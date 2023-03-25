@@ -1,0 +1,73 @@
+[
+  {
+    "path": "/login",
+    "element": "@/pages/Login"
+  },
+  {
+    "path": "/",
+    "element": "@/layouts/LayoutDefault",
+    "children": [
+      {
+        "index": true,
+        "redirect": "/home"
+      },
+      {
+        "path": "/home",
+        "title": "首页",
+        "element": "@/pages/Home"
+      },
+      {
+        "path": "/manage",
+        "element": "@/layouts/LayoutBase",
+        "children": [
+          {
+            "index": true,
+            "redirect": "/manage/employee-profile"
+          },
+          {
+            "path": "/manage/employee-profile",
+            "title": "员工档案管理",
+            "element": "@/pages/EmployeeProfile"
+          },
+          {
+            "path": "/manage/organization-structure",
+            "title": "组织结构管理",
+            "element": "@/pages/OrganizationStructure"
+          },
+          {
+            "path": "/manage/employee-attendance",
+            "title": "员工考勤管理",
+            "element": "@/pages/EmployeeAttendance"
+          },
+          {
+            "path": "/manage/employee-induction",
+            "title": "员工入职",
+            "element": "@/pages/EmployeeInduction"
+          },
+          {
+            "path": "/manage/employee-depart",
+            "title": "离职管理",
+            "element": "@/pages/EmployeeDepart"
+          },
+          {
+            "path": "/manage/training-and-development",
+            "title": "员工培训与发展",
+            "element": "@/pages/TrainingAndDevelopment"
+          },
+          {
+            "path": "*",
+            "element": "@uiw-admin/exceptions/lib/Exceptions/404"
+          }
+        ]
+      },
+      {
+        "path": "*",
+        "element": "@uiw-admin/exceptions/lib/Exceptions/404"
+      }
+    ]
+  },
+  {
+    "path": "*",
+    "element": "@uiw-admin/exceptions/lib/Exceptions/404"
+  }
+]
