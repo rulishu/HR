@@ -1,15 +1,14 @@
-import { useLocation, KktproPageProps } from '@kkt/pro';
+import { KktproPageProps } from '@kkt/pro';
+import { Wraper, Wallpaper, Body } from './style';
 
 const Home = (props: KktproPageProps) => {
-  const { navigate } = props;
-  console.log(useLocation());
-  const click = () => {
-    navigate?.('/ceshi');
-  };
   return (
-    <div>
-      <button onClick={click}>add route</button>
-    </div>
+    <Wraper>
+      <Wallpaper />
+      <Body>
+        home
+      </Body>
+    </Wraper>
   );
 };
 export default Home;

@@ -3,11 +3,9 @@ import { Header } from '@/components';
 
 const Layout = () => {
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <Header />
-      <div style={{ height: 800 }}>
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };

@@ -6,6 +6,7 @@ export const Wrapper = styled.header`
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   position: sticky;
+  z-index: 9;
   top: 0;
   height: 50px;
   padding: 0 15px;
@@ -17,4 +18,5 @@ export const Wrapper = styled.header`
 export const Log = styled.div`
   font-weight: bold;
   font-size: 18px;
+  color: #fff;
 `

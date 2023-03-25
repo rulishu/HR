@@ -1,9 +1,11 @@
+import Right from './Right';
 import { Wrapper, Log } from './style';
 
 const Headers = () => {
   return (
     <Wrapper>
-      <Log>人事管理系统</Log>
+      <Log>22</Log>
+      <Right />
     </Wrapper>
   );
 };
