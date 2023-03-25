@@ -18,15 +18,17 @@ export const HoverDiv = styled.div`
   cursor: pointer;
   transition: background .5s;
   &:hover {
-    background: rgba(124, 124, 124, 0.4);
+    background: rgba(218, 218, 218, 0.4);
   }
 `
 
 export const CircleIcon = styled(Icon)`
-  color: #fff;
+  color: #999;
   font-size: 24px;
 `
 
 export const UserAvatar = styled(Avatar)`
-  border: 2px solid #fff;
+  color: #999;
+  border: 2px solid #999;
+  background: #f0f0f0;
 `

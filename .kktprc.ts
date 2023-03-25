@@ -4,6 +4,7 @@ export default {
   initEntery: true,
   initRoutes: {
     fallbackElement: '@/loading',
+    routesOutletElement: '@/index'
   },
   initModel: true,
   define: {

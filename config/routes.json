@@ -13,7 +13,7 @@
       },
       {
         "path": "/home",
-        "title": "首页",
+        "name": "首页",
         "element": "@/pages/Home"
       },
       {
@@ -26,32 +26,38 @@
           },
           {
             "path": "/manage/employee-profile",
-            "title": "员工档案管理",
+            "name": "员工档案管理",
+            "icon": "appstore",
             "element": "@/pages/EmployeeProfile"
           },
           {
             "path": "/manage/organization-structure",
-            "title": "组织结构管理",
+            "name": "组织结构管理",
+            "icon": "appstore",
             "element": "@/pages/OrganizationStructure"
           },
           {
             "path": "/manage/employee-attendance",
-            "title": "员工考勤管理",
+            "name": "员工考勤管理",
+            "icon": "appstore",
             "element": "@/pages/EmployeeAttendance"
           },
           {
             "path": "/manage/employee-induction",
-            "title": "员工入职",
+            "name": "员工入职",
+            "icon": "appstore",
             "element": "@/pages/EmployeeInduction"
           },
           {
             "path": "/manage/employee-depart",
-            "title": "离职管理",
+            "name": "离职管理",
+            "icon": "appstore",
             "element": "@/pages/EmployeeDepart"
           },
           {
             "path": "/manage/training-and-development",
-            "title": "员工培训与发展",
+            "name": "员工培训与发展",
+            "icon": "appstore",
             "element": "@/pages/TrainingAndDevelopment"
           },
           {

@@ -1,8 +1,30 @@
-import { Menu, Card } from "uiw";
-import { Container, CircleIcon, UserAvatar, HoverDiv } from './style/right';
+import { KktproKeys } from '@kkt/pro';
+import { Menu, Card, Row, Col, Icon } from "uiw";
+import { ApplyBox, ApplyItem } from './style/render';
 
 const Apply = () => {
-  return <div>344</div>
+  const appleData: KktproKeys[] = [
+    { text: '员工档案' },
+    { text: '组织结构' },
+    { text: '员工考勤' },
+    { text: '员工入职' },
+    { text: '员工离职' },
+    { text: '培训与发展' },
+  ]
+  return (
+    <ApplyBox>
+      <Row>
+        {appleData.map((item: KktproKeys, index: number) => (
+          <Col span="8" key={index}>
+            <ApplyItem>
+              <Icon type="uiw" />
+              <span>{item.text}</span>
+            </ApplyItem>
+          </Col>
+        ))}
+      </Row>
+    </ApplyBox>
+  )
 }
 
 export const popoverConent = (type: 'add' | 'apply' | 'user') => {
