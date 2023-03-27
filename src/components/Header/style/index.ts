@@ -41,4 +41,7 @@ export const Log = styled.div`
   font-weight: bold;
   font-size: 18px;
   color: #333;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `

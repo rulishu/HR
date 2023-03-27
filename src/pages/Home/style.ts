@@ -24,4 +24,13 @@ export const Body = styled.div`
   color: #fff;
   position: relative;
   z-index: 2;
+  padding-top: 30px;
+  box-sizing: border-box;
+`;
+
+export const BodyWraper = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #333;
+  padding-bottom: 50px;
 `;

@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@uiw-admin/exceptions": "~5.3.21",
+    "echarts": "^5.4.2",
     "styled-components": "^5.3.6",
     "uiw": "4.21.25"
   },

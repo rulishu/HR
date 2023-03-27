@@ -1,31 +1,5 @@
-import { KktproKeys } from '@kkt/pro';
-import { Menu, Card, Row, Col, Icon } from "uiw";
-import { ApplyBox, ApplyItem } from './style/render';
-
-const Apply = () => {
-  const appleData: KktproKeys[] = [
-    { text: '员工档案' },
-    { text: '组织结构' },
-    { text: '员工考勤' },
-    { text: '员工入职' },
-    { text: '员工离职' },
-    { text: '培训与发展' },
-  ]
-  return (
-    <ApplyBox>
-      <Row>
-        {appleData.map((item: KktproKeys, index: number) => (
-          <Col span="8" key={index}>
-            <ApplyItem>
-              <Icon type="uiw" />
-              <span>{item.text}</span>
-            </ApplyItem>
-          </Col>
-        ))}
-      </Row>
-    </ApplyBox>
-  )
-}
+import { Menu, Card } from "uiw";
+import { Apply } from '@/components';
 
 export const popoverConent = (type: 'add' | 'apply' | 'user') => {
   if (type === 'user') {
@@ -52,9 +26,7 @@ export const popoverConent = (type: 'add' | 'apply' | 'user') => {
   }
   if (type === 'apply') {
     return (
-      <Card bordered={false} title="应用" bodyStyle={{ padding: 0 }}>
-        <Apply />
-      </Card>
+      <Apply size={40} style={{ width: 300, height: 200 }} />
     )
   }
 };

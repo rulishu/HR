@@ -17,7 +17,7 @@
         "element": "@/pages/Home"
       },
       {
-        "path": "/manage",
+        "path": "/admin",
         "element": "@/layouts/LayoutBase",
         "children": [
           {
@@ -25,40 +25,65 @@
             "redirect": "/manage/employee-profile"
           },
           {
-            "path": "/manage/employee-profile",
+            "path": "/admin/employee-profile",
             "name": "员工档案管理",
             "icon": "appstore",
             "element": "@/pages/EmployeeProfile"
           },
           {
-            "path": "/manage/organization-structure",
-            "name": "组织结构管理",
+            "path": "/admin/organization-structure",
+            "name": "组织机构管理",
             "icon": "appstore",
             "element": "@/pages/OrganizationStructure"
           },
           {
-            "path": "/manage/employee-attendance",
+            "path": "/admin/employee-attendance",
             "name": "员工考勤管理",
             "icon": "appstore",
             "element": "@/pages/EmployeeAttendance"
           },
           {
-            "path": "/manage/employee-induction",
+            "path": "/admin/employee-induction",
             "name": "员工入职",
             "icon": "appstore",
             "element": "@/pages/EmployeeInduction"
           },
           {
-            "path": "/manage/employee-depart",
+            "path": "/admin/employee-depart",
             "name": "离职管理",
             "icon": "appstore",
             "element": "@/pages/EmployeeDepart"
           },
           {
-            "path": "/manage/training-and-development",
+            "path": "/admin/training-and-development",
             "name": "员工培训与发展",
             "icon": "appstore",
             "element": "@/pages/TrainingAndDevelopment"
+          },
+          {
+            "path": "/admin/sys",
+            "name": "设置",
+            "icon": "appstore",
+            "children": [
+              {
+                "path": "/admin/sys/organization-structure",
+                "name": "组织机构管理",
+                "icon": "appstore",
+                "element": "@/pages/OrganizationStructure"
+              },
+              {
+                "path": "/admin/sys/auth",
+                "name": "权限管理",
+                "icon": "appstore",
+                "element": "@/pages/OrganizationStructure"
+              },
+              {
+                "path": "/admin/sys/role",
+                "name": "角色管理",
+                "icon": "appstore",
+                "element": "@/pages/OrganizationStructure"
+              }
+            ]
           },
           {
             "path": "*",
