@@ -3,6 +3,7 @@ import { DatePicker } from 'uiw';
 
 export const CardBody = styled.div`
   display: flex;
+  height: 242px;
 `;
 
 export const CardDate = styled.div`
@@ -19,3 +20,7 @@ export const CardContent = styled.div`
   margin-left: 20px;
 `;
 
+export const CardContentTit = styled.div`
+  font-weight: bold;
+  margin-bottom: 10px;
+`

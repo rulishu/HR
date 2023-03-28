@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { KktproKeys, KktproPageProps, KktproRoutesProps, useLocation } from '@kkt/pro';
-import { SiderWraps, SiderMenu, SiderMenuItem } from './style';
+import { SiderWraps, SiderMenu, SiderMenuItem, SiderSubMenu } from './style';
 import { getMenus } from './utils';
 
 
@@ -16,18 +16,36 @@ const Siders = ({ routes, navigate }: KktproPageProps) => {
     navigate(item.path);
   }
 
-  return (
-    <SiderWraps>
-      <SiderMenu>
-        {menusData.map((item: KktproKeys, index: number) => (
-          <SiderMenuItem
+  const loop = (data: KktproKeys[]) => {
+    if (!data || data.length === 0) return;
+    return data.map((item: KktproKeys, index: number) => {
+      if (item.children && Array.isArray(item.children)) {
+        return (
+          <SiderSubMenu
             key={index}
             icon={item.icon}
             text={item.name}
-            active={pathname === item.path}
-            onClick={() => onClickItem(item)}
-          />
-        ))}
+          >
+            {loop(item.children)}
+          </SiderSubMenu>
+        )
+      }
+      return (
+        <SiderMenuItem
+          key={index}
+          icon={item.icon}
+          text={item.name}
+          active={pathname === item.path}
+          onClick={() => onClickItem(item)}
+        />
+      )
+    })
+  }
+
+  return (
+    <SiderWraps>
+      <SiderMenu>
+        {loop(menusData)}
       </SiderMenu>
     </SiderWraps>
   );

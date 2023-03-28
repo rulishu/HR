@@ -1,6 +1,6 @@
 import { Card } from 'uiw';
 import { Title } from '@/components'
-import { CardBody, CardDate, CardDatePicker, CardContent } from './style';
+import { CardBody, CardDate, CardDatePicker, CardContent, CardContentTit } from './style';
 
 const Modules = () => {
   return (
@@ -13,7 +13,7 @@ const Modules = () => {
         </CardDate>
         
         <CardContent>
-          <div>备忘</div>
+          <CardContentTit>备忘</CardContentTit>
           <div>今日9:30 有一个面试</div>
         </CardContent>
       </CardBody>

@@ -27,61 +27,61 @@
           {
             "path": "/admin/employee-profile",
             "name": "员工档案管理",
-            "icon": "appstore",
+            "icon": "usergroup-add",
             "element": "@/pages/EmployeeProfile"
-          },
-          {
-            "path": "/admin/organization-structure",
-            "name": "组织机构管理",
-            "icon": "appstore",
-            "element": "@/pages/OrganizationStructure"
           },
           {
             "path": "/admin/employee-attendance",
             "name": "员工考勤管理",
-            "icon": "appstore",
+            "icon": "copy",
             "element": "@/pages/EmployeeAttendance"
           },
           {
             "path": "/admin/employee-induction",
             "name": "员工入职",
-            "icon": "appstore",
+            "icon": "user-add",
             "element": "@/pages/EmployeeInduction"
           },
           {
             "path": "/admin/employee-depart",
             "name": "离职管理",
-            "icon": "appstore",
+            "icon": "user-delete",
             "element": "@/pages/EmployeeDepart"
           },
           {
             "path": "/admin/training-and-development",
             "name": "员工培训与发展",
-            "icon": "appstore",
+            "icon": "laptop",
             "element": "@/pages/TrainingAndDevelopment"
           },
           {
             "path": "/admin/sys",
             "name": "设置",
-            "icon": "appstore",
+            "icon": "setting-o",
             "children": [
               {
                 "path": "/admin/sys/organization-structure",
                 "name": "组织机构管理",
-                "icon": "appstore",
-                "element": "@/pages/OrganizationStructure"
+                "icon": "document",
+                "element": "@/pages/sys/OrganizationStructure"
               },
               {
                 "path": "/admin/sys/auth",
                 "name": "权限管理",
-                "icon": "appstore",
-                "element": "@/pages/OrganizationStructure"
+                "icon": "eye-o",
+                "element": "@/pages/sys/Auth"
               },
               {
                 "path": "/admin/sys/role",
                 "name": "角色管理",
-                "icon": "appstore",
-                "element": "@/pages/OrganizationStructure"
+                "icon": "table",
+                "element": "@/pages/sys/Role"
+              },
+              {
+                "path": "/admin/sys/route",
+                "name": "路由管理",
+                "icon": "folder-open",
+                "element": "@/pages/sys/Route"
               }
             ]
           },

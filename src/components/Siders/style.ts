@@ -18,3 +18,19 @@ export const SiderMenuItem = styled(Menu.Item)`
   cursor: pointer;
   margin-bottom: 3px;
 `;
+
+export const SiderSubMenu = styled(Menu.SubMenu)`
+  height: 32px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 3px;
+  +.w-menu-subitem-collapse .w-menu {
+    background: none !important;
+    padding-left: 0;
+    .w-menu-item {
+      padding-left: 20px;
+    }
+  }
+`;
