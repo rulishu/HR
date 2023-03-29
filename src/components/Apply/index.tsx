@@ -15,12 +15,12 @@ const appleData = (size: number) => {
     height: size
   }
   return [
-    { text: '员工档案', icon: <Svg1 style={iconStyle} />  },
-    { text: '组织结构', icon: <Svg2 style={iconStyle} /> },
-    { text: '员工考勤', icon: <Svg3 style={iconStyle} /> },
-    { text: '员工入职', icon: <Svg4 style={iconStyle} /> },
-    { text: '员工离职', icon: <Svg5 style={iconStyle} /> },
-    { text: '培训与发展', icon: <Svg6 style={iconStyle} /> },
+    { text: '员工档案', icon: <Svg1 style={iconStyle} />, path: '/admin/employee-profile'  },
+    { text: '组织机构', icon: <Svg2 style={iconStyle} />, path: '/admin/sys/organization-structure' },
+    { text: '员工考勤', icon: <Svg3 style={iconStyle} />, path: '/admin/employee-attendance' },
+    { text: '员工入职', icon: <Svg4 style={iconStyle} />, path: '/admin/employee-induction', },
+    { text: '员工离职', icon: <Svg5 style={iconStyle} />, path: '/admin/employee-depart' },
+    { text: '培训与发展', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
   ]
 }
 
@@ -42,7 +42,7 @@ const Modules = (props: AppleProps) => {
       <Row style={style}>
         {appleData(size).map((item: KktproKeys, index: number) => (
           <Col span="8" key={index}>
-            <ApplyItem>
+            <ApplyItem to={item.path}>
               {item.icon}
               <span>{item.text}</span>
             </ApplyItem>

@@ -10,3 +10,11 @@ export const getMenus = (data: KktproRoutesProps[] = []) => {
   }
   return [];
 }
+
+/**
+ * 判断菜单是否是展开状态
+*/
+export const getOpen = (data: KktproRoutesProps[] = [], path: string) => {
+  const obj = data.find((item: KktproRoutesProps) => item.path === path);
+  return !!obj;
+}

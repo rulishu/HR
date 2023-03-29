@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Link } from '@kkt/pro';
 
-export const ApplyItem = styled.div`
+export const ApplyItem = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,6 +9,8 @@ export const ApplyItem = styled.div`
   height: 100%;
   cursor: pointer;
   transition: all .5s;
+  text-decoration: none;
+  color: #333;
   span {
     margin-top: 5px;
   }

@@ -10,7 +10,7 @@ const Page = () => {
   } = useSelector((state: RootState) => state);
 
   useEffect(() => {
-    userData && dispatch.sysRoute.selectMenu({});
+    userData && dispatch.sysRoute.selectMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData])
 

@@ -39,7 +39,7 @@ const Page = () => {
   }
 
   const onConfirm = () => {
-    dispatch.sysRoute.deleteMenu({});
+    dispatch.sysRoute.deleteMenu();
   }
 
   return (

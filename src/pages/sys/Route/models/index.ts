@@ -26,23 +26,34 @@ const route = {
   },
   effects: (dispatch: Dispatch) => ({
     /**
-     * 获取用户信息
+     * 获取路由列表
     */
-    async selectMenu(payload: KktproKeys, { global }: any) {
+    async selectMenu(payload?: KktproKeys, state?: any) {
+      const  { global } = state;
       const { userData } = global;
       const { code, data } = await selectMenu({
         userId: userData.userId
       });
       if (code === 200 && data) {
-        dispatch.sysRoute.updateState({
-          dataList: data.map((item: KktproKeys) => {
-            const newItem = { ...item }
-            if (Array.isArray(item.children) && item.children.length === 0) {
-              delete newItem.children
-            }
-            return newItem;
-          })
-        });
+        const newData = data.map((item: KktproKeys) => {
+          const newItem = { ...item }
+          if (Array.isArray(item.children) && item.children.length === 0) {
+            delete newItem.children
+          }
+          return newItem;
+        })
+        if (payload?.callback) {
+          // 其它页面获取路由列表
+          payload?.callback(data);
+        } else {
+          dispatch.sysRoute.updateState({
+            dataList: newData
+          });
+          // 为了避免角色管理弹层里面的路由数据不是最新，获取到数据后，存储一份到角色管理弹层modal里面
+          dispatch.roleModal.updateState({
+            routeList: newData
+          });
+        }
       }
     },
     /**
@@ -59,7 +70,8 @@ const route = {
     /**
      * 添加菜单
     */
-    async deleteMenu(_: any, { sysRoute, global }: any) {
+    async deleteMenu(_?: any, state?: any) {
+      const { sysRoute, global } = state;
       const { detailsData = {} } = sysRoute;
       const { userData } = global;
       const { code, msg } = await deleteMenu({
@@ -75,7 +87,8 @@ const route = {
     /**
      * 编辑菜单
     */
-    async updateMenu(payload: KktproKeys, { sysRoute, global }: any) {
+    async updateMenu(payload?: KktproKeys, state?: any) {
+      const { sysRoute, global } = state;
       const { detailsData = {} } = sysRoute;
       const { userData } = global;
       const { code, msg } = await updateMenu({

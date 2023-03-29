@@ -1,3 +1,6 @@
+/**
+ * 路由管理
+*/
 import { request } from '@uiw-admin/utils';
 import { KktproKeys } from '@kkt/pro';
 

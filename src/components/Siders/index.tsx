@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import { KktproKeys, KktproPageProps, KktproRoutesProps, useLocation } from '@kkt/pro';
 import { SiderWraps, SiderMenu, SiderMenuItem, SiderSubMenu } from './style';
-import { getMenus } from './utils';
-
+import { getMenus, getOpen } from './utils';
 
 const Siders = ({ routes, navigate }: KktproPageProps) => {
   const { pathname } = useLocation();
@@ -25,6 +24,9 @@ const Siders = ({ routes, navigate }: KktproPageProps) => {
             key={index}
             icon={item.icon}
             text={item.name}
+            overlayProps={{
+              isOpen: getOpen(item.children, pathname)
+            }}
           >
             {loop(item.children)}
           </SiderSubMenu>

@@ -1,3 +1,4 @@
+import { useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm } from "@uiw-admin/components";
 
 //搜索表单
@@ -10,7 +11,14 @@ const formSearchList = [
 ];
 
 const Search = () => {
-  const onScreenSubmit = (current: object) => {}
+  const dispatch = useDispatch<Dispatch>();
+
+  const onScreenSubmit = (current?: object) => {
+    dispatch.sysRole.roleList({
+      ...current,
+      page: 1
+    });
+  }
 
   return (
     <ProForm
