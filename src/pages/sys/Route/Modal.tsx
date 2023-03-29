@@ -4,7 +4,7 @@ import { Drawer } from "uiw";
 
 const Modals = () => {
   const {
-    sysRoute: { isVisible, popUpStatus },
+    sysRoute: { isVisible, popUpStatus, detailsData },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
@@ -22,7 +22,6 @@ const Modals = () => {
 
   //提交按钮
   const onSubmit = (current: object) => {
-    console.log(4444, current)
     if (popUpStatus === "add") {
       dispatch({
         type: "sysRoute/addMenu",
@@ -31,13 +30,12 @@ const Modals = () => {
           menuType: 'M', // M 菜单
         },
       });
+    } else {
+      dispatch({
+        type: "sysRoute/updateMenu",
+        payload: current,
+      });
     }
-    // else {
-    //   dispatch({
-    //     type: "RouteManagement/getEdit",
-    //     payload: { ...current, pid: detailsData.pid, id: detailsData.id },
-    //   });
-    // }
   };
   return (
     <Drawer
@@ -62,7 +60,7 @@ const Modals = () => {
             widget: "input",
             span: "24",
             required: true,
-            // initialValue: detailsData?.name,
+            initialValue: (detailsData as any)?.menuName,
           },
           {
             label: "菜单路径",
@@ -70,7 +68,7 @@ const Modals = () => {
             widget: "input",
             span: "24",
             required: true,
-            // initialValue: detailsData?.route,
+            initialValue: (detailsData as any)?.path,
           },
         ]}
       />

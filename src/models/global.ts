@@ -32,7 +32,6 @@ const login = {
           userData: data.user,
           authRoutes: data.route
         });
-        console.log(333, data.user)
         payload.callback?.();
       }
     },

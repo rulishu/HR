@@ -1,8 +1,11 @@
-import { useDispatch, Dispatch } from '@kkt/pro';
-import { Button, Table, Pagination, Empty } from "uiw";
+import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
+import { Button, Table, Empty, Alert } from "uiw";
 import { columns } from './utils';
 
 const Page = () => {
+  const {
+    sysRoute: { dataList, isDelete },
+  } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   // 新增
@@ -14,11 +17,30 @@ const Page = () => {
     });
   }
 
-  // 删除
-  const onDelete = () => {}
+  // 编辑
+  const onEdit = (rowData: any) => {
+    dispatch.sysRoute.updateState({
+      isVisible: true,
+      popUpStatus: 'edit',
+      detailsData: rowData
+    });
+  }
 
-  // 翻页
-  const onTurnPages = (current: number) => {}
+  // 删除
+  const onRemove = (rowData: any) => {
+    dispatch.sysRoute.updateState({
+      detailsData: rowData,
+      isDelete: true
+    });
+  }
+
+  const onDelClosed = () => {
+    dispatch.sysRoute.hideModal();
+  }
+
+  const onConfirm = () => {
+    dispatch.sysRoute.deleteMenu({});
+  }
 
   return (
     <div>
@@ -26,29 +48,21 @@ const Page = () => {
         <Button icon="plus" type="primary" onClick={() => addModal()}>
           新增路由
         </Button>
-        <Button
-          icon="delete"
-          type="danger"
-          onClick={() => {
-            onDelete();
-          }}
-        >
-          删除
-        </Button>
       </div>
       <Table
-        columns={columns({})}
-        data={[]}
+        columns={columns({ onEdit, onRemove })}
+        data={dataList}
         empty={<Empty />}
-        footer={
-          <Pagination
-            current={1}
-            pageSize={20}
-            total={100}
-            divider
-            onChange={(current) => onTurnPages(current)}
-          />
-        }
+      />
+      <Alert
+        isOpen={isDelete}
+        confirmText="确定"
+        cancelText="取消"
+        icon="warning"
+        type="warning"
+        onClosed={() => onDelClosed()}
+        onConfirm={() => onConfirm()}
+        content="您确定要删除吗？"
       />
     </div>
   )

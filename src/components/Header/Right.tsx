@@ -18,7 +18,9 @@ const Right = () => {
       <Popover
         trigger="click"
         placement="bottomRight"
-        content={popoverConent('apply', (type, menuType) => onMenuClick(menuType))}
+        content={popoverConent({ 
+          type: 'apply'
+        })}
       >
         <HoverDiv>
           <CircleIcon type="appstore" style={{ fontSize: 20 }} />
@@ -27,7 +29,10 @@ const Right = () => {
       <Popover
         trigger="click"
         placement="bottomRight"
-        content={popoverConent('add')}
+        content={popoverConent({
+          type: 'add',
+          callback: (type, menuType) => onMenuClick(menuType)
+        })}
       >
         <HoverDiv>
           <CircleIcon type="plus-circle-o" />
@@ -36,7 +41,10 @@ const Right = () => {
       <Popover
         trigger="click"
         placement="bottomRight"
-        content={popoverConent('user')}
+        content={popoverConent({
+          type: 'user',
+          callback: (type, menuType) => onMenuClick(menuType)
+        })}
       >
         <HoverDiv>
           <UserAvatar icon="user" />

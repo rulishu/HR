@@ -1,11 +1,13 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectMenu, addMenu } from '@/servers/sys/route';
+import { selectMenu, addMenu, deleteMenu, updateMenu } from '@/servers/sys/route';
 
 const route = {
   name: "sysRoute",
   state: {
+    dataList: [],
     isVisible: false,
+    isDelete: false,
     popUpStatus: undefined, // 是新增还是编辑 add / edit
     detailsData: undefined, // 编辑的数据
   },
@@ -17,6 +19,7 @@ const route = {
     hideModal: (state: any) => ({
       ...state,
       isVisible: false,
+      isDelete: false,
       popUpStatus: undefined,
       detailsData: undefined,
     })
@@ -31,6 +34,15 @@ const route = {
         userId: userData.userId
       });
       if (code === 200 && data) {
+        dispatch.sysRoute.updateState({
+          dataList: data.map((item: KktproKeys) => {
+            const newItem = { ...item }
+            if (Array.isArray(item.children) && item.children.length === 0) {
+              delete newItem.children
+            }
+            return newItem;
+          })
+        });
       }
     },
     /**
@@ -41,9 +53,42 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
         dispatch.sysRoute.hideModal();
+        dispatch.sysRoute.selectMenu({});
       }
     },
-
+    /**
+     * 添加菜单
+    */
+    async deleteMenu(_: any, { sysRoute, global }: any) {
+      const { detailsData = {} } = sysRoute;
+      const { userData } = global;
+      const { code, msg } = await deleteMenu({
+        menuId: detailsData.menuId,
+        userId: userData.userId
+      });
+      if (code === 200) {
+        Notify.success({ description: msg || '删除成功' });
+        dispatch.sysRoute.hideModal();
+        dispatch.sysRoute.selectMenu({});
+      }
+    },
+    /**
+     * 编辑菜单
+    */
+    async updateMenu(payload: KktproKeys, { sysRoute, global }: any) {
+      const { detailsData = {} } = sysRoute;
+      const { userData } = global;
+      const { code, msg } = await updateMenu({
+        ...detailsData,
+        ...payload,
+        userId: userData.userId
+      });
+      if (code === 200) {
+        Notify.success({ description: msg || '编辑成功' });
+        dispatch.sysRoute.hideModal();
+        dispatch.sysRoute.selectMenu({});
+      }
+    },
   }),
 };
 

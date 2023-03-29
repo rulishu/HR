@@ -45,9 +45,20 @@ export function addMenu(params: KktproKeys) {
 /**
  * 删除菜单
  * @menuId
+ * @userId
 */
 export function deleteMenu(params: KktproKeys) {
   return request('/api/menu/deleteMenu', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 编辑菜单
+*/
+export function updateMenu(params: KktproKeys) {
+  return request('/api/menu/updateMenu', {
     method: 'post',
     body: { ...params },
   });
