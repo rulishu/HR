@@ -30,19 +30,28 @@ const route = {
     async roleList(payload?: KktproKeys, state?: any) {
       const { sysRole } = state;
       const { page, pageSize } = sysRole;
+      const { callback, ...other } = payload || {};
       const params: KktproKeys = {
         page,
         pageSize,
-        ...payload
+        ...other
       }
       const { code, data } = await roleList(params);
       if (code === 200 && data) {
         const { list, total } = data;
-        dispatch.sysRole.updateState({
-          dataList: list || [],
-          total,
-          page: params.page
-        });
+        if (callback) {
+          callback(list || []);
+        } else {
+          dispatch.sysRole.updateState({
+            dataList: list || [],
+            total,
+            page: params.page
+          });
+          // 为了避免用户管理弹层里面的路由数据不是最新，获取到数据后，存储一份到用户管理弹层modal里面
+          dispatch.usersModal.updateState({
+            roleList: list || []
+          });
+        }
       }
     },
     /**

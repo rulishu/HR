@@ -23,3 +23,13 @@ html, main {
 #root .w-empty {
   padding: 50px 0;
 }
+
+.w-radio {
+  display: inline-flex !important;
+  align-items: center;
+  height: 30px;
+  margin-right: 20px;
+}
+.w-radio:last-child {
+  margin-right: 0;
+}

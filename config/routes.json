@@ -72,6 +72,12 @@
                 "element": "@/pages/sys/Auth"
               },
               {
+                "path": "/admin/sys/users",
+                "name": "用户管理",
+                "icon": "user",
+                "element": "@/pages/sys/Users"
+              },
+              {
                 "path": "/admin/sys/role",
                 "name": "角色管理",
                 "icon": "table",

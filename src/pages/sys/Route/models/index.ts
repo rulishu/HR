@@ -68,7 +68,7 @@ const route = {
       }
     },
     /**
-     * 添加菜单
+     * 删除菜单
     */
     async deleteMenu(_?: any, state?: any) {
       const { sysRoute, global } = state;
