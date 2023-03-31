@@ -6,6 +6,7 @@ interface FormListProps {
   detailsData?: any;
   roleList?: any[];
   passIcon?: string;
+  formObj?: KktproKeys;
   onLockPass?: () => void;
 }
 
@@ -14,15 +15,16 @@ export const formList = ({
   detailsData,
   roleList = [],
   passIcon = 'lock',
+  formObj,
   onLockPass
 }: FormListProps) => [
   {
-    label: "角色名称",
-    key: "name",
+    label: "账号名称",
+    key: "username",
     widget: "input",
     required: true,
     disabled: type === "add" ? false : true,
-    initialValue: (detailsData as any)?.name,
+    initialValue: (detailsData as any)?.username,
     span: "12",
     readSpan: 1,
   },
@@ -39,6 +41,18 @@ export const formList = ({
     widget: "input",
     initialValue: detailsData?.password,
     type: passIcon === "lock" ? "password" : "text",
+    required: formObj?.password,
+    rules: [
+      { 
+        // validator: (value = '') => {
+        //   console.log(44444, value)
+        //   if(value &&  value.length < 5) return false
+        //   return true
+        // },
+        pattern: new RegExp(/^.{0,5}$/),
+        message: "密码不能少于6位数"
+      },
+    ],
     widgetProps: {
       addonAfter: (
         <Button
@@ -54,22 +68,19 @@ export const formList = ({
     readSpan: 1,
   },
   {
-    label: "选择部门",
-    key: "roleId2",
-    widget: "select",
-    option: [],
-    initialValue: detailsData?.roleId,
-    required: true,
-    rules: [{ required: true, message: "请选择选择部门" }],
+    label: "昵称",
+    key: "name",
+    widget: "input",
+    initialValue: (detailsData as any)?.name,
     span: "12",
-    widgetProps: {},
+    readSpan: 1,
   },
   {
     label: "分配角色",
-    key: "roleId",
+    key: "roleIds",
     widget: "select",
     option: roleList.map((item: KktproKeys) => ({ label: item.name, value: item.id })),
-    initialValue: detailsData?.roleId,
+    initialValue: detailsData?.roleIds,
     required: true,
     rules: [{ required: true, message: "请选择需要分配的角色" }],
     span: "12",
@@ -86,14 +97,11 @@ export const formList = ({
   {
     label: "是否禁用",
     widget: "radio",
-    key: "enable",
+    key: "locked",
     readSpan: 1,
     span: "24",
     hide: type === "add" ? true : false,
-    initialValue: (typeof detailsData?.enable === "boolean"
-      ? detailsData?.enable
-      : ""
-    ).toString(),
+    initialValue: (!!detailsData?.locked).toString(),
     option: [
       { label: "正常", value: "true" },
       { label: "禁用", value: "false" },

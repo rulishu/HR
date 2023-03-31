@@ -73,7 +73,7 @@
               },
               {
                 "path": "/admin/sys/users",
-                "name": "用户管理",
+                "name": "账号管理",
                 "icon": "user",
                 "element": "@/pages/sys/Users"
               },

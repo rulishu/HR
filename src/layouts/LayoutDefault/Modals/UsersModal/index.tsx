@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { Dispatch, KktproKeys, RootState, useDispatch, useSelector } from "@kkt/pro";
-import { ProForm } from "@uiw-admin/components";
+import { ProForm, useForm } from "@uiw-admin/components";
 import { Drawer } from "uiw";
 import { formList } from './utils';
 
@@ -13,23 +14,22 @@ function Modals() {
     },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
+  const [formObj, setFormObj] = useState<KktproKeys>({});
+  const form = useForm();
 
   //提交按钮
-  const onAddSubmit = (current: object) => {
-    const params: KktproKeys = {
-      ...current,
-    }
+  const onAddSubmit = async (current: object) => {
     if (type === "add") {
       dispatch({
-        type: "usersModal/roleAdd",
-        payload: params
+        type: "usersModal/usersAdd",
+        payload: current
       });
     } else {
       dispatch({
-        type: "usersModal/roleUpdate",
+        type: "usersModal/usersUpdate",
         payload: {
-          id: (detailsData as any)?.id,
-          ...params
+          id: (detailsData as any)?.userId,
+          ...current
         },
       });
     }
@@ -43,8 +43,9 @@ function Modals() {
     });
   };
 
-  //新增编辑表单
-  ;
+  const onChange = (current: KktproKeys) => {
+    setFormObj(current);
+  }
 
   return (
     <Drawer
@@ -56,13 +57,15 @@ function Modals() {
       useButton={false}
     >
       <ProForm
+        form={form}
         showSaveButton
         showResetButton
         formType="pure"
         saveButtonProps={{ type: "primary" }}
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
-        formDatas={formList({ type, detailsData, roleList })}
+        onChange={(_, current) => onChange(current)}
+        formDatas={formList({ type, detailsData, roleList, formObj })}
       />
     </Drawer>
   );

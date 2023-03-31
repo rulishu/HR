@@ -1,3 +1,4 @@
+import { useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm } from "@uiw-admin/components";
 
 //搜索表单
@@ -10,16 +11,23 @@ const formSearchList = [
   {
     label: "是否禁用",
     widget: "radio",
-    key: "enable",
+    key: "locked",
     option: [
-      { label: "正常", value: "true" },
-      { label: "禁用", value: "false" },
+      { label: "正常", value: 1 },
+      { label: "禁用", value: 2 },
     ],
   },
 ];
 
 const Search = () => {
-  const onScreenSubmit = (current: object) => {}
+  const dispatch = useDispatch<Dispatch>();
+
+  const onScreenSubmit = (current?: object) => {
+    dispatch.sysUser.usersList({
+      ...current,
+      page: 1
+    });
+  }
 
   return (
     <ProForm

@@ -1,7 +1,6 @@
 import { KktproKeys } from '@kkt/pro';
-import { Card, Row, Col } from "uiw";
-import { Title } from '@/components';
-import { ApplyItem } from './style';
+import { Row, Col } from "uiw";
+import { ApplyItem, ColItem } from './style';
 import { ReactComponent as Svg1 } from './assets/1.svg';
 import { ReactComponent as Svg2 } from './assets/2.svg';
 import { ReactComponent as Svg3 } from './assets/3.svg';
@@ -48,12 +47,12 @@ const Modules = (props: AppleProps) => {
   return (
     <Row style={style}>
       {appleData(size).map((item: KktproKeys, index: number) => (
-        <Col span="4" key={index}>
+        <ColItem span="4" key={index}>
           <ApplyItem to={item.path}>
             {item.icon}
             <span>{item.text}</span>
           </ApplyItem>
-        </Col>
+        </ColItem>
       ))}
     </Row>
   )

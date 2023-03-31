@@ -28,20 +28,23 @@ const route = {
      * 获取列表
     */
     async usersList(payload?: KktproKeys, state?: any) {
-      const { sysUser, global } = state;
+      const { sysUser } = state;
       const { page, pageSize } = sysUser;
-      const { userData } = global;
       const params: KktproKeys = {
         page,
         pageSize,
-        userIds: [userData.userId],
         ...payload
       }
       const { code, data } = await usersList(params);
       if (code === 200 && data) {
         const { list, total } = data;
+        const newData = (list || []).map((item: KktproKeys) => ({
+          ...item,
+          password: undefined,
+          roleIds: item.roleIds.length > 0 && item.roleIds[0]
+        }))
         dispatch.sysUser.updateState({
-          dataList: list || [],
+          dataList: newData,
           total,
           page: params.page
         });

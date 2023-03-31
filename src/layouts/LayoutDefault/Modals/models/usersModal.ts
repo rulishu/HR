@@ -34,12 +34,16 @@ const store = {
     async usersAdd(payload: KktproKeys, state: any) {
       const { usersModal } = state;
       const { isForm } = usersModal;
-      const { code, msg } = await usersAdd(payload);
+      const { code, msg } = await usersAdd({
+        ...payload,
+        roleIds: [payload.roleIds],
+        departmentId: '',
+      });
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
         if (isForm) {
           // 如果当前页面是在用户管理页面，则重新请求列表
-          dispatch.sysUsers.roleList();
+          dispatch.sysUser.usersList();
         }
         dispatch.usersModal.updateState({
           isVisible: false
@@ -57,7 +61,7 @@ const store = {
         Notify.success({ description: msg || '编辑成功成功' });
         if (isForm) {
           // 如果当前页面是在用户管理页面，则重新请求列表
-          dispatch.sysUsers.usersList();
+          dispatch.sysUser.usersList();
         }
         dispatch.usersModal.updateState({
           isVisible: false,

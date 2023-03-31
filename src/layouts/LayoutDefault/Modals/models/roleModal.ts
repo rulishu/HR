@@ -48,38 +48,38 @@ const store = {
         dispatch.roleModal.updateState(obj);
       }
     },
-    // async roleAdd(payload: KktproKeys, state: any) {
-    //   const { roleModal } = state;
-    //   const { isForm } = roleModal;
-    //   const { code, msg } = await roleAdd(payload);
-    //   if (code === 200) {
-    //     Notify.success({ description: msg || '添加成功' });
-    //     if (isForm) {
-    //       // 如果当前页面是在角色管理页面，则重新请求列表
-    //       dispatch.sysRole.roleList();
-    //     }
-    //     dispatch.roleModal.updateState({
-    //       isVisible: false,
-    //       checkRouteMenuIds: []
-    //     });
-    //   }
-    // },
-    // async roleUpdate(payload: KktproKeys, state: any) {
-    //   const { roleModal } = state;
-    //   const { isForm } = roleModal;
-    //   const { code, msg } = await roleUpdate(payload);
-    //   if (code === 200) {
-    //     Notify.success({ description: msg || '编辑成功成功' });
-    //     if (isForm) {
-    //       // 如果当前页面是在角色管理页面，则重新请求列表
-    //       dispatch.sysRole.roleList();
-    //     }
-    //     dispatch.roleModal.updateState({
-    //       isVisible: false,
-    //       checkRouteMenuIds: []
-    //     });
-    //   }
-    // },
+    async roleAdd(payload: KktproKeys, state: any) {
+      const { roleModal } = state;
+      const { isForm } = roleModal;
+      const { code, msg } = await roleAdd(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '添加成功' });
+        if (isForm) {
+          // 如果当前页面是在角色管理页面，则重新请求列表
+          dispatch.sysRole.roleList();
+        }
+        dispatch.roleModal.updateState({
+          isVisible: false,
+          checkRouteMenuIds: []
+        });
+      }
+    },
+    async roleUpdate(payload: KktproKeys, state: any) {
+      const { roleModal } = state;
+      const { isForm } = roleModal;
+      const { code, msg } = await roleUpdate(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '编辑成功成功' });
+        if (isForm) {
+          // 如果当前页面是在角色管理页面，则重新请求列表
+          dispatch.sysRole.roleList();
+        }
+        dispatch.roleModal.updateState({
+          isVisible: false,
+          checkRouteMenuIds: []
+        });
+      }
+    },
   })
 };
 

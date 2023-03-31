@@ -1,5 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
-import { Button } from "uiw";
+import { Button, Tag } from "uiw";
 
 interface columnsProps {
   onEdit?: (rowData: KktproKeys) => void;
@@ -12,11 +12,22 @@ export const columns = ({
 }: columnsProps) => [
   {
     title: "用户名",
+    key: "username",
+  },
+  {
+    title: "昵称",
     key: "name",
   },
   {
-    title: "有效性",
-    key: "name2",
+    title: "禁用状态",
+    key: "locked",
+    with: 100,
+    render: (text: any) => (
+      <Tag
+        title={text === 1 ? "正常" : "停用"}
+        color={text === 1 ? "#28a745" : "#dc3545"}
+      />
+    ),
   },
   {
     title: "备注",
