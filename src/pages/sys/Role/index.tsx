@@ -3,6 +3,7 @@ import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Divider } from 'uiw';
 import Search from './Search';
 import Table from './Table';
+import Modals from './Modals';
 
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -20,6 +21,7 @@ const Page = () => {
       <Search />
       <Divider />
       <Table />
+      <Modals />
     </Fragment>
   )
 }

@@ -18,18 +18,25 @@ function Modals() {
   const form = useForm();
 
   //提交按钮
-  const onAddSubmit = async (current: object) => {
+  const onAddSubmit = async (current: any) => {
+    const roleIds = current.roleIds;
+    const locked = current.locked === 'true' ? 1 : 2
+    const params = {
+      ...current,
+      roleIds: !Array.isArray(roleIds) ? [roleIds] : roleIds,
+      locked
+    }
     if (type === "add") {
       dispatch({
         type: "usersModal/usersAdd",
-        payload: current
+        payload: params
       });
     } else {
       dispatch({
         type: "usersModal/usersUpdate",
         payload: {
-          id: (detailsData as any)?.userId,
-          ...current
+          userId: (detailsData as any)?.userId,
+          ...params
         },
       });
     }
@@ -49,7 +56,7 @@ function Modals() {
 
   return (
     <Drawer
-      title={type === "add" ? "新增用户" : "编辑用户"}
+      title={type === "add" ? "新增账号" : "编辑账号"}
       size={700}
       isOpen={isVisible}
       onClose={() => onClosed()}

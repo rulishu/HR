@@ -60,10 +60,10 @@
             "icon": "setting-o",
             "children": [
               {
-                "path": "/admin/sys/organization-structure",
+                "path": "/admin/sys/organization",
                 "name": "组织机构管理",
                 "icon": "document",
-                "element": "@/pages/sys/OrganizationStructure"
+                "element": "@/pages/sys/Organization"
               },
               {
                 "path": "/admin/sys/auth",
