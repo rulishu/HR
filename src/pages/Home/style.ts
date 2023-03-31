@@ -3,7 +3,7 @@ import bg from './assets/wallpaper.webp';
 
 export const Wallpaper = styled.div`
   position: absolute;
-  background-image: url(${bg});
+  /* background-image: url(${bg}); */
   background-color: #32a2f6;
   background-position: 50%;
   background-size: cover;
