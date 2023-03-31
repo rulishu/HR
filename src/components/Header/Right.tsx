@@ -50,7 +50,7 @@ const Right = () => {
         })}
       >
         <HoverDiv onClick={() => setOpen1(true)}>
-          <CircleIcon type="appstore" style={{ fontSize: 20 }} />
+          <CircleIcon type="appstore-o" />
         </HoverDiv>
       </Popover>
       <Popover
@@ -69,6 +69,9 @@ const Right = () => {
           <CircleIcon type="plus-circle-o" />
         </HoverDiv>
       </Popover>
+      <HoverDiv>
+          <CircleIcon type="bell" />
+        </HoverDiv>
       <Popover
         trigger="click"
         placement="bottomRight"

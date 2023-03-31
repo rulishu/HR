@@ -23,8 +23,8 @@ export const HoverDiv = styled.div`
 `
 
 export const CircleIcon = styled(Icon)`
-  color: #999;
-  font-size: 24px;
+  color: #333;
+  /* font-size: 24px; */
 `
 
 export const UserAvatar = styled(Avatar)`

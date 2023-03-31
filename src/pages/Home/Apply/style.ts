@@ -31,8 +31,3 @@ export const ApplyItem = styled(Link)`
 export const ColItem = styled(Col)`
   padding: 10px 0;
 `;
-
-export const TimeItem = styled.div`
-  font-size: 18px;
-  color: #333;
-`;

@@ -30,7 +30,7 @@ export const Body = styled.div`
 
 export const BodyWraper = styled.div`
   /* max-width: 1200px; */
-  margin: 20px;
+  margin: 0 40px;
   color: #333;
   padding-bottom: 50px;
 `;
