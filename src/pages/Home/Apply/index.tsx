@@ -1,5 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
-import { Row, Col } from "uiw";
+import { Row } from "uiw";
 import { ApplyItem, ColItem } from './style';
 import { ReactComponent as Svg1 } from './assets/1.svg';
 import { ReactComponent as Svg2 } from './assets/2.svg';

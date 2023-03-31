@@ -1,6 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
 import { Menu, Card } from "uiw";
-import { Apply } from '@/components';
 
 type Type = 'add' | 'apply' | 'user';
 
@@ -33,7 +32,7 @@ export const popoverConent = ({ type, username, callback }: PopoverConentProps) 
   }
   if (type === 'apply') {
     return (
-      <Apply size={40} style={{ width: 300, height: 200 }} />
+      <div>apply</div>
     )
   }
 };
