@@ -34,8 +34,8 @@ const route = {
      * 新增机构
     */
     async onAdd(payload: KktproKeys, state: any) {
-      const { usersModal } = state;
-      const { isForm } = usersModal;
+      const { sysOrganizationModal } = state;
+      const { isForm } = sysOrganizationModal;
       const { code, msg } = await add(payload);
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
@@ -52,8 +52,8 @@ const route = {
      * 编辑机构
     */
     async onEdit(payload: KktproKeys, state: any) {
-      const { usersModal } = state;
-      const { isForm } = usersModal;
+      const { sysOrganizationModal } = state;
+      const { isForm } = sysOrganizationModal;
       const { code, msg } = await edit(payload);
       if (code === 200) {
         Notify.success({ description: msg || '编辑成功' });
