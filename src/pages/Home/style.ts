@@ -29,8 +29,8 @@ export const Body = styled.div`
 `;
 
 export const BodyWraper = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+  /* max-width: 1200px; */
+  margin: 20px;
   color: #333;
   padding-bottom: 50px;
 `;

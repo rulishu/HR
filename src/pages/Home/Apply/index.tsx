@@ -1,6 +1,6 @@
 import { KktproKeys } from '@kkt/pro';
-import { Row, Divider } from "uiw";
-import { ApplyItem, ColItem } from './style';
+import { Row, Icon, Col, Card, Empty, Badge, Divider } from "uiw";
+import { ApplyItem, ColItem, TimeItem } from './style';
 import { ReactComponent as Svg1 } from './assets/1.svg';
 import { ReactComponent as Svg2 } from './assets/2.svg';
 import { ReactComponent as Svg3 } from './assets/3.svg';
@@ -47,48 +47,81 @@ const Modules = (props: AppleProps) => {
 
   return (
     <div style={style}>
-      <div>
-        <h3>置顶应用</h3>
-        <Row gutter={20} >
-          {appleData(size).map((item: KktproKeys, index: number) => (
-            <ColItem span="4" key={index}>
-              <ApplyItem to={item.path}>
-                {item.icon}
-                <span>{item.text}</span>
-              </ApplyItem>
-            </ColItem>
-          ))}
-        </Row>
-        <Divider />
-      </div>
-      <div>
-        <h3>全员常用</h3>
-        <Row gutter={20} >
-          {appleData2(size).map((item: KktproKeys, index: number) => (
-            <ColItem span="4" key={index}>
-              <ApplyItem to={item.path}>
-                {item.icon}
-                <span>{item.text}</span>
-              </ApplyItem>
-            </ColItem>
-          ))}
-        </Row>
-        <Divider />
-      </div>
-      <div>
-        <h3>全部应用</h3>
-        <Row gutter={20} >
-          {appleData(size).map((item: KktproKeys, index: number) => (
-            <ColItem span="4" key={index}>
-              <ApplyItem to={item.path}>
-                {item.icon}
-                <span>{item.text}</span>
-              </ApplyItem>
-            </ColItem>
-          ))}
-        </Row>
-        <Divider />
-      </div>
+      <Row gutter={10}>
+        <Col span="18">
+          <Card title="置顶应用" noHover style={{ marginBottom: 10 }} >
+            <Row gutter={20} >
+              {appleData(size).map((item: KktproKeys, index: number) => (
+                <ColItem span="4" key={index}>
+                  <ApplyItem to={item.path}>
+                    {item.icon}
+                    <span>{item.text}</span>
+                  </ApplyItem>
+                </ColItem>
+              ))}
+            </Row>
+          </Card>
+
+          <Card title="全员常用" noHover style={{ marginBottom: 10 }}>
+            <Row gutter={20} >
+              {appleData2(size).map((item: KktproKeys, index: number) => (
+                <ColItem span="4" key={index}>
+                  <ApplyItem to={item.path}>
+                    {item.icon}
+                    <span>{item.text}</span>
+                  </ApplyItem>
+                </ColItem>
+              ))}
+            </Row>
+          </Card>
+          <Card title="全部应用" noHover style={{ marginBottom: 10 }} >
+            <Row gutter={20} >
+              {appleData(size).map((item: KktproKeys, index: number) => (
+                <ColItem span="4" key={index}>
+                  <ApplyItem to={item.path}>
+                    {item.icon}
+                    <span>{item.text}</span>
+                  </ApplyItem>
+                </ColItem>
+              ))}
+            </Row>
+          </Card>
+
+        </Col>
+        <Col span="6">
+          <Card style={{ marginBottom: 10 }}
+            title={
+            <div style={{display:'flex'}}>
+              <Icon type="check-square" style={{ fontSize: '20px', color: '#2d69f6', marginRight:10 }} />
+              <span>待办<Badge count={5} style={{marginLeft:10}}/></span>
+              <Icon type="right" style={{ color: '#c1c1c1', fontWeight: 'bold' }} />
+            </div>}
+            footer={<div style={{textAlign:'center',color: '#2d69f6', fontSize: 18,fontWeight:600}}>前往</div>}>
+              <div style={{fontSize:12,fontWeight:500}}>9月考勤异常待处理</div>
+              <div style={{color:'#707374'}}>迟到：2次</div>
+          </Card>
+          <Card
+            title={
+            <div style={{display:'flex'}}>
+              <Icon type="environment" style={{ fontSize: '22px', color: '#2d69f6', marginRight:10 }} />
+              <span>考勤打卡</span>
+              <Icon type="right" style={{ color: '#c1c1c1', fontWeight: 'bold' }} />
+            </div>}
+            footer={<div style={{textAlign:'center',color: '#2d69f6', fontSize: 18,fontWeight:600}}>去处理</div>}>
+              <div style={{color:'#707374',marginBottom:10, fontWeight:500}}>待处理异常</div>
+              <Row justify="center" align="middle"
+              style={{background:'#f6f7fa',borderRadius: 10, textAlign:'center', color:'#707374',padding:10, fontWeight:500}}
+              >
+      <Col>缺卡<TimeItem>0</TimeItem></Col>
+      <Divider type="vertical" style={{height:50}} />
+      <Col>迟到<TimeItem>0</TimeItem></Col>
+      <Divider type="vertical" style={{height:50}} />
+      <Col>早退<TimeItem>0</TimeItem></Col>
+    </Row>
+          </Card>
+        </Col>
+      </Row>
+
     </div>
 
   )
