@@ -69,7 +69,7 @@ const store = {
       const { isForm } = roleModal;
       const { code, msg } = await roleUpdate(payload);
       if (code === 200) {
-        Notify.success({ description: msg || '编辑成功成功' });
+        Notify.success({ description: msg || '编辑成功' });
         if (isForm) {
           // 如果当前页面是在角色管理页面，则重新请求列表
           dispatch.sysRole.roleList();

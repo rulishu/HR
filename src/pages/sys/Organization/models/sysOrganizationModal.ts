@@ -1,5 +1,5 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { add } from '@/servers/sys/organization';
+import { add, edit } from '@/servers/sys/organization';
 import { Notify } from 'uiw';
 
 const route = {
@@ -39,6 +39,24 @@ const route = {
       const { code, msg } = await add(payload);
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
+        if (isForm) {
+          // 如果当前页面是在用户管理页面，则重新请求列表
+          dispatch.sysOrganization.selectList();
+        }
+        dispatch.sysOrganizationModal.updateState({
+          isVisible: false
+        });
+      }
+    },
+    /**
+     * 编辑机构
+    */
+    async onEdit(payload: KktproKeys, state: any) {
+      const { usersModal } = state;
+      const { isForm } = usersModal;
+      const { code, msg } = await edit(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '编辑成功' });
         if (isForm) {
           // 如果当前页面是在用户管理页面，则重新请求列表
           dispatch.sysOrganization.selectList();

@@ -24,25 +24,23 @@ const route = {
      * 获取列表
     */
     async selectList(payload?: KktproKeys, state?: any) {
-      const { sysUser } = state;
-      const { page, pageSize } = sysUser;
-      const params: KktproKeys = {
-        page,
-        pageSize,
-        ...payload
-      }
-      const { code, data } = await selectList(params);
+      const { code, data } = await selectList();
       if (code === 200 && data) {
-        const { list, total } = data;
-        const newData = (list || []).map((item: KktproKeys) => ({
-          ...item,
-          password: undefined,
-          roleIds: item.roleIds.length > 0 && item.roleIds[0]
-        }))
-        dispatch.sysUser.updateState({
-          dataList: newData,
-          total,
-          page: params.page
+        const newData = (data || []).map((item: KktproKeys) => {
+          const newItem: any = {
+            ...item,
+            type: 'company'
+          };
+          if (Array.isArray(item.department) && item.department.length > 0) {
+            newItem.children = item.department.map((item2: KktproKeys) => ({
+              ...item2,
+              companyName: item2.departmentName,
+            }))
+          }
+          return newItem;
+        })
+        dispatch.sysOrganization.updateState({
+          dataList: newData
         });
       }
     },
@@ -50,15 +48,15 @@ const route = {
      * 删除
     */
     async deletes(_?: any, state?: any) {
-      const { sysUser } = state;
-      const { detailsData = {} } = sysUser;
+      const { sysOrganization } = state;
+      const { detailsData = {} } = sysOrganization;
       const { code, msg } = await deletes({
-        id: detailsData.userId
+        id: detailsData.id
       });
       if (code === 200) {
         Notify.success({ description: msg || '删除成功' });
-        dispatch.sysUser.hideModal();
-        dispatch.sysUser.usersList();
+        dispatch.sysOrganization.hideModal();
+        dispatch.sysOrganization.selectList();
       }
     },
   })

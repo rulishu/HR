@@ -25,13 +25,13 @@ function Modals() {
       });
     } else {
       // 编辑
-      // dispatch({
-      //   type: "sysOrganizationModal/usersUpdate",
-      //   payload: {
-      //     userId: (detailsData as any)?.userId,
-      //     ...params
-      //   },
-      // });
+      dispatch({
+        type: "sysOrganizationModal/onEdit",
+        payload: {
+          id: (detailsData as any)?.id,
+          ...params
+        },
+      });
     }
   };
 

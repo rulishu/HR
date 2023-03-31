@@ -2,62 +2,53 @@ import { KktproKeys } from '@kkt/pro';
 import { Button, Checkbox } from "uiw";
 
 interface columnsProps {
-  onCheck?: (rowData: KktproKeys, e: KktproKeys) => void;
-  onRole?: (data: KktproKeys) => void;
-  onEdit?: (rowData: KktproKeys, e: KktproKeys) => void;
+  onEdit?: (rowData: KktproKeys) => void;
+  onDelete?: (rowData: KktproKeys) => void;
 }
 
 export const columns = ({
-  onCheck,
-  onRole,
-  onEdit
+  onEdit,
+  onDelete
 }: columnsProps) => [
   {
-    key: "checked",
-    render: (text: any, key: any, rowData: any) => {
-      return (
-        <Checkbox
-          checked={rowData.checked}
-          onClick={(e) => {
-            onCheck?.(rowData, e);
-          }}
-        />
-      );
-    },
+    title: "机构/部门",
+    key: "companyName"
   },
   {
-    title: "机构名称",
-    key: "code",
-    render: (text: any, key: any, rowData: any) => (
-      <Button
-        type="link"
-        onClick={() => {
-          onRole?.(rowData);
-        }}
-      >
-        {text}
-      </Button>
-    ),
-  },
-  {
-    title: "备注",
-    key: "tip",
+    title: "机构地址",
+    key: "companyAddress",
   },
   {
     title: "操作",
     key: "edit",
-    width: 80,
+    width: 220,
     render: (text: any, key: any, rowData: any) => {
       return (
-        <Button
-          icon="edit"
-          type="primary"
-          onClick={(e) => {
-            onEdit?.(rowData, e);
-          }}
-        >
-          编辑
-        </Button>
+        <>
+          <Button
+            icon="edit"
+            type="primary"
+            onClick={(e) => onEdit?.(rowData)}
+          >
+            编辑
+          </Button>
+          {rowData.type === 'company' && (
+            <Button
+              icon="plus"
+              type="success"
+              onClick={() => onDelete?.(rowData)}
+            >
+              部门
+            </Button>
+          )}
+          <Button
+            icon="delete"
+            type="danger"
+            onClick={() => onDelete?.(rowData)}
+          >
+            删除
+          </Button>
+        </>
       );
     },
   },

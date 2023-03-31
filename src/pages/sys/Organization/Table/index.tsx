@@ -33,7 +33,9 @@ const Page = () => {
         </Button>
       </div>
       <Table
-        columns={columns({})}
+        columns={columns({
+          onEdit: (data) => onModals('edit', data)
+        })}
         data={dataList}
         empty={<Empty />}
       />

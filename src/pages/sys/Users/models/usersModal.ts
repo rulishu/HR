@@ -58,7 +58,7 @@ const store = {
       const { isForm } = usersModal;
       const { code, msg } = await usersUpdate(payload);
       if (code === 200) {
-        Notify.success({ description: msg || '编辑成功成功' });
+        Notify.success({ description: msg || '编辑成功' });
         if (isForm) {
           // 如果当前页面是在用户管理页面，则重新请求列表
           dispatch.sysUser.usersList();
