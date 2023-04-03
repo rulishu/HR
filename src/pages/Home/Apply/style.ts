@@ -45,10 +45,13 @@ export const ColItem = styled.div`
   @media screen and (min-width: 601px) and (max-width: 900px) {
     width: 33.33%;
   }
-  @media screen and (min-width: 901px) and (max-width: 1200px) {
+  @media screen and (min-width: 901px) and (max-width: 1000px) {
     width: 25%;
   }
-  @media (min-width: 1201px) {
+  @media screen and (min-width: 1001px) and (max-width: 1300px) {
+    width: 20%;
+  }
+  @media (min-width: 1301px) {
     width: 16.66%;
   }
 `;

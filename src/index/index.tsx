@@ -5,6 +5,10 @@ import { SWRConfig } from "swr";
 import { getAuthRoutes } from './utils';
 import './response';
 
+const req = (require as any).context('@/icons', true, /.svg$/)
+const requireAll = (requireContext: any) => requireContext.keys().map(requireContext);
+requireAll(req);
+
 interface RoutesOutletElementProps {
   children: React.ReactNode;
   routes: KktproRoutesProps[];

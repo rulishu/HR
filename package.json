@@ -16,14 +16,14 @@
     "@uiw-admin/exceptions": "~5.3.21",
     "@uiw-admin/user-login": "^6.1.0",
     "@uiw-admin/utils": "^6.1.0",
-    "echarts": "^5.4.2",
     "styled-components": "^5.3.6",
     "swr": "1.3.0",
     "uiw": "4.21.25"
   },
   "devDependencies": {
     "@kkt/pro": "^1.0.10",
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "svg-sprite-loader": "^6.0.11"
   },
   "eslintConfig": {
     "extends": [
