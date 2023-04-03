@@ -4,26 +4,28 @@ import { Button } from "uiw";
 interface columnsProps {
   onEdit?: (rowData: KktproKeys) => void;
   onDelete?: (rowData: KktproKeys) => void;
-  onAddDepartment?: (rowData: KktproKeys) => void;
 }
 
 export const columns = ({
   onEdit,
-  onDelete,
-  onAddDepartment
+  onDelete
 }: columnsProps) => [
   {
-    title: "机构/部门",
-    key: "companyName"
+    title: "项目组名称",
+    key: "groupName"
   },
   {
-    title: "机构地址",
-    key: "companyAddress",
+    title: "机构名称",
+    key: "companyName",
+  },
+  {
+    title: "备注",
+    key: "remark",
   },
   {
     title: "操作",
     key: "edit",
-    width: 220,
+    width: 160,
     render: (text: any, key: any, rowData: any) => {
       return (
         <>
@@ -34,15 +36,6 @@ export const columns = ({
           >
             编辑
           </Button>
-          {rowData.type === 'company' && (
-            <Button
-              icon="plus"
-              type="success"
-              onClick={() => onAddDepartment?.(rowData)}
-            >
-              部门
-            </Button>
-          )}
           <Button
             icon="delete"
             type="danger"

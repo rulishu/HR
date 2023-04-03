@@ -1,20 +1,31 @@
-import { useDispatch, Dispatch  } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, RootState, KktproKeys  } from '@kkt/pro';
 import { ProForm } from "@uiw-admin/components";
 
 //搜索表单
-const formSearchList = [
+const formSearchList = ({ companyList }: any) => [
+  {
+    label: "项目组",
+    key: "groupName",
+    widget: "input",
+  },
   {
     label: "机构名称",
     key: "companyName",
-    widget: "input",
+    widget: "select",
+    option: companyList.map((item: KktproKeys) => ({ label: item.companyName, value: item.companyName })),
   },
 ];
 
 const Search = () => {
+  const {
+    sysItemsModal: {
+      companyList
+    },
+  } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   const onScreenSubmit = (current: object) => {
-    dispatch.sysOrganization.selectList({ ...current });
+    dispatch.sysItems.selectList({ ...current });
   }
 
   return (
@@ -29,7 +40,7 @@ const Search = () => {
         noHover: true,
       }}
       onSubmit={(_, current) => onScreenSubmit(current)}
-      formDatas={formSearchList}
+      formDatas={formSearchList({ companyList })}
     />
   )
 }

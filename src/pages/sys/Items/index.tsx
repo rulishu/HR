@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from 'react';
-import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, RootState, KktproKeys } from '@kkt/pro';
 import { Divider } from 'uiw';
 import Search from './Search';
 import Table from './Table';
@@ -9,11 +9,21 @@ const Page = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
     global: { userData },
+    sysItemsModal: { companyList = [] },
   } = useSelector((state: RootState) => state);
 
   useEffect(() => {
     if (userData) {
-      dispatch.sysOrganization.selectList();
+      dispatch.sysItems.selectList();
+      if (companyList.length === 0) {
+        dispatch.sysOrganization.selectList({
+          callback: (data: KktproKeys) => {
+            dispatch.sysItemsModal.updateState({
+              companyList: data
+            });
+          }
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData])

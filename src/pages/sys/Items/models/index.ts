@@ -1,10 +1,12 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes, departmentDelete } from '@/servers/sys/organization';
+import { selectList, deletes } from '@/servers/sys/items';
 
 const route = {
-  name: "sysOrganization",
+  name: "sysItems",
   state: {
+    page: 1,
+    pageSize: 20,
     dataList: [],
     isDelete: false,
   },
@@ -23,59 +25,36 @@ const route = {
      * 获取列表
     */
     async selectList(payload?: KktproKeys, state?: any) {
-      const { code, data } = await selectList(payload);
+      const { sysItems } = state;
+      const { page, pageSize } = sysItems;
+      const { callback, ...other } = payload || {};
+      const params: KktproKeys = {
+        page,
+        pageSize,
+        ...other
+      }
+      const { code, data } = await selectList(params);
       if (code === 200 && data) {
-        const newData = (data || []).map((item: KktproKeys) => {
-          const newItem: any = {
-            ...item,
-            type: 'company'
-          };
-          if (Array.isArray(item.department) && item.department.length > 0) {
-            newItem.children = item.department.map((item2: KktproKeys) => ({
-              ...item2,
-              type: 'department',
-              company: item.companyName,
-              companyName: item2.departmentName,
-              companyAddress: item2.departmentDesc
-            }))
-          }
-          return newItem;
-        })
-        dispatch.sysOrganization.updateState({
-          dataList: newData
+        dispatch.sysItems.updateState({
+          dataList: data.list || []
         });
       }
     },
     /**
-     * 删除公司
+     * 删除项目组
     */
     async deletes(_?: any, state?: any) {
-      const { sysOrganizationModal } = state;
-      const { detailsData = {} } = sysOrganizationModal;
+      const { sysItemsModal } = state;
+      const { detailsData = {} } = sysItemsModal;
       const { code, msg } = await deletes({
         id: detailsData.id
       });
       if (code === 200) {
         Notify.success({ description: msg || '删除成功' });
-        dispatch.sysOrganization.hideModal();
-        dispatch.sysOrganization.selectList();
+        dispatch.sysItems.hideModal();
+        dispatch.sysItems.selectList();
       }
-    },
-    /**
-     * 删除部门
-    */
-    async departmentDelete(_?: any, state?: any) {
-      const { sysOrganizationModal } = state;
-      const { detailsData = {} } = sysOrganizationModal;
-      const { code, msg } = await departmentDelete({
-        id: detailsData.id
-      });
-      if (code === 200) {
-        Notify.success({ description: msg || '删除成功' });
-        dispatch.sysOrganization.hideModal();
-        dispatch.sysOrganization.selectList();
-      }
-    },
+    }
   })
 };
 

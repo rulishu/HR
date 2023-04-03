@@ -5,10 +5,11 @@ import { formList, ModalTitle } from './utils';
 
 function Modals() {
   const {
-    sysOrganizationModal: {
+    sysItemsModal: {
       isVisible,
       detailsData,
-      type
+      type,
+      companyList
     },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
@@ -20,13 +21,13 @@ function Modals() {
     }
     if (type === "add") {
       dispatch({
-        type: "sysOrganizationModal/onAdd",
+        type: "sysItemsModal/onAdd",
         payload: params
       });
     } else if (type === 'edit') {
       // 编辑
       dispatch({
-        type: "sysOrganizationModal/onEdit",
+        type: "sysItemsModal/onEdit",
         payload: {
           id: (detailsData as any)?.id,
           ...params
@@ -34,7 +35,7 @@ function Modals() {
       });
     } else if (type === "departmentAdd") {
       dispatch({
-        type: "sysOrganizationModal/onDepartmentAdd",
+        type: "sysItemsModal/onDepartmentAdd",
         payload: {
           companyId: (detailsData as any)?.id,
           ...params
@@ -43,7 +44,7 @@ function Modals() {
     } else if (type === 'departmentEdit') {
       // 编辑
       dispatch({
-        type: "sysOrganizationModal/onDepartmentEdit",
+        type: "sysItemsModal/onDepartmentEdit",
         payload: {
           id: (detailsData as any)?.id,
           ...params
@@ -55,7 +56,7 @@ function Modals() {
   //关闭弹窗
   const onClosed = () => {
     dispatch({
-      type: "sysOrganizationModal/updateState",
+      type: "sysItemsModal/updateState",
       payload: { isVisible: false },
     });
   };
@@ -75,7 +76,7 @@ function Modals() {
         saveButtonProps={{ type: "primary" }}
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
-        formDatas={formList({ type, detailsData })}
+        formDatas={formList({ type, detailsData, companyList })}
       />
     </Drawer>
   );

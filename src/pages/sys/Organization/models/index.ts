@@ -23,7 +23,8 @@ const route = {
      * 获取列表
     */
     async selectList(payload?: KktproKeys, state?: any) {
-      const { code, data } = await selectList(payload);
+      const { callback, ...other} = payload || {}
+      const { code, data } = await selectList(other);
       if (code === 200 && data) {
         const newData = (data || []).map((item: KktproKeys) => {
           const newItem: any = {
@@ -41,9 +42,17 @@ const route = {
           }
           return newItem;
         })
-        dispatch.sysOrganization.updateState({
-          dataList: newData
-        });
+        if (callback) {
+          callback(newData)
+        } else {
+          dispatch.sysOrganization.updateState({
+            dataList: newData
+          });
+          // 为了避免项目管理管理弹层里面的路由数据不是最新，获取到数据后，存储一份到项目管理弹层modal里面
+          dispatch.sysItemsModal.updateState({
+            companyList: newData
+          });
+        }
       }
     },
     /**

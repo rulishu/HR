@@ -44,12 +44,10 @@ export const formList = ({
     required: formObj?.password,
     rules: [
       { 
-        // validator: (value = '') => {
-        //   console.log(44444, value)
-        //   if(value &&  value.length < 5) return false
-        //   return true
-        // },
-        pattern: new RegExp(/^.{0,5}$/),
+        validator: (value = '') => {
+          if(value &&  value.length < 6) return false
+          return true
+        },
         message: "密码不能少于6位数"
       },
     ],

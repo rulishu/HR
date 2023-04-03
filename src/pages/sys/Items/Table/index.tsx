@@ -4,37 +4,31 @@ import { columns } from './utils';
 
 const Page = () => {
   const {
-    sysOrganization: { dataList, isDelete },
-    sysOrganizationModal: { detailsData }
+    sysItems: { dataList, isDelete },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
-  // 新增 / 编辑 / 新增部门 / 编辑部门
-  const onModals = (type: 'add' | 'edit' | 'departmentAdd' | 'departmentEdit', data?: any) => {
-    const _type = data.type === 'department' ? 'departmentEdit' : type;
-    dispatch.sysOrganizationModal.onModals({ type: _type, data, isForm: true });
+  // 新增 / 编辑
+  const onModals = (type: 'add' | 'edit', data?: any) => {
+    dispatch.sysItemsModal.onModals({ type, data, isForm: true });
   }
 
   // 删除
   const onDelete = (data: any) => {
-    dispatch.sysOrganization.updateState({
+    dispatch.sysItems.updateState({
       isDelete: true
     });
-    dispatch.sysOrganizationModal.updateState({
+    dispatch.sysItemsModal.updateState({
       detailsData: data
     });
   }
 
   const onDelClosed = () => {
-    dispatch.sysOrganization.hideModal();
+    dispatch.sysItems.hideModal();
   }
 
   const onConfirm = () => {
-    if ((detailsData as any).type === 'department') {
-      dispatch.sysOrganization.departmentDelete();
-    } else {
-      dispatch.sysOrganization.deletes();
-    }
+    dispatch.sysItems.deletes();
   }
 
   return (
@@ -48,7 +42,6 @@ const Page = () => {
         columns={columns({
           onEdit: (data) => onModals('edit', data),
           onDelete,
-          onAddDepartment: (data) => onModals('departmentAdd', data),
         })}
         data={dataList}
         empty={<Empty />}

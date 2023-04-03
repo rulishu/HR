@@ -49,7 +49,6 @@ const Modules = (props: AppleProps) => {
         </div>
       ))}
     </div>
-
   )
 }
 

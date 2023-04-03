@@ -2,66 +2,52 @@ import { KktproKeys } from '@kkt/pro';
 interface FormListProps {
   type?: string,
   detailsData?: any;
+  companyList?: KktproKeys[]
 }
 
 export const ModalTitle: KktproKeys = {
-  add: '新增组织机构',
-  edit: '编辑组织机构',
-  departmentAdd: '添加部门',
-  departmentEdit: '编辑部门'
+  add: '新增项目组',
+  edit: '编辑项目组',
 }
 
 export const formList = ({
   type,
   detailsData,
+  companyList = []
 }: FormListProps) => {
-  const isDepartment = type ? ['departmentAdd', 'departmentEdit'].includes(type) : false
-  const companyName = isDepartment ? detailsData?.company : detailsData?.companyName;
-  console.log(1111, companyName)
   return [
     {
-      label: "公司名称",
-      key: "companyName",
+      label: "项目组名称",
+      key: "groupName",
       widget: "input",
       required: true,
-      initialValue: companyName,
-      disabled: isDepartment,
+      initialValue: (detailsData as any)?.groupName,
       span: "24",
       readSpan: 1,
       rules: [
-        { required: true, message: '请输入公司名称' },
+        { required: true, message: '请输入项目组名称' },
       ],
     },
     {
-      label: "公司地址",
-      key: "companyAddress",
-      widget: "textarea",
-      initialValue: (detailsData as any)?.companyAddress,
-      hide: isDepartment,
+      label: "选择机构",
+      key: "companyId",
+      widget: "select",
+      initialValue: (detailsData as any)?.companyId,
+      option: companyList.map((item: KktproKeys) => ({ label: item.companyName, value: item.id })),
       span: "24",
       readSpan: 1,
-    },
-    {
-      label: "部门名称",
-      key: "departmentName",
-      widget: "input",
-      initialValue: (detailsData as any)?.departmentName,
-      hide: !isDepartment,
-      required:true,
+      required: true,
       rules: [
-        { required: true, message: '请输入部门名称' },
+        { required: true, message: '请选择机构' },
       ],
-      span: "24",
-      readSpan: 1,
     },
     {
       label: "备注",
-      key: "departmentDesc",
+      key: "remark",
       widget: "textarea",
-      initialValue: (detailsData as any)?.departmentDesc,
-      hide: !isDepartment,
+      initialValue: (detailsData as any)?.remark,
       span: "24",
       readSpan: 1,
-    }
+    },
   ]
 }

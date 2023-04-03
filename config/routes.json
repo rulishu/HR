@@ -72,12 +72,6 @@
                 "element": "@/pages/sys/Items"
               },
               {
-                "path": "/admin/sys/auth",
-                "name": "权限管理",
-                "icon": "eye-o",
-                "element": "@/pages/sys/Auth"
-              },
-              {
                 "path": "/admin/sys/users",
                 "name": "账号管理",
                 "icon": "user",
