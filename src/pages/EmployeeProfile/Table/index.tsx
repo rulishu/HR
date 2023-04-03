@@ -1,9 +1,19 @@
+import { useDispatch, Dispatch } from '@kkt/pro';
 import { Button, Table, Pagination, Empty } from "uiw";
 import { columns } from './utils';
 
 const Page = () => {
+  const dispatch = useDispatch<Dispatch>();
   // 新增
-  const addModal = () => {}
+  const addModal = () => {
+    dispatch({
+      type: 'employeeProfile/updateState',
+      payload: {
+        type: 'add',
+        isVisible: true,
+      },
+    })
+  }
 
   // 删除
   const onDelete = () => {}

@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { Divider } from 'uiw';
 import Search from './Search';
 import Table from './Table';
+import Modals from './Modals'
 
 const Page = () => {
   return (
@@ -9,6 +10,7 @@ const Page = () => {
       <Search />
       <Divider />
       <Table />
+      <Modals />
     </Fragment>
   )
 }

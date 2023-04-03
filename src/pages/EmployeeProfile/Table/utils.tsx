@@ -52,17 +52,47 @@ export const columns = ({
     key: "tip",
   },
   {
-    title: "工作经历",
+    title: "手机号",
+    key: "tip",
+  },
+  {
+    title: "邮箱",
+    key: "tip",
+  },
+  {
+    title: "入职时间",
+    key: "tip",
+  },
+  {
+    title: "证件类型",
+    key: "tip",
+  },
+  {
+    title: "证件号码",
+    key: "tip",
+  },
+  {
+    title: "身份证地址",
+    key: "tip",
+  },
+  {
+    title: "婚姻状况",
+    key: "tip",
+  },
+  {
+    title: "员工类型",
+    key: "tip",
+  },
+  {
+    title: "员工状态",
     key: "tip",
   },
   {
     title: "学历",
     key: "tip",
   },
-  {
-    title: "薪资",
-    key: "tip",
-  },
+  
+  
   {
     title: "操作",
     key: "edit",
