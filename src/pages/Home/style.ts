@@ -3,7 +3,7 @@ import bg from './assets/wallpaper.webp';
 
 export const Wallpaper = styled.div`
   position: absolute;
-  background-image: url(${bg});
+  /* background-image: url(${bg}); */
   background-color: #32a2f6;
   background-position: 50%;
   background-size: cover;
@@ -29,8 +29,8 @@ export const Body = styled.div`
 `;
 
 export const BodyWraper = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+  /* max-width: 1200px; */
+  margin: 0 40px;
   color: #333;
   padding-bottom: 50px;
 `;

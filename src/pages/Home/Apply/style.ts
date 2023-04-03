@@ -4,23 +4,30 @@ import { Link } from '@kkt/pro';
 
 export const ApplyItem = styled(Link)`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100%;
   cursor: pointer;
   transition: all .5s;
   text-decoration: none;
-  color: #333;
+  color: #495366;
+  /* background: #f2f4f7; */
+  padding: 10px;
   span {
-    margin-top: 5px;
+    padding-left: 15px;
+    max-width: 160px;
+    font-weight: 500;
+    font-size: 15px;
   }
   &:hover {
     transform: scale(1.1);
+    background: #f2f4f7;
+    border-radius: 10px
   }
 `;
 
 
 export const ColItem = styled(Col)`
-  padding: 20px 0;
+  padding: 10px 0;
 `;
