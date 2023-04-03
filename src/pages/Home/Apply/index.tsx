@@ -1,8 +1,8 @@
-import { KktproKeys } from '@kkt/pro';
 import { Divider } from "uiw";
 import { ApplyItem, RowItem, ColItem } from './style';
 import Icons from '@/components/Icons';
 import { menuNewsConfig, menusConfig } from './utils';
+import type { MenuConfigType, MenuAllconfigType } from './utils'
 interface AppleProps {
   title?: string;
   size?: number;
@@ -21,9 +21,9 @@ const Modules = (props: AppleProps) => {
       <div>
         <h3>置顶应用</h3>
         <RowItem >
-          {menuNewsConfig.map((item: KktproKeys, index: number) => (
+          {menuNewsConfig.map((item: MenuConfigType, index: number) => (
             <ColItem key={index}>
-              <ApplyItem to={item.path}>
+              <ApplyItem to={item.path  as string}>
                 <Icons type={item.icon} style={iconStyle} />
                 <span>{item.text}</span>
               </ApplyItem>
@@ -32,13 +32,13 @@ const Modules = (props: AppleProps) => {
         </RowItem>
         <Divider />
       </div>
-      {menusConfig.map((_item: KktproKeys, _index: number) => (
+      {menusConfig.map((_item: MenuAllconfigType, _index: number) => (
         <div key={_index}>
           <h3>{_item.title}</h3>
           <RowItem>
-            {_item.child.map((item: KktproKeys, index: number) => (
+            {_item.child.map((item: MenuConfigType, index: number) => (
               <ColItem key={index}>
-                <ApplyItem to={item.path}>
+                <ApplyItem to={item.path as string}>
                   <Icons type={item.icon} style={iconStyle} />
                   <span>{item.text}</span>
                 </ApplyItem>

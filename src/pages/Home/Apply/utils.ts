@@ -1,10 +1,10 @@
-type MenuConfigType = {
+export type MenuConfigType = {
   text: string;
   icon: string;
   path?: string;
 }
 
-type MenuAllconfigType = {
+export type MenuAllconfigType = {
   title: string;
   child: MenuConfigType[]
 }
