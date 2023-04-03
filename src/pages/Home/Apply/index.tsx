@@ -1,5 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
-import { Row } from "uiw";
+import { Row, Divider } from "uiw";
 import { ApplyItem, ColItem } from './style';
 import { ReactComponent as Svg1 } from './assets/1.svg';
 import { ReactComponent as Svg2 } from './assets/2.svg';
@@ -14,27 +14,48 @@ const appleData = (size: number) => {
     height: size
   }
   return [
-    { text: '员工档案', icon: <Svg1 style={iconStyle} />, path: '/admin/employee-profile'  },
-    { text: '组织机构', icon: <Svg2 style={iconStyle} />, path: '/admin/sys/organization-structure' },
-    { text: '员工考勤', icon: <Svg3 style={iconStyle} />, path: '/admin/employee-attendance' },
-    { text: '员工入职', icon: <Svg4 style={iconStyle} />, path: '/admin/employee-induction', },
-    { text: '员工离职', icon: <Svg5 style={iconStyle} />, path: '/admin/employee-depart' },
-    { text: '培训与发展', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
-    { text: '员工档案', icon: <Svg1 style={iconStyle} />, path: '/admin/employee-profile'  },
-    { text: '组织机构', icon: <Svg2 style={iconStyle} />, path: '/admin/sys/organization-structure' },
-    { text: '员工考勤', icon: <Svg3 style={iconStyle} />, path: '/admin/employee-attendance' },
-    { text: '员工入职', icon: <Svg4 style={iconStyle} />, path: '/admin/employee-induction', },
-    { text: '员工离职', icon: <Svg5 style={iconStyle} />, path: '/admin/employee-depart' },
-    { text: '培训与发展', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
-    { text: '员工档案', icon: <Svg1 style={iconStyle} />, path: '/admin/employee-profile'  },
-    { text: '组织机构', icon: <Svg2 style={iconStyle} />, path: '/admin/sys/organization-structure' },
-    { text: '员工考勤', icon: <Svg3 style={iconStyle} />, path: '/admin/employee-attendance' },
-    { text: '员工入职', icon: <Svg4 style={iconStyle} />, path: '/admin/employee-induction', },
-    { text: '员工离职', icon: <Svg5 style={iconStyle} />, path: '/admin/employee-depart' },
-    { text: '培训与发展', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
+    { text: '员工档案', icon: <Svg1 style={iconStyle} />, path: '/admin/employee-profile' },
+    { text: '考勤管理', icon: <Svg3 style={iconStyle} />, path: '/admin/employee-attendance' },
+    { text: '入职管理', icon: <Svg4 style={iconStyle} />, path: '/admin/employee-induction', },
   ]
 }
+const appleData2 = (size: number) => {
+  const iconStyle: React.CSSProperties = {
+    width: size,
+    height: size
+  }
+  return [
+    { text: '招聘管理', icon: <Svg1 style={iconStyle} />, path: '/admin/employee-profile' },
+    { text: '转正管理', icon: <Svg2 style={iconStyle} />, path: '/admin/sys/organization-structure' },
+    { text: '调岗管理', icon: <Svg3 style={iconStyle} />, path: '/admin/employee-attendance' },
+    { text: '离职管理', icon: <Svg4 style={iconStyle} />, path: '/admin/employee-depart', },
+    { text: '合同管理', icon: <Svg5 style={iconStyle} />, path: '/admin/employee-attendance' },
+    { text: '薪资管理', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
+    { text: '组织机构', icon: <Svg2 style={iconStyle} />, path: '/admin/sys/organization-structure' },
+    { text: '培训与发展', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
 
+  ]
+}
+const appleData3 = (size: number) => {
+  const iconStyle: React.CSSProperties = {
+    width: size,
+    height: size
+  }
+  return [
+    { text: '员工档案', icon: <Svg1 style={iconStyle} />, path: '/admin/employee-profile' },
+    { text: '考勤管理', icon: <Svg3 style={iconStyle} />, path: '/admin/employee-attendance' },
+    { text: '入职管理', icon: <Svg4 style={iconStyle} />, path: '/admin/employee-induction', },
+    { text: '招聘管理', icon: <Svg1 style={iconStyle} />, path: '/admin/employee-profile' },
+    { text: '转正管理', icon: <Svg2 style={iconStyle} />, path: '/admin/sys/organization-structure' },
+    { text: '调岗管理', icon: <Svg3 style={iconStyle} />, path: '/admin/employee-attendance' },
+    { text: '离职管理', icon: <Svg4 style={iconStyle} />, path: '/admin/employee-depart', },
+    { text: '合同管理', icon: <Svg5 style={iconStyle} />, path: '/admin/employee-attendance' },
+    { text: '薪资管理', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
+    { text: '组织机构', icon: <Svg2 style={iconStyle} />, path: '/admin/sys/organization-structure' },
+    { text: '培训与发展', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
+    { text: '系统设置', icon: <Svg6 style={iconStyle} />, path: '/admin/training-and-development' },
+  ]
+}
 interface AppleProps {
   title?: string;
   size?: number;
@@ -42,19 +63,54 @@ interface AppleProps {
 }
 
 const Modules = (props: AppleProps) => {
-  const { size= 60, style } = props;
+  const { size = 40, style } = props;
 
   return (
-    <Row style={style}>
-      {appleData(size).map((item: KktproKeys, index: number) => (
-        <ColItem span="4" key={index}>
-          <ApplyItem to={item.path}>
-            {item.icon}
-            <span>{item.text}</span>
-          </ApplyItem>
-        </ColItem>
-      ))}
-    </Row>
+    <div style={style}>
+      <div>
+        <h3>置顶应用</h3>
+        <Row gutter={20} >
+          {appleData(size).map((item: KktproKeys, index: number) => (
+            <ColItem span="4" key={index}>
+              <ApplyItem to={item.path}>
+                {item.icon}
+                <span>{item.text}</span>
+              </ApplyItem>
+            </ColItem>
+          ))}
+        </Row>
+        <Divider />
+      </div>
+      <div>
+        <h3>全员常用</h3>
+        <Row gutter={20} >
+          {appleData2(size).map((item: KktproKeys, index: number) => (
+            <ColItem span="4" key={index}>
+              <ApplyItem to={item.path}>
+                {item.icon}
+                <span>{item.text}</span>
+              </ApplyItem>
+            </ColItem>
+          ))}
+        </Row>
+        <Divider />
+      </div>
+      <div>
+        <h3>全部应用</h3>
+        <Row gutter={20} >
+          {appleData3(size).map((item: KktproKeys, index: number) => (
+            <ColItem span="4" key={index}>
+              <ApplyItem to={item.path}>
+                {item.icon}
+                <span>{item.text}</span>
+              </ApplyItem>
+            </ColItem>
+          ))}
+        </Row>
+        <Divider />
+      </div>
+    </div>
+
   )
 }
 
