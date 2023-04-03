@@ -16,6 +16,14 @@ const formSearchList = [
       { value: 20, label: "人事部" },
     ],
   },
+  {
+    label: "月份",
+    key: "month",
+    widget: "monthPicker",
+    widgetProps: {
+      format: 'YYYY-MM'
+    },
+  },
 ];
 
 const Search = () => {
