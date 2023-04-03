@@ -1,6 +1,6 @@
 import { KktproKeys } from '@kkt/pro';
-import { Row, Divider } from "uiw";
-import { ApplyItem, ColItem } from './style';
+import { Divider } from "uiw";
+import { ApplyItem, RowItem, ColItem } from './style';
 import { ReactComponent as Svg1 } from './assets/1.svg';
 import { ReactComponent as Svg2 } from './assets/2.svg';
 import { ReactComponent as Svg3 } from './assets/3.svg';
@@ -64,49 +64,48 @@ interface AppleProps {
 
 const Modules = (props: AppleProps) => {
   const { size = 40, style } = props;
-
   return (
     <div style={style}>
       <div>
         <h3>置顶应用</h3>
-        <Row gutter={20} >
+        <RowItem >
           {appleData(size).map((item: KktproKeys, index: number) => (
-            <ColItem span="4" key={index}>
+            <ColItem key={index}>
               <ApplyItem to={item.path}>
                 {item.icon}
                 <span>{item.text}</span>
               </ApplyItem>
             </ColItem>
           ))}
-        </Row>
+        </RowItem>
         <Divider />
       </div>
       <div>
         <h3>全员常用</h3>
-        <Row gutter={20} >
+        <RowItem>
           {appleData2(size).map((item: KktproKeys, index: number) => (
-            <ColItem span="4" key={index}>
+            <ColItem key={index}>
               <ApplyItem to={item.path}>
                 {item.icon}
                 <span>{item.text}</span>
               </ApplyItem>
             </ColItem>
           ))}
-        </Row>
+        </RowItem>
         <Divider />
       </div>
       <div>
         <h3>全部应用</h3>
-        <Row gutter={20} >
+        <RowItem>
           {appleData3(size).map((item: KktproKeys, index: number) => (
-            <ColItem span="4" key={index}>
+            <ColItem key={index}>
               <ApplyItem to={item.path}>
                 {item.icon}
                 <span>{item.text}</span>
               </ApplyItem>
             </ColItem>
           ))}
-        </Row>
+        </RowItem>
         <Divider />
       </div>
     </div>

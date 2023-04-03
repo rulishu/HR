@@ -66,6 +66,12 @@
                 "element": "@/pages/sys/Organization"
               },
               {
+                "path": "/admin/sys/items",
+                "name": "项目组管理",
+                "icon": "document",
+                "element": "@/pages/sys/Items"
+              },
+              {
                 "path": "/admin/sys/auth",
                 "name": "权限管理",
                 "icon": "eye-o",

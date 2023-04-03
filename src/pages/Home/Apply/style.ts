@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import { Col } from 'uiw';
 import { Link } from '@kkt/pro';
 
 export const ApplyItem = styled(Link)`
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: flex-start;
   height: 100%;
@@ -12,7 +10,6 @@ export const ApplyItem = styled(Link)`
   transition: all .5s;
   text-decoration: none;
   color: #495366;
-  /* background: #f2f4f7; */
   padding: 10px;
   span {
     padding-left: 15px;
@@ -27,7 +24,31 @@ export const ApplyItem = styled(Link)`
   }
 `;
 
+export const RowItem = styled.div`
+  ::after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+`;
 
-export const ColItem = styled(Col)`
-  padding: 10px 0;
+
+export const ColItem = styled.div`
+  float: left;
+  box-sizing: border-box;
+  padding: 10px;
+  @media (max-width: 600px) {
+    width: 50%;
+  }
+  @media screen and (min-width: 601px) and (max-width: 900px) {
+    width: 33.33%;
+  }
+  @media screen and (min-width: 901px) and (max-width: 1200px) {
+    width: 25%;
+  }
+  @media (min-width: 1201px) {
+    width: 16.66%;
+  }
 `;
