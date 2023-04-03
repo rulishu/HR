@@ -3,7 +3,7 @@ import { Notify } from 'uiw';
 import { usersList, usersAdd, usersUpdate, usersDelete } from '@/servers/sys/users';
 
 const route = {
-  name: "sysUser",
+  name: "employeeProfile",
   state: {
     page: 1,
     pageSize: 20,
@@ -11,6 +11,8 @@ const route = {
     dataList: [],
     isDelete: false,
     detailsData: undefined, // 编辑的数据
+    isVisible: false,
+    type: undefined, // 类型 add：新增 / edit: 编辑
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -53,16 +55,6 @@ const route = {
     /**
      * 点击新增用户
     */
-    async onUsersAdd(payload: KktproKeys, state?: any) {
-      const { type, data, isForm } = payload;
-      let obj: KktproKeys = {
-        type: type,
-        isVisible: true,
-        isForm,
-        detailsData: data,
-      }
-       dispatch.sysUser.updateState(obj);
-    },
     async usersAdd(payload: KktproKeys, state: any) {
       const { sysUser } = state;
       const { isForm } = sysUser;

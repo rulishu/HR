@@ -1,12 +1,18 @@
-import { useDispatch, Dispatch, KktproKeys } from '@kkt/pro';
+import { useDispatch, Dispatch } from '@kkt/pro';
 import { Button, Table, Pagination, Empty } from "uiw";
 import { columns } from './utils';
 
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
   // 新增
-  const usersModal = (type: 'add' | 'edit', data?: KktproKeys) => {
-    dispatch.usersModal.onUsersAdd({ type, data, isForm: true });
+  const addModal = () => {
+    dispatch({
+      type: 'employeeProfile/updateState',
+      payload: {
+        type: 'add',
+        isVisible: true,
+      },
+    })
   }
 
   // 删除
@@ -18,7 +24,7 @@ const Page = () => {
   return (
     <div>
       <div style={{ marginBottom: 15 }}>
-        <Button icon="plus" type="primary" onClick={() => usersModal('add')}>
+        <Button icon="plus" type="primary" onClick={() => addModal()}>
           新增
         </Button>
         <Button

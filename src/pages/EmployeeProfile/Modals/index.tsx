@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Dispatch, KktproKeys, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm, useForm } from "@uiw-admin/components";
-import { Drawer } from "uiw";
+import { Drawer, Tabs } from "uiw";
 import { formList } from './utils';
 
 function Modals() {
   const {
-    usersModal: {
+    employeeProfile: {
       isVisible,
       detailsData,
       type,
-      roleList
+      // roleList
     },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
@@ -28,12 +28,12 @@ function Modals() {
     }
     if (type === "add") {
       dispatch({
-        type: "usersModal/usersAdd",
+        type: "employeeProfile/usersAdd",
         payload: params
       });
     } else {
       dispatch({
-        type: "usersModal/usersUpdate",
+        type: "employeeProfile/usersUpdate",
         payload: {
           userId: (detailsData as any)?.userId,
           ...params
@@ -45,7 +45,7 @@ function Modals() {
   //关闭弹窗
   const onClosed = () => {
     dispatch({
-      type: "usersModal/updateState",
+      type: "employeeProfile/updateState",
       payload: { isVisible: false },
     });
   };
@@ -72,8 +72,18 @@ function Modals() {
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
         onChange={(_, current) => onChange(current)}
-        formDatas={formList({ type, detailsData, roleList, formObj })}
+        formDatas={formList({ type, detailsData, formObj })}
       />
+      <Tabs type="card" activeKey="1" onTabClick={(tab, key, e) => {
+          console.log("=>", key, tab);
+        }}>
+        <Tabs.Pane label="个人信息" key="1">个人信息</Tabs.Pane>
+        <Tabs.Pane label="工作信息" key="2">工作信息</Tabs.Pane>
+        <Tabs.Pane label="教育信息" key="3">教育信息</Tabs.Pane>
+        <Tabs.Pane label="合同情况" key="4"><div>合同情况</div></Tabs.Pane>
+        <Tabs.Pane label="教育信息" key="5">银行卡信息</Tabs.Pane>
+        <Tabs.Pane label="教育信息" key="6">薪资记录</Tabs.Pane>
+      </Tabs>
     </Drawer>
   );
 }
