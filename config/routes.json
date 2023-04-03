@@ -31,12 +31,6 @@
             "element": "@/pages/EmployeeProfile"
           },
           {
-            "path": "/admin/employee-attendance",
-            "name": "员工考勤管理",
-            "icon": "copy",
-            "element": "@/pages/EmployeeAttendance"
-          },
-          {
             "path": "/admin/employee-induction",
             "name": "员工入职",
             "icon": "user-add",
@@ -53,6 +47,37 @@
             "name": "员工培训与发展",
             "icon": "laptop",
             "element": "@/pages/TrainingAndDevelopment"
+          },
+          {
+            "path": "/admin/AttendanceManagement",
+            "name": "考勤管理",
+            "icon": "copy",
+            "children": [
+              {
+                "path": "/admin/AttendanceManagement/employee-attendance",
+                "name": "出勤记录",
+                "icon": "document",
+                "element": "@/pages/AttendanceManagement/EmployeeAttendance"
+              },
+              {
+                "path": "/admin/AttendanceManagement/Makeup-record",
+                "name": "补卡记录",
+                "icon": "document",
+                "element": "@/pages/AttendanceManagement/MakeupRecord"
+              },
+              {
+                "path": "/admin/AttendanceManagement/Leave-record",
+                "name": "请假记录",
+                "icon": "document",
+                "element": "@/pages/AttendanceManagement/LeaveRecord"
+              },
+              {
+                "path": "/admin/AttendanceManagement/Overtime-record",
+                "name": "加班记录",
+                "icon": "document",
+                "element": "@/pages/AttendanceManagement/OvertimeRecord"
+              }
+            ]
           },
           {
             "path": "/admin/sys",

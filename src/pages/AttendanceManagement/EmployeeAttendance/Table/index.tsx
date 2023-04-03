@@ -15,7 +15,16 @@ const Page = () => {
     <div>
       <div style={{ marginBottom: 15 }}>
         <Button icon="plus" type="primary" onClick={() => addModal()}>
-          新增
+          打卡
+        </Button>
+        <Button
+          icon="download"
+          type="primary"
+          onClick={() => {
+            onDelete();
+          }}
+        >
+          导出
         </Button>
         <Button
           icon="delete"
@@ -29,7 +38,7 @@ const Page = () => {
       </div>
       <Table
         columns={columns({})}
-        data={[]}
+        data={[{name:'sss',status:1},{name:'sss',status:2}]}
         empty={<Empty />}
         footer={
           <Pagination
