@@ -1,9 +1,13 @@
+import { useDispatch, Dispatch, KktproKeys } from '@kkt/pro';
 import { Button, Table, Pagination, Empty } from "uiw";
 import { columns } from './utils';
 
 const Page = () => {
+  const dispatch = useDispatch<Dispatch>();
   // 新增
-  const addModal = () => {}
+  const usersModal = (type: 'add' | 'edit', data?: KktproKeys) => {
+    dispatch.usersModal.onUsersAdd({ type, data, isForm: true });
+  }
 
   // 删除
   const onDelete = () => {}
@@ -14,7 +18,7 @@ const Page = () => {
   return (
     <div>
       <div style={{ marginBottom: 15 }}>
-        <Button icon="plus" type="primary" onClick={() => addModal()}>
+        <Button icon="plus" type="primary" onClick={() => usersModal('add')}>
           新增
         </Button>
         <Button
