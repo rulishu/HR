@@ -43,3 +43,33 @@ export function deletes (params: KktproKeys) {
     body: { ...params },
   });
 }
+
+/**
+ * 添加部门
+*/
+export const departmentAdd = (params: KktproKeys) => {
+  return request('/api/department/add', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 修改部门信息
+*/
+export const departmentUpdate = (params: KktproKeys) => {
+  return request('/api/department/update', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 删除部门
+*/
+export const departmentDelete = (params: KktproKeys) => {
+  return request('/api/department/delete', {
+    method: 'post',
+    body: { ...params },
+  });
+}

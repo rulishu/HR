@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes } from '@/servers/sys/organization';
+import { selectList, deletes, departmentDelete } from '@/servers/sys/organization';
 
 const route = {
   name: "sysOrganization",
@@ -15,8 +15,7 @@ const route = {
     }),
     hideModal: (state: any) => ({
       ...state,
-      isDelete: false,
-      detailsData: undefined,
+      isDelete: false
     })
   },
   effects: (dispatch: Dispatch) => ({
@@ -24,7 +23,7 @@ const route = {
      * 获取列表
     */
     async selectList(payload?: KktproKeys, state?: any) {
-      const { code, data } = await selectList();
+      const { code, data } = await selectList(payload);
       if (code === 200 && data) {
         const newData = (data || []).map((item: KktproKeys) => {
           const newItem: any = {
@@ -34,7 +33,10 @@ const route = {
           if (Array.isArray(item.department) && item.department.length > 0) {
             newItem.children = item.department.map((item2: KktproKeys) => ({
               ...item2,
+              type: 'department',
+              company: item.companyName,
               companyName: item2.departmentName,
+              companyAddress: item2.departmentDesc
             }))
           }
           return newItem;
@@ -45,12 +47,27 @@ const route = {
       }
     },
     /**
-     * 删除
+     * 删除公司
     */
     async deletes(_?: any, state?: any) {
-      const { sysOrganization } = state;
-      const { detailsData = {} } = sysOrganization;
+      const { sysOrganizationModal } = state;
+      const { detailsData = {} } = sysOrganizationModal;
       const { code, msg } = await deletes({
+        id: detailsData.id
+      });
+      if (code === 200) {
+        Notify.success({ description: msg || '删除成功' });
+        dispatch.sysOrganization.hideModal();
+        dispatch.sysOrganization.selectList();
+      }
+    },
+    /**
+     * 删除部门
+    */
+    async departmentDelete(_?: any, state?: any) {
+      const { sysOrganizationModal } = state;
+      const { detailsData = {} } = sysOrganizationModal;
+      const { code, msg } = await departmentDelete({
         id: detailsData.id
       });
       if (code === 200) {

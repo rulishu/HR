@@ -1,16 +1,21 @@
+import { useDispatch, Dispatch  } from '@kkt/pro';
 import { ProForm } from "@uiw-admin/components";
 
 //搜索表单
 const formSearchList = [
   {
     label: "机构名称",
-    key: "name",
+    key: "companyName",
     widget: "input",
   },
 ];
 
 const Search = () => {
-  const onScreenSubmit = (current: object) => {}
+  const dispatch = useDispatch<Dispatch>();
+
+  const onScreenSubmit = (current: object) => {
+    dispatch.sysOrganization.selectList({ ...current });
+  }
 
   return (
     <ProForm

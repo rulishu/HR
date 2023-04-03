@@ -1,14 +1,16 @@
 import { KktproKeys } from '@kkt/pro';
-import { Button, Checkbox } from "uiw";
+import { Button } from "uiw";
 
 interface columnsProps {
   onEdit?: (rowData: KktproKeys) => void;
   onDelete?: (rowData: KktproKeys) => void;
+  onAddDepartment?: (rowData: KktproKeys) => void;
 }
 
 export const columns = ({
   onEdit,
-  onDelete
+  onDelete,
+  onAddDepartment
 }: columnsProps) => [
   {
     title: "机构/部门",
@@ -36,7 +38,7 @@ export const columns = ({
             <Button
               icon="plus"
               type="success"
-              onClick={() => onDelete?.(rowData)}
+              onClick={() => onAddDepartment?.(rowData)}
             >
               部门
             </Button>

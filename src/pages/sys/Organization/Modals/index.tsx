@@ -1,7 +1,7 @@
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm } from "@uiw-admin/components";
 import { Drawer } from "uiw";
-import { formList } from './utils';
+import { formList, ModalTitle } from './utils';
 
 function Modals() {
   const {
@@ -23,10 +23,27 @@ function Modals() {
         type: "sysOrganizationModal/onAdd",
         payload: params
       });
-    } else {
+    } else if (type === 'edit') {
       // 编辑
       dispatch({
         type: "sysOrganizationModal/onEdit",
+        payload: {
+          id: (detailsData as any)?.id,
+          ...params
+        },
+      });
+    } else if (type === "departmentAdd") {
+      dispatch({
+        type: "sysOrganizationModal/onDepartmentAdd",
+        payload: {
+          companyId: (detailsData as any)?.id,
+          ...params
+        }
+      });
+    } else if (type === 'departmentEdit') {
+      // 编辑
+      dispatch({
+        type: "sysOrganizationModal/onDepartmentEdit",
         payload: {
           id: (detailsData as any)?.id,
           ...params
@@ -44,7 +61,7 @@ function Modals() {
   };
   return (
     <Drawer
-      title={type === "add" ? "新增组织机构" : "编辑组织机构"}
+      title={type && ModalTitle[type]}
       size={700}
       isOpen={isVisible}
       onClose={() => onClosed()}
