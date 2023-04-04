@@ -15,6 +15,17 @@ const Page = () => {
     dispatch.sysOrganizationModal.onModals({ type: _type, data, isForm: true });
   }
 
+  const onAddDepartment = (data: any) => {
+    dispatch.sysOrganizationModal.onModals({
+      type: 'departmentAdd',
+      data: {
+        id: data.id,
+        companyName: data.companyName
+      },
+      isForm: true
+    });
+  }
+
   // 删除
   const onDelete = (data: any) => {
     dispatch.sysOrganization.updateState({
@@ -48,7 +59,7 @@ const Page = () => {
         columns={columns({
           onEdit: (data) => onModals('edit', data),
           onDelete,
-          onAddDepartment: (data) => onModals('departmentAdd', data),
+          onAddDepartment,
         })}
         data={dataList}
         empty={<Empty />}

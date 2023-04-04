@@ -37,7 +37,7 @@ const route = {
               type: 'department',
               company: item.companyName,
               companyName: item2.departmentName,
-              companyAddress: item2.departmentDesc
+              companyPhone: item2.departmentPhone
             }))
           }
           return newItem;

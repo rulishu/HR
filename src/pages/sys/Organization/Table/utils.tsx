@@ -21,6 +21,18 @@ export const columns = ({
     key: "companyAddress",
   },
   {
+    title: "领导人",
+    key: "leader",
+  },
+  {
+    title: "联系电话",
+    key: "companyPhone",
+  },
+  {
+    title: "备注",
+    key: "remark",
+  },
+  {
     title: "操作",
     key: "edit",
     width: 140,

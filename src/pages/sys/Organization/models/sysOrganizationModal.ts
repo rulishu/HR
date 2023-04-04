@@ -72,7 +72,12 @@ const route = {
     async onDepartmentAdd(payload: KktproKeys, state: any) {
       const { sysOrganizationModal } = state;
       const { isForm } = sysOrganizationModal;
-      const { code, msg } = await departmentAdd(payload);
+      const parmas: any = {
+        ...payload,
+        departmentPhone: payload.companyPhone
+      }
+      delete parmas.companyPhone;
+      const { code, msg } = await departmentAdd(parmas);
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
         if (isForm) {
@@ -90,7 +95,12 @@ const route = {
     async onDepartmentEdit(payload: KktproKeys, state: any) {
       const { sysOrganizationModal } = state;
       const { isForm } = sysOrganizationModal;
-      const { code, msg } = await departmentUpdate(payload);
+      const parmas: any = {
+        ...payload,
+        departmentPhone: payload.companyPhone
+      }
+      delete parmas.companyPhone;
+      const { code, msg } = await departmentUpdate(parmas);
       if (code === 200) {
         Notify.success({ description: msg || '编辑成功' });
         if (isForm) {
