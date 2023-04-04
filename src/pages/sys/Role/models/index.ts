@@ -6,7 +6,7 @@ const route = {
   name: "sysRole",
   state: {
     page: 1,
-    pageSize: 20,
+    pageSize: 10,
     total: 0,
     dataList: [],
     isDelete: false,

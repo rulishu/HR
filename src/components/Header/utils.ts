@@ -19,7 +19,6 @@ const getAllRoutes = (routes: KktproRoutesProps[]) => {
       }
       const newRoutes = {...item};
       delete newRoutes.children;
-      console.log(333)
       arr.push(newRoutes)
     })
   })(routes)

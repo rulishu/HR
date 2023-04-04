@@ -110,6 +110,12 @@
             "element": "@/pages/sys/Route"
           },
           {
+            "path": "/admin/sys/dataDictionary",
+            "name": "数据字典",
+            "icon": "folder-open",
+            "element": "@/pages/sys/DataDictionary"
+          },
+          {
             "path": "*",
             "element": "@uiw-admin/exceptions/lib/Exceptions/404"
           }
