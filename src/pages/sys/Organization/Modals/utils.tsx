@@ -16,7 +16,7 @@ export const formList = ({
   detailsData,
 }: FormListProps) => {
   const isDepartment = type ? ['departmentAdd', 'departmentEdit'].includes(type) : false
-  const companyName = isDepartment ? detailsData?.company : detailsData?.companyName;
+  const companyName = type === 'departmentEdit' ? detailsData?.company : detailsData?.companyName;
   return [
     {
       label: "公司名称",

@@ -58,7 +58,6 @@ export const menusConfig: MenuAllconfigType[] = [
       { text: '账号管理', icon: 'menu4', path: '/admin/sys/users', },
       { text: '角色管理', icon: 'menu4', path: '/admin/sys/role' },
       { text: '路由管理', icon: 'menu4', path: '/admin/sys/route' },
-      { text: '修改密码', icon: 'menu4', path: '/admin/employee-attendance' },
     ]
   },
 ]

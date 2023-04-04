@@ -7,3 +7,6 @@ export { default as Siders } from './Siders';
 export { default as Title } from './Title';
 
 export { default as TipButton } from './TipButton';
+
+export { default as FormPage } from './FormPage';
+export * from './FormPage';
