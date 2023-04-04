@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Dispatch, KktproKeys, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm, useForm } from "@uiw-admin/components";
-import { Drawer, Tabs } from "uiw";
-import { formList } from './utils';
+import { Drawer, Tabs, Button } from "uiw";
+import { bankInformation, contractSituation, educationalInformation, formList, personalInformation, workInformation } from './utils';
 
 function Modals() {
   const {
@@ -16,6 +16,7 @@ function Modals() {
   const dispatch = useDispatch<Dispatch>();
   const [formObj, setFormObj] = useState<KktproKeys>({});
   const form = useForm();
+  const form2 = useForm()
 
   //提交按钮
   const onAddSubmit = async (current: any) => {
@@ -65,8 +66,6 @@ function Modals() {
     >
       <ProForm
         form={form}
-        showSaveButton
-        showResetButton
         formType="pure"
         saveButtonProps={{ type: "primary" }}
         readOnlyProps={{ column: 2 }}
@@ -77,13 +76,85 @@ function Modals() {
       <Tabs type="card" activeKey="1" onTabClick={(tab, key, e) => {
           console.log("=>", key, tab);
         }}>
-        <Tabs.Pane label="个人信息" key="1">个人信息</Tabs.Pane>
-        <Tabs.Pane label="工作信息" key="2">工作信息</Tabs.Pane>
-        <Tabs.Pane label="教育信息" key="3">教育信息</Tabs.Pane>
-        <Tabs.Pane label="合同情况" key="4"><div>合同情况</div></Tabs.Pane>
-        <Tabs.Pane label="教育信息" key="5">银行卡信息</Tabs.Pane>
-        <Tabs.Pane label="教育信息" key="6">薪资记录</Tabs.Pane>
+        <Tabs.Pane label="个人信息" key="1">
+          <ProForm
+          form={form}
+          formType="pure"
+          saveButtonProps={{ type: "primary" }}
+          readOnlyProps={{ column: 2 }}
+          onSubmit={(_, current) => onAddSubmit(current)}
+          onChange={(_, current) => onChange(current)}
+          formDatas={personalInformation({ type, detailsData })}
+        />
+        </Tabs.Pane>
+        <Tabs.Pane label="工作信息" key="2">
+        <ProForm
+          form={form}
+          formType="pure"
+          saveButtonProps={{ type: "primary" }}
+          readOnlyProps={{ column: 2 }}
+          onSubmit={(_, current) => onAddSubmit(current)}
+          onChange={(_, current) => onChange(current)}
+          formDatas={workInformation({ type, detailsData })}
+        />
+        </Tabs.Pane>
+        <Tabs.Pane label="教育信息" key="3">
+        <ProForm
+          form={form}
+          formType="pure"
+          saveButtonProps={{ type: "primary" }}
+          readOnlyProps={{ column: 2 }}
+          onSubmit={(_, current) => onAddSubmit(current)}
+          onChange={(_, current) => onChange(current)}
+          formDatas={educationalInformation({ type, detailsData })}
+        />
+        </Tabs.Pane>
+        <Tabs.Pane label="合同情况" key="4">
+        <ProForm
+          form={form}
+          formType="pure"
+          saveButtonProps={{ type: "primary" }}
+          readOnlyProps={{ column: 2 }}
+          onSubmit={(_, current) => onAddSubmit(current)}
+          onChange={(_, current) => onChange(current)}
+          formDatas={contractSituation({ type, detailsData })}
+        />
+        </Tabs.Pane>
+        <Tabs.Pane label="银行卡信息" key="5">
+        <ProForm
+          form={form2}
+          formType="pure"
+          saveButtonProps={{ type: "primary" }}
+          readOnlyProps={{ column: 2 }}
+          onSubmit={(_, current) => onAddSubmit(current)}
+          onChange={(_, current) => onChange(current)}
+          formDatas={bankInformation({ type, detailsData })}
+        />
+        </Tabs.Pane>
       </Tabs>
+      <Button 
+        style={{ marginTop:10,width:80 }} 
+        type="primary" 
+        onClick={ async ()=>{
+          // 触发验证
+          await form?.submitvalidate()
+          await form2?.submitvalidate()
+          // 获取错误信息
+          const errors = form.getError()
+          const errors2 = form2.getError()
+
+          if(errors && Object.keys(errors).length > 0 ) return
+          if(errors2 && Object.keys(errors2).length > 0 ) return
+          // 获取表单值
+          const value = form.getFieldValues?.()
+          const value2 = form2.getFieldValues?.()
+          const params = {...value,...value2}
+          console.log(params);
+
+          // 调用请求接口
+       }}>
+         保存
+      </Button>
     </Drawer>
   );
 }
