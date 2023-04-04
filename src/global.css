@@ -37,3 +37,21 @@ html, main {
 .w-radio:last-child {
   margin-right: 0;
 }
+
+.i--form .w-form {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.w-table table {
+  border: 1px solid #e8e8e8;
+  border-bottom: none;
+}
+.w-table table  th {
+  padding: 12px 8px !important;
+  font-weight: bold !important;
+  font-size: 15px;
+}
+.w-table table td {
+  padding: 8px !important;
+}

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const LayoutBase = styled.div`
-  height: calc(100vh - 50px);
+  height: calc(100vh - 60px);
   position: relative;
 `;
 

@@ -1,5 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
-import { Button } from "uiw";
+import { TipButton } from '@/components';
 
 interface columnsProps {
   onEdit?: (rowData: KktproKeys) => void;
@@ -25,24 +25,22 @@ export const columns = ({
   {
     title: "操作",
     key: "edit",
-    width: 160,
+    width: 100,
     render: (text: any, key: any, rowData: any) => {
       return (
         <>
-          <Button
+          <TipButton
+            tip="编辑"
             icon="edit"
             type="primary"
-            onClick={(e) => onEdit?.(rowData)}
-          >
-            编辑
-          </Button>
-          <Button
+            onClick={() => onEdit?.(rowData)}
+          />
+          <TipButton
+            tip="删除"
             icon="delete"
             type="danger"
             onClick={() => onDelete?.(rowData)}
-          >
-            删除
-          </Button>
+          />
         </>
       );
     },

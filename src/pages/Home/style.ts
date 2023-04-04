@@ -9,13 +9,13 @@ export const Wallpaper = styled.div`
   background-size: cover;
   width: 100%;
   height: calc(100vh);
-  top: -50px;
+  top: -60px;
 `;
 
 export const Wraper = styled.div`
   position: relative;
   z-index: 1;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 60px);
 `;
 
 export const Body = styled.div`
@@ -24,7 +24,6 @@ export const Body = styled.div`
   color: #fff;
   position: relative;
   z-index: 2;
-  padding-top: 30px;
   box-sizing: border-box;
 `;
 

@@ -1,5 +1,5 @@
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
-import { Button, Table, Empty, Alert } from "uiw";
+import { Button, Table, Empty, Alert, Card } from "uiw";
 import { columns } from './utils';
 
 const Page = () => {
@@ -32,7 +32,7 @@ const Page = () => {
   }
 
   return (
-    <div>
+    <Card noHover>
       <div style={{ marginBottom: 15 }}>
         <Button icon="plus" type="primary" onClick={() => onModals('add')}>
           新增
@@ -56,7 +56,7 @@ const Page = () => {
         onConfirm={() => onConfirm()}
         content="您确定要删除吗？"
       />
-    </div>
+    </Card>
   )
 }
 

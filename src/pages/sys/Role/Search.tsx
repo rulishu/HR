@@ -21,19 +21,21 @@ const Search = () => {
   }
 
   return (
-    <ProForm
-      formType="pure"
-      showSaveButton
-      showResetButton
-      saveButtonProps={{
-        type: "primary",
-      }}
-      cardProps={{
-        noHover: true,
-      }}
-      onSubmit={(_, current) => onScreenSubmit(current)}
-      formDatas={formSearchList}
-    />
+    <div className="i--form">
+      <ProForm
+        formType="card"
+        showSaveButton
+        showResetButton
+        saveButtonProps={{
+          type: "primary",
+        }}
+        cardProps={{
+          noHover: true,
+        }}
+        onSubmit={(_, current) => onScreenSubmit(current)}
+        formDatas={formSearchList}
+      />
+    </div>
   )
 }
 
