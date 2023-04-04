@@ -11,7 +11,7 @@ const Page = () => {
 
   // 新增 / 编辑 / 新增部门 / 编辑部门
   const onModals = (type: 'add' | 'edit' | 'departmentAdd' | 'departmentEdit', data?: any) => {
-    const _type = data.type === 'department' ? 'departmentEdit' : type;
+    const _type = data && data.type === 'department' ? 'departmentEdit' : type;
     dispatch.sysOrganizationModal.onModals({ type: _type, data, isForm: true });
   }
 

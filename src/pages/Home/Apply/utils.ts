@@ -47,9 +47,18 @@ export const menusConfig: MenuAllconfigType[] = [
       { text: '离职管理', icon: 'menu4', path: '/admin/employee-depart', },
       { text: '合同管理', icon: 'menu4', path: '/admin/employee-attendance' },
       { text: '薪资管理', icon: 'menu4', path: '/admin/training-and-development' },
-      { text: '组织机构', icon: 'menu4', path: '/admin/sys/organization-structure' },
       { text: '培训与发展', icon: 'menu4', path: '/admin/training-and-development' },
-      { text: '系统设置', icon: 'menu4', path: '/admin/training-and-development' },
+    ]
+  },
+  {
+    title: '系统设置',
+    child: [
+      { text: '组织机构', icon: 'menu4', path: '/admin/sys/organization' },
+      { text: '项目管理', icon: 'menu4', path: '/admin/sys/items' },
+      { text: '账号管理', icon: 'menu4', path: '/admin/sys/users', },
+      { text: '角色管理', icon: 'menu4', path: '/admin/sys/role' },
+      { text: '路由管理', icon: 'menu4', path: '/admin/sys/route' },
+      { text: '修改密码', icon: 'menu4', path: '/admin/employee-attendance' },
     ]
   },
 ]

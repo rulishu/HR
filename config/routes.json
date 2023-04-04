@@ -80,41 +80,34 @@
             ]
           },
           {
-            "path": "/admin/sys",
-            "name": "设置",
-            "icon": "setting-o",
-            "children": [
-              {
-                "path": "/admin/sys/organization",
-                "name": "组织机构管理",
-                "icon": "document",
-                "element": "@/pages/sys/Organization"
-              },
-              {
-                "path": "/admin/sys/items",
-                "name": "项目组管理",
-                "icon": "document",
-                "element": "@/pages/sys/Items"
-              },
-              {
-                "path": "/admin/sys/users",
-                "name": "账号管理",
-                "icon": "user",
-                "element": "@/pages/sys/Users"
-              },
-              {
-                "path": "/admin/sys/role",
-                "name": "角色管理",
-                "icon": "table",
-                "element": "@/pages/sys/Role"
-              },
-              {
-                "path": "/admin/sys/route",
-                "name": "路由管理",
-                "icon": "folder-open",
-                "element": "@/pages/sys/Route"
-              }
-            ]
+            "path": "/admin/sys/organization",
+            "name": "组织机构管理",
+            "icon": "document",
+            "element": "@/pages/sys/Organization"
+          },
+          {
+            "path": "/admin/sys/items",
+            "name": "项目组管理",
+            "icon": "document",
+            "element": "@/pages/sys/Items"
+          },
+          {
+            "path": "/admin/sys/users",
+            "name": "账号管理",
+            "icon": "user",
+            "element": "@/pages/sys/Users"
+          },
+          {
+            "path": "/admin/sys/role",
+            "name": "角色管理",
+            "icon": "table",
+            "element": "@/pages/sys/Role"
+          },
+          {
+            "path": "/admin/sys/route",
+            "name": "路由管理",
+            "icon": "folder-open",
+            "element": "@/pages/sys/Route"
           },
           {
             "path": "*",

@@ -17,7 +17,7 @@ export const LayoutSider = styled.div`
 `;
 
 export const LayoutWraper = styled.div`
-  padding-left: 250px;
   height: 100%;
   overflow-y: auto;
+  background: #f5f5f5;
 `;

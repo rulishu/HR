@@ -1,13 +1,13 @@
 import { Outlet, KktproPageProps } from '@kkt/pro';
-import { Siders } from '@/components';
-import { LayoutBase, LayoutSider, LayoutWraper } from './style';
+// import { Siders } from '@/components';
+import { LayoutBase, LayoutWraper } from './style';
 
 const Layout = (props: KktproPageProps) => {
   return (
     <LayoutBase>
-      <LayoutSider>
+      {/* <LayoutSider>
         <Siders {...props} />
-      </LayoutSider>
+      </LayoutSider> */}
       <LayoutWraper>
         <div style={{ padding: 20 }}>
           <Outlet />

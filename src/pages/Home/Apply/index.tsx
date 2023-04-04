@@ -45,7 +45,7 @@ const Modules = (props: AppleProps) => {
               </ColItem>
             ))}
           </RowItem>
-          <Divider />
+          {_index !== menusConfig.length - 1 && <Divider />}
         </div>
       ))}
     </div>
