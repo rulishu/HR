@@ -13,6 +13,7 @@ const route = {
     queryInfo: {}, // 编辑的数据
     isVisible: false,
     type: undefined, // 类型 add：新增 / edit: 编辑
+    groupItem: [] as any[]
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({

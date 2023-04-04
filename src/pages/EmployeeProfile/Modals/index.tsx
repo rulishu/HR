@@ -1,7 +1,9 @@
+import React, { useRef } from 'react';
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProDrawer, ProForm, useForm } from '@uiw-admin/components'
 import { Tabs } from "uiw";
-import { bankInformation, contractSituation, educationalInformation, formList, personalInformation, workInformation } from './utils';
+import { bankInformation, contractSituation, formListData, personalInformation } from './utils';
+import EducationalInformation from './educationalInformation'
 
 function Modals() {
   const {
@@ -14,8 +16,9 @@ function Modals() {
   const dispatch = useDispatch<Dispatch>();
   const form = useForm();
   const personalForm = useForm()
-  const workForm = useForm()
   const form1 = useForm();
+  const formRefList = useRef([] as any[]);
+  const formList = formRefList?.current.filter((n) => n) || [];
 
   const updateData = (payload: { queryInfo: any; }) => {
     dispatch({
@@ -23,7 +26,15 @@ function Modals() {
       payload,
     })
   }
-
+  //Promise表单方法
+  const asyncAwaitFormList = (arr = []) => {
+    if (arr && arr.length > 0) {
+      return Promise.all(arr).then((vals) => {
+        return vals;
+      });
+    }
+    return [];
+  };
   //关闭弹窗
   const onClosed = () => {
     dispatch({
@@ -40,6 +51,10 @@ function Modals() {
         title={type === "add" ? "新增" : "编辑"}
         buttons={[
           {
+            label: '取消',
+            onClick: () => onClosed(),
+          },
+          {
             label: '保存',
             type: 'primary',
             style: { width: '80px' },
@@ -53,6 +68,10 @@ function Modals() {
     
               if(errors && Object.keys(errors).length > 0 ) return
               if(errors2 && Object.keys(errors2).length > 0 ) return
+              const validateList: any =
+              formList.map((itm) => itm.validateFieldsAndGetValue()) || [];
+              const values = await asyncAwaitFormList(validateList);
+              console.log("values",values)
               dispatch({
                 type: `employeeProfile/${type === 'add' ? 'insert' : 'addTeam'}`,
                 payload: {
@@ -70,7 +89,7 @@ function Modals() {
         onChange={(initial, current) => 
           updateData({ queryInfo: { ...queryInfo, ...current } })
         }
-        formDatas={formList({ type, queryInfo })}
+        formDatas={formListData({ type, queryInfo })}
       />
       <Tabs type="card" activeKey="1" onTabClick={(tab, key, e) => {
           console.log("=>", key, tab);
@@ -83,21 +102,22 @@ function Modals() {
           formDatas={personalInformation({ type, queryInfo })}
         />
         </Tabs.Pane>
-        <Tabs.Pane label="工作信息" key="2">
+        {/* <Tabs.Pane label="工作信息" key="2">
         <ProForm
           form={workForm}
           formType="pure"
           readOnlyProps={{ column: 2 }}
           formDatas={workInformation({ type, queryInfo })}
         />
-        </Tabs.Pane>
+        </Tabs.Pane> */}
         <Tabs.Pane label="教育信息" key="3">
-        <ProForm
+          <EducationalInformation formRefList={formRefList}/>
+        {/* <ProForm
           form={form1}
           formType="pure"
           readOnlyProps={{ column: 2 }}
           formDatas={educationalInformation({ type, queryInfo })}
-        />
+        /> */}
         </Tabs.Pane>
         <Tabs.Pane label="合同情况" key="4">
         <ProForm

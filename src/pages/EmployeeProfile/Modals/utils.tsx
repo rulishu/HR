@@ -2,19 +2,11 @@
 interface FormListProps {
   type?: string,
   queryInfo?: any;
-  // roleList?: any[];
-  // passIcon?: string;
-  // formObj?: KktproKeys;
-  // onLockPass?: () => void;
 }
 
-export const formList = ({
+export const formListData = ({
   type,
   queryInfo,
-  // roleList = [],
-  // passIcon = 'lock',
-  // formObj,
-  // onLockPass
 }: FormListProps) => [
   {
     label: "姓名",
@@ -56,7 +48,7 @@ export const formList = ({
     readSpan: 1,
     rules: [
       { required: true, message: '请输入' },
-      // { pattern: new RegExp(/[1][3][0-9]{9}$/), message: "请输入正确手机号" },
+      { pattern: new RegExp(/[1][3][0-9]{9}$/), message: "请输入正确手机号" },
      ]
   },
   {
@@ -65,7 +57,6 @@ export const formList = ({
     widget: "input",
     // required: true,
     disabled: type === "add" ? false : true,
-    // initialValue: (detailsData as any)?.username,
     span: "12",
     readSpan: 1,
   },
@@ -364,6 +355,45 @@ export const bankInformation = ({ type, queryInfo}: { type?: string, queryInfo?:
     initialValue: (queryInfo as any)?.name,
     span: "12",
     readSpan: 1,
+  }, 
+]
+export const addItems = (data?: any, queryInfo?: any)=>[
+  {
+    label: '起止日期',
+    key: 'time',
+    widget: 'dateInput',
+    widgetProps: {
+      format: 'YYYY-MM-DD'
+    },
   },
-  
+ {
+   label: '学校',
+   key: 'school',
+   widget: 'input',
+   initialValue: '',
+   required:true,
+   rules: [
+     { required: true, message: '请输入' },
+   ]
+ },
+ {
+   label: '专业',
+   key: 'specialize',
+   widget: 'input',
+   initialValue: '',
+   required:true,
+   rules: [
+     { required: true, message: '请输入' },
+   ]
+ },
+//  {
+//    label: '证书情况',
+//    key: 'certificate',
+//    widget: 'input',
+//    initialValue: '',
+//    required:true,
+//    rules: [
+//      { required: true, message: '请输入' },
+//    ]
+//  },
 ]
