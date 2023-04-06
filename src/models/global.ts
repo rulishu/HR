@@ -15,7 +15,7 @@ const login = {
     navigate: null,
     userData: undefined, // 用户信息
     authRoutes: [], // 权限菜单
-    dictList: [], // 字典列表
+    dictList: {}, // 字典数据
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -44,13 +44,15 @@ const login = {
     async getDict() {
       const { code, data } = await getDict();
       if (code === 200 && data) {
-        const newData = (data || []).map((item: any) => ({
-          lable: item.dictName,
-          value: item.dictType,
-          child: getDictChild(item.dictData)
-        }));
+        let obj: any = {};
+        (data || []).forEach((item: any) => {
+          obj[item.dictType] = {
+            label: item.dictName,
+            child: getDictChild(item.dictData)
+          }
+        });
         dispatch.global.updateState({
-          dictList: newData
+          dictObject: obj
         });
       }
     },

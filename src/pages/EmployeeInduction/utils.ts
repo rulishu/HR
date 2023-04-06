@@ -1,3 +1,4 @@
+import { KktproKeys } from '@kkt/pro';
 export interface formDataProps {
   title: string;
   tips?: string;
@@ -164,3 +165,27 @@ export const formData: formDataProps[] = [
     type: 'family',
   },
 ]
+
+/**
+ * 点击新增 ** 更改 models数据 
+*/
+export const addConfig: KktproKeys = {
+  education: {
+    educationType: 'add',
+    educationObj: undefined,
+    educationIndex: undefined,
+    isEducationVisible: true,
+  },
+  work: {
+    workType: 'add',
+    workIndex: undefined,
+    workObj: undefined,
+    isWorkVisible: true,
+  },
+  family: {
+    familyType: 'add',
+    familyIndex: undefined,
+    familyObj: undefined,
+    isFamilyVisible: true,
+  }
+}

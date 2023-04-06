@@ -1,21 +1,32 @@
 import { TipButton } from '@/components';
 
+interface FormListProps {
+  onEdit?: (data: any, index: number) => void;
+  onRemove?: (data: any, index: number) => void;
+}
+
+
 export const educationColumn = () => [
   {
     title: "时间",
-    key: "a"
+    key: "time",
+    render: (text: any, key: any, rowData: any) => {
+      const { startTime, endTime } = rowData;
+      if (!startTime || !endTime) return '--'
+      return startTime + ' ~ ' + endTime;
+    },
   },
   {
     title: "学校名称",
-    key: "b",
+    key: "school",
   },
   {
     title: "专业",
-    key: "b",
+    key: "specialize",
   },
   {
     title: "证书情况",
-    key: "b",
+    key: "certificate",
   },
   {
     title: "操作",
@@ -43,15 +54,20 @@ export const educationColumn = () => [
 export const workColumn = () => [
   {
     title: "起止日期",
-    key: "a"
+    key: "time",
+    render: (text: any, key: any, rowData: any) => {
+      const { startTime, endTime } = rowData;
+      if (!startTime || !endTime) return '--'
+      return startTime + ' ~ ' + endTime;
+    },
   },
   {
     title: "工作单位",
-    key: "b",
+    key: "company",
   },
   {
     title: "职位及主要工作职责",
-    key: "c",
+    key: "desc",
   },
   {
     title: "操作",
@@ -76,39 +92,46 @@ export const workColumn = () => [
   },
 ]
 
-export const familyColumn = () => [
+export const familyColumn = ({ onEdit, onRemove }: FormListProps) => [
   {
     title: "姓名",
-    key: "a"
+    key: "name"
+  },
+  {
+    title: "电话",
+    key: "memberPhone",
   },
   {
     title: "年龄",
-    key: "b",
+    key: "age",
   },
   {
     title: "关系",
-    key: "c",
+    key: "relation",
   },
   {
     title: "现工作单位及职务",
-    key: "d",
+    key: "desc",
   },
   {
     title: "操作",
     key: "edit",
     width: 100,
-    render: (text: any, key: any, rowData: any) => {
+    render: (text: any, key: string, rowData: any, rowNumber: number) => {
+      console.log(444444, key, rowData)
       return (
         <>
           <TipButton
             tip="编辑"
             icon="edit"
             type="primary"
+            onClick={() => onEdit?.(rowData, rowNumber)}
           />
           <TipButton
             tip="删除"
             type="danger"
             icon="delete"
+            onClick={() => onRemove?.(rowData, rowNumber)}
           />
         </>
       );

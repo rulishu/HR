@@ -68,7 +68,7 @@ const route = {
       const { sysDataDictionaryModal } = state;
       const { detailsData = {} } = sysDataDictionaryModal;
       const { code, msg } = await deletes({
-        id: detailsData.id
+        ids: [detailsData.dictId]
       });
       if (code === 200) {
         Notify.success({ description: msg || '删除成功' });
