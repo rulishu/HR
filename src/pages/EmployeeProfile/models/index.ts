@@ -46,7 +46,7 @@ const route = {
           password: undefined,
           roleIds: item.roleIds.length > 0 && item.roleIds[0]
         }))
-        dispatch.sysUser.updateState({
+        dispatch.employeeProfile.updateState({
           dataList: newData,
           total,
           page: params.page
@@ -56,21 +56,13 @@ const route = {
     /**
      * 新增档案
     */
-    async insert(payload: KktproKeys, state: any) {
-      const { sysUser } = state;
-      const { isForm } = sysUser;
+    async insert(payload: KktproKeys) {
       const { code, msg } = await insert({
         ...payload,
-        // roleIds: [payload.roleIds],
-        // departmentId: '',
       });
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
-        if (isForm) {
-          // 如果当前页面是在用户管理页面，则重新请求列表
-          dispatch.sysUser.usersList();
-        }
-        dispatch.sysUser.updateState({
+        dispatch.employeeProfile.updateState({
           isVisible: false
         });
       }
@@ -78,17 +70,11 @@ const route = {
     /**
      * 档案审批
     */
-    async usersUpdate(payload: KktproKeys, state: any) {
-      const { sysUser } = state;
-      const { isForm } = sysUser;
+    async usersUpdate(payload: KktproKeys) {
       const { code, msg } = await approve(payload);
       if (code === 200) {
         Notify.success({ description: msg || '编辑成功' });
-        if (isForm) {
-          // 如果当前页面是在用户管理页面，则重新请求列表
-          dispatch.sysUser.usersList();
-        }
-        dispatch.sysUser.updateState({
+        dispatch.employeeProfile.updateState({
           isVisible: false,
           checkRouteMenuIds: []
         });

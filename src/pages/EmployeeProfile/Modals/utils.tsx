@@ -20,6 +20,18 @@ export const formListData = ({
      ]
   },
   {
+    label: "手机号码",
+    key: "phone",
+    widget: "input",
+    required: true,
+    span: "12",
+    readSpan: 1,
+    rules: [
+      { required: true, message: '请输入' },
+      { pattern: new RegExp(/[1][3][0-9]{9}$/), message: "请输入正确手机号" },
+     ]
+  },
+  {
     label: '部门',
     key: 'department',
     widget: 'select',
@@ -40,22 +52,9 @@ export const formListData = ({
     ],
   },
   {
-    label: "手机号码",
-    key: "phone",
-    widget: "input",
-    required: true,
-    span: "12",
-    readSpan: 1,
-    rules: [
-      { required: true, message: '请输入' },
-      { pattern: new RegExp(/[1][3][0-9]{9}$/), message: "请输入正确手机号" },
-     ]
-  },
-  {
     label: "邮箱",
     key: "email",
     widget: "input",
-    // required: true,
     disabled: type === "add" ? false : true,
     span: "12",
     readSpan: 1,
@@ -68,6 +67,11 @@ export const formListData = ({
     widgetProps: {
       format: 'YYYY-MM-DD'
     },
+    required: true,
+    readSpan: 1,
+    rules: [
+      { required: true, message: '请选择' },
+     ]
   },
 ]
 
@@ -90,10 +94,11 @@ export const personalInformation = ({ type, queryInfo}: { type?: string, queryIn
     key: "idNumber",
     widget: "input",
     required: true,
-    // disabled: type === "add" ? false : true,
-    // initialValue: (detailsData as any)?.name,
     span: "12",
     readSpan: 1,
+    rules: [
+      { required: true, message: '请输入' },
+     ]
   },
   {
     label: '出生日期',
@@ -115,15 +120,6 @@ export const personalInformation = ({ type, queryInfo}: { type?: string, queryIn
     ],
   },
   {
-    label: "户口所在地",
-    key: "hukou",
-    widget: "input",
-    required: true,
-    // initialValue: (detailsData as any)?.desc,
-    span: "12",
-    readSpan: 1,
-  },
-  {
     label: '婚姻状况',
     key: 'isMarried',
     widget: 'select',
@@ -135,6 +131,15 @@ export const personalInformation = ({ type, queryInfo}: { type?: string, queryIn
       { value: 40, label: "离异" },
     ],
   },
+  // {
+  //   label: "户口所在地",
+  //   key: "hukou",
+  //   widget: "input",
+  //   required: true,
+  //   // initialValue: (detailsData as any)?.desc,
+  //   span: "12",
+  //   readSpan: 1,
+  // },
   // {
   //   label: '户籍类型',
   //   key: 'select4',
@@ -150,7 +155,6 @@ export const personalInformation = ({ type, queryInfo}: { type?: string, queryIn
     key: "livingPlace",
     widget: "input",
     required: true,
-    // initialValue: (detailsData as any)?.desc,
     span: "12",
     readSpan: 1,
   },
@@ -159,7 +163,6 @@ export const personalInformation = ({ type, queryInfo}: { type?: string, queryIn
     key: "nationality",
     widget: "input",
     required: true,
-    // initialValue: (detailsData as any)?.desc,
     span: "12",
     readSpan: 1,
   },
@@ -168,7 +171,6 @@ export const personalInformation = ({ type, queryInfo}: { type?: string, queryIn
     key: "nativePlace",
     widget: "input",
     required: true,
-    // initialValue: (detailsData as any)?.desc,
     span: "12",
     readSpan: 1,
   },
@@ -203,160 +205,118 @@ export const personalInformation = ({ type, queryInfo}: { type?: string, queryIn
   //   readSpan: 1,
   // },
 ]
+export const educationalItem = ({ type, queryInfo}: { type?: string, queryInfo?: any}) => [
+  {
+    label: '时间',
+    key: 'time',
+    widget: 'dateInput',
+    widgetProps: {
+      format: 'YYYY-MM-DD'
+    },
+  },
+ {
+   label: '学校',
+   key: 'school',
+   widget: 'input',
+   initialValue: '',
+   required:true,
+   rules: [
+     { required: true, message: '请输入' },
+   ]
+ },
+ {
+   label: '专业',
+   key: 'specialize',
+   widget: 'input',
+   initialValue: '',
+   required:true,
+   rules: [
+     { required: true, message: '请输入' },
+   ]
+ },
+]
 export const workInformation = ({ type, queryInfo}: { type?: string, queryInfo?: any}) => [
   {
-    label: '员工类型',
-    key: 'select1',
-    widget: 'select',
-    span: "12",
-    option: [
-      { value: 10, label: "全职" },
-      { value: 20, label: "兼职" },
-      { value: 30, label: "实习" },
-      { value: 40, label: "劳务派遣" },
-      { value: 50, label: "劳务外包" },
-      { value: 60, label: "退休返聘" },
-      { value: 70, label: "无类型" }
-    ],
-  },
-  {
-    label: '员工状态',
-    key: 'select2',
-    widget: 'select',
-    span: "12",
-    option: [
-      { value: 10, label: "试用" },
-      { value: 20, label: "正式" },
-      { value: 30, label: "待离职" },
-      { value: 40, label: "已离职" },
-    ],
-  },
-  {
-    label: "试用期（天）",
-    key: "name",
-    widget: "input",
-    required: true,
-    disabled: type === "add" ? false : true,
-    initialValue: (queryInfo as any)?.name,
-    span: "12",
-    readSpan: 1,
-  },
-  {
-    label: '转正日期',
-    key: 'dateInput',
+    label: '时间',
+    key: 'endTime',
     widget: 'dateInput',
-    span: "12",
-    widgetProps: {
-      format: 'YYYY-MM-DD'
-    },
-  },
-]
-export const educationalInformation = ({ type, queryInfo}: { type?: string, queryInfo?: any}) => [
-  {
-    label: '最高学历',
-    key: 'select1',
-    widget: 'select',
-    span: "12",
-    option: [
-      { value: 10, label: "本科" },
-      { value: 20, label: "硕士" },
-      { value: 30, label: "博士" },
-      { value: 40, label: "专科" },
-    ],
-  },
-  {
-    label: "毕业院校",
-    key: "name",
-    widget: "input",
-    required: true,
-    disabled: type === "add" ? false : true,
-    initialValue: (queryInfo as any)?.name,
-    span: "12",
-    readSpan: 1,
-  },
-  {
-    label: '毕业时间',
-    key: 'dateInput',
-    widget: 'dateInput',
-    span: "12",
     widgetProps: {
       format: 'YYYY-MM-DD'
     },
   },
   {
-    label: "所学专业",
-    key: "name",
+    label: "工作单位",
+    key: "company",
     widget: "input",
     required: true,
     disabled: type === "add" ? false : true,
-    initialValue: (queryInfo as any)?.name,
-    span: "12",
+    readSpan: 1,
+  },
+  {
+    label: "职务及工作内容",
+    key: "desc",
+    widget: "input",
+    required: true,
+    disabled: type === "add" ? false : true,
     readSpan: 1,
   },
 ]
 export const contractSituation = ({ type, queryInfo}: { type?: string, queryInfo?: any}) => [
   {
-    label: '合同类型',
-    key: 'select1',
-    widget: 'select',
-    span: "12",
-    option: [
-      { value: 10, label: "固定期限" },
-      { value: 20, label: "无固定期限" },
-      { value: 30, label: "以完成一定工作任务为限" },
-    ],
-  },
-  {
-    label: "合同名称",
+    label: "姓名",
     key: "name",
     widget: "input",
     required: true,
     disabled: type === "add" ? false : true,
-    initialValue: (queryInfo as any)?.name,
-    span: "12",
     readSpan: 1,
   },
   {
-    label: '合同起始日期',
-    key: 'dateInput',
-    widget: 'dateInput',
-    span: "12",
-    widgetProps: {
-      format: 'YYYY-MM-DD'
-    },
-  },
-  {
-    label: '合同终止日期',
-    key: 'dateInput2',
-    widget: 'dateInput',
-    span: "12",
-    widgetProps: {
-      format: 'YYYY-MM-DD'
-    },
-  },
-]
-export const bankInformation = ({ type, queryInfo}: { type?: string, queryInfo?: any}) => [
-  {
-    label: "银行卡号",
-    key: "name",
+    label: "关系",
+    key: "relation",
     widget: "input",
     required: true,
     disabled: type === "add" ? false : true,
-    initialValue: (queryInfo as any)?.name,
-    span: "12",
     readSpan: 1,
   },
   {
-    label: "开户行",
-    key: "bakn",
+    label: "现单位及职务",
+    key: "desc",
     widget: "input",
     required: true,
     disabled: type === "add" ? false : true,
-    initialValue: (queryInfo as any)?.name,
-    span: "12",
     readSpan: 1,
-  }, 
+  },
 ]
+// export const bankInformation = ({ type, queryInfo}: { type?: string, queryInfo?: any}) => [
+//   {
+//     label: '起止日期',
+//     key: 'endTime',
+//     widget: 'dateInput',
+//     widgetProps: {
+//       format: 'YYYY-MM-DD'
+//     },
+//   },
+//   {
+//     label: "工作单位",
+//     key: "company",
+//     widget: "input",
+//     required: true,
+//     disabled: type === "add" ? false : true,
+//     initialValue: (queryInfo as any)?.name,
+//     span: "12",
+//     readSpan: 1,
+//   },
+//   {
+//     label: "职务及工作内容",
+//     key: "desc",
+//     widget: "input",
+//     required: true,
+//     disabled: type === "add" ? false : true,
+//     initialValue: (queryInfo as any)?.name,
+//     span: "12",
+//     readSpan: 1,
+//   }, 
+// ]
 export const addItems = (data?: any, queryInfo?: any)=>[
   {
     label: '起止日期',
