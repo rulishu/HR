@@ -1,12 +1,19 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes } from '@/servers/sys/dataDictionary';
+import { selectList, deletes, getDetails, dictDeletes } from '@/servers/sys/dataDictionary';
 
 const route = {
   name: "sysDataDictionary",
   state: {
     dataList: [],
+    page: 1,
+    pageSize: 10,
+    total: 0,
     isDelete: false,
+
+    dictDataList: [],
+    dictData: undefined, // 点击查看字典数据存储的数据
+    isDictDelect: false, // 是否是右侧字典列表里面的删除
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -15,7 +22,8 @@ const route = {
     }),
     hideModal: (state: any) => ({
       ...state,
-      isDelete: false
+      isDelete: false,
+      isDictDelect: false,
     })
   },
   effects: (dispatch: Dispatch) => ({
@@ -24,20 +32,33 @@ const route = {
     */
     async selectList(payload?: KktproKeys, state?: any) {
       const { callback, ...other} = payload || {}
-      const { code, data } = await selectList(other);
+      const { sysDataDictionary: { page, pageSize }} = state;
+      const params = {
+        page,
+        pageSize,
+        ...other,
+      }
+      const { code, data } = await selectList(params);
       if (code === 200 && data) {
-        const newData = data || []
-        if (callback) {
-          callback(newData)
-        } else {
-          dispatch.sysDataDictionary.updateState({
-            dataList: newData
-          });
-          // 为了避免字典管理管理弹层里面的路由数据不是最新，获取到数据后，存储一份到项目管理弹层modal里面
-          dispatch.sysItemsModal.updateState({
-            companyList: newData
-          });
-        }
+        dispatch.sysDataDictionary.updateState({
+          dataList: data.list || [],
+          total: data.total,
+          page: params.page
+        });
+      }
+    },
+    /**
+     * 获取字典详情列表
+    */
+    async getDetails(payload?: KktproKeys, state?: any) {
+      const { sysDataDictionary: { dictData }} = state;
+      const { code, data } = await getDetails({
+        dictType: dictData.dictType
+      });
+      if (code === 200 && data) {
+        dispatch.sysDataDictionary.updateState({
+          dictDataList: data || []
+        });
       }
     },
     /**
@@ -53,6 +74,22 @@ const route = {
         Notify.success({ description: msg || '删除成功' });
         dispatch.sysDataDictionary.hideModal();
         dispatch.sysDataDictionary.selectList();
+      }
+    },
+    /**
+     * 删除字典项
+    */
+    async dictDeletes(_?: any, state?: any) {
+      const { sysDataDictionaryModal } = state;
+      const { dictDetailsData = {} } = sysDataDictionaryModal;
+      const { code, msg } = await dictDeletes({
+        ids: [dictDetailsData.dictCode]
+      });
+      if (code === 200) {
+        Notify.success({ description: msg || '删除成功' });
+        dispatch.sysDataDictionary.hideModal();
+        dispatch.sysDataDictionary.selectList();
+        dispatch.sysDataDictionary.getDetails();
       }
     }
   })

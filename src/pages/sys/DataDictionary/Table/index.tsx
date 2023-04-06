@@ -4,23 +4,33 @@ import { columns } from './utils';
 
 const Page = () => {
   const {
-    sysDataDictionary: { dataList, isDelete },
+    sysDataDictionary: { dataList, isDelete, isDictDelect, page, pageSize, total },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
-  // 新增 / 编辑 / 新增部门 / 编辑部门
+  // 新增 / 编辑
   const onModals = (type: 'add' | 'edit', data?: any) => {
-    const _type = data && data.type === 'department' ? 'departmentEdit' : type;
-    dispatch.sysDataDictionaryModal.onModals({ type: _type, data, isForm: true });
+    dispatch.sysDataDictionaryModal.onModals({ type, data, isForm: true });
   }
 
   // 删除
   const onDelete = (data: any) => {
     dispatch.sysDataDictionary.updateState({
-      isDelete: true
+      isDelete: true,
+      isDictDelect: false,
     });
     dispatch.sysDataDictionaryModal.updateState({
       detailsData: data
+    });
+  }
+
+  /**
+   * 查看字典数据
+  */
+  const onShow = (data: any) => {
+    dispatch.sysDataDictionary.updateState({
+      dictData: data,
+      dictDataList: data.dictData || []
     });
   }
 
@@ -29,10 +39,19 @@ const Page = () => {
   }
 
   const onConfirm = () => {
-    dispatch.sysDataDictionary.deletes();
+    if (isDictDelect) {
+      dispatch.sysDataDictionary.dictDeletes();
+    } else {
+      dispatch.sysDataDictionary.deletes();
+    }
   }
 
-  const onTurnPages = (current: number) => {}
+  const onTurnPages = (current: number) => {
+    dispatch.sysUser.updateState({
+      page: current
+    });
+    dispatch.sysDataDictionary.selectList();
+  }
 
   return (
     <Card noHover={true}>
@@ -44,15 +63,16 @@ const Page = () => {
       <Table
         columns={columns({
           onEdit: (data) => onModals('edit', data),
-          onDelete
+          onDelete,
+          onShow
         })}
         data={dataList}
         empty={<Empty />}
         footer={(
           <Pagination
-            current={1}
-            pageSize={20}
-            total={100}
+            current={page}
+            pageSize={pageSize}
+            total={total}
             divider
             onChange={(current) => onTurnPages(current)}
           />

@@ -10,7 +10,7 @@ const formSearchList = [
   },
   {
     label: "字典类别编号",
-    key: "firstCode",
+    key: "dictType",
     widget: "input",
   },
   {
@@ -18,8 +18,8 @@ const formSearchList = [
     key: "enable",
     widget: "radio",
     option: [
-      { label: '正常', value: 1 },
-      { label: '停用', value: 0 }
+      { label: '正常', value: '1' },
+      { label: '停用', value: '0'}
     ]
   },
 ];
@@ -28,6 +28,11 @@ const Search = () => {
   const dispatch = useDispatch<Dispatch>();
 
   const onScreenSubmit = (current: object) => {
+    dispatch.sysDataDictionary.updateState({
+      page: 1,
+      dictData: undefined,
+      dictDataList: []
+    });
     dispatch.sysDataDictionary.selectList({ ...current });
   }
 

@@ -1,34 +1,37 @@
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm } from "@uiw-admin/components";
 import { Drawer } from "uiw";
-import { formList, ModalTitle } from './utils';
+import { dictFormList, ModalDictTitle } from './utils';
 
 function Modals() {
   const {
     sysDataDictionaryModal: {
-      isVisible,
-      detailsData,
-      type
+      isDictVisible,
+      dictDetailsData,
+      dictType
     },
+    sysDataDictionary: { dictData }
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   //提交按钮
   const onAddSubmit = async (current: any) => {
     const params = {
-      ...current
+      ...current,
+      dictType: (dictData as any)?.dictType
     }
-    if (type === "add") {
+    if (dictType === "add") {
       dispatch({
-        type: "sysDataDictionaryModal/onAdd",
+        type: "sysDataDictionaryModal/onDictAdd",
         payload: params
       });
-    } else if (type === 'edit') {
+    } else if (dictType === 'edit') {
       // 编辑
       dispatch({
-        type: "sysDataDictionaryModal/onEdit",
+        type: "sysDataDictionaryModal/onDictEdit",
         payload: {
-          dictId: (detailsData as any)?.dictId,
+          dictType: (dictData as any)?.dictType,
+          dictCode: (dictDetailsData as any)?.dictCode,
           ...params
         },
       });
@@ -39,14 +42,14 @@ function Modals() {
   const onClosed = () => {
     dispatch({
       type: "sysDataDictionaryModal/updateState",
-      payload: { isVisible: false },
+      payload: { isDictVisible: false },
     });
   };
   return (
     <Drawer
-      title={type && ModalTitle[type]}
+      title={dictType && ModalDictTitle[dictType]}
       size={700}
-      isOpen={isVisible}
+      isOpen={isDictVisible}
       onClose={() => onClosed()}
       type="danger"
       useButton={false}
@@ -58,7 +61,7 @@ function Modals() {
         saveButtonProps={{ type: "primary" }}
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
-        formDatas={formList({ type, detailsData })}
+        formDatas={dictFormList({ type: dictType, dictDetailsData })}
       />
     </Drawer>
   );
