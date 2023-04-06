@@ -74,6 +74,7 @@ const route = {
         Notify.success({ description: msg || '删除成功' });
         dispatch.sysDataDictionary.hideModal();
         dispatch.sysDataDictionary.selectList();
+        dispatch.global.getDict();
       }
     },
     /**
@@ -90,6 +91,7 @@ const route = {
         dispatch.sysDataDictionary.hideModal();
         dispatch.sysDataDictionary.selectList();
         dispatch.sysDataDictionary.getDetails();
+        dispatch.global.getDict();
       }
     }
   })

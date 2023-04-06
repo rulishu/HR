@@ -1,5 +1,5 @@
-import React from 'react';
-import { KktproKeys } from '@kkt/pro';
+import React, { useEffect } from 'react';
+import { KktproKeys, useDispatch, Dispatch } from '@kkt/pro';
 import { Card } from 'uiw';
 import { ProForm } from "@uiw-admin/components";
 import { FormPage } from '@/components'
@@ -10,6 +10,12 @@ import { formData } from './utils';
 import { PlusItems, PlusIcon  } from './style';
 
 const Page = () => {
+  const dispatch = useDispatch<Dispatch>();
+
+  // 每次进入页面清楚之前遗留的数据
+  useEffect(() => {
+    dispatch.employeeInduction.clearState();
+  }, [dispatch])
 
   return (
     <FormPage 

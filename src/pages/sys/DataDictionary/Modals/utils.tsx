@@ -51,8 +51,8 @@ export const formList = ({
       initialValue: (detailsData as any)?.status,
       hide: type === 'add',
       option: [
-        { label: '正常', value: '1' },
-        { label: '停用', value: '0' }
+        { label: '正常', value: '0' },
+        { label: '停用', value: '1' }
       ],
       span: "12",
       readSpan: 1,
@@ -93,8 +93,8 @@ export const dictFormList = ({ type, dictDetailsData }: FormListProps) => {
       initialValue: (dictDetailsData as any)?.status,
       hide: type === 'add',
       option: [
-        { label: '正常', value: '1' },
-        { label: '停用', value: '0' }
+        { label: '正常', value: '0' },
+        { label: '停用', value: '1' }
       ],
       span: "12",
       readSpan: 1,

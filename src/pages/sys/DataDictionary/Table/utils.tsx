@@ -27,8 +27,8 @@ export const columns = ({
     with: 100,
     render: (text: any) => (
       <Tag
-        title={text === '1' ? "正常" : "停用"}
-        color={text === '1' ? "#28a745" : "#dc3545"}
+        title={text === '0' ? "正常" : "停用"}
+        color={text === '0' ? "#28a745" : "#dc3545"}
       />
     ),
   },
@@ -81,8 +81,8 @@ export const dictColumns = ({
     with: 100,
     render: (text: any) => (
       <Tag
-        title={text === '1' ? "正常" : "停用"}
-        color={text === '1' ? "#28a745" : "#dc3545"}
+        title={text === '0' ? "正常" : "停用"}
+        color={text === '0' ? "#28a745" : "#dc3545"}
       />
     ),
   },

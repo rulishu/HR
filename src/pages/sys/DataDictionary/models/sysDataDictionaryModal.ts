@@ -51,7 +51,7 @@ const route = {
       const { isForm } = sysDataDictionaryModal;
       const { code, msg } = await add({
         ...payload,
-        status: '1'
+        status: '0'
       });
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
@@ -62,6 +62,7 @@ const route = {
         dispatch.sysDataDictionaryModal.updateState({
           isVisible: false
         });
+        dispatch.global.getDict();
       }
     },
     /**
@@ -80,6 +81,7 @@ const route = {
         dispatch.sysDataDictionaryModal.updateState({
           isVisible: false
         });
+        dispatch.global.getDict();
       }
     },
     /**
@@ -88,7 +90,7 @@ const route = {
     async onDictAdd(payload: KktproKeys, state: any) {
       const { code, msg } = await dictAdd({
         ...payload,
-        status: '1'
+        status: '0'
       });
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
@@ -96,6 +98,7 @@ const route = {
         dispatch.sysDataDictionaryModal.updateState({
           isDictVisible: false
         });
+        dispatch.global.getDict();
       }
     },
     /**
@@ -109,6 +112,7 @@ const route = {
         dispatch.sysDataDictionaryModal.updateState({
           isDictVisible: false
         });
+        dispatch.global.getDict();
       }
     },
   })
