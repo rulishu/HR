@@ -5,6 +5,8 @@ import Table from './Table';
 import MakeupRecord from '../MakeupRecord'
 import LeaveRecord from '../LeaveRecord'
 import OvertimeRecord from '../OvertimeRecord'
+import '../style/index.css';
+
 const Page = () => {
   return (
     <Fragment>

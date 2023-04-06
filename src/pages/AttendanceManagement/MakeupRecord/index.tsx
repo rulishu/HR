@@ -1,6 +1,5 @@
 import React from 'react';
 import { ProTable, useTable } from '@uiw-admin/components';
-import '../style/index.css';
 
 function MakeupRecord() {
   const table = useTable('https://randomuser.me/api', {

@@ -14,8 +14,11 @@
 .tabsRecord .w-tabs-item {
   padding: 12px;
 }
-.tabsRecord .w-tabs-line > div > div > .w-tabs-bar > .w-tabs-nav > .w-tabs-slide {
-  height: 2px;
+.tabsRecord .w-tabs-bar > .w-tabs-nav > .w-tabs-slide {
+  height: 2px !important;
+}
+.tabsRecord .w-tabs-bar > .w-tabs-nav::after {
+  border: 0 !important;
 }
 .formRecordAtt .w-form {
   margin-bottom: 0 !important;
@@ -36,4 +39,9 @@
 
 .formRecord .w-btn {
   margin-right: 0 !important;
+  margin-left: 4px;
+}
+.formRecord .w-table {
+  padding: 5px 14px;
+  background: #fff;
 }

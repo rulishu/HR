@@ -51,11 +51,12 @@ const Search = () => {
   }
   return (
     <ProForm
-      formType="card"
+      formType="pure"
       showSaveButton
       showResetButton
       saveButtonProps={{
         type: "primary",
+        label: '搜索'
       }}
       cardProps={{
         noHover: true,
