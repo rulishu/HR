@@ -1,3 +1,4 @@
+import { useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm } from "@uiw-admin/components";
 
 //搜索表单
@@ -9,12 +10,12 @@ const formSearchList = [
   },
   {
     label: "入职日期",
-    key: "time",
+    key: "entryDate",
     widget: "dateInput",
   },
   {
     label: "所属部门",
-    key: "workState",
+    key: "department",
     widget: "select",
     option: [
       { value: 10, label: "研发部" },
@@ -29,28 +30,34 @@ const formSearchList = [
       { value: 10, label: "兼职" },
       { value: 20, label: "劳务派遣" },
       { value: 30, label: "全职" },
-      { value: 30, label: "实习" },
+      { value: 40, label: "实习" },
     ],
   },
   {
     label: "员工状态",
-    key: "employeeStatus",
+    key: "state",
     widget: "select",
     option: [
-      { value: 10, label: "正式" },
+      { value: 1, label: "正式" },
       { value: 20, label: "试用" },
-      { value: 30, label: "实习" },
-      { value: 40, label: "已离职" },
+      { value: 3, label: "实习" },
+      { value: 2, label: "已离职" },
     ],
   },
 ];
 
 const Search = () => {
-  const onScreenSubmit = (current: object) => {}
+  const dispatch = useDispatch<Dispatch>();
 
+  const onScreenSubmit = (current?: object) => {
+    dispatch.employeeProfile.selectStaffFile({
+      ...current,
+      page: 1
+    });
+  }
   return (
     <ProForm
-      formType="pure"
+      formType="card"
       showSaveButton
       showResetButton
       saveButtonProps={{
