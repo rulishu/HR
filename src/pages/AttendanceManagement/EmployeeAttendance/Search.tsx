@@ -27,22 +27,25 @@ const formSearchList = [
 ];
 
 const Search = () => {
-  const onScreenSubmit = (current: object) => {}
+  const onScreenSubmit = (current: object) => { }
 
   return (
-    <ProForm
-      formType="pure"
-      showSaveButton
-      showResetButton
-      saveButtonProps={{
-        type: "primary",
-      }}
-      cardProps={{
-        noHover: true,
-      }}
-      onSubmit={(_, current) => onScreenSubmit(current)}
-      formDatas={formSearchList}
-    />
+    <div className='formRecordAtt'>
+      <ProForm
+        formType="pure"
+        showSaveButton
+        showResetButton
+        saveButtonProps={{
+          type: "primary",
+          label: '搜索'
+        }}
+        cardProps={{
+          noHover: true,
+        }}
+        onSubmit={(_, current) => onScreenSubmit(current)}
+        formDatas={formSearchList}
+      />
+    </div>
   )
 }
 

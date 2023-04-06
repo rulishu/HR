@@ -40,15 +40,9 @@ const route = {
       }
       const { code, data } = await selectStaffFile(params);
       if (code === 200 && data) {
-        const { list, total } = data;
-        const newData = (list || []).map((item: KktproKeys) => ({
-          ...item,
-          password: undefined,
-          roleIds: item.roleIds.length > 0 && item.roleIds[0]
-        }))
         dispatch.employeeProfile.updateState({
-          dataList: newData,
-          total,
+          dataList: data,
+          total: data.total,
           page: params.page
         });
       }
