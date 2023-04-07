@@ -17,14 +17,13 @@ const Page = () => {
         console.log("=>", key, tab);
       }}>
         <Tabs.Pane label="人员信息档案" key="1">
-
+          <Modals />
         </Tabs.Pane>
         <Tabs.Pane label="人员信息档案记录" key="2">
           <Card noHover bordered={false} style={{ marginBottom: 14 }}><Search /></Card>
           <Card noHover bordered={false}><Table /></Card>
         </Tabs.Pane>
       </Tabs>
-      <Modals />
     </Fragment>
   )
 }

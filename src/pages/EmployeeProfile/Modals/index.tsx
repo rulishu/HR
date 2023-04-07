@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { Tabs } from "uiw";
+import { Tabs, Button } from "uiw";
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
-import { ProDrawer, ProForm, useForm } from '@uiw-admin/components'
+import { ProForm, useForm } from '@uiw-admin/components'
 import formatter from "@uiw/formatter";
 import { workInformation, contractSituation, formListData, personalInformation, educationalItem } from './utils';
 import EducationalInformation from './informationItem'
@@ -47,50 +47,7 @@ function Modals() {
   };
 
   return (
-    <ProDrawer
-      visible={isVisible}
-      width={800}
-      onClose={() => onClosed()}
-      title={type === "add" ? "新增" : "编辑"}
-      buttons={[
-        {
-          label: '取消',
-          style: { width: '80px' },
-          onClick: () => onClosed(),
-        },
-        {
-          label: '保存',
-          type: 'primary',
-          style: { width: '80px' },
-          onClick: async () => {
-            // 触发验证
-            await form?.submitvalidate()
-            await personalForm?.submitvalidate()
-            await educationForm?.submitvalidate()
-            await workForm?.submitvalidate()
-            await familyForm?.submitvalidate()
-            
-            // 获取错误信息
-            const errors = form.getError()
-            const errors2 = personalForm.getError()
-
-            if (errors && Object.keys(errors).length > 0) return
-            if (errors2 && Object.keys(errors2).length > 0) return
-            const validateList: any =
-              formList.map((itm) => itm.validateFieldsAndGetValue()) || [];
-            const values = await asyncAwaitFormList(validateList);
-            console.log("values", values)
-            dispatch({
-              type: `employeeProfile/${type === 'add' ? 'insert' : 'addTeam'}`,
-              payload: {
-                ...queryInfo,
-                educationalExperience: (queryInfo as any).educationalExperience?.concat(values),
-              },
-            })
-          },
-        },
-      ]}>
-
+    <>
       <ProForm
         form={form}
         formType="pure"
@@ -189,7 +146,39 @@ function Modals() {
           />
         </Tabs.Pane>
       </Tabs>
-    </ProDrawer>
+      <Button 
+        style={{ marginTop:10,width:80 }} 
+        type="primary" 
+        onClick={async()=>{
+          // 触发验证
+          await form?.submitvalidate()
+          await personalForm?.submitvalidate()
+          await educationForm?.submitvalidate()
+          await workForm?.submitvalidate()
+          await familyForm?.submitvalidate()
+          
+          // 获取错误信息
+          const errors = form.getError()
+          const errors2 = personalForm.getError()
+
+          if (errors && Object.keys(errors).length > 0) return
+          if (errors2 && Object.keys(errors2).length > 0) return
+          const validateList: any =
+            formList.map((itm) => itm.validateFieldsAndGetValue()) || [];
+          const values = await asyncAwaitFormList(validateList);
+          console.log("values", values)
+          dispatch({
+            type: `employeeProfile/${type === 'add' ? 'insert' : 'addTeam'}`,
+            payload: {
+              ...queryInfo,
+              educationalExperience: (queryInfo as any).educationalExperience?.concat(values),
+            },
+          })
+       }}
+       >
+        保存
+      </Button>
+      </>
   );
 }
 
