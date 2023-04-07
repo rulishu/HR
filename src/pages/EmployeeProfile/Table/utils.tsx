@@ -1,5 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
-import { Button, Checkbox } from "uiw";
+import { Checkbox } from "uiw";
 
 interface columnsProps {
   onCheck?: (rowData: KktproKeys, e: KktproKeys) => void;
@@ -27,88 +27,80 @@ export const columns = ({
   },
   {
     title: "姓名",
-    key: "code",
-    render: (text: any, key: any, rowData: any) => (
-      <Button
-        type="link"
-        onClick={() => {
-          onRole?.(rowData);
-        }}
-      >
-        {text}
-      </Button>
-    ),
+    key: "name",
   },
-  {
-    title: "年龄",
-    key: "tip",
-  },
+  // {
+  //   title: "年龄",
+  //   key: "tip",
+  // },
   {
     title: "部门",
-    key: "tip",
+    key: "department",
   },
   {
     title: "职位",
-    key: "tip",
+    key: "post",
   },
   {
     title: "手机号",
-    key: "tip",
+    key: "phone",
   },
   {
     title: "邮箱",
-    key: "tip",
+    key: "email",
   },
   {
-    title: "入职时间",
-    key: "tip",
+    title: "入职日期",
+    key: "entryDate",
   },
   {
-    title: "证件类型",
-    key: "tip",
+    title: "身份证号",
+    key: "idNumber",
   },
   {
-    title: "证件号码",
-    key: "tip",
+    title: "出生日期",
+    key: "birth",
   },
   {
-    title: "身份证地址",
-    key: "tip",
+    title: "性别",
+    key: "gender",
+  },
+  {
+    title: "籍贯",
+    key: "nativePlace",
   },
   {
     title: "婚姻状况",
-    key: "tip",
+    key: "isMarried",
   },
   {
-    title: "员工类型",
-    key: "tip",
+    title: "现居地",
+    key: "livingPlace",
+  },
+  {
+    title: "政治面貌",
+    key: "politicalStatus",
   },
   {
     title: "员工状态",
-    key: "tip",
+    key: "state",
   },
-  {
-    title: "学历",
-    key: "tip",
-  },
-  
-  
-  {
-    title: "操作",
-    key: "edit",
-    width: 80,
-    render: (text: any, key: any, rowData: any) => {
-      return (
-        <Button
-          icon="edit"
-          type="primary"
-          onClick={(e) => {
-            onEdit?.(rowData, e);
-          }}
-        >
-          编辑
-        </Button>
-      );
-    },
-  },
+  // {
+  //   title: "操作",
+  //   key: "edit",
+  //   width: 80,
+  //   render: (text: any, key: any, rowData: any) => {
+  //     return (
+  //       <Button
+  //         icon="edit"
+  //         type="primary"
+  //         onClick={(e) => {
+  //           onEdit?.(rowData, e);
+  //         }}
+  //       >
+  //         编辑
+  //       </Button>
+  //     );
+  //   },
+  // },
 ]
