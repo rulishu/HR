@@ -20,11 +20,9 @@ function Modals() {
   //提交按钮
   const onAddSubmit = async (current: any) => {
     const roleIds = current.roleIds;
-    const locked = current.locked === 'true' ? 1 : 2
     const params = {
       ...current,
       roleIds: !Array.isArray(roleIds) ? [roleIds] : roleIds,
-      locked
     }
     if (type === "add") {
       dispatch({

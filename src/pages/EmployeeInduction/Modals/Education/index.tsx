@@ -6,30 +6,49 @@ import { formList, ModalTitle } from './utils';
 function Modals() {
   const {
     employeeInduction: {
-      educationType,
       isEducationVisible,
+      educationType,
+      educationData,
+      educationIndex = 0,
+      educationObj
     },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   //提交按钮
   const onAddSubmit = async (current: any) => {
-    // const params = {
-    //   ...current,
-    //   dictType: (dictData as any)?.dictType
-    // }
+    const newData: any[] = [...educationData];
+    if (educationType === 'add') {
+      newData.push(current);
+    } else {
+      newData[educationIndex] = current;
+    }
+    dispatch({
+      type: "employeeInduction/updateState",
+      payload: {
+        educationData: newData,
+        isEducationVisible: false,
+        educationObj: undefined
+      }
+    });
   };
 
   //关闭弹窗
   const onClosed = () => {
     dispatch({
       type: "employeeInduction/updateState",
-      payload: { isEducationVisible: false },
+      payload: {
+        isEducationVisible: false,
+        educationObj: undefined
+      },
     });
   };
 
   const onFormChange = (current: any) => {
-    // console.log(4444, current)
+    dispatch({
+      type: "employeeInduction/updateState",
+      payload: { educationObj: current },
+    });
   }
 
   return (
@@ -49,7 +68,7 @@ function Modals() {
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
         onChange={(_, current) => onFormChange(current)}
-        formDatas={formList()}
+        formDatas={formList({ data: educationObj }) as any}
       />
     </Drawer>
   );

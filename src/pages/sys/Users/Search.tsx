@@ -13,8 +13,8 @@ const formSearchList = [
     widget: "radio",
     key: "locked",
     option: [
-      { label: "正常", value: 1 },
-      { label: "禁用", value: 2 },
+      { label: "正常", value: '1' },
+      { label: "禁用", value: '2' },
     ],
   },
 ];

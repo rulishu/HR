@@ -8,28 +8,47 @@ function Modals() {
     employeeInduction: {
       workType,
       isWorkVisible,
+      workData,
+      workIndex = 0,
+      workObj
     },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   //提交按钮
   const onAddSubmit = async (current: any) => {
-    // const params = {
-    //   ...current,
-    //   dictType: (dictData as any)?.dictType
-    // }
+    const newData: any[] = [...workData];
+    if (workType === 'add') {
+      newData.push(current);
+    } else {
+      newData[workIndex] = current;
+    }
+    dispatch({
+      type: "employeeInduction/updateState",
+      payload: {
+        workData: newData,
+        isWorkVisible: false,
+        workObj: {}
+      }
+    });
   };
 
   //关闭弹窗
   const onClosed = () => {
     dispatch({
       type: "employeeInduction/updateState",
-      payload: { isWorkVisible: false },
+      payload: {
+        isWorkVisible: false,
+        workObj: undefined
+      },
     });
   };
 
   const onFormChange = (current: any) => {
-    // console.log(4444, current)
+    dispatch({
+      type: "employeeInduction/updateState",
+      payload: { workObj: current },
+    });
   }
 
   return (
@@ -49,7 +68,7 @@ function Modals() {
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
         onChange={(_, current) => onFormChange(current)}
-        formDatas={formList()}
+        formDatas={formList({ data: workObj }) as any}
       />
     </Drawer>
   );

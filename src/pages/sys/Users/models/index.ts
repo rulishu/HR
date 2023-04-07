@@ -41,6 +41,7 @@ const route = {
         const newData = (list || []).map((item: KktproKeys) => ({
           ...item,
           password: undefined,
+          locked: String(item.locked),
           roleIds: item.roleIds.length > 0 && item.roleIds[0]
         }))
         dispatch.sysUser.updateState({

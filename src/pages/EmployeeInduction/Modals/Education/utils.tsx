@@ -9,11 +9,6 @@ export const ModalTitle: KktproKeys = {
   edit: '编辑教育经历'
 }
 
-// const disabledDate = (currentDate: Date) => {
-//   // 今天和今天之前不能选择
-//   return currentDate && currentDate.valueOf() < Date.now();
-// }
-
 export const formList = (props?: FormListProps) => {
   const { data } = props || {};
   return [
@@ -30,7 +25,7 @@ export const formList = (props?: FormListProps) => {
         autoClose: true
       },
       rules: [
-        { required: true, message: '请输入字典类别名称' },
+        { required: true, message: '请选择开始时间' },
       ],
     },
     {
@@ -46,7 +41,16 @@ export const formList = (props?: FormListProps) => {
         autoClose: true
       },
       rules: [
-        { required: true, message: '请输入字典类别名称' },
+        { required: true, message: '请选择结束时间' },
+        { 
+          validator: (value: any) => {
+            if (data.startTime && value) {
+              return data.startTime.valueOf() < value.valueOf();
+            }
+            return true;
+          },
+          message: '结束时间不能小于开始时间'
+        }
       ],
     },
     {

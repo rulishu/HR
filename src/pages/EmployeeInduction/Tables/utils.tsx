@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { TipButton } from '@/components';
 
 interface FormListProps {
@@ -6,14 +7,17 @@ interface FormListProps {
 }
 
 
-export const educationColumn = () => [
+export const educationColumn = ({ onEdit, onRemove }: FormListProps) => [
   {
     title: "时间",
     key: "time",
+    width: 220,
     render: (text: any, key: any, rowData: any) => {
       const { startTime, endTime } = rowData;
       if (!startTime || !endTime) return '--'
-      return startTime + ' ~ ' + endTime;
+      const start = dayjs(startTime).format('YYYY-MM')
+      const end = dayjs(endTime).format('YYYY-MM')
+      return <div style={{ width: 180 }}>{start + ' ~ ' + end}</div>;
     },
   },
   {
@@ -32,18 +36,20 @@ export const educationColumn = () => [
     title: "操作",
     key: "edit",
     width: 100,
-    render: (text: any, key: any, rowData: any) => {
+    render: (text: any, key: any, rowData: any, rowNumber: number) => {
       return (
         <>
           <TipButton
             tip="编辑"
             icon="edit"
             type="primary"
+            onClick={() => onEdit?.(rowData, rowNumber)}
           />
           <TipButton
             tip="删除"
             type="danger"
             icon="delete"
+            onClick={() => onRemove?.(rowData, rowNumber)}
           />
         </>
       );
@@ -51,14 +57,17 @@ export const educationColumn = () => [
   },
 ]
 
-export const workColumn = () => [
+export const workColumn = ({ onEdit, onRemove }: FormListProps) => [
   {
     title: "起止日期",
     key: "time",
+    width: 220,
     render: (text: any, key: any, rowData: any) => {
       const { startTime, endTime } = rowData;
       if (!startTime || !endTime) return '--'
-      return startTime + ' ~ ' + endTime;
+      const start = dayjs(startTime).format('YYYY-MM-DD')
+      const end = dayjs(endTime).format('YYYY-MM-DD')
+      return <div style={{ width: 180 }}>{start + ' ~ ' + end}</div>;
     },
   },
   {
@@ -73,18 +82,20 @@ export const workColumn = () => [
     title: "操作",
     key: "edit",
     width: 100,
-    render: (text: any, key: any, rowData: any) => {
+    render: (text: any, key: any, rowData: any, rowNumber: number) => {
       return (
         <>
           <TipButton
             tip="编辑"
             icon="edit"
             type="primary"
+            onClick={() => onEdit?.(rowData, rowNumber)}
           />
           <TipButton
             tip="删除"
             type="danger"
             icon="delete"
+            onClick={() => onRemove?.(rowData, rowNumber)}
           />
         </>
       );
@@ -118,7 +129,6 @@ export const familyColumn = ({ onEdit, onRemove }: FormListProps) => [
     key: "edit",
     width: 100,
     render: (text: any, key: string, rowData: any, rowNumber: number) => {
-      console.log(444444, key, rowData)
       return (
         <>
           <TipButton

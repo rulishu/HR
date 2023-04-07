@@ -79,7 +79,6 @@ function Modals() {
             const validateList: any =
               formList.map((itm) => itm.validateFieldsAndGetValue()) || [];
             const values = await asyncAwaitFormList(validateList);
-            console.log("values", values)
             dispatch({
               type: `employeeProfile/${type === 'add' ? 'insert' : 'addTeam'}`,
               payload: {

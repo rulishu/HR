@@ -99,10 +99,10 @@ export const formList = ({
     readSpan: 1,
     span: "24",
     hide: type === "add" ? true : false,
-    initialValue: (!!detailsData?.locked).toString(),
+    initialValue: detailsData?.locked,
     option: [
-      { label: "正常", value: "true" },
-      { label: "禁用", value: "false" },
+      { label: "正常", value: '1' },
+      { label: "禁用", value: '2' },
     ],
   },
 ]

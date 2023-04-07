@@ -15,7 +15,7 @@ const formSearchList = [
   },
   {
     label: "状态",
-    key: "enable",
+    key: "status",
     widget: "radio",
     option: [
       { label: '正常', value: '0' },
