@@ -1,27 +1,53 @@
 import React, { useEffect } from 'react';
-import { useDispatch, Dispatch } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Card } from 'uiw';
-import { ProForm } from "@uiw-admin/components";
+import { ProForm, useForm } from "@uiw-admin/components";
 import { FormPage } from '@/components'
 import Education from './Tables/Education'
 import Work from './Tables/Work';
 import Family from './Tables/Family';
 import Modals from './Modals';
-import { formData, formDataProps, addConfig } from './utils';
+import { formData, formDataVoid, addConfig } from './utils';
+import { asyncAwaitFormList } from '@/utils/valid';
 import { PlusItems, PlusIcon  } from './style';
 
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
+  const {
+    employeeInduction: {
+      companyList = [],
+      departmentList = [],
+      allFormData = {}
+    },
+    global: { dictObject },
+  } = useSelector((state: RootState) => state);
+
+  const form1 = useForm();
+  const form2 = useForm();
 
   // 每次进入页面清楚之前遗留的数据
   useEffect(() => {
     dispatch.employeeInduction.clearState();
   }, [dispatch]);
 
+  // 获取公司数据
+  useEffect(() => {
+    if (companyList.length === 0) {
+      dispatch.sysOrganization.selectList({
+        callback: (data: any) => {
+          dispatch.employeeInduction.updateState({
+            companyList: data
+          })
+        }
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [companyList])
+
   /**
    * 点击新增 教育经历 / 工作经历 / 家庭成员
   */
-  const onAdd = ({ type }: formDataProps) => {
+  const onAdd = ({ type }: formDataVoid) => {
     if (!type) return;
     dispatch({
       type: "employeeInduction/updateState",
@@ -29,23 +55,58 @@ const Page = () => {
     });
   }
 
+  const onSubmit = async () => {
+    const values: any = await asyncAwaitFormList([
+      form1?.validateFieldsAndGetValue(),
+      form2.validateFieldsAndGetValue()
+    ])
+    const obj = {...values[0], ...values[1]}
+    console.log(11, obj);
+
+    console.log('allFormData ===>', allFormData)
+  }
+
+  /**
+   * 监听入职公司变化
+  */
+  const onCompanyChange = async (value: string) => {
+    const values = await form1.getFieldValues?.();
+    const parmas = {
+      ...values,
+      company: value,
+      department: undefined
+    }
+    form1.setFields?.(parmas);
+    dispatch.employeeInduction.getDepartmentList(value);
+  }
+
+  const _formData = formData({
+    companyList,
+    departmentList,
+    data: allFormData,
+    dictObject,
+    onCompanyChange
+  });
+
   return (
     <FormPage 
       buttons={[
         {
           type: "primary",
-          label: '提交'
+          label: '提交',
+          onClick: onSubmit
         },
         {
           label: '重置'
         },
       ]}
     >
-      {formData.map((item: formDataProps, index: number) => (
+      {_formData.map((item: formDataVoid, index: number) => (
         <React.Fragment key={index}>
           {!item.type ? (
             <ProForm
               title={item.title}
+              form={index === 0 ? form1 : form2}
               formType="card"
               saveButtonProps={{
                 type: "primary",
@@ -67,7 +128,7 @@ const Page = () => {
               {item.type === 'family' && <Family />}
             </Card>
           )}
-          {index !== formData.length - 1 && <div style={{ marginBottom: 20 }} />}
+          {index !== _formData.length - 1 && <div style={{ marginBottom: 20 }} />}
         </React.Fragment>
       ))}
       <Modals />

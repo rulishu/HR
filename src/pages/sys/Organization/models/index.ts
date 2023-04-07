@@ -50,7 +50,8 @@ const route = {
           });
           // 为了避免项目管理管理弹层里面的路由数据不是最新，获取到数据后，存储一份到项目管理弹层modal里面
           dispatch.sysItemsModal.updateState({
-            companyList: newData
+            companyList: newData,
+            employeeInduction: newData // 入职管理页面
           });
         }
       }

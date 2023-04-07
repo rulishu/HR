@@ -1,5 +1,14 @@
 import { KktproKeys } from '@kkt/pro';
-export interface formDataProps {
+import { valid } from '@/utils/valid';
+
+interface formDataProps {
+  companyList: any[];
+  departmentList: any[]
+  data: any,
+  dictObject: any;
+  onCompanyChange?: (value: string) => void;
+}
+export interface formDataVoid {
   title: string;
   tips?: string;
   /**
@@ -11,35 +20,87 @@ export interface formDataProps {
   child?: any[];
 }
 
-export const formData: formDataProps[] = [
+export const formData = ({
+  companyList,
+  departmentList,
+  data,
+  dictObject,
+  onCompanyChange
+}: formDataProps): formDataVoid[] => [
   {
     title: '入职信息',
     child: [
       {
-        label: "入职公司",
-        key: "a",
-        widget: "select",
-        option: [
-          { value: 10, label: "研发部" },
-          { value: 20, label: "人事部" },
+        label: "姓名",
+        key: "name",
+        widget: "input",
+        rules: [
+          { required: true, message: '请填写姓名' },
         ],
+        initialValue: data?.name,
+      },
+      {
+        label: "手机号",
+        key: "phone",
+        widget: "input",
+        rules: [
+          { required: true, message: '请填写手机号' },
+          { 
+            validator: (value: any) => {
+              if (value) {
+                return valid.isValidPhoneNumber(value);
+              }
+              return true;
+            },
+            message: '请填写正确的手机号'
+          }
+        ],
+        initialValue: data?.phone,
+      },
+      {
+        label: "入职日期",
+        key: "entryDate",
+        widget: "dateInput",
+        widgetProps: {
+          format: 'YYYY-MM-DD'
+        },
+        rules: [
+          { required: true, message: '请选择入职日期' },
+        ],
+        initialValue: data?.entryDate,
+      },
+      {
+        label: "入职公司",
+        key: "company",
+        widget: "select",
+        option: companyList.map(item => ({ label: item.companyName, value: item.id })),
+        rules: [
+          { required: true, message: '请选择入职公司' },
+        ],
+        initialValue: data?.company,
+        widgetProps: {
+          onChange: (e: any) => {
+            onCompanyChange?.(e.target.value)
+          }
+        }
       },
       {
         label: "入职部门",
-        key: "b",
+        key: "department",
         widget: "select",
-        option: [
-          { value: 10, label: "研发部" },
-          { value: 20, label: "人事部" },
+        option: departmentList,
+        rules: [
+          { required: true, message: '请选择入职部门' },
         ],
+        initialValue: data?.department,
       },
       {
         label: "入职岗位",
-        key: "c",
+        key: "post",
         widget: "select",
-        option: [
-          { value: 10, label: "研发部" },
-          { value: 20, label: "人事部" },
+        option: dictObject['post']?.child || [],
+        rules: [
+          { required: true, message: '请选择入职岗位' },
         ],
       },
     ]
@@ -48,107 +109,122 @@ export const formData: formDataProps[] = [
     title: '基本信息',
     child: [
       {
-        label: "姓名",
-        key: "b1",
-        widget: "input",
-      },
-      {
         label: "性别",
-        key: "b2",
+        key: "gender",
         widget: "radio",
-        option: [
-          { value: 10, label: "男" },
-          { value: 20, label: "女" },
+        option: dictObject['sex']?.child || [],
+        rules: [
+          { required: true, message: '请选择性别' },
         ],
       },
       {
         label: "出生日期",
-        key: "b3",
+        key: "birth",
         widget: "dateInput",
+        rules: [
+          { required: true, message: '请选择出生日期' },
+        ],
       },
       {
         label: "体重",
-        key: "b4",
+        key: "weight",
         widget: "input",
       },
       {
         label: "身高",
-        key: "b5",
+        key: "height",
         widget: "input",
       },
       {
-        label: "名族",
-        key: "b6",
+        label: "民族",
+        key: "nationality",
         widget: "input",
       },
       {
         label: "政治面貌",
-        key: "b7",
+        key: "politicalStatus",
         widget: "input",
       },
       {
         label: "籍贯",
-        key: "b8",
+        key: "nativePlace",
         widget: "input",
+        rules: [
+          { required: true, message: '请填写籍贯' },
+        ],
       },
       {
-        label: "婚姻装款",
-        key: "b9",
+        label: "婚姻状况",
+        key: "isMarried",
         widget: "select",
         option: [
-          { value: 10, label: "已婚" },
-          { value: 20, label: "未婚" },
+          { value: '已婚', label: "已婚" },
+          { value: '未婚', label: "未婚" },
+        ],
+        rules: [
+          { required: true, message: '请选择入婚姻状况' },
         ],
       },
       {
         label: "身份证号",
-        key: "b10",
+        key: "idNumber",
         widget: "input",
-      },
-      {
-        label: "联系电话",
-        key: "b11",
-        widget: "input",
-      },
-      {
-        label: "E-mail",
-        key: "mail",
-        widget: "input",
+        rules: [
+          { required: true, message: '请填写身份证号' },
+        ],
       },
       {
         label: "户籍所在地",
-        key: "b12",
+        key: "hukou",
         widget: "input",
         span: 8,
+        rules: [
+          { required: true, message: '请填写户籍所在地' },
+        ],
       },
       {
         label: "现居地址",
-        key: "b13",
+        key: "livingPlace",
         widget: "input",
         span: 16,
+        rules: [
+          { required: true, message: '请填写现居地址' },
+        ],
+      },
+      {
+        label: "E-mail",
+        key: "email",
+        widget: "input",
+        rules: [
+          { required: true, message: '请填写邮箱' },
+        ],
       },
       {
         label: "学历",
-        key: "b14",
+        key: "qualification",
         widget: "select",
-        option: [
-          { value: '初中', label: "初中" },
-          { value: '高中', label: "高中" },
-          { value: '专科', label: "专科" },
-          { value: '本科', label: "本科" },
-          { value: '硕士研究生', label: "硕士研究生" },
-          { value: '博士研究生', label: "博士研究生" },
+        option: dictObject['education']?.child || [],
+        rules: [
+          { required: true, message: '请选择学历' },
         ],
       },
       {
         label: "学位",
-        key: "b15",
+        key: "academicDegree",
         widget: "input",
       },
       {
         label: "专业",
-        key: "b16",
+        key: "specialize",
         widget: "input",
+      },
+      {
+        label: "紧急联系电话",
+        key: "emergencyPhone",
+        widget: "input",
+        rules: [
+          { required: true, message: '请填写紧急联系电话' },
+        ],
       },
     ]
   },

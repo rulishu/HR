@@ -15,7 +15,7 @@ const login = {
     navigate: null,
     userData: undefined, // 用户信息
     authRoutes: [], // 权限菜单
-    dictList: {}, // 字典数据
+    dictObject: {}, // 字典数据
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -51,6 +51,7 @@ const login = {
             child: getDictChild(item.dictData)
           }
         });
+        console.log(1111, obj)
         dispatch.global.updateState({
           dictObject: obj
         });
