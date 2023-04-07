@@ -26,15 +26,6 @@ const Page = () => {
         >
           导出
         </Button>
-        <Button
-          icon="delete"
-          type="danger"
-          onClick={() => {
-            onDelete();
-          }}
-        >
-          删除
-        </Button>
       </div>
       <Table
         columns={columns({})}

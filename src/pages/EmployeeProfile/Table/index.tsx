@@ -7,17 +7,6 @@ const Page = () => {
     employeeProfile: { dataList, page, pageSize, total, }
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
-  
-  // 新增
-  const addModal = () => {
-    dispatch({
-      type: 'employeeProfile/updateState',
-      payload: {
-        type: 'add',
-        isVisible: true,
-      },
-    })
-  }
 
   // 删除
   const onDelete = () => {}
@@ -33,9 +22,6 @@ const Page = () => {
   return (
     <div>
       <div style={{ marginBottom: 15 }}>
-        <Button icon="plus" type="primary" onClick={() => addModal()}>
-          新增
-        </Button>
         <Button
           icon="download"
           type="primary"
@@ -44,15 +30,6 @@ const Page = () => {
           }}
         >
           导出
-        </Button>
-        <Button
-          icon="delete"
-          type="danger"
-          onClick={() => {
-            onDelete();
-          }}
-        >
-          删除
         </Button>
       </div>
       <Table
