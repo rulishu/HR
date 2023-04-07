@@ -14,6 +14,11 @@ const formSearchList = [
     widget: "dateInput",
   },
   {
+    label: "手机号",
+    key: "phone",
+    widget: "dateInput",
+  },
+  {
     label: "所属部门",
     key: "department",
     widget: "select",
@@ -23,24 +28,13 @@ const formSearchList = [
     ],
   },
   {
-    label: "员工类型",
-    key: "employeeStatus",
-    widget: "select",
-    option: [
-      { value: 10, label: "兼职" },
-      { value: 20, label: "劳务派遣" },
-      { value: 30, label: "全职" },
-      { value: 40, label: "实习" },
-    ],
-  },
-  {
     label: "员工状态",
     key: "state",
     widget: "select",
     option: [
       { value: 1, label: "正式" },
-      { value: 20, label: "试用" },
       { value: 3, label: "实习" },
+      { value: 4, label: "试用" },
       { value: 2, label: "已离职" },
     ],
   },
@@ -57,11 +51,12 @@ const Search = () => {
   }
   return (
     <ProForm
-      formType="card"
+      formType="pure"
       showSaveButton
       showResetButton
       saveButtonProps={{
         type: "primary",
+        label: '搜索'
       }}
       cardProps={{
         noHover: true,
