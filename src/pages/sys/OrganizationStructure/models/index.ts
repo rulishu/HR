@@ -5,18 +5,24 @@ import { Dispatch, KktproKeys } from '@kkt/pro';
 const route = {
   name: "organizationStructure",
   state: {
-
-    dataSource: [
-      { name: '111' }
-    ],
+    search: {},
     page: 1,
     pageSize: 10,
-    total: 0,
-    isDelete: false,
+    total: 10,
+    dataList: [
+      { name: '张三' },
+      { name: '李四' },
+    ],
+    checked: [],
+
+    editType: "none",
+    editVisible: false,
+
+    formData: {}
 
   },
   reducers: {
-    updateState: (state: any, payload: KktproKeys) => ({
+    update: (state: any, payload: KktproKeys) => ({
       ...state,
       ...payload,
     }),

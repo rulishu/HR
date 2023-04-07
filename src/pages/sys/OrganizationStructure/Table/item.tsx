@@ -1,39 +1,73 @@
-import { Button } from 'uiw';
-// import { useSelector, RootState } from '@kkt/pro';
+import { Checkbox } from 'uiw';
+import { Dispatch } from '@kkt/pro';
+import TipButton from '@/components/TipButton'
 
-export const columns = () => {
+export const columns = (
+  dispatch: Dispatch,
+  dataList: any[],
+  checked: any[],
+  handle: (type: any, data: any) => void
+) => {
 
-  // const onClickCheckbox = () => { }
+  const onClickCheckedItem = (rowData: any, e: any) => {
+    const isChecked = e.target.checked;
+    let check = [...checked] as any[];
+    if (isChecked) {
+      // 添加到选中数组中
+      check.push(rowData.id);
+      check = check.sort((a, b) => a - b);
+    } else {
+      // 删除选中项
+      check.splice(check.indexOf(rowData.id), 1);
+    }
+    dispatch({
+      type: "organizationStructure/update",
+      payload: { checked: check },
+    });
+  }
   return [
-    // {
-    //   title: () => {
-    //     const indeterminate = dataSource.length !== checked.length && checked.length > 0;
-    //     const checked = dataSource.length === checked.length;
-    //     return (
-    //       <Checkbox
-    //         checked={checked}
-    //         indeterminate={indeterminate}
-    //         onClick={(evn) => {
-    //           let checked = dataSource.map((item: any, idx: any) => idx);
-    //           if (!evn.target.checked) {
-    //             checked = [];
-    //           }
-    //           setState({ checked });
-    //         }}
-    //       />
-    //     );
-    //   },
-    //   key: 'checked',
-    //   render: (text: any, key: any, rowData: any,) => {
-    //     return (
-    //       <Checkbox checked={rowData.checked} onClick={() => { onClickCheckbox()}} />
-    //     );
-    //   }
-    // },
+    {
+      title: () => {
+        const indeterminate =
+          dataList.length !== checked.length && checked.length > 0;
+        const isChecked =
+          dataList.length === checked.length && dataList.length > 0;
+        return (
+          <Checkbox
+            checked={isChecked}
+            indeterminate={indeterminate}
+            onClick={(e: any) => {
+              let checkedIdx = dataList.map((item: any) => item.id);
+              if (!e.target.checked) {
+                checkedIdx = [];
+              }
+              dispatch({
+                type: "organizationStructure/update",
+                payload: { checked: checkedIdx },
+              });
+            }}
+          />
+        );
+      },
+      key: "checked",
+      width: 60,
+      ellipsis: true,
+      render: (text: any, key: any, rowData: any) => {
+        return (
+          <Checkbox
+            checked={rowData.checked}
+            onClick={(e) => {
+              onClickCheckedItem(rowData, e);
+            }}
+          />
+        );
+      },
+    },
     {
       title: '实际申请人',
       key: 'name',
       width: 100,
+      ellipsis: true
     },
     {
       title: '入职日期',
@@ -68,17 +102,17 @@ export const columns = () => {
     {
       title: '对本岗位的理解',
       key: 'name',
-      width: 100,
+      width: 150,
     },
     {
       title: '试用期内对工作的总结',
       key: 'name',
-      width: 100,
+      width: 150,
     },
     {
       title: '对公司的意见和建议',
       key: 'name',
-      width: 100,
+      width: 150,
     },
     {
       title: '审批结果',
@@ -90,54 +124,28 @@ export const columns = () => {
       key: 'name',
       width: 100,
     },
-    {
-      title: '当前节点',
-      key: 'name',
-      width: 100,
-    },
-    {
-      title: '当前负责人',
-      key: 'name',
-      width: 100,
-    },
-    {
-      title: '历史审批人',
-      key: 'name',
-      width: 100,
-    },
+
     {
       title: '审批编号',
       key: 'name',
       width: 100,
     },
-    {
-      title: '创建人',
-      key: 'name',
-      width: 100,
-    },
-    {
-      title: '创建时间',
-      key: 'name',
-      width: 100,
-    },
-    {
-      title: '更新时间',
-      key: 'name',
-      width: 100,
-    },
-    {
-      title: '创建人部门',
-      key: 'name',
-      width: 100,
-    },
+
     {
       title: '操作',
       key: 'edit',
-      width: 200,
-      render: () => (
+      width: 100,
+      render: (text: any, key: any, rowData: any) => (
         <div>
-          <Button size="small" type="danger">删除</Button>
-          <Button size="small" type="success">修改</Button>
+          {/* <Button type="primary" onClick={() => { handle('edit', rowData) }}>
+            编辑
+          </Button> */}
+          <TipButton
+            tip="编辑"
+            icon="edit"
+            type="primary"
+            onClick={() => handle('edit', rowData)}
+          />
         </div>
       ),
     },

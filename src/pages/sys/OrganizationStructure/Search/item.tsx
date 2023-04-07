@@ -31,31 +31,4 @@ export const formDatasList = [
       { value: 20, label: '6个月' },
     ],
   },
-  {
-    label: '职位',
-    key: 'position',
-    widget: 'select',
-    initialValue: '',
-    option: [
-      { value: 10, label: '组长' },
-      { value: 20, label: '大组长' },
-    ],
-  },
-  {
-    label: '职级',
-    key: 'level',
-    widget: 'select',
-    initialValue: '',
-    option: [
-      { value: 10, label: '3个月' },
-      { value: 20, label: '6个月' },
-    ],
-  },
-  {
-    label: '工作地点',
-    key: 'adress',
-    widget: 'input',
-    initialValue: '',
-    widgetProps: {},
-  },
 ]

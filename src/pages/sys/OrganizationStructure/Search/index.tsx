@@ -1,14 +1,17 @@
 import { ProForm } from '@uiw-admin/components'
 import { formDatasList } from './item'
-import { useDispatch, Dispatch } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 
 const Index = () => {
+  const {
+    organizationStructure: { search }
+  } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>();
 
   const onScreenSubmit = (current: object) => {
     dispatch({
-      type: '',
-      payload: {}
+      type: 'organizationStructure/update',
+      payload: { ...search, ...current }
     })
   }
 

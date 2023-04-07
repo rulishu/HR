@@ -1,7 +1,7 @@
 import { Divider } from 'uiw';
 import Search from './Search';
-import Table from './Table'
-
+import Table from './Table';
+import Modal from './Modal';
 
 const Index = () => {
   return (
@@ -9,6 +9,7 @@ const Index = () => {
       <Search />
       <Divider />
       <Table />
+      <Modal />
     </>
   )
 }
