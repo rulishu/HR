@@ -116,6 +116,12 @@
             "element": "@/pages/sys/DataDictionary"
           },
           {
+            "path": "/admin/sys/organization-structure",
+            "name": "转正管理",
+            "icon": "folder-open",
+            "element": "@/pages/sys/OrganizationStructure"
+          },
+          {
             "path": "*",
             "element": "@uiw-admin/exceptions/lib/Exceptions/404"
           }
