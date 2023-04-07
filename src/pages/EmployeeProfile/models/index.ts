@@ -40,9 +40,10 @@ const route = {
       }
       const { code, data } = await selectStaffFile(params);
       if (code === 200 && data) {
+        const { list, total } = data;
         dispatch.employeeProfile.updateState({
-          dataList: data,
-          total: data.total,
+          dataList: list,
+          total,
           page: params.page
         });
       }
