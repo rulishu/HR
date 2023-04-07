@@ -55,6 +55,7 @@ export const menusConfig: MenuAllconfigType[] = [
     child: [
       { text: '组织机构', icon: 'menu2', path: '/admin/sys/organization' },
       { text: '项目管理', icon: 'menu4', path: '/admin/sys/items' },
+      { text: '人员管理', icon: 'menu4', path: '/admin/sys/personnel' },
       { text: '账号管理', icon: 'menu4', path: '/admin/sys/users', },
       { text: '角色管理', icon: 'menu4', path: '/admin/sys/role' },
       { text: '路由管理', icon: 'menu4', path: '/admin/sys/route' },

@@ -92,6 +92,12 @@
             "element": "@/pages/sys/Items"
           },
           {
+            "path": "/admin/sys/personnel",
+            "name": "人员管理",
+            "icon": "document",
+            "element": "@/pages/sys/Personnel"
+          },
+          {
             "path": "/admin/sys/users",
             "name": "账号管理",
             "icon": "user",
