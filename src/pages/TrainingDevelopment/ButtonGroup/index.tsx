@@ -1,12 +1,27 @@
 import { Button } from "uiw";
+import { useDispatch, Dispatch } from '@kkt/pro'
 
 const Index = () => {
-  const addmodal = () => { }
+  // const {
+  //   trainingDevelopment: { editType }
+  // } = useSelector((state: RootState) => state)
+  const dispatch = useDispatch<Dispatch>()
+
+  const addModal = () => {
+    dispatch({
+      type: 'trainingDevelopment/update',
+      payload: {
+        editType: 'add',
+        editVisible: true
+      }
+    })
+  }
+
   return (
-    <div style={{ marginTop: 20, marginBottom: 20 }}>
+    <div style={{ marginTop: 10, marginBottom: 20 }}>
       <Button
         type="primary"
-        onClick={() => { addmodal() }}
+        onClick={() => { addModal() }}
       >
         添加培训公告
       </Button>

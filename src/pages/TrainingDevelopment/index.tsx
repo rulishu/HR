@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 import { Card, Divider } from 'uiw';
 import ButtonGroup from './ButtonGroup';
-import Table from './Table'
+import Table from './Table';
+import Modal from './Modal'
 
 const Index = () => {
   return (
@@ -11,6 +12,7 @@ const Index = () => {
         <Divider />
         <Table />
       </Card>
+      <Modal />
     </Fragment>
   )
 }
