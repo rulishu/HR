@@ -3,14 +3,14 @@ import { Button, Checkbox } from "uiw";
 
 interface columnsProps {
   onCheck?: (rowData: KktproKeys, e: KktproKeys) => void;
-  onRole?: (data: KktproKeys) => void;
-  onEdit?: (rowData: KktproKeys, e: KktproKeys) => void;
+  onEdit?: (rowData: KktproKeys) => void;
+  onDelete?: (rowData: KktproKeys) => void;
 }
 
 export const columns = ({
   onCheck,
-  onRole,
-  onEdit
+  onEdit,
+  onDelete
 }: columnsProps) => [
   {
     key: "checked",
@@ -28,23 +28,61 @@ export const columns = ({
   {
     title: "姓名",
     key: "code",
-    render: (text: any, key: any, rowData: any) => (
-      <Button
-        type="link"
-        onClick={() => {
-          onRole?.(rowData);
-        }}
-      >
-        {text}
-      </Button>
-    ),
   },
   {
-    title: "年龄",
+    title: "入职时间",
     key: "tip",
   },
   {
-    title: "离职日期",
+    title: "离职时间",
+    key: "tip",
+  },
+  {
+    title: "所属岗位",
+    key: "tip",
+  },
+  {
+    title: "交接人员",
+    key: "tip",
+  },
+  {
+    title: "劳动合同开始时间",
+    key: "tip",
+  },
+  {
+    title: "劳动合同结束时间",
+    key: "tip",
+  },
+  {
+    title: "离职原因",
+    key: "tip",
+  },
+  {
+    title: "所属交接事项",
+    key: "tip",
+  },
+  {
+    title: "审批结果",
+    key: "tip",
+  },
+  {
+    title: "审批状态",
+    key: "tip",
+  },
+  {
+    title: "历史审批人",
+    key: "tip",
+  },
+  {
+    title: "创建人",
+    key: "tip",
+  },
+  {
+    title: "创建时间",
+    key: "tip",
+  },
+  {
+    title: "更新时间",
     key: "tip",
   },
   {
@@ -53,15 +91,26 @@ export const columns = ({
     width: 80,
     render: (text: any, key: any, rowData: any) => {
       return (
+        <>
         <Button
           icon="edit"
           type="primary"
-          onClick={(e) => {
-            onEdit?.(rowData, e);
+          onClick={() => {
+            onEdit?.(rowData);
           }}
         >
           编辑
         </Button>
+        <Button
+        icon="edit"
+        type="primary"
+        onClick={() => {
+          onDelete?.(rowData);
+        }}
+      >
+        删除
+      </Button>
+      </>
       );
     },
   },

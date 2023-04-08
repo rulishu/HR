@@ -1,35 +1,49 @@
+import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { Button, Table, Pagination, Empty } from "uiw";
 import { columns } from './utils';
 
 const Page = () => {
-  // 新增
-  const addModal = () => {}
+  const {
+    sysItems: { dataList },
+  } = useSelector((state: RootState) => state);
+  const dispatch = useDispatch<Dispatch>();
+
+  // 新增 / 编辑
+  const onModals = (type: 'add' | 'edit', data?: any) => {
+    dispatch({
+      type: 'employeeDepart/updateState',
+      payload: {
+        type: 'add',
+        isVisible: true,
+      }
+    })
+  }
 
   // 删除
-  const onDelete = () => {}
-
+  const onDelete = (data: any) => {
+    dispatch.sysItems.updateState({
+      isDelete: true
+    });
+    dispatch.sysItemsModal.updateState({
+      detailsData: data
+    });
+  }
   // 翻页
   const onTurnPages = (current: number) => {}
 
   return (
     <div>
       <div style={{ marginBottom: 15 }}>
-        <Button icon="plus" type="primary" onClick={() => addModal()}>
-          新增
-        </Button>
-        <Button
-          icon="delete"
-          type="danger"
-          onClick={() => {
-            onDelete();
-          }}
-        >
-          删除
+        <Button icon="download" type="primary">
+          导出
         </Button>
       </div>
       <Table
-        columns={columns({})}
-        data={[]}
+        columns={columns({
+          onEdit: (data) => onModals('edit', data),
+          onDelete,
+        })}
+        data={dataList}
         empty={<Empty />}
         footer={
           <Pagination
