@@ -4,7 +4,7 @@ import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 
 const Index = () => {
   const {
-    organizationStructure: { dataList, checked, page, pageSize, total }
+    organizationStructure: { dataList, checked, page, pageSize, total, formData }
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
@@ -35,7 +35,8 @@ const Index = () => {
       dispatch({
         type: 'organizationStructure/update',
         payload: {
-          editVisible: true
+          editVisible: true,
+          formData: { ...formData, ...data }
         }
       })
     }

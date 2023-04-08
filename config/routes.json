@@ -125,7 +125,7 @@
             "path": "/admin/sys/organization-structure",
             "name": "转正管理",
             "icon": "folder-open",
-            "element": "@/pages/sys/OrganizationStructure"
+            "element": "@/pages/sys/RegularEmployee"
           },
           {
             "path": "*",
