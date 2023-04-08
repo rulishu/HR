@@ -1,5 +1,7 @@
 
-export const editFormData = () => {
+export const editFormData = (
+  formData: any
+) => {
 
   return [
     {
@@ -59,7 +61,7 @@ export const editFormData = () => {
       label: "职位",
       key: "position",
       widget: "input",
-      initialValue: '',
+      initialValue: formData?.name,
       span: "24",
       rules: [
         { required: true, message: '请输入职位' },
@@ -69,7 +71,7 @@ export const editFormData = () => {
       label: "职级",
       key: "level",
       widget: "input",
-      initialValue: '',
+      initialValue: formData?.name,
       span: "24",
       rules: [
         { required: true, message: '请输入' },
@@ -79,7 +81,7 @@ export const editFormData = () => {
       label: "对本岗位的理解",
       key: "understanding",
       widget: "input",
-      initialValue: '',
+      initialValue: formData?.name,
       span: "24",
       required: true,
       rules: [
@@ -90,7 +92,7 @@ export const editFormData = () => {
       label: "试用期内对工作的总结",
       key: "summary",
       widget: "textarea",
-      initialValue: '',
+      initialValue: formData?.name,
       span: "24",
       required: true,
       rules: [
@@ -101,7 +103,7 @@ export const editFormData = () => {
       label: "对公司的意见和建议",
       key: "company",
       widget: "textarea",
-      initialValue: '',
+      initialValue: formData?.name,
       span: "24",
       rules: [
         { required: true, message: '请输入' },
