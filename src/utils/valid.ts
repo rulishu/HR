@@ -17,6 +17,35 @@ const isValidPhoneNumber = (phoneNumber: string) => {
   return regExp.test(phoneNumber);
 }
 
+/**
+ * 效验身份证
+*/
+const isValidId = (card: string) => {
+  // 校验规则的正则表达式
+  const pattern = /^[1-9]\d{5}(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])\d{3}[\dX]$/;
+  // 如果身份证号码不符合规则，则直接返回 false
+  if (!pattern.test(card)) {
+    return false;
+  }
+  // 校验身份证号码的最后一位（校验码）
+  const checksum = card
+    .substr(0, 17)
+    .split('')
+    .map(Number)
+    .reduce((acc, cur, idx) => acc + cur * [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2][idx], 0);
+  const checkCode = '10X98765432'[checksum % 11];
+  return checkCode === card[17];
+}
+
+const isValidEmail = (email: string) => {
+  // 校验规则的正则表达式
+  const pattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  // 使用正则表达式进行校验，并返回校验结果
+  return pattern.test(email);
+}
+
 export const valid = {
   isValidPhoneNumber,
+  isValidId,
+  isValidEmail
 }

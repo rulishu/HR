@@ -51,7 +51,6 @@ const login = {
             child: getDictChild(item.dictData)
           }
         });
-        console.log(1111, obj)
         dispatch.global.updateState({
           dictObject: obj
         });

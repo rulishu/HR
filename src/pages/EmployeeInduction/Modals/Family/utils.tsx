@@ -1,4 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
+import { valid } from '@/utils/valid';
 
 interface FormListProps {
   data?: any;
@@ -30,12 +31,23 @@ export const formList = (props?: FormListProps) => {
       ],
     },
     {
-      label: "电话",
+      label: "手机号",
       key: "memberPhone",
       widget: "input",
       initialValue: data?.memberPhone,
       span: "12",
       readSpan: 1,
+      rules: [
+        { 
+          validator: (value: string) => {
+            if (value) {
+              return valid.isValidPhoneNumber(value);
+            }
+            return true;
+          },
+          message: '请填写正确的手机号'
+        }
+      ],
     },
     {
       label: "年龄",

@@ -22,7 +22,6 @@ export const formList = (props?: FormListProps) => {
       readSpan: 1,
       widgetProps: {
         format: 'YYYY-MM-DD',
-        autoClose: true
       },
       rules: [
         { required: true, message: '请选择开始时间' },

@@ -70,39 +70,45 @@ export const formData = ({
         initialValue: data?.entryDate,
       },
       {
-        label: "入职公司",
-        key: "company",
-        widget: "select",
-        option: companyList.map(item => ({ label: item.companyName, value: item.id })),
-        rules: [
-          { required: true, message: '请选择入职公司' },
-        ],
-        initialValue: data?.company,
-        widgetProps: {
-          onChange: (e: any) => {
-            onCompanyChange?.(e.target.value)
-          }
-        }
+        label: "社保公积金账号",
+        key: "socialInsuranceAccount",
+        widget: "input",
+        initialValue: data?.socialInsuranceAccount,
       },
-      {
-        label: "入职部门",
-        key: "department",
-        widget: "select",
-        option: departmentList,
-        rules: [
-          { required: true, message: '请选择入职部门' },
-        ],
-        initialValue: data?.department,
-      },
-      {
-        label: "入职岗位",
-        key: "post",
-        widget: "select",
-        option: dictObject['post']?.child || [],
-        rules: [
-          { required: true, message: '请选择入职岗位' },
-        ],
-      },
+      // {
+      //   label: "入职公司",
+      //   key: "company",
+      //   widget: "select",
+      //   option: companyList.map(item => ({ label: item.companyName, value: item.id })),
+      //   rules: [
+      //     { required: true, message: '请选择入职公司' },
+      //   ],
+      //   initialValue: data?.company,
+      //   widgetProps: {
+      //     onChange: (e: any) => {
+      //       onCompanyChange?.(e.target.value)
+      //     }
+      //   }
+      // },
+      // {
+      //   label: "入职部门",
+      //   key: "department",
+      //   widget: "select",
+      //   option: departmentList,
+      //   rules: [
+      //     { required: true, message: '请选择入职部门' },
+      //   ],
+      //   initialValue: data?.department,
+      // },
+      // {
+      //   label: "入职岗位",
+      //   key: "post",
+      //   widget: "select",
+      //   option: dictObject['post']?.child || [],
+      //   rules: [
+      //     { required: true, message: '请选择入职岗位' },
+      //   ],
+      // },
     ]
   },
   {
@@ -139,6 +145,9 @@ export const formData = ({
         label: "民族",
         key: "nationality",
         widget: "input",
+        rules: [
+          { required: true, message: '请填写民族' },
+        ],
       },
       {
         label: "政治面貌",
@@ -157,10 +166,7 @@ export const formData = ({
         label: "婚姻状况",
         key: "isMarried",
         widget: "select",
-        option: [
-          { value: '已婚', label: "已婚" },
-          { value: '未婚', label: "未婚" },
-        ],
+        option: dictObject['married']?.child || [],
         rules: [
           { required: true, message: '请选择入婚姻状况' },
         ],
@@ -171,6 +177,15 @@ export const formData = ({
         widget: "input",
         rules: [
           { required: true, message: '请填写身份证号' },
+          { 
+            validator: (value: string) => {
+              if (value) {
+                return valid.isValidId(value);
+              }
+              return true;
+            },
+            message: '请填写正确的身份证号'
+          }
         ],
       },
       {
@@ -197,6 +212,15 @@ export const formData = ({
         widget: "input",
         rules: [
           { required: true, message: '请填写邮箱' },
+          { 
+            validator: (value: any) => {
+              if (value) {
+                return valid.isValidEmail(value);
+              }
+              return true;
+            },
+            message: '请填写正确的邮箱'
+          }
         ],
       },
       {
@@ -217,9 +241,12 @@ export const formData = ({
         label: "专业",
         key: "specialize",
         widget: "input",
+        rules: [
+          { required: true, message: '请填写专业' },
+        ],
       },
       {
-        label: "紧急联系电话",
+        label: "联系人及关系",
         key: "emergencyPhone",
         widget: "input",
         rules: [

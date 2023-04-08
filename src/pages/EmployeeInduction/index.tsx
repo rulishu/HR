@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
-import { Card } from 'uiw';
+import { Card, Notify } from 'uiw';
 import { ProForm, useForm } from "@uiw-admin/components";
 import { FormPage } from '@/components'
 import Education from './Tables/Education'
@@ -17,7 +17,9 @@ const Page = () => {
     employeeInduction: {
       companyList = [],
       departmentList = [],
-      allFormData = {}
+      allFormData = {},
+      educationData = [],
+      workData = []
     },
     global: { dictObject },
   } = useSelector((state: RootState) => state);
@@ -55,15 +57,39 @@ const Page = () => {
     });
   }
 
+  /**
+   * 提交
+  */
   const onSubmit = async () => {
     const values: any = await asyncAwaitFormList([
       form1?.validateFieldsAndGetValue(),
       form2.validateFieldsAndGetValue()
     ])
+    if (educationData.length === 0) {
+      Notify.warning({
+        title: '教育经历至少填写一项',
+      });
+      return;
+    }
+    if (workData.length === 0) {
+      Notify.warning({
+        title: '工作经历至少填写一项',
+      });
+      return;
+    }
     const obj = {...values[0], ...values[1]}
-    console.log(11, obj);
+    dispatch.employeeInduction.submit({
+      ...obj,
+      callback: () => {
+        onReset();
+      }
+    })
+  }
 
-    console.log('allFormData ===>', allFormData)
+  const onReset = () => {
+    form1?.resetForm?.();
+    form2?.resetForm?.();
+    dispatch.employeeInduction.clearState();
   }
 
   /**
@@ -97,7 +123,8 @@ const Page = () => {
           onClick: onSubmit
         },
         {
-          label: '重置'
+          label: '重置',
+          onClick: onReset
         },
       ]}
     >

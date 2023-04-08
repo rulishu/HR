@@ -38,6 +38,16 @@ export const PageWraps = styled.div`
   .w-empty {
     padding: 50px 0 !important;
   }
+  .w-form-label {
+    font-weight: normal;
+    color: #4f4f4f;
+  }
+  .w-table table th {
+    font-weight: normal !important;
+  }
+  .w-select {
+    background-color: transparent;
+  }
 `;
 
 export const FixedWrap = styled.div`
