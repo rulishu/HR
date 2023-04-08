@@ -8,13 +8,14 @@ const formSearchList = [
     widget: "input",
   },
   {
-    label: "所属部门",
+    label: "入职时间",
     key: "workState",
-    widget: "select",
-    option: [
-      { value: 10, label: "研发部" },
-      { value: 20, label: "人事部" },
-    ],
+    widget: "dateInput",
+  },
+  {
+    label: "离职时间",
+    key: "timeState",
+    widget: "dateInput",
   },
 ];
 
