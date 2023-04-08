@@ -5,7 +5,7 @@ import { TipButton } from '@/components';
 
 const Index = () => {
   const {
-    trainingDevelopment: { dataList, isDelete }
+    trainingDevelopment: { dataList, isDelete, formData }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
 
@@ -21,7 +21,8 @@ const Index = () => {
       dispatch({
         type: 'trainingDevelopment/update',
         payload: {
-          editVisible: true
+          editVisible: true,
+          formData: { ...formData, ...data }
         }
       })
     }
