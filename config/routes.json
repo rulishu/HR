@@ -46,7 +46,7 @@
             "path": "/admin/training-and-development",
             "name": "员工培训与发展",
             "icon": "laptop",
-            "element": "@/pages/TrainingAndDevelopment"
+            "element": "@/pages/TrainingDevelopment"
           },
           {
             "path": "/admin/AttendanceManagement",
