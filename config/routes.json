@@ -13,11 +13,11 @@
       },
       {
         "path": "/home",
-        "title": "首页",
+        "name": "首页",
         "element": "@/pages/Home"
       },
       {
-        "path": "/manage",
+        "path": "/admin",
         "element": "@/layouts/LayoutBase",
         "children": [
           {
@@ -25,34 +25,107 @@
             "redirect": "/manage/employee-profile"
           },
           {
-            "path": "/manage/employee-profile",
-            "title": "员工档案管理",
+            "path": "/admin/employee-profile",
+            "name": "员工档案管理",
+            "icon": "usergroup-add",
             "element": "@/pages/EmployeeProfile"
           },
           {
-            "path": "/manage/organization-structure",
-            "title": "组织结构管理",
-            "element": "@/pages/OrganizationStructure"
-          },
-          {
-            "path": "/manage/employee-attendance",
-            "title": "员工考勤管理",
-            "element": "@/pages/EmployeeAttendance"
-          },
-          {
-            "path": "/manage/employee-induction",
-            "title": "员工入职",
+            "path": "/admin/employee-induction",
+            "name": "员工入职",
+            "icon": "user-add",
             "element": "@/pages/EmployeeInduction"
           },
           {
-            "path": "/manage/employee-depart",
-            "title": "离职管理",
+            "path": "/admin/employee-depart",
+            "name": "离职管理",
+            "icon": "user-delete",
             "element": "@/pages/EmployeeDepart"
           },
           {
-            "path": "/manage/training-and-development",
-            "title": "员工培训与发展",
+            "path": "/admin/training-and-development",
+            "name": "员工培训与发展",
+            "icon": "laptop",
             "element": "@/pages/TrainingAndDevelopment"
+          },
+          {
+            "path": "/admin/AttendanceManagement",
+            "name": "考勤管理",
+            "icon": "copy",
+            "children": [
+              {
+                "path": "/admin/AttendanceManagement/employee-attendance",
+                "name": "出勤记录",
+                "icon": "document",
+                "element": "@/pages/AttendanceManagement/EmployeeAttendance"
+              },
+              {
+                "path": "/admin/AttendanceManagement/Makeup-record",
+                "name": "补卡记录",
+                "icon": "document",
+                "element": "@/pages/AttendanceManagement/MakeupRecord"
+              },
+              {
+                "path": "/admin/AttendanceManagement/Leave-record",
+                "name": "请假记录",
+                "icon": "document",
+                "element": "@/pages/AttendanceManagement/LeaveRecord"
+              },
+              {
+                "path": "/admin/AttendanceManagement/Overtime-record",
+                "name": "加班记录",
+                "icon": "document",
+                "element": "@/pages/AttendanceManagement/OvertimeRecord"
+              }
+            ]
+          },
+          {
+            "path": "/admin/sys/organization",
+            "name": "组织机构管理",
+            "icon": "document",
+            "element": "@/pages/sys/Organization"
+          },
+          {
+            "path": "/admin/sys/items",
+            "name": "项目组管理",
+            "icon": "document",
+            "element": "@/pages/sys/Items"
+          },
+          {
+            "path": "/admin/sys/personnel",
+            "name": "人员管理",
+            "icon": "document",
+            "element": "@/pages/sys/Personnel"
+          },
+          {
+            "path": "/admin/sys/users",
+            "name": "账号管理",
+            "icon": "user",
+            "element": "@/pages/sys/Users"
+          },
+          {
+            "path": "/admin/sys/role",
+            "name": "角色管理",
+            "icon": "table",
+            "element": "@/pages/sys/Role"
+          },
+          {
+            "path": "/admin/sys/route",
+            "name": "路由管理",
+            "icon": "folder-open",
+            "element": "@/pages/sys/Route"
+          },
+          {
+            "path": "/admin/sys/dataDictionary",
+            "name": "数据字典",
+            "icon": "folder-open",
+            "element": "@/pages/sys/DataDictionary"
+          },
+          {
+            "path": "/admin/sys/organization-structure",
+            "name": "转正管理",
+            "icon": "folder-open",
+            "element": "@/pages/sys/RegularEmployee"
           },
           {
             "path": "*",

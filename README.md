@@ -1,4 +1,6 @@
-# Admin
+# 人事管理系统
+
+接口文档： http://192.168.188.84:8080/swagger-ui/index.html
 
 参考网站： https://www.icloud.com.cn/
 

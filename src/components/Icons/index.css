@@ -1,0 +1,17 @@
+
+.kktp-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.kktp-External {
+  background-color: currentColor;
+  mask-size: cover !important;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}

@@ -1,13 +1,11 @@
-import { Outlet } from '@kkt/pro';
+import { Outlet, KktproPageProps } from '@kkt/pro';
 import { Header } from '@/components';
 
-const Layout = () => {
+const Layout = (props: KktproPageProps) => {
   return (
-    <div>
-      <Header />
-      <div style={{ height: 800 }}>
-        <Outlet />
-      </div>
+    <div style={{ height: '100%' }}>
+      <Header {...props} />
+      <Outlet />
     </div>
   );
 };
