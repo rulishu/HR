@@ -6,7 +6,7 @@ export const columns = (
   dispatch: Dispatch,
   dataList: any[],
   checked: any[],
-  handle: (type: any, data: any) => void
+  handle: (type: any, data: any) => void,
 ) => {
 
   const onClickCheckedItem = (rowData: any, e: any) => {

@@ -1,4 +1,4 @@
-import { Drawer, Steps, Button } from 'uiw';
+import { Drawer, Steps, Button, Collapse } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm, useForm } from '@uiw-admin/components'
 import { editFormData } from './item'
@@ -47,6 +47,8 @@ const Modal = () => {
         <ProForm
           formType="pure"
           form={form}
+          // showSaveButton
+          // showResetButton
           saveButtonProps={{
             type: "primary",
           }}
@@ -54,17 +56,21 @@ const Modal = () => {
           cardProps={{
             noHover: true,
           }}
-          formDatas={editFormData()}
+          formDatas={editFormData(formData)}
         />
         {editType === 'edit' &&
-          // <Card noHover={true}>
-          <Steps current={1} direction="vertical" style={{ padding: '20px 0' }}>
-            <Steps.Step title="已完成" description="这里是该步骤的描述信息" />
-            <Steps.Step title="进行中" description="这里是该步骤的描述信息" />
-            <Steps.Step status="error" title="待进行" description="这里是该步骤的描述信息" />
-            <Steps.Step title="待进行" description="这里是该步骤的描述信息" />
-          </Steps>
-          // </Card>
+          <div style={{ marginBottom: 15 }}>
+            <Collapse >
+              <Collapse.Panel header="审批流程" key="1">
+                <div>
+                  <Steps current={1} direction="vertical" style={{ padding: '20px 0' }}>
+                    <Steps.Step title="审批人" description="审批人" />
+                    <Steps.Step title="抄送人" description="抄送人" />
+                  </Steps>
+                </div>
+              </Collapse.Panel>
+            </Collapse>
+          </div>
         }
         <Button type='primary' onClick={() => { onSave() }}>
           保存
