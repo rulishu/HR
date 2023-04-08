@@ -17,7 +17,7 @@ const Page = () => {
     employeeInduction: {
       companyList = [],
       departmentList = [],
-      allFormData = {},
+      allFormData,
       educationData = [],
       workData = []
     },
@@ -45,6 +45,9 @@ const Page = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyList])
+
+  // 当前登录用户是 入职用户
+
 
   /**
    * 点击新增 教育经历 / 工作经历 / 家庭成员
@@ -113,6 +116,8 @@ const Page = () => {
     dictObject,
     onCompanyChange
   });
+
+  console.log('allFormData===>', allFormData)
 
   return (
     <FormPage 

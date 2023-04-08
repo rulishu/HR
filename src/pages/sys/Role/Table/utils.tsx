@@ -29,6 +29,9 @@ export const columns = ({
   {
     title: "更新时间",
     key: "updateTime",
+    render: (text: any, key: any, rowData: any) => {
+      return <>{rowData.updateTime || rowData.createTime}</>
+    },
   },
   {
     title: "操作",

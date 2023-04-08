@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { Dispatch, KktproKeys, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm } from "@uiw-admin/components";
-import { Drawer, TreeChecked, Card, Row } from "uiw";
+import { Drawer, Card, Row } from "uiw";
 import { formList } from './utils';
+import { TreeCheckedBox } from './style';
 
 function Modals() {
   const {
@@ -20,7 +21,7 @@ function Modals() {
     const GenerateLabel = (item: any, width: number) => (
       <Row style={{ display: "inline-flex" }}>
         <span style={{ width }}>{item.menuName}</span>
-        <span>{item.path}</span>
+        {/* <span>{item.path}</span> */}
       </Row>
     );
     return routeList.map((item: KktproKeys) => ({
@@ -72,7 +73,7 @@ function Modals() {
       useButton={false}
     >
       <Card title="分配路由" noHover={true}>
-        <TreeChecked
+        <TreeCheckedBox
           data={treeData}
           selectedKeys={checkRouteMenuIds}
           onSelected={(key, selected, item, evn) => {

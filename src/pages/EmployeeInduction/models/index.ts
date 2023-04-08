@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import dayjs from 'dayjs';
-import { insert } from '@/servers/employeeInduction';
+import { insert, selectStaffFile } from '@/servers/employeeInduction';
 import { Notify } from 'uiw';
 
 const int = {
@@ -88,6 +88,27 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
         callback?.();
+      }
+    },
+    /**
+     * 档案查询
+    */
+    async selectStaffFile({callback, ...other}: KktproKeys, state: any) {
+      const { code, data } = await selectStaffFile(other);
+      if (code === 200) {
+        const {
+          educationalExperience = [],
+          workExperience = [],
+          familyMember = [],
+          ...works
+        } = data.list && data.list.length > 0 ? data.list[0] : {};
+        dispatch.employeeInduction.updateState({
+          allFormData: works,
+          educationData: educationalExperience,
+          workData: workExperience,
+          familyData: familyMember
+        })
+        callback?.(works);
       }
     },
   })

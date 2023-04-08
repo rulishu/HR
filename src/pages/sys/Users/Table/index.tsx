@@ -4,7 +4,8 @@ import { columns } from './utils';
 
 const Page = () => {
   const {
-    sysUser: { dataList, page, pageSize, total, isDelete }
+    sysUser: { dataList, page, pageSize, total, isDelete },
+    usersModal: { roleList }
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
@@ -52,7 +53,8 @@ const Page = () => {
         key="id"
         columns={columns({
           onEdit: (data) => usersModal('edit', data),
-          onDelete
+          onDelete,
+          roleList
         })}
         data={dataList}
         empty={<Empty />}

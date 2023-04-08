@@ -19,6 +19,13 @@ export const columns = ({
     key: "path",
   },
   {
+    title: "排序",
+    key: "orderNum",
+    render: (text: any) => {
+      return <>{text || '0'}</>
+    }
+  },
+  {
     title: "操作",
     key: "edit",
     width: 100,

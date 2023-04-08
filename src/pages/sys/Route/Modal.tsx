@@ -59,16 +59,27 @@ const Modals = () => {
             key: "menuName",
             widget: "input",
             span: "24",
-            required: true,
             initialValue: (detailsData as any)?.menuName,
+            rules: [
+              { required: true, message: '请填写菜单名称' },
+            ],
           },
           {
             label: "菜单路径",
             key: "path",
             widget: "input",
             span: "24",
-            required: true,
             initialValue: (detailsData as any)?.path,
+            rules: [
+              { required: true, message: '请填写菜单路径' },
+            ],
+          },
+          {
+            label: "排序",
+            key: "orderNum",
+            widget: "input",
+            span: "24",
+            initialValue: (detailsData as any)?.orderNum,
           },
         ]}
       />

@@ -22,7 +22,7 @@
         "children": [
           {
             "index": true,
-            "redirect": "/manage/employee-profile"
+            "redirect": "/admin/employee-profile"
           },
           {
             "path": "/admin/employee-profile",
@@ -126,10 +126,6 @@
             "name": "转正管理",
             "icon": "folder-open",
             "element": "@/pages/sys/RegularEmployee"
-          },
-          {
-            "path": "*",
-            "element": "@uiw-admin/exceptions/lib/Exceptions/404"
           }
         ]
       },

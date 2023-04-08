@@ -9,7 +9,6 @@ import EducationalInformation from './informationItem'
 function Modals() {
   const {
     employeeProfile: {
-      isVisible,
       queryInfo,
       type,
     },
@@ -39,12 +38,12 @@ function Modals() {
     return [];
   };
   //关闭弹窗
-  const onClosed = () => {
-    dispatch({
-      type: "employeeProfile/updateState",
-      payload: { isVisible: false },
-    });
-  };
+  // const onClosed = () => {
+  //   dispatch({
+  //     type: "employeeProfile/updateState",
+  //     payload: { isVisible: false },
+  //   });
+  // };
 
   return (
     <>

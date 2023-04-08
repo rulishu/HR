@@ -16,26 +16,42 @@ const login = {
     userData: undefined, // 用户信息
     authRoutes: [], // 权限菜单
     dictObject: {}, // 字典数据
+    roles: undefined,
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
       ...state,
       ...payload,
     }),
+    clearState: (state: any) => ({
+      ...state,
+      userData: undefined,
+      authRoutes: [],
+      dictObject: {},
+      roles: undefined,
+    })
   },
   effects: (dispatch: Dispatch) => ({
     /**
      * 获取用户信息
     */
-    async getUserInfo(payload: KktproKeys) {
+    async getUserInfo(payload?: KktproKeys, state?: any) {
       const { code, data } = await getUserInfo();
       if (code === 200 && data) {
-        dispatch.global.updateState({
+        const params = {
           userData: data.user,
-          authRoutes: data.route
-        });
+          authRoutes: (data.route || []).map((itme: KktproKeys) => itme.path),
+          roles: data.roles && data.roles.length > 0 ? data.roles[0] : undefined
+        }
+        dispatch.global.updateState(params);
         dispatch.global.getDict();
-        payload.callback?.();
+        payload?.callback?.(params.authRoutes);
+        if (params.roles === 'entry') {
+          const { userId } = params.userData;
+          dispatch.employeeInduction.selectStaffFile({
+            userId
+          })
+        }
       }
     },
     /**

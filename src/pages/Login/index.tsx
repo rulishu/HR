@@ -21,8 +21,12 @@ const Pages = ({ navigate }: KktproPageProps) => {
           Notify.success({ description: '登录成功' });
           localStorage.setItem("token", data?.token);
           dispatch.global.getUserInfo({
-            callback: () => {
-              navigate('/home', { replace: true })
+            callback: (authRoutes: string[]) => {
+              if (authRoutes.length === 1) {
+                navigate(authRoutes[0], { replace: true })
+              } else {
+                navigate('/home', { replace: true })
+              }
             }
           });
         }

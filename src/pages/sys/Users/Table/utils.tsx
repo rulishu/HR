@@ -5,11 +5,18 @@ import { TipButton } from '@/components';
 interface columnsProps {
   onEdit?: (rowData: KktproKeys) => void;
   onDelete?: (rowData: KktproKeys) => void;
+  roleList: KktproKeys[]
+}
+
+const getLabel = (roleList: KktproKeys[], id: string) => {
+  const obj = roleList.find(item => item.id === id) || {};
+  return obj.name || '';
 }
 
 export const columns = ({
   onEdit,
   onDelete,
+  roleList
 }: columnsProps) => [
   {
     title: "用户名",
@@ -18,6 +25,13 @@ export const columns = ({
   {
     title: "昵称",
     key: "name",
+  },
+  {
+    title: "角色",
+    key: "roleIds",
+    render: (text: any) => (
+      <>{getLabel(roleList, text)}</>
+    ),
   },
   {
     title: "禁用状态",
