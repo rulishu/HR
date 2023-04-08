@@ -9,17 +9,22 @@ import Modals from './Modals';
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
-    global: { userData },
-    sysOrganization: { dataList },
+    employeeInduction: { companyList },
   } = useSelector((state: RootState) => state);
   const [nameId, setNameId] = useState(1)
 
   useEffect(() => {
-    if (userData) {
-      dispatch.sysOrganization.selectList();
+    if (companyList.length === 0) {
+      dispatch.sysOrganization.selectList({
+        callback: (data: any) => {
+          dispatch.employeeInduction.updateState({
+            companyList: data
+          })
+        }
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData])
+  }, [companyList])
 
   const onButName = (data: any) => {
     setNameId(data.id)
@@ -32,7 +37,7 @@ const Page = () => {
         <Col fixed style={{ width: 200, height: '100%' }}>
           <FlexCol>
             <Menu>
-              {dataList.map((itm: any) => (
+              {companyList.map((itm: any) => (
                 <div key={itm.id}>
                   <Menu.Item
                     text={itm.companyName}

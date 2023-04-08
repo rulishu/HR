@@ -13,18 +13,9 @@ const Page = () => {
       type: 'sysOrganization/updateState',
       payload: {
         isVisible: true,
+        queryInfo: data,
       }
     })
-  }
-
-  // 删除
-  const onDelete = (data: any) => {
-    dispatch.sysItems.updateState({
-      isDelete: true
-    });
-    dispatch.sysItemsModal.updateState({
-      detailsData: data
-    });
   }
 
   return (
@@ -37,7 +28,6 @@ const Page = () => {
       <Table
         columns={columns({
           onEdit: (data) => onModals('edit', data),
-          onDelete,
         })}
         data={dataListStaff}
         empty={<Empty />}

@@ -1,25 +1,28 @@
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
-import { ProForm } from "@uiw-admin/components";
+import { ProForm, useForm } from "@uiw-admin/components";
 import { Modal } from "uiw";
 import { formList } from './utils';
 
 function Modals() {
   const {
-    sysOrganization: {
-      isVisible,
-      dataList
-    },
+    sysOrganization: { isVisible, dataList, queryInfo },
+    employeeInduction: { companyList },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
-
+  const form = useForm();
   //提交按钮
   const onAddSubmit = async (current: any) => {
     const params = {
-      ...current
+      ...current,
+      companyName: current.companyId[0].label,
+      companyId: current.companyId[0].value,
     }
     dispatch({
       type: "sysOrganization/entranceOrDeparture",
-      payload: params
+      payload: {
+        userId: (queryInfo as any)?.userId,
+        ...params
+      },
     });
   };
 
@@ -31,6 +34,13 @@ function Modals() {
     });
   };
 
+  /**
+   * 监听公司变化
+  */
+  const onCompanyChange = async (val: any) => {
+    dispatch.sysOrganization.selectList({id:val?.[0]?.value});
+  }
+
   return (
     <Modal
       title="员工派遣"
@@ -41,13 +51,14 @@ function Modals() {
       useButton={false}
     >
       <ProForm
+        form={form}
         showSaveButton
         showResetButton
         formType="pure"
         saveButtonProps={{ type: "primary" }}
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
-        formDatas={formList({ dataList })}
+        formDatas={formList({ companyList, dataList, onCompanyChange })}
       />
     </Modal>
   );

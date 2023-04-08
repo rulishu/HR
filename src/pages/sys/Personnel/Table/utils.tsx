@@ -51,20 +51,12 @@ export const columns = ({
     width: 100,
     render: (text: any, key: any, rowData: any) => {
       return (
-        <>
           <TipButton
             tip="编辑"
             icon="edit"
             type="primary"
             onClick={() => onEdit?.(rowData)}
           />
-          <TipButton
-            tip="删除"
-            icon="delete"
-            type="danger"
-            onClick={() => onDelete?.(rowData)}
-          />
-        </>
       );
     },
   },
