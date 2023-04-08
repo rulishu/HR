@@ -1,3 +1,4 @@
+import { Tag } from "uiw";
 import { KktproKeys } from '@kkt/pro';
 import { TipButton } from '@/components';
 
@@ -12,15 +13,15 @@ export const columns = ({
 }: columnsProps) => [
   {
     title: "姓名",
-    key: "name",
+    key: "staffName",
   },
   {
     title: "部门",
-    key: "department",
+    key: "departmentName",
   },
   {
     title: "职位",
-    key: "post",
+    key: "groupProjectName",
   },
   {
     title: "手机号",
@@ -36,7 +37,13 @@ export const columns = ({
   },
   {
     title: "员工状态",
-    key: "state",
+    key: "type",
+    render: (text: any) => (
+      <Tag
+        title={text === '1' ? "在职" : "离职"}
+        color={text === '1' ? "#28a745" : "#dc3545"}
+      />
+    ),
   },
   {
     title: "操作",

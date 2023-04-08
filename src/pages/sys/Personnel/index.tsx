@@ -4,6 +4,7 @@ import { Row, Col, Menu, Card } from 'uiw';
 import { FlexCol } from './style';
 import Search from './Search';
 import Table from './Table';
+import Modals from './Modals';
 
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -22,6 +23,7 @@ const Page = () => {
 
   const onButName = (data: any) => {
     setNameId(data.id)
+    dispatch.sysOrganization.selectListStaff({id:data.id});
   }
 
   return (
@@ -50,6 +52,7 @@ const Page = () => {
           <Table />
         </Col>
       </Row>
+      <Modals />
     </Fragment>
   )
 }
