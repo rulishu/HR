@@ -1,12 +1,15 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes, departmentDelete } from '@/servers/sys/organization';
+import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture } from '@/servers/sys/organization';
 
 const route = {
   name: "sysOrganization",
   state: {
     dataList: [],
     isDelete: false,
+    dataListStaff: [],
+    isVisible: false,
+    queryInfo: {}
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -15,7 +18,8 @@ const route = {
     }),
     hideModal: (state: any) => ({
       ...state,
-      isDelete: false
+      isDelete: false,
+      isVisible: false,
     })
   },
   effects: (dispatch: Dispatch) => ({
@@ -84,6 +88,29 @@ const route = {
         Notify.success({ description: msg || '删除成功' });
         dispatch.sysOrganization.hideModal();
         dispatch.sysOrganization.selectList();
+      }
+    },
+    /**
+     * 查询人员当前所在公司
+    */
+    async selectListStaff(payload?: KktproKeys, state?: any) {
+      const { code, data } = await selectListStaff({...payload});
+      if (code === 200 && data) {
+        dispatch.sysOrganization.updateState({
+          dataListStaff: data.staff,
+        });
+      }
+    },
+    /**
+     * 入场或者离场
+    */
+    async entranceOrDeparture(payload?: KktproKeys, state?: any) {
+      const { code, data } = await entranceOrDeparture({...payload});
+      if (code === 200 && data) {
+        dispatch.sysOrganization.updateState({
+          dataListStaff: data.staff,
+        });
+        dispatch.sysOrganization.hideModal();
       }
     },
   })
