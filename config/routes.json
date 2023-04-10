@@ -126,6 +126,12 @@
             "name": "转正管理",
             "icon": "folder-open",
             "element": "@/pages/sys/RegularEmployee"
+          },
+          {
+            "path": "/admin/resume",
+            "name": "简历模版",
+            "icon": "folder-open",
+            "element": "@/pages/Resume"
           }
         ]
       },

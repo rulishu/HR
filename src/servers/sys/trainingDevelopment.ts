@@ -19,3 +19,21 @@ export function selectList(params: KktproKeys) {
     body: { ...params },
   });
 }
+/**
+ * 更新公告
+*/
+export function editList(params: KktproKeys) {
+  return request('/api/notice/update', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+/**
+ * 删除公告
+*/
+export function deleteList(params: KktproKeys) {
+  return request('/api/notice/delete', {
+    method: 'post',
+    body: { ...params },
+  });
+}
