@@ -1,7 +1,8 @@
 import { Modal } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm } from '@uiw-admin/components';
-import { formDataList } from './item'
+import { formDataList } from './item';
+import formatter from "@uiw/formatter";
 
 const Index = () => {
   const {
@@ -25,7 +26,8 @@ const Index = () => {
         type: 'trainingDevelopment/insert',
         payload: {
           ...formData,
-          createTime: current.createTime
+          createTime: formatter("YYYY-MM-DD", new Date(current.createTime)),
+          enable: 1
         }
       })
     }
@@ -34,7 +36,7 @@ const Index = () => {
         type: 'trainingDevelopment/editList',
         payload: {
           ...formData,
-          createTime: current.createTime
+          createTime: formatter("YYYY-MM-DD", new Date(current.createTime))
         }
       })
     }
@@ -51,7 +53,7 @@ const Index = () => {
       >
         <ProForm
           showSaveButton
-          showResetButton
+          // showResetButton
           saveButtonProps={{
             type: "primary",
           }}

@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
-import { Alert, Card, Empty, Pagination } from 'uiw';
+import { Alert, Card, Empty } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
 import { TipButton } from '@/components';
+import formatter from "@uiw/formatter";
 
 const Index = () => {
   const {
@@ -22,7 +23,11 @@ const Index = () => {
         type: 'trainingDevelopment/update',
         payload: {
           editVisible: true,
-          formData: { ...formData, ...itemData }
+          formData: {
+            ...formData,
+            ...itemData,
+            createTime: formatter("YYYY-MM-DD", new Date(itemData.createTime))
+          }
         }
       })
     }
@@ -71,7 +76,7 @@ const Index = () => {
                     style={{ width: 240 }}
                     bodyStyle={{ padding: 0 }}
                   >
-                    <div>
+                    <div style={{ margin: 15 }}>
                       <img alt="example" width="100%" src="https://avatars1.githubusercontent.com/u/1680273?v=4" />
                       <p>{item?.context}</p>
                     </div>
@@ -98,19 +103,21 @@ const Index = () => {
           <Empty />
         </div>
       }
-      <Pagination
-        current={1}
-        pageSize={10}
-        total={20}
-        divider
-        onShowSizeChange={(current: any) =>
-          dispatch({
-            type: 'trainingDevelopment/update',
-            payload: {
-              page: current
-            }
-          })}
-      />
+      {/* {dataList.length > 0 &&
+        <Pagination
+          current={1}
+          pageSize={10}
+          total={20}
+          divider
+          onShowSizeChange={(current: any) => {
+            dispatch({
+              type: 'trainingDevelopment/update',
+              payload: {
+                page: current
+              }
+            })}
+          }
+        />} */}
       <Alert
         isOpen={isDelete}
         confirmText="确定"

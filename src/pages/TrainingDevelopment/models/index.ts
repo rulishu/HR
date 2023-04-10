@@ -34,11 +34,11 @@ const Index = {
     * 获取列表
     */
     async selectList(payload?: any, state?: any) {
-      const { code, data, total } = await selectList(payload);
+      const { code, data } = await selectList(payload);
       if (code === 200 && data) {
         dispatch.trainingDevelopment.update({
           dataList: data || [],
-          total: total,
+          // total: total,
         });
       }
     },
@@ -52,7 +52,7 @@ const Index = {
         dispatch.trainingDevelopment.update({
           editVisible: false
         });
-        dispatch.trainingDevelopment.selectList();
+        dispatch.trainingDevelopment.selectList({ enable: 1 });
       }
     },
     /**
@@ -65,7 +65,7 @@ const Index = {
         dispatch.trainingDevelopment.update({
           editVisible: false
         });
-        dispatch.trainingDevelopment.selectList();
+        dispatch.trainingDevelopment.selectList({ enable: 1 });
       }
     },
     /**
@@ -78,7 +78,7 @@ const Index = {
         dispatch.trainingDevelopment.update({
           isDelete: false
         });
-        dispatch.trainingDevelopment.selectList();
+        dispatch.trainingDevelopment.selectList({ enable: 1 });
       }
     },
   })
