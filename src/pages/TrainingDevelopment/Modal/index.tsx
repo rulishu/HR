@@ -20,13 +20,24 @@ const Index = () => {
     })
   }
   const onSubmit = async (current: any) => {
-    dispatch({
-      type: 'trainingDevelopment/insert',
-      payload: {
-        ...formData,
-        createTime: current.createTime
-      }
-    })
+    if (editType === 'add') {
+      dispatch({
+        type: 'trainingDevelopment/insert',
+        payload: {
+          ...formData,
+          createTime: current.createTime
+        }
+      })
+    }
+    if (editType === 'edit') {
+      dispatch({
+        type: 'trainingDevelopment/editList',
+        payload: {
+          ...formData,
+          createTime: current.createTime
+        }
+      })
+    }
   }
   return (
     <>
