@@ -45,6 +45,26 @@ export function deletes (params: KktproKeys) {
 }
 
 /**
+ * 查询人员当前所在公司
+*/
+export function selectListStaff (params: KktproKeys) {
+  return request('/api/company/selectListStaff', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 入场或者离场
+*/
+export function entranceOrDeparture (params: KktproKeys) {
+  return request('/api/company/entranceOrDeparture', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
  * 添加部门
 */
 export const departmentAdd = (params: KktproKeys) => {

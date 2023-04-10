@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useDispatch, Dispatch, useSelector, RootState, useLocation } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, RootState, useLocation } from '@kkt/pro';
 import { Popover } from "uiw";
 import { popoverConent } from './Render';
 import { Container, CircleIcon, UserAvatar, HoverDiv } from './style/right';
@@ -7,7 +7,6 @@ import { Container, CircleIcon, UserAvatar, HoverDiv } from './style/right';
 const Right = () => {
   const [open3, setOpen3] = useState<boolean>(false);
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch>();
   const {
     global: { userData },
@@ -21,7 +20,8 @@ const Right = () => {
     if (menuType === 'logout') {
       localStorage.removeItem('token');
       dispatch.global.clearState();
-      navigate('/login');
+      window.location.reload();
+      // navigate('/login');
     }
     if (menuType === 'refreshAuth') {
       // 刷新权限

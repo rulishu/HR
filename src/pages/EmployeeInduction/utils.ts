@@ -23,13 +23,12 @@ export interface formDataVoid {
 
 
 export const formData = ({
-  companyList,
+  companyList = [],
   departmentList,
   data = {},
   dictObject,
   onCompanyChange
 }: formDataProps): formDataVoid[] => {
-  const { name } = data || {}
   return [
     {
       title: '入职信息',
@@ -41,7 +40,7 @@ export const formData = ({
           rules: [
             { required: true, message: '请填写姓名' },
           ],
-          initialValue: name,
+          initialValue: data?.name,
         },
         {
           label: "手机号",
@@ -72,12 +71,6 @@ export const formData = ({
             { required: true, message: '请选择入职日期' },
           ],
           initialValue: data?.entryDate,
-        },
-        {
-          label: "社保公积金账号",
-          key: "socialInsuranceAccount",
-          widget: "input",
-          initialValue: data?.socialInsuranceAccount,
         },
         // {
         //   label: "入职公司",
@@ -112,7 +105,14 @@ export const formData = ({
         //   rules: [
         //     { required: true, message: '请选择入职岗位' },
         //   ],
+        //   initialValue: data?.post,
         // },
+        {
+          label: "社保公积金账号",
+          key: "socialInsuranceAccount",
+          widget: "input",
+          initialValue: data?.socialInsuranceAccount,
+        },
       ]
     },
     {
@@ -126,6 +126,7 @@ export const formData = ({
           rules: [
             { required: true, message: '请选择性别' },
           ],
+          initialValue: data?.gender,
         },
         {
           label: "出生日期",
@@ -134,16 +135,19 @@ export const formData = ({
           rules: [
             { required: true, message: '请选择出生日期' },
           ],
+          initialValue: data?.birth,
         },
         {
           label: "体重",
           key: "weight",
           widget: "input",
+          initialValue: data?.weight,
         },
         {
           label: "身高",
           key: "height",
           widget: "input",
+          initialValue: data?.height,
         },
         {
           label: "民族",

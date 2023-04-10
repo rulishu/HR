@@ -52,6 +52,5 @@ export const getAuthRoutes = (data: KktproRoutesProps[] = [], authUrls: string[]
     }
     return newItem;
   })
-  console.log(4444, newData)
   return newData;
 }

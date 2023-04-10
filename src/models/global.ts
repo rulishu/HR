@@ -46,12 +46,6 @@ const login = {
         dispatch.global.updateState(params);
         dispatch.global.getDict();
         payload?.callback?.(params.authRoutes);
-        if (params.roles === 'entry') {
-          const { userId } = params.userData;
-          dispatch.employeeInduction.selectStaffFile({
-            userId
-          })
-        }
       }
     },
     /**

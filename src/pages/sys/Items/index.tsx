@@ -8,13 +8,11 @@ const Page = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
     global: { userData },
-    sysItemsModal: { companyList = [] },
   } = useSelector((state: RootState) => state);
 
   useEffect(() => {
     if (userData) {
       dispatch.sysItems.selectList();
-      if (companyList.length === 0) {
         dispatch.sysOrganization.selectList({
           callback: (data: KktproKeys) => {
             dispatch.sysItemsModal.updateState({
@@ -22,7 +20,6 @@ const Page = () => {
             });
           }
         });
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData])
