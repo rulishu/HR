@@ -63,3 +63,27 @@ export const menusConfig: MenuAllconfigType[] = [
     ]
   },
 ]
+
+const defaultAuth = (data: MenuConfigType[], auth: string[] = []) => {
+  const newArr: MenuConfigType[] = [];
+  data.forEach((item: MenuConfigType) => {
+    let obj = { ...item };
+    const data = auth.find((cur) => cur === item.path);
+    if (data) {
+      newArr.push(obj);
+    }
+  });
+  return newArr;
+}
+
+export const getNewsAuthMenu = (auth: string[] = []) => {
+  return defaultAuth(menuNewsConfig, auth);
+}
+
+export const getAuthMenu = (auth: string[] = []) => {
+  return menusConfig.map(item => {
+    const newItem = {...item};
+    newItem.child = defaultAuth(item.child, auth);
+    return newItem;
+  }).filter(item => item.child.length > 0);
+}

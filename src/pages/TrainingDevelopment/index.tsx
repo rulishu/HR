@@ -11,6 +11,7 @@ const Index = () => {
     dispatch.trainingDevelopment.selectList({
       enable: 1
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <Fragment>

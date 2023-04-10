@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Card, Notify } from 'uiw';
-import { useForm } from "@uiw-admin/components";
 import { FormPage } from '@/components'
 import Education from './Tables/Education'
 import Work from './Tables/Work';
