@@ -56,15 +56,17 @@ const route = {
     /**
      * 入职公司变化 重新获取入职部门 列表
     */
-    async getDepartmentList(company: string, state: any) {
+    async getDepartmentList(payload: KktproKeys, state: any) {
       const { employeeInduction: { companyList } } = state;
-      const obj = companyList.find((item: any) => String(item.id) === company) || { department: [] };
+      const obj = companyList.find((item: any) => String(item.id) === payload.company) || { department: [] };
       const departmentList = obj.department.map((item: any) => ({
         label: item.departmentName,
         value: item.id
       }))
       dispatch.employeeInduction.updateState({
         departmentList,
+        allFormData: payload,
+        department: ''
       })
     },
     /**
@@ -104,6 +106,7 @@ const route = {
         } = data.list && data.list.length > 0 ? data.list[0] : {};
         dispatch.employeeInduction.updateState({
           allFormData: works,
+          oldAllFormData: works,
           educationData: educationalExperience,
           workData: workExperience,
           familyData: familyMember

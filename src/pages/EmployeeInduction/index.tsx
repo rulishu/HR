@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Card, Notify } from 'uiw';
-import { ProForm, useForm } from "@uiw-admin/components";
+import { useForm } from "@uiw-admin/components";
 import { FormPage } from '@/components'
 import Education from './Tables/Education'
 import Work from './Tables/Work';
 import Family from './Tables/Family';
 import Modals from './Modals';
+import Form from './Form';
 import { formData, formDataVoid, addConfig } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
 import { PlusItems, PlusIcon  } from './style';
@@ -21,11 +22,12 @@ const Page = () => {
       educationData = [],
       workData = []
     },
-    global: { dictObject },
+    global: { dictObject, roles, userData },
   } = useSelector((state: RootState) => state);
+  const formRefList = useRef<any>([]);
 
-  const form1 = useForm();
-  const form2 = useForm();
+  // 过滤删除为null的ref
+  const formList = formRefList?.current.filter((n: any) => n) || []
 
   // 每次进入页面清楚之前遗留的数据
   useEffect(() => {
@@ -47,7 +49,15 @@ const Page = () => {
   }, [companyList])
 
   // 当前登录用户是 入职用户
-
+  useEffect(() => {
+    if (roles === 'entry') {
+      const { userId } = userData as any || {};
+      dispatch.employeeInduction.selectStaffFile({
+        userId
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   /**
    * 点击新增 教育经历 / 工作经历 / 家庭成员
@@ -64,10 +74,11 @@ const Page = () => {
    * 提交
   */
   const onSubmit = async () => {
-    const values: any = await asyncAwaitFormList([
-      form1?.validateFieldsAndGetValue(),
-      form2.validateFieldsAndGetValue()
-    ])
+    await (formList || []).forEach((item: any) => {
+      item.submitvalidate()
+    });
+    const validateList: any = formList.map((itm: any) => itm.validateFieldsAndGetValue()) || [];
+    const values: any = await asyncAwaitFormList(validateList)
     if (educationData.length === 0) {
       Notify.warning({
         title: '教育经历至少填写一项',
@@ -80,7 +91,7 @@ const Page = () => {
       });
       return;
     }
-    const obj = {...values[0], ...values[1]}
+    const obj = values.reduce((acc: any, cur: any) => ({...acc, ...cur}), {});
     dispatch.employeeInduction.submit({
       ...obj,
       callback: () => {
@@ -89,9 +100,10 @@ const Page = () => {
     })
   }
 
-  const onReset = () => {
-    form1?.resetForm?.();
-    form2?.resetForm?.();
+  const onReset = async () => {
+    await (formList || []).forEach((item: any) => {
+      item.resetForm()
+    });
     dispatch.employeeInduction.clearState();
   }
 
@@ -99,14 +111,15 @@ const Page = () => {
    * 监听入职公司变化
   */
   const onCompanyChange = async (value: string) => {
-    const values = await form1.getFieldValues?.();
+    const validateList = formList.map((item: any) => item.getFieldValues()) || []
+    const values = await asyncAwaitFormList(validateList) || []
+    const obj = values.reduce((acc: any, cur: any) => ({...acc, ...cur}), {});
     const parmas = {
-      ...values,
+      ...obj,
       company: value,
       department: undefined
     }
-    form1.setFields?.(parmas);
-    dispatch.employeeInduction.getDepartmentList(value);
+    dispatch.employeeInduction.getDepartmentList(parmas);
   }
 
   const _formData = formData({
@@ -116,8 +129,7 @@ const Page = () => {
     dictObject,
     onCompanyChange
   });
-
-  console.log('allFormData===>', allFormData)
+  
 
   return (
     <FormPage 
@@ -129,6 +141,7 @@ const Page = () => {
         },
         {
           label: '重置',
+          hide: allFormData && (allFormData as any).id,
           onClick: onReset
         },
       ]}
@@ -136,17 +149,11 @@ const Page = () => {
       {_formData.map((item: formDataVoid, index: number) => (
         <React.Fragment key={index}>
           {!item.type ? (
-            <ProForm
+            <Form
+              refs={(e: any) => e && (formRefList.current[index] = e)}
               title={item.title}
-              form={index === 0 ? form1 : form2}
-              formType="card"
-              saveButtonProps={{
-                type: "primary",
-              }}
-              cardProps={{
-                noHover: true
-              }}
               formDatas={item.child || []}
+              value={allFormData}
             />
           ) : (
             <Card noHover title={item.title} extra={

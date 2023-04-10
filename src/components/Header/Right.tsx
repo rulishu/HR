@@ -21,7 +21,8 @@ const Right = () => {
     if (menuType === 'logout') {
       localStorage.removeItem('token');
       dispatch.global.clearState();
-      navigate('/login');
+      window.location.reload();
+      // navigate('/login');
     }
     if (menuType === 'refreshAuth') {
       // 刷新权限

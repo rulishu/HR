@@ -1,8 +1,10 @@
+import React from 'react';
 import { ButtonProps, Button } from 'uiw';
 import { PageWraps, FixedWrap, FixedBody } from './style';
 
 export interface FormPageButtonsProps extends Omit<ButtonProps, 'label' | 'ref'> {
   label?: React.ReactNode;
+  hide?: boolean;
 }
 
 export interface FormPageProps {
@@ -20,7 +22,10 @@ const Page = (props: FormPageProps) => {
       <FixedWrap>
         <FixedBody>
           {buttons.map((item: FormPageButtonsProps, index: number) => {
-            const { label, children, ...other } = item;
+            const { label, children, hide, ...other } = item;
+            if (hide) {
+              return <React.Fragment key={index} />
+            }
             return (
               <Button className="form-btn" key={index} {...other}>{label || children}</Button>
             )

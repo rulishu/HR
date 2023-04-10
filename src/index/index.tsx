@@ -33,7 +33,7 @@ const RoutesOutletElement = (props: RoutesOutletElementProps) => {
     if (token) {
       dispatch.global.getUserInfo({
         callback: (auths: string[]) => {
-          console.log(999, auths)
+          // 如果只有1个菜单权限的则直接跳到对应的页面
           if (auths.length === 1) {
             navigate(auths[0], { replace: true })
           } else {
