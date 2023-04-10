@@ -11,12 +11,14 @@ const Page = () => {
   const {
     employeeInduction: { companyList },
   } = useSelector((state: RootState) => state);
-  const [nameId, setNameId] = useState(1)
+  const [nameId, setNameId] = useState()
 
   useEffect(() => {
     if (companyList.length === 0) {
       dispatch.sysOrganization.selectList({
         callback: (data: any) => {
+          setNameId(data[0].id)
+          dispatch.sysOrganization.selectListStaff({id:data[0].id});
           dispatch.employeeInduction.updateState({
             companyList: data
           })

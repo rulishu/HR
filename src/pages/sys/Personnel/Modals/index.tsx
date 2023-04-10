@@ -1,6 +1,7 @@
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm, useForm } from "@uiw-admin/components";
 import { Modal } from "uiw";
+import formatter from "@uiw/formatter";
 import { formList } from './utils';
 
 function Modals() {
@@ -10,10 +11,22 @@ function Modals() {
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
   const form = useForm();
+
+  const updateData = (payload: object) => {
+    dispatch({
+      type: 'sysOrganization/updateState',
+      payload,
+    })
+  }
+
   //提交按钮
   const onAddSubmit = async (current: any) => {
     const params = {
       ...current,
+      time: formatter(
+        "YYYY-MM-DD HH:mm:ss",
+        new Date(current?.time)
+      ),
       companyName: current.companyId[0].label,
       companyId: current.companyId[0].value,
     }
@@ -35,10 +48,20 @@ function Modals() {
   };
 
   /**
-   * 监听公司变化
+   * 监听
   */
-  const onCompanyChange = async (val: any) => {
-    dispatch.sysOrganization.selectList({id:val?.[0]?.value});
+  const handleChange = async (type: string,val: any) => {
+    if(type === 'companyId') {
+      dispatch.sysOrganization.selectList({id:val?.[0]?.value});
+    }
+    if(type === 'flag') {
+      updateData({
+        queryInfo: {
+          ...queryInfo,
+          flag: val,
+        },
+      })
+    }
   }
 
   return (
@@ -58,7 +81,7 @@ function Modals() {
         saveButtonProps={{ type: "primary" }}
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
-        formDatas={formList({ companyList, dataList, onCompanyChange })}
+        formDatas={formList({ queryInfo, companyList, dataList, handleChange })}
       />
     </Modal>
   );

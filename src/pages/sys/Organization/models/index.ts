@@ -18,7 +18,8 @@ const route = {
     }),
     hideModal: (state: any) => ({
       ...state,
-      isDelete: false
+      isDelete: false,
+      isVisible: false,
     })
   },
   effects: (dispatch: Dispatch) => ({
@@ -109,6 +110,7 @@ const route = {
         dispatch.sysOrganization.updateState({
           dataListStaff: data.staff,
         });
+        dispatch.sysOrganization.hideModal();
       }
     },
   })

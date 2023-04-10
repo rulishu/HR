@@ -1,32 +1,18 @@
 import { KktproKeys } from '@kkt/pro';
 interface FormListProps {
+  queryInfo?:any;
   dataList?: any;
   companyList?: any;
-  onCompanyChange?: (value: string) => void;
+  handleChange?: (type:string,value: string) => void;
 }
 
 export const formList = ({
+  queryInfo,
   dataList,
   companyList,
-  onCompanyChange
+  handleChange
 }: FormListProps) => {
   return [
-    // {
-    //   label: "公司名称",
-    //   key: "companyName",
-    //   widget: "select",
-    //   span: "24",
-    //   option: companyList.map((item: KktproKeys) => ({ label: item.companyName, value: item.companyName })),
-    //   widgetProps: {
-    //     labelInValue: true,
-    //     onChange: (e: any) => {
-    //       onCompanyChange?.(e.target.value)
-    //     }
-    //   },
-    //   rules: [
-    //     { required: true, message: '请选择公司名称' },
-    //   ],
-    // },
     {
       label: "公司名称",
       key: "companyId",
@@ -38,7 +24,7 @@ export const formList = ({
         allowClear: true,
         labelInValue: true,
         onChange: (value: any) => {
-          onCompanyChange?.(value)
+          handleChange?.('companyId', value)
         }
       },
       rules: [
@@ -76,9 +62,21 @@ export const formList = ({
         { value: 1, label: "入场" },
         { value: 2, label: "离场" },
       ],
+      onChange: (e: any) => {
+        handleChange?.('flag', e.target.value)
+      },
       rules: [
         { required: true, message: '请选择派遣方式' },
       ],
+    },
+    {
+      label: `${queryInfo?.flag === '2' ? '离场' : '入场'}日期`,
+      key: 'time',
+      widget: 'dateInput',
+      span: "24",
+      widgetProps: {
+        format: 'YYYY-MM-DD'
+      },
     },
   ]
 }
