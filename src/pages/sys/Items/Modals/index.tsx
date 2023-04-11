@@ -35,16 +35,16 @@ function Modals() {
       });
     } else if (type === "departmentAdd") {
       dispatch({
-        type: "sysItemsModal/onDepartmentAdd",
+        type: "sysItemsModal/projectAdd",
         payload: {
-          companyId: (detailsData as any)?.id,
+          groupId: (detailsData as any)?.id,
           ...params
         }
       });
     } else if (type === 'departmentEdit') {
       // 编辑
       dispatch({
-        type: "sysItemsModal/onDepartmentEdit",
+        type: "sysItemsModal/projectUpdate",
         payload: {
           id: (detailsData as any)?.id,
           ...params

@@ -59,7 +59,7 @@ const Page = () => {
   }
 
   const onVal = (e: any) => {
-    dispatch.sysOrganization.selectListStaff({ staffName: e.target.value  });
+    dispatch.sysOrganization.selectListStaff({ id: companyId, staffName: e.target.value  });
   };
 
   return (
