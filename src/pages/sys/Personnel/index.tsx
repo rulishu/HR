@@ -1,10 +1,12 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
-import { Row, Col, Menu, Card, List } from 'uiw';
-import { FlexCol, FlexTop, FlexSpan, CircleList, CircleCol, FlexIcon } from './style';
+import { Row, Col, Menu, Card, List, Input, Button } from 'uiw';
+import newDebounce from "@/utils/debounce";
+import Modals from './Modals';
+import { FlexCol, FlexTop, FlexSpan, CircleList, CircleCol, FlexIcon, FlexLeft } from './style/style';
+import './style/index.css';
 // import Search from './Search';
 // import Table from './Table';
-import Modals from './Modals';
 
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -18,7 +20,6 @@ const Page = () => {
 
 
   useEffect(() => {
-    if (companyList.length === 0) {
       dispatch.sysOrganization.selectList({
         callback: (data: any) => {
           setCompanyId(data?.[0].id)
@@ -37,14 +38,29 @@ const Page = () => {
           })
         }
       })
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyList])
+  }, [])
 
   const onButName = (data: any) => {
     setCompanyId(data.id)
     dispatch.sysOrganization.selectListStaff({ id: data.id });
+    setUserItem(dataListStaff?.[0])
+    setNameId(dataListStaff?.[0]?.userId)
   }
+
+  const onModals = () => {
+    dispatch({
+      type: 'sysOrganization/updateState',
+      payload: {
+        isVisible: true,
+        queryInfo: userItem,
+      }
+    })
+  }
+
+  const onVal = (e: any) => {
+    dispatch.sysOrganization.selectListStaff({ staffName: e.target.value  });
+  };
 
   return (
     <Fragment>
@@ -52,10 +68,11 @@ const Page = () => {
         <Row gutter={10}>
           <Col span="5">
             <FlexCol>
-              <Menu>
+              <Menu className='nameMenu'>
                 {companyList.map((itm: any) => (
                   <div key={itm.id}>
                     <Menu.Item
+                      // style={{lineHeight:'30px',fontSize:16}}
                       text={itm.companyName}
                       active={itm.id === companyId ? true : false}
                       onClick={() => {
@@ -69,14 +86,28 @@ const Page = () => {
           </Col>
           <Col span="5">
             <FlexCol>
-              <Menu>
+            <Input
+            className='searchName'
+            size='large'
+            preIcon="search"
+            placeholder="请输入内容"
+            onChange={(e) => {
+              newDebounce(() => {
+                // 防抖
+                onVal(e);
+              }, 600)
+            }}
+          />
+              <Menu className='nameMenu'>
                 {dataListStaff.map((itm: any) => (
                   <div key={itm.userId}>
                     <Menu.Item
+                      style={{lineHeight:'26px', fontSize:16, fontWeight: 500}}
                       text={itm.staffName}
                       active={itm.userId === nameId ? true : false}
                       onClick={() => {
                         setUserItem(itm)
+                        setNameId(itm.userId)
                       }}
                     />
                   </div>
@@ -87,8 +118,11 @@ const Page = () => {
           <Col>
             <Card noHover bordered={false}>
               <FlexTop>
+                <FlexLeft>
                 <FlexIcon type="verification" />
                 <FlexSpan>{userItem?.staffName}</FlexSpan>
+                </FlexLeft>
+                <Button icon="edit" type="primary" onClick={() => onModals()}/>
               </FlexTop>
               <CircleList noHover size='large'>
                 <List.Item>
@@ -100,7 +134,7 @@ const Page = () => {
                 <List.Item>
                   <Row>
                     <CircleCol fixed>部门负责人:</CircleCol>
-                    <Col grow={1}> {userItem?.departmentName}</Col>
+                    <Col grow={1}> {userItem?.leader}</Col>
                   </Row>
                 </List.Item>
                 <List.Item>
@@ -112,13 +146,13 @@ const Page = () => {
                 <List.Item>
                   <Row>
                     <CircleCol fixed>项目组负责人:</CircleCol>
-                    <Col grow={1}> {userItem?.groupProjectName}</Col>
+                    <Col grow={1}> {userItem?.manager}</Col>
                   </Row>
                 </List.Item>
                 <List.Item>
                   <Row>
                     <CircleCol fixed>项目:</CircleCol>
-                    <Col grow={1}> {userItem?.groupProjectName}</Col>
+                    <Col grow={1}> {userItem?.ProjectName}</Col>
                   </Row>
                 </List.Item>
                 <List.Item>
@@ -136,7 +170,7 @@ const Page = () => {
                 <List.Item>
                   <Row>
                     <CircleCol fixed>外派状态:</CircleCol>
-                    <Col grow={1}> {userItem?.type === '1' ? "在职" : "离职"}</Col>
+                    <Col grow={1}> {userItem?.type === '1' ? "在职" : userItem?.type === '2' ? "离职" : userItem?.type === '3' ? '入场' : ''}</Col>
                   </Row>
                 </List.Item>
               </CircleList>

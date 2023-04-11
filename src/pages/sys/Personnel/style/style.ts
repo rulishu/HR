@@ -8,6 +8,13 @@ export const FlexCol = styled.div`
 export const FlexTop = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+`;
+
+export const FlexLeft = styled.div`
+  display: flex;
+  align-items: center;
   justify-content: flex-start;
   margin-bottom: 12px;
 `;
