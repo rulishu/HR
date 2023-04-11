@@ -1,11 +1,17 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Layout } from 'uiw';
 import LeftSider from './LeftSider';
 import MiddleContent from './MiddleContent';
-import ResumeModal from './Modal'
+import ResumeModal from './Modal';
+import { useDispatch, Dispatch } from '@kkt/pro';
 const { Sider, Content } = Layout;
 
 const Index = () => {
+  const dispatch = useDispatch<Dispatch>()
+  useEffect(() => {
+    dispatch.resume.quickSelect({ value: 0 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <Fragment>
       <Layout style={{ marginTop: 5, minHeight: 600, background: 'rgb(243,244,247)' }}>

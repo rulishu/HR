@@ -1,5 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import {
+  quickSelect,
   selectUserVC
 } from '@/servers/resume'
 
@@ -8,11 +9,13 @@ const route = {
   state: {
     listType: 10,
     listData: [
-      { value: 10, level: '前端' },
-      { value: 20, level: '后端' },
-      { value: 30, level: '测试' },
-      { value: 40, level: '架构师' },
+      { value: 10, post: '前端' },
+      { value: 20, post: '后端' },
+      { value: 30, post: '测试' },
+      { value: 40, post: '架构师' },
     ],
+
+    TableData: [],
 
     modalVisible: false,
   },
@@ -24,7 +27,20 @@ const route = {
   },
   effects: (dispatch: Dispatch) => ({
     /**
-     * 获取简历查询列表
+     * table列表数据查询
+    */
+    async quickSelect(payload?: any, state?: any) {
+      console.log('payload', payload);
+
+      const { code, data } = await quickSelect(payload);
+      if (code === 200 && data) {
+        dispatch.resume.update({
+          TableData: data,
+        });
+      }
+    },
+    /**
+     * 查询用户简历
     */
     async selectUserVC(payload?: any, state?: any) {
       const { code, data } = await selectUserVC(payload);

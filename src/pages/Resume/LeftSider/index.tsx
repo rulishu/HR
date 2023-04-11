@@ -12,17 +12,15 @@ const Index = () => {
     return (
       <Fragment>
         {listData?.map((item: any, idx: any) => {
+          let valueItem = listData.find((itm: any) => itm?.post === item.post)
+          let value = valueItem?.value
+
           return (
             <Fragment key={idx}>
               <Menu.Item
-                text={item.level}
+                text={item.post}
                 onClick={() => {
-                  dispatch({
-                    type: 'resume/update',
-                    payload: {
-                      listType: item.value
-                    }
-                  })
+                  dispatch.resume.quickSelect({ value })
                 }}
               />
               <Menu.Divider />
