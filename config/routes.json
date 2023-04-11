@@ -26,7 +26,7 @@
           },
           {
             "path": "/admin/employee-profile",
-            "name": "员工档案管理",
+            "name": "员工档案",
             "icon": "usergroup-add",
             "element": "@/pages/EmployeeProfile"
           },

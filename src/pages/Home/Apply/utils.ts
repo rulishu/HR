@@ -1,3 +1,5 @@
+import { KktproRoutesProps } from '@kkt/pro';
+
 export type MenuConfigType = {
   text: string;
   icon: string;
@@ -23,7 +25,10 @@ export const menuNewsConfig: MenuConfigType[] = [
  * 所有路由对应的图标
 */
 export const getIocns: any = {
+  '/admin/employee-profile': 'menu1',
   '/admin/employee-induction': 'menu4',
+  '/admin/employee-depart': 'menu1',
+  '/admin/training-and-development': 'menu1',
   '/admin/sys/items': 'menu4',
   '/admin/sys/personnel': 'menu4',
   '/admin/sys/organization-structure': 'menu4',
@@ -47,8 +52,24 @@ const defaultAuth = (data: MenuConfigType[], auth: string[] = []) => {
   return newArr;
 }
 
-export const getNewsAuthMenu = (auth: string[] = []) => {
-  return defaultAuth(menuNewsConfig, auth);
+export const returnPaths = (data: KktproRoutesProps[] = []) => {
+  const newRoutes: string[] = [];
+  (function setRoutes(arr) {
+    arr.forEach(item => {
+      const { children, ...other } = item;
+      if (children && Array.isArray(children)) {
+        setRoutes(children);
+      }
+      if (other.path) {
+        newRoutes.push(other.path)
+      }
+    })
+  })(data);
+  return newRoutes;
+}
+
+export const getNewsAuthMenu = (auth: any[] = []) => {
+  return defaultAuth(menuNewsConfig, returnPaths(auth));
 }
 
 /**
