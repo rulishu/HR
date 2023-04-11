@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import dayjs from 'dayjs';
-import { insert, selectStaffFile } from '@/servers/employeeInduction';
+import { insert, update, selectStaffFile } from '@/servers/employeeInduction';
 import { Notify } from 'uiw';
 
 const int = {
@@ -65,12 +65,11 @@ const route = {
       }))
       dispatch.employeeInduction.updateState({
         departmentList,
-        allFormData: payload,
-        department: ''
+        // allFormData: payload,
       })
     },
     /**
-     * 新增档案 - 提交
+     * 新增/编辑档案 - 提交
     */
     async submit({callback, ...other}: KktproKeys, state: any) {
       const { employeeInduction: {
@@ -86,9 +85,15 @@ const route = {
         workExperience: dateShift(workData),
         familyMember: familyData
       }
-      const { code, msg } = await insert(params);
+      let data: any;
+      if (params.id) {
+        data = await update(params)
+      } else {
+        data = await insert(params);
+      }
+      const { code, msg } = data;
       if (code === 200) {
-        Notify.success({ description: msg || '添加成功' });
+        Notify.success({ description: msg || `${params.id ? '编辑': '添加'}成功` });
         callback?.();
       }
     },
@@ -104,14 +109,20 @@ const route = {
           familyMember = [],
           ...works
         } = data.list && data.list.length > 0 ? data.list[0] : {};
+        let newWorks: any = {}
+        for(const key in works) {
+          newWorks[key] = works[key] ? works[key] : '';
+        }
         dispatch.employeeInduction.updateState({
-          allFormData: works,
-          oldAllFormData: works,
+          allFormData: newWorks,
           educationData: educationalExperience,
           workData: workExperience,
           familyData: familyMember
         })
-        callback?.(works);
+        if (newWorks.company) {
+          dispatch.employeeInduction.getDepartmentList(newWorks);
+        }
+        callback?.(newWorks);
       }
     },
   })

@@ -1,28 +1,29 @@
 import { useEffect } from 'react';
-import { ProForm, useForm } from "@uiw-admin/components";
+import { ProForm } from "@uiw-admin/components";
 
 interface FormProps {
-  refs: (e: any) => void;
+  refs: any;
   title?: string;
   formDatas?: any[];
+  form?: any;
   value?: any;
+  onChange?: (old: any, current: any) => void;
 }
 
 const Form = (props: FormProps) => {
-  const { refs, title, formDatas, value } = props;
+  const { refs, title, form, formDatas, value, onChange } = props;
 
-  const form = useForm();
+  // const form = useForm();
 
   useEffect(() => {
-    if (form && value !== undefined) {
-      form.setFields?.(value || {});
+    if (form && value) {
+      // form.setFields?.(value || {});
     }
   }, [value, form])
 
   return (
     <ProForm
       title={title}
-      // ref={ref}
       ref={(e: any) => refs(e)}
       form={form}
       formType="card"
@@ -30,6 +31,7 @@ const Form = (props: FormProps) => {
         noHover: true
       }}
       formDatas={formDatas || []}
+      onChange={(_, current) => onChange?.(_, current)}
     />
   )
 }

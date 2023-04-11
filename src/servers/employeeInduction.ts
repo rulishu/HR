@@ -15,6 +15,16 @@ export function insert(params: KktproKeys) {
 }
 
 /**
+ * 更新档案
+*/
+export function update(params: KktproKeys) {
+  return request('/api/staffFile/update', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
  * 通过userId 查询个人档案
  * @userId
 */

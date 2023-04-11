@@ -22,6 +22,7 @@ const RoutesOutletElement = (props: RoutesOutletElementProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch<Dispatch>();
+  const [loading, setLoading] = useState<boolean>(true);
   const [routes, setRoutes] = useState<KktproRoutesProps[]>(props.routes);
   
   useEffect(() => {
@@ -56,15 +57,20 @@ const RoutesOutletElement = (props: RoutesOutletElementProps) => {
   useEffect(() => {
     const newRoutes = getAuthRoutes(props.routes, authRoutes);
     setRoutes(newRoutes);
+    setTimeout(() => {
+      const is = authRoutes.length === 0;
+      setLoading(is);
+    }, 10)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authRoutes])
 
   return (
     <Loader
       style={{ width: '100%', height: '100vh' }}
-      loading={authRoutes.length === 0 && !['/login', '*'].includes(pathname)}
+      loading={loading && !['/login', '*'].includes(pathname)}
       tip="加载中..."
       bgColor="rgba(255, 255, 255, 1)"
+      
     >
       <SWRConfig
         value={{

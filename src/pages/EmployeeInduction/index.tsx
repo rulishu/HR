@@ -7,6 +7,7 @@ import Work from './Tables/Work';
 import Family from './Tables/Family';
 import Modals from './Modals';
 import Form from './Form';
+import { useForm } from "@uiw-admin/components";
 import { formData, formDataVoid, addConfig } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
 import { PlusItems, PlusIcon  } from './style';
@@ -25,6 +26,9 @@ const Page = () => {
   } = useSelector((state: RootState) => state);
   const formRefList = useRef<any>([]);
 
+  const form1 = useForm();
+  const form2 = useForm();
+
   // 过滤删除为null的ref
   const formList = formRefList?.current.filter((n: any) => n) || []
 
@@ -41,22 +45,30 @@ const Page = () => {
           dispatch.employeeInduction.updateState({
             companyList: data
           })
+          // 当前登录用户是 入职用户
+          if (roles === 'entry') {
+            entryInit();
+          }
         }
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyList])
 
-  // 当前登录用户是 入职用户
-  useEffect(() => {
-    if (roles === 'entry') {
-      const { userId } = userData as any || {};
-      dispatch.employeeInduction.selectStaffFile({
-        userId
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const entryInit = async () => {
+    const { userId } = userData as any || {};
+    dispatch.employeeInduction.selectStaffFile({
+      userId,
+      callback: async (all: any) => {
+        if (formRefList.current.length > 0) {
+          const list = formRefList?.current.filter((n: any) => n) || [];
+          await (list || []).forEach((item: any) => {
+            item.setFields?.(all || {});
+          });
+        }
+      }
+    })
+  }
 
   /**
    * 点击新增 教育经历 / 工作经历 / 家庭成员
@@ -73,11 +85,8 @@ const Page = () => {
    * 提交
   */
   const onSubmit = async () => {
-    await (formList || []).forEach((item: any) => {
-      item.submitvalidate()
-    });
-    const validateList: any = formList.map((itm: any) => itm.validateFieldsAndGetValue()) || [];
-    const values: any = await asyncAwaitFormList(validateList)
+    const validateList = formList.map((itm: any) => itm.validateFieldsAndGetValue())
+    await asyncAwaitFormList(validateList);
     if (educationData.length === 0) {
       Notify.warning({
         title: '教育经历至少填写一项',
@@ -90,11 +99,13 @@ const Page = () => {
       });
       return;
     }
-    const obj = values.reduce((acc: any, cur: any) => ({...acc, ...cur}), {});
+    const obj: any = allFormData;
     dispatch.employeeInduction.submit({
       ...obj,
       callback: () => {
-        onReset();
+        if (!obj.id) {
+          onReset();
+        }
       }
     })
   }
@@ -106,28 +117,37 @@ const Page = () => {
     dispatch.employeeInduction.clearState();
   }
 
-  /**
-   * 监听入职公司变化
-  */
-  const onCompanyChange = async (value: string) => {
-    const validateList = formList.map((item: any) => item.getFieldValues()) || []
-    const values = await asyncAwaitFormList(validateList) || []
-    const obj = values.reduce((acc: any, cur: any) => ({...acc, ...cur}), {});
-    const parmas = {
-      ...obj,
-      company: value,
-      department: undefined
-    }
-    dispatch.employeeInduction.getDepartmentList(parmas);
-  }
-
   const _formData = formData({
     companyList,
     departmentList,
-    data: allFormData,
+    // data: allFormData,
     dictObject,
-    onCompanyChange
   });
+
+  /**
+   * 监听表单数据
+  */
+  const onChange = async (_: any, current: any) => {
+    const all: any = allFormData || {};
+    const params = {
+      ...all,
+      ...current
+    }
+    dispatch.employeeInduction.updateState({
+      allFormData: {
+        ...params,
+        department: all.company !== current.company ? '' : params.department
+      }
+    })
+    if (all.company !== current.company) {
+      // 如果选择入职公司，则重新获取入职部门里表，并清除入职部门数据
+      dispatch.employeeInduction.getDepartmentList(params);
+      formList[0].setFields({
+        ...params,
+        department: ''
+      });
+    }
+  }
   
 
   return (
@@ -151,8 +171,10 @@ const Page = () => {
             <Form
               refs={(e: any) => e && (formRefList.current[index] = e)}
               title={item.title}
+              form={index === 0 ? form1 : form2}
               formDatas={item.child || []}
               value={allFormData}
+              onChange={onChange}
             />
           ) : (
             <Card noHover title={item.title} extra={

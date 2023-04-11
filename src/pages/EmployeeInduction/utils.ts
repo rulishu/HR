@@ -4,9 +4,8 @@ import { valid } from '@/utils/valid';
 interface formDataProps {
   companyList?: any[];
   departmentList?: any[]
-  data: any,
+  // data: any,
   dictObject: any;
-  onCompanyChange?: (value: string) => void;
 }
 export interface formDataVoid {
   title: string;
@@ -25,9 +24,8 @@ export interface formDataVoid {
 export const formData = ({
   companyList = [],
   departmentList,
-  data = {},
+  // data = {},
   dictObject,
-  onCompanyChange
 }: formDataProps): formDataVoid[] => {
   return [
     {
@@ -40,7 +38,6 @@ export const formData = ({
           rules: [
             { required: true, message: '请填写姓名' },
           ],
-          initialValue: data?.name,
         },
         {
           label: "手机号",
@@ -58,7 +55,6 @@ export const formData = ({
               message: '请填写正确的手机号'
             }
           ],
-          initialValue: data?.phone,
         },
         {
           label: "入职日期",
@@ -70,7 +66,6 @@ export const formData = ({
           rules: [
             { required: true, message: '请选择入职日期' },
           ],
-          initialValue: data?.entryDate,
         },
         // {
         //   label: "入职公司",
@@ -79,13 +74,7 @@ export const formData = ({
         //   option: companyList.map(item => ({ label: item.companyName, value: item.id })),
         //   rules: [
         //     { required: true, message: '请选择入职公司' },
-        //   ],
-        //   initialValue: data?.company,
-        //   widgetProps: {
-        //     onChange: (e: any) => {
-        //       onCompanyChange?.(e.target.value)
-        //     }
-        //   }
+        //   ]
         // },
         // {
         //   label: "入职部门",
@@ -95,7 +84,6 @@ export const formData = ({
         //   rules: [
         //     { required: true, message: '请选择入职部门' },
         //   ],
-        //   initialValue: data?.department,
         // },
         // {
         //   label: "入职岗位",
@@ -105,13 +93,11 @@ export const formData = ({
         //   rules: [
         //     { required: true, message: '请选择入职岗位' },
         //   ],
-        //   initialValue: data?.post,
         // },
         {
           label: "社保公积金账号",
           key: "socialInsuranceAccount",
           widget: "input",
-          initialValue: data?.socialInsuranceAccount,
         },
       ]
     },
@@ -126,7 +112,6 @@ export const formData = ({
           rules: [
             { required: true, message: '请选择性别' },
           ],
-          initialValue: data?.gender,
         },
         {
           label: "出生日期",
@@ -135,19 +120,16 @@ export const formData = ({
           rules: [
             { required: true, message: '请选择出生日期' },
           ],
-          initialValue: data?.birth,
         },
         {
           label: "体重",
           key: "weight",
           widget: "input",
-          initialValue: data?.weight,
         },
         {
           label: "身高",
           key: "height",
           widget: "input",
-          initialValue: data?.height,
         },
         {
           label: "民族",

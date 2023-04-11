@@ -134,9 +134,5 @@
         "element": "@uiw-admin/exceptions/lib/Exceptions/404"
       }
     ]
-  },
-  {
-    "path": "*",
-    "element": "@uiw-admin/exceptions/lib/Exceptions/404"
   }
 ]
