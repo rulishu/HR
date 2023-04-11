@@ -129,7 +129,7 @@
           },
           {
             "path": "/admin/resume",
-            "name": "简历模版",
+            "name": "简历查询",
             "icon": "folder-open",
             "element": "@/pages/Resume"
           }

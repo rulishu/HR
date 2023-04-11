@@ -16,7 +16,7 @@ export const menuNewsConfig: MenuConfigType[] = [
   { text: '员工档案', icon: 'menu1', path: '/admin/employee-profile' },
   { text: '考勤管理', icon: 'menu3', path: '/admin/AttendanceManagement/employee-attendance' },
   { text: '入职管理', icon: 'menu4', path: '/admin/employee-induction', },
-  { text: '简历模版', icon: 'menu2', path: '/admin/resume', }
+  { text: '简历查询', icon: 'menu2', path: '/admin/resume', }
 ]
 
 /**
@@ -83,7 +83,7 @@ export const getNewsAuthMenu = (auth: string[] = []) => {
 
 export const getAuthMenu = (auth: string[] = []) => {
   return menusConfig.map(item => {
-    const newItem = {...item};
+    const newItem = { ...item };
     newItem.child = defaultAuth(item.child, auth);
     return newItem;
   }).filter(item => item.child.length > 0);

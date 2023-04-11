@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import {
-  selectList
+  selectUserVC
 } from '@/servers/resume'
 
 const route = {
@@ -24,10 +24,10 @@ const route = {
   },
   effects: (dispatch: Dispatch) => ({
     /**
-     * 获取左侧列表
+     * 获取简历查询列表
     */
-    async selectStaffFile(payload?: any, state?: any) {
-      const { code, data } = await selectList(payload);
+    async selectUserVC(payload?: any, state?: any) {
+      const { code, data } = await selectUserVC(payload);
       if (code === 200 && data) {
         const { list } = data;
         dispatch.resume.update({

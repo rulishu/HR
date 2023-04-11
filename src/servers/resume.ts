@@ -4,8 +4,8 @@ import { KktproKeys } from '@kkt/pro';
 /**
  * 查询公告列表
 */
-export function selectList(params: KktproKeys) {
-  return request('', {
+export function selectUserVC(params: KktproKeys) {
+  return request('/api/vc/selectUserVC', {
     method: 'post',
     body: { ...params },
   });
