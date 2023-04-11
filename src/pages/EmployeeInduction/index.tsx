@@ -120,7 +120,7 @@ const Page = () => {
   const _formData = formData({
     companyList,
     departmentList,
-    // data: allFormData,
+    data: allFormData,
     dictObject,
   });
 
@@ -174,6 +174,7 @@ const Page = () => {
               form={index === 0 ? form1 : form2}
               formDatas={item.child || []}
               value={allFormData}
+              // readOnly={true}
               onChange={onChange}
             />
           ) : (

@@ -19,7 +19,6 @@ const Right = () => {
   const onMenuClick = (menuType: string) => {
     if (menuType === 'logout') {
       localStorage.removeItem('token');
-      dispatch.global.clearState();
       window.location.reload();
       // navigate('/login');
     }

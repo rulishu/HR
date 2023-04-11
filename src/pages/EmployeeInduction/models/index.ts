@@ -3,10 +3,9 @@ import dayjs from 'dayjs';
 import { insert, update, selectStaffFile } from '@/servers/employeeInduction';
 import { Notify } from 'uiw';
 
-const int = {
+const init = {
   allFormData: undefined, // 存储表单所有的数据，不包括教育经历 / 工作经历 / 家庭成员
 
-  companyList: [], // 入职公司
   departmentList: [], // 入职部门
 
   // 教育经历
@@ -41,7 +40,10 @@ const dateShift = (data: KktproKeys[] = []) => {
 
 const route = {
   name: "employeeInduction",
-  state: int,
+  state: {
+    ...init,
+    companyList: [], // 入职公司
+  },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
       ...state,
@@ -49,7 +51,7 @@ const route = {
     }),
     clearState: (state: any) => ({
       ...state,
-      ...int
+      ...init
     })
   },
   effects: (dispatch: Dispatch) => ({

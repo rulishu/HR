@@ -1,10 +1,11 @@
 import { useDispatch, useSelector, Dispatch, RootState } from "@kkt/pro";
 import { ProForm } from "@uiw-admin/components";
 import { Drawer } from "uiw";
+import { ModalTitle, getRouteList } from './utils';
 
 const Modals = () => {
   const {
-    sysRoute: { isVisible, popUpStatus, detailsData },
+    sysRoute: { isVisible, popUpStatus, dataList, detailsData },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
@@ -21,8 +22,9 @@ const Modals = () => {
   };
 
   //提交按钮
-  const onSubmit = (current: object) => {
-    if (popUpStatus === "add") {
+  const onSubmit = (current: any) => {
+    if (!popUpStatus) return;
+    if (['add', 'tableAdd'].includes(popUpStatus)) {
       dispatch({
         type: "sysRoute/addMenu",
         payload: {
@@ -31,15 +33,27 @@ const Modals = () => {
         },
       });
     } else {
+      const params = {
+        ...(detailsData as any),
+        ...current
+      }
       dispatch({
         type: "sysRoute/updateMenu",
-        payload: current,
+        payload: {
+          menuName: params.menuName,
+          menuId: params.menuId,
+          orderNum: params.orderNum,
+          query: params.query,
+          path: params.query === '1' ? '' : params.path,
+          userId: params.userId,
+          parentId: params.query === '1' ? 0 : params.parentId
+        },
       });
     }
   };
   return (
     <Drawer
-      title={popUpStatus === "add" ? "新增" : "编辑"}
+      title={ModalTitle[popUpStatus || 'add']}
       size={600}
       isOpen={isVisible}
       onClose={() => onClosed()}
@@ -65,13 +79,52 @@ const Modals = () => {
             ],
           },
           {
-            label: "菜单路径",
+            label: "类型",
+            key: "query",
+            widget: "select",
+            span: "24",
+            initialValue: (detailsData as any)?.query,
+            disabled: popUpStatus === 'tableAdd',
+            option: [
+              { label: '文件', value: '1' },
+              { label: '路径', value: '2' },
+            ],
+            rules: [
+              { required: true, message: '请选择类型' },
+            ],
+            widgetProps: {
+              onChange: (e: any) => {
+                dispatch({
+                  type: "sysRoute/updateState",
+                  payload: {
+                    detailsData: {
+                      ...(detailsData as any),
+                      query: e.target.value
+                    }
+                  },
+                });
+              }
+            }
+          },
+          {
+            label: "上级菜单",
+            key: "parentId",
+            widget: "select",
+            span: "24",
+            initialValue: (detailsData as any)?.parentId,
+            disabled: popUpStatus === 'tableAdd',
+            hide: (detailsData as any)?.query === '1',
+            option: getRouteList(dataList, (detailsData as any)?.path),
+          },
+          {
+            label: "路由地址",
             key: "path",
             widget: "input",
             span: "24",
             initialValue: (detailsData as any)?.path,
+            hide: (detailsData as any)?.query === '1',
             rules: [
-              { required: true, message: '请填写菜单路径' },
+              { required: true, message: '请填写路由地址' },
             ],
           },
           {

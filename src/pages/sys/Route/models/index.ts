@@ -1,6 +1,7 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
 import { selectMenu, addMenu, deleteMenu, updateMenu } from '@/servers/sys/route';
+import { removeChild } from '../utils';
 
 const route = {
   name: "sysRoute",
@@ -35,13 +36,7 @@ const route = {
         userId: userData.userId
       });
       if (code === 200 && data) {
-        const newData = data.map((item: KktproKeys) => {
-          const newItem = { ...item }
-          if (Array.isArray(item.children) && item.children.length === 0) {
-            delete newItem.children
-          }
-          return newItem;
-        })
+        const newData = removeChild(data);
         if (payload?.callback) {
           // 其它页面获取路由列表
           payload?.callback(data);
@@ -60,7 +55,10 @@ const route = {
      * 添加菜单
     */
     async addMenu(payload: KktproKeys) {
-      const { code, msg } = await addMenu(payload);
+      const { code, msg } = await addMenu({
+        ...payload,
+        parentId: payload.parentId || 0
+      });
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
         dispatch.sysRoute.hideModal();
@@ -88,14 +86,7 @@ const route = {
      * 编辑菜单
     */
     async updateMenu(payload?: KktproKeys, state?: any) {
-      const { sysRoute, global } = state;
-      const { detailsData = {} } = sysRoute;
-      const { userData } = global;
-      const { code, msg } = await updateMenu({
-        ...detailsData,
-        ...payload,
-        userId: userData.userId
-      });
+      const { code, msg } = await updateMenu(payload || {});
       if (code === 200) {
         Notify.success({ description: msg || '编辑成功' });
         dispatch.sysRoute.hideModal();

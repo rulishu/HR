@@ -7,11 +7,12 @@ interface FormProps {
   formDatas?: any[];
   form?: any;
   value?: any;
+  readOnly?: boolean;
   onChange?: (old: any, current: any) => void;
 }
 
 const Form = (props: FormProps) => {
-  const { refs, title, form, formDatas, value, onChange } = props;
+  const { refs, title, form, readOnly, formDatas, value, onChange } = props;
 
   // const form = useForm();
 
@@ -24,6 +25,7 @@ const Form = (props: FormProps) => {
   return (
     <ProForm
       title={title}
+      readOnly={readOnly}
       ref={(e: any) => refs(e)}
       form={form}
       formType="card"

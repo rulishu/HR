@@ -4,7 +4,7 @@ import { valid } from '@/utils/valid';
 interface formDataProps {
   companyList?: any[];
   departmentList?: any[]
-  // data: any,
+  data: any,
   dictObject: any;
 }
 export interface formDataVoid {
@@ -24,7 +24,7 @@ export interface formDataVoid {
 export const formData = ({
   companyList = [],
   departmentList,
-  // data = {},
+  data = {},
   dictObject,
 }: formDataProps): formDataVoid[] => {
   return [
@@ -38,11 +38,13 @@ export const formData = ({
           rules: [
             { required: true, message: '请填写姓名' },
           ],
+          initialValue: data?.name
         },
         {
           label: "手机号",
           key: "phone",
           widget: "input",
+          initialValue: data?.phone,
           rules: [
             { required: true, message: '请填写手机号' },
             { 
@@ -60,6 +62,7 @@ export const formData = ({
           label: "入职日期",
           key: "entryDate",
           widget: "dateInput",
+          initialValue: data?.entryDate,
           widgetProps: {
             format: 'YYYY-MM-DD'
           },
@@ -98,6 +101,7 @@ export const formData = ({
           label: "社保公积金账号",
           key: "socialInsuranceAccount",
           widget: "input",
+          initialValue: data?.socialInsuranceAccount,
         },
       ]
     },
@@ -109,6 +113,7 @@ export const formData = ({
           key: "gender",
           widget: "radio",
           option: dictObject['sex']?.child || [],
+          initialValue: data?.gender,
           rules: [
             { required: true, message: '请选择性别' },
           ],
@@ -117,6 +122,7 @@ export const formData = ({
           label: "出生日期",
           key: "birth",
           widget: "dateInput",
+          initialValue: data?.birth,
           rules: [
             { required: true, message: '请选择出生日期' },
           ],
@@ -125,11 +131,13 @@ export const formData = ({
           label: "体重",
           key: "weight",
           widget: "input",
+          initialValue: data?.weight,
         },
         {
           label: "身高",
           key: "height",
           widget: "input",
+          initialValue: data?.height,
         },
         {
           label: "民族",

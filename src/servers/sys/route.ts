@@ -9,7 +9,7 @@ import { KktproKeys } from '@kkt/pro';
  * @userId
 */
 export function selectMenu(params: KktproKeys) {
-  return request('/api/menu/selectMenu', {
+  return request('/api/menu/selectMenuTreeByUserId', {
     method: 'post',
     body: { ...params },
   });
