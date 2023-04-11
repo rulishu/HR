@@ -9,3 +9,9 @@
 .nameMenu .w-menu-item:hover, .nameMenu .w-menu-item.active {
   background: #f2f4f7;
 }
+.modalForm .w-modal-inner {
+  background: #fff;
+}
+.modalForm .w-btn {
+  width: 80px;
+}
