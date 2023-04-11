@@ -44,3 +44,44 @@ export function deletes(params: KktproKeys) {
     body: { ...params },
   });
 }
+
+/**
+ * 项目列表
+ * @userId
+*/
+export function projectSelectList(params: KktproKeys) {
+  return request('/api/project/selectList', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 添加项目
+*/
+export const projectAdd = (params: KktproKeys) => {
+  return request('/api/project/add', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 修改项目
+*/
+export const projectUpdate = (params: KktproKeys) => {
+  return request('/api/project/update', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 删除项目
+*/
+export const projectDelete = (params: KktproKeys) => {
+  return request('/api/project/delete', {
+    method: 'post',
+    body: { ...params },
+  });
+}

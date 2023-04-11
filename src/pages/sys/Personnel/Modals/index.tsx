@@ -72,6 +72,7 @@ function Modals() {
       onClosed={() => onClosed()}
       type="danger"
       useButton={false}
+      className="modalForm"
     >
       <ProForm
         form={form}
