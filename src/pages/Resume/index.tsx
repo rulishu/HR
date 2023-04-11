@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 import { Layout } from 'uiw';
 import LeftSider from './LeftSider';
-import MiddleContent from './MiddleContent'
+import MiddleContent from './MiddleContent';
+import ResumeModal from './Modal'
 const { Sider, Content } = Layout;
 
 const Index = () => {
@@ -15,6 +16,7 @@ const Index = () => {
           <MiddleContent />
         </Content>
       </Layout>
+      <ResumeModal />
     </Fragment>
   )
 }

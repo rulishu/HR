@@ -14,6 +14,7 @@ const route = {
       { value: 40, level: '架构师' },
     ],
 
+    modalVisible: false,
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({

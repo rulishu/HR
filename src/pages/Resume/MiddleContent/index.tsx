@@ -1,13 +1,25 @@
 import { Fragment } from 'react';
 import { Card } from 'uiw';
+import { useDispatch, Dispatch } from '@kkt/pro';
 
 const Index = () => {
+  const dispatch = useDispatch<Dispatch>()
+
   return (
     <Fragment>
 
       <Card style={{ width: "100%", minHeight: 100 }} bodyStyle={{ padding: 10 }} noHover={true}>
         <div style={{ display: 'flex', justifyContent: "space-between" }} >
-          <div style={{ marginLeft: 20 }}>
+          <div
+            style={{ marginLeft: 20 }}
+            onClick={() => {
+              dispatch({
+                type: 'resume/update',
+                payload: {
+                  modalVisible: true
+                }
+              })
+            }}>
             <p><strong>姓名：</strong> 10年工作经验</p>
             <p>简历 </p>
           </div>
