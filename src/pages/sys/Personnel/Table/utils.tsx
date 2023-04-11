@@ -20,23 +20,31 @@ export const columns = ({
     key: "departmentName",
   },
   {
-    title: "职位",
+    title: "部门负责人",
+    key: "departmentName",
+  },
+  {
+    title: "项目组",
     key: "groupProjectName",
   },
   {
-    title: "手机号",
-    key: "phone",
+    title: "项目组负责人",
+    key: "groupProjectName",
   },
   {
-    title: "邮箱",
+    title: "项目",
     key: "email",
   },
   {
-    title: "入职日期",
+    title: "联系电话",
+    key: "phone",
+  },
+  {
+    title: "入场/离场时间",
     key: "entryDate",
   },
   {
-    title: "员工状态",
+    title: "外派状态",
     key: "type",
     render: (text: any) => (
       <Tag
