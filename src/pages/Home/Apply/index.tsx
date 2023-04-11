@@ -2,17 +2,17 @@ import { useMemo } from 'react';
 import { Divider } from "uiw";
 import { ApplyItem, RowItem, ColItem } from './style';
 import Icons from '@/components/Icons';
-import { getNewsAuthMenu, getAuthMenu } from './utils';
-import type { MenuConfigType, MenuAllconfigType } from './utils'
+import { getNewsAuthMenu, getIocns, getRoutes } from './utils';
+import type { MenuConfigType } from './utils'
 interface AppleProps {
   title?: string;
   size?: number;
   style?: React.CSSProperties;
-  auth?: string[];
+  auth?: any[];
 }
 
 const Modules = (props: AppleProps) => {
-  const { size = 40, style, auth } = props;
+  const { size = 40, style, auth = [] } = props;
   
   const iconStyle: React.CSSProperties = {
     width: size,
@@ -22,10 +22,6 @@ const Modules = (props: AppleProps) => {
   const newsMenu = useMemo(() => {
     return getNewsAuthMenu(auth);
   }, [auth]);
-
-  const authMenu = useMemo(() => {
-    return getAuthMenu(auth)
-  }, [auth])
 
   return (
     <div style={style}>
@@ -45,20 +41,20 @@ const Modules = (props: AppleProps) => {
           <Divider />
         </div>
       )}
-      {authMenu.map((_item: MenuAllconfigType, _index: number) => (
+      {getRoutes(auth).map((_item: any, _index: number) => (
         <div key={_index}>
-          <h3>{_item.title}</h3>
+          <h3>{_item.menuName}</h3>
           <RowItem>
-            {_item.child.map((item: MenuConfigType, index: number) => (
+            {_item.children.map((item: any, index: number) => (
               <ColItem key={index}>
                 <ApplyItem to={item.path as string}>
-                  <Icons type={item.icon} style={iconStyle} />
-                  <span>{item.text}</span>
+                  <Icons type={getIocns[item.path]} style={iconStyle} />
+                  <span>{item.menuName}</span>
                 </ApplyItem>
               </ColItem>
             ))}
           </RowItem>
-          {_index !== authMenu.length - 1 && <Divider />}
+          {_index !== getRoutes(auth).length - 1 && <Divider />}
         </div>
       ))}
     </div>

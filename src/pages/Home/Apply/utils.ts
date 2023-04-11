@@ -20,50 +20,20 @@ export const menuNewsConfig: MenuConfigType[] = [
 ]
 
 /**
- * 其它配置
+ * 所有路由对应的图标
 */
-export const menusConfig: MenuAllconfigType[] = [
-  {
-    title: '全员常用',
-    child: [
-      { text: '招聘管理', icon: 'menu4', path: '/admin/employee-profile' },
-      { text: '转正管理', icon: 'menu4', path: '/admin/sys/organization-structure' },
-      { text: '调岗管理', icon: 'menu4', path: '/admin/employee-attendance' },
-      { text: '离职管理', icon: 'menu5', path: '/admin/employee-depart', },
-      { text: '合同管理', icon: 'menu4', path: '/admin/employee-attendance' },
-      { text: '薪资管理', icon: 'menu4', path: '/admin/training-and-development' },
-      { text: '组织机构', icon: 'menu4', path: '/admin/sys/organization-structure' },
-      { text: '培训与发展', icon: 'menu6', path: '/admin/training-and-development' },
-    ]
-  },
-  {
-    title: '全部应用',
-    child: [
-      { text: '员工档案', icon: 'menu1', path: '/admin/employee-profile' },
-      { text: '考勤管理', icon: 'menu3', path: '/admin/employee-attendance' },
-      { text: '入职管理', icon: 'menu4', path: '/admin/employee-induction', },
-      { text: '招聘管理', icon: 'menu3', path: '/admin/employee-profile' },
-      { text: '转正管理', icon: 'menu4', path: '/admin/sys/organization-structure' },
-      { text: '调岗管理', icon: 'menu4', path: '/admin/employee-attendance' },
-      { text: '离职管理', icon: 'menu5', path: '/admin/employee-depart', },
-      { text: '合同管理', icon: 'menu4', path: '/admin/employee-attendance' },
-      { text: '薪资管理', icon: 'menu4', path: '/admin/training-and-development' },
-      { text: '培训与发展', icon: 'menu6', path: '/admin/training-and-development' },
-    ]
-  },
-  {
-    title: '系统设置',
-    child: [
-      { text: '组织机构', icon: 'menu2', path: '/admin/sys/organization' },
-      { text: '项目管理', icon: 'menu4', path: '/admin/sys/items' },
-      { text: '人员管理', icon: 'menu4', path: '/admin/sys/personnel' },
-      { text: '账号管理', icon: 'menu4', path: '/admin/sys/users', },
-      { text: '角色管理', icon: 'menu4', path: '/admin/sys/role' },
-      { text: '路由管理', icon: 'menu4', path: '/admin/sys/route' },
-      { text: '数据字典', icon: 'menu4', path: '/admin/sys/dataDictionary' },
-    ]
-  },
-]
+export const getIocns: any = {
+  '/admin/employee-induction': 'menu4',
+  '/admin/sys/items': 'menu4',
+  '/admin/sys/personnel': 'menu4',
+  '/admin/sys/organization-structure': 'menu4',
+  '/admin/resume': 'menu4',
+  '/admin/sys/organization': 'menu4',
+  '/admin/sys/dataDictionary': 'menu4',
+  '/admin/sys/route': 'menu4',
+  '/admin/sys/role': 'menu4',
+  '/admin/sys/users': 'menu4'
+}
 
 const defaultAuth = (data: MenuConfigType[], auth: string[] = []) => {
   const newArr: MenuConfigType[] = [];
@@ -81,10 +51,10 @@ export const getNewsAuthMenu = (auth: string[] = []) => {
   return defaultAuth(menuNewsConfig, auth);
 }
 
-export const getAuthMenu = (auth: string[] = []) => {
-  return menusConfig.map(item => {
-    const newItem = {...item};
-    newItem.child = defaultAuth(item.child, auth);
-    return newItem;
-  }).filter(item => item.child.length > 0);
+/**
+ * 菜单排除首页及子级是空的数据
+*/
+export const getRoutes = (routes: any[] = []) => {
+  const newData = routes.filter(item => item.path !== 'path').filter(item => item.children && item.children.length > 0);
+  return newData
 }

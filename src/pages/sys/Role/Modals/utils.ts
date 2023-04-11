@@ -1,3 +1,5 @@
+import { KktproKeys } from '@kkt/pro';
+
 export const formList = ({ type, detailsData}: { type?: string, detailsData?: any}) => [
   {
     label: "角色名称",
@@ -19,3 +21,16 @@ export const formList = ({ type, detailsData}: { type?: string, detailsData?: an
     readSpan: 1,
   },
 ]
+
+export const getMenus = (data: KktproKeys[] = []) => {
+  return data.map((item: KktproKeys) => {
+    let obj: KktproKeys  = {
+      label: item.menuName,
+      key: item.menuId
+    }
+    if (item.children && item.children.length > 0) {
+      obj.children = getMenus(item.children);
+    }
+    return obj
+  })
+}

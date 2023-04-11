@@ -40,6 +40,7 @@ const store = {
         // 如果路由列表不存在则先获取路由列表
         dispatch.sysRoute.selectMenu({
           callback: (data: KktproKeys[]) => {
+            console.log(5555, data)
             obj['routeList'] = data;
             dispatch.roleModal.updateState(obj);
           }

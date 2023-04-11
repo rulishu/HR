@@ -38,17 +38,34 @@ const renderRoutes = (data: KktproRoutesProps[], authUrls: string[]) => {
   return arr;
 }
 
+export const returnPaths = (data: KktproRoutesProps[] = []) => {
+  const newRoutes: string[] = [];
+  (function setRoutes(arr) {
+    arr.forEach(item => {
+      const { children, ...other } = item;
+      if (children && Array.isArray(children)) {
+        setRoutes(children);
+      }
+      if (other.path) {
+        newRoutes.push(other.path)
+      }
+    })
+  })(data);
+  return newRoutes;
+}
+
 /**
  * 处理权限路由
  * @data     所有路由
  * @authUrls 权限数组
 */
-export const getAuthRoutes = (data: KktproRoutesProps[] = [], authUrls: string[]) => {
+export const getAuthRoutes = (data: KktproRoutesProps[] = [], authUrls: any[]) => {
   // 处理 权限路由
+  const arr = returnPaths(authUrls);
   const newData = data.map((item: KktproRoutesProps) => {
     const newItem = { ...item };
     if (item.path === '/') {
-      newItem.children = renderRoutes(item.children || [], authUrls)
+      newItem.children = renderRoutes(item.children || [], arr)
     }
     return newItem;
   })

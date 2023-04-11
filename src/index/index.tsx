@@ -33,13 +33,9 @@ const RoutesOutletElement = (props: RoutesOutletElementProps) => {
     const token = localStorage.getItem("token");
     if (token) {
       dispatch.global.getUserInfo({
-        callback: (auths: string[]) => {
+        callback: (auths: any[]) => {
           // 如果只有1个菜单权限的则直接跳到对应的页面
-          if (auths.length === 1) {
-            navigate(auths[0], { replace: true })
-          } else {
-            navigate(pathname, { replace: true })
-          }
+          navigate(pathname, { replace: true })
         }
       });
     }

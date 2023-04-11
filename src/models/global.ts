@@ -40,7 +40,7 @@ const login = {
       if (code === 200 && data) {
         const params = {
           userData: data.user,
-          authRoutes: (data.route || []).map((itme: KktproKeys) => itme.path),
+          authRoutes: data.route || [],
           roles: data.roles && data.roles.length > 0 ? data.roles[0] : undefined
         }
         dispatch.global.updateState(params);

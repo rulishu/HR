@@ -22,11 +22,7 @@ const Pages = ({ navigate }: KktproPageProps) => {
           localStorage.setItem("token", data?.token);
           dispatch.global.getUserInfo({
             callback: (authRoutes: string[]) => {
-              if (authRoutes.length === 1) {
-                navigate(authRoutes[0], { replace: true })
-              } else {
-                navigate('/home', { replace: true })
-              }
+              navigate('/home', { replace: true })
             }
           });
         }
