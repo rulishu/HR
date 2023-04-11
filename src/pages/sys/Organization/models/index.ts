@@ -7,9 +7,9 @@ const route = {
   state: {
     dataList: [],
     isDelete: false,
-    dataListStaff: [],
     isVisible: false,
-    queryInfo: {}
+    queryInfo: {},
+    dataListStaff: [] as any[],
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -94,11 +94,17 @@ const route = {
      * 查询人员当前所在公司
     */
     async selectListStaff(payload?: KktproKeys, state?: any) {
-      const { code, data } = await selectListStaff({...payload});
+      const { callback, ...other} = payload || {}
+      const { code, data } = await selectListStaff(other);
       if (code === 200 && data) {
-        dispatch.sysOrganization.updateState({
-          dataListStaff: data.staff,
-        });
+        if (callback) {
+          callback(data)
+        } else {
+          dispatch.sysOrganization.updateState({
+            dataListStaff: data.staff,
+          });
+        }
+        
       }
     },
     /**
