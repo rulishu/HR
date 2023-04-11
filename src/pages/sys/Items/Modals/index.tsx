@@ -47,6 +47,7 @@ function Modals() {
         type: "sysItemsModal/projectUpdate",
         payload: {
           id: (detailsData as any)?.id,
+          groupId: (detailsData as any)?.groupId,
           ...params
         },
       });

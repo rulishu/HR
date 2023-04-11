@@ -18,6 +18,7 @@ export const formList = ({
   companyList = []
 }: FormListProps) => {
   const isDepartment = type ? ['departmentAdd', 'departmentEdit'].includes(type) : false
+  const groupName = type === 'departmentEdit' ? detailsData?.group : detailsData?.groupName;
   return [
     {
       label: "项目组名称",
@@ -25,7 +26,7 @@ export const formList = ({
       widget: "input",
       required: true,
       disabled: isDepartment,
-      initialValue: (detailsData as any)?.groupName,
+      initialValue: groupName,
       span: "24",
       readSpan: 1,
       rules: [
@@ -44,6 +45,19 @@ export const formList = ({
       ],
       span: "24",
       readSpan: 1,
+    },
+    {
+      label: "负责人",
+      key: "manager",
+      widget: "input",
+      required: true,
+      initialValue:  (detailsData as any)?.manager,
+      hide: isDepartment,
+      span: "24",
+      readSpan: 1,
+      rules: [
+        { required: true, message: '请输入负责人' },
+      ],
     },
     {
       label: "选择机构",
