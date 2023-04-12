@@ -5,6 +5,7 @@ import { columns } from './utils';
 const Page = () => {
   const {
     sysItems: { dataList, isDelete },
+    sysItemsModal: { detailsData }
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
@@ -40,7 +41,11 @@ const Page = () => {
   }
 
   const onConfirm = () => {
-    dispatch.sysItems.deletes();
+    if ((detailsData as any).type === 'department') {
+      dispatch.sysItems.projectDelete();
+    } else {
+      dispatch.sysItems.deletes();
+    }
   }
 
   return (

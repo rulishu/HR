@@ -4,12 +4,14 @@ import { columns } from './utils';
 
 const Page = () => {
   const {
-    employeeProfile: { dataList, page, pageSize, total, }
+    employeeProfile: { dataList, page, pageSize, total },
+    employeeInduction: { companyList },
+    global: { dictObject },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   // 删除
-  const onDelete = () => {}
+  const onDelete = () => { }
 
   // 翻页
   const onTurnPages = (current: number) => {
@@ -33,7 +35,10 @@ const Page = () => {
         </Button>
       </div>
       <Table
-        columns={columns({})}
+        columns={columns({
+          companyList,
+          dictObject
+        })}
         data={dataList}
         empty={<Empty />}
         footer={total > 0 && (

@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Card, Empty } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
+import { TipButton } from '@/components';
 
 const Index = () => {
   const {
@@ -19,22 +20,34 @@ const Index = () => {
                   <p>姓名： {item?.name}</p>
                   <p>性别： {item?.gender}</p>
                 </div>
+                <div>
+                  <p>工作经验： {item?.experience} 年</p>
+                  <p>薪资范围： {item?.salaryExpectation} K</p>
+                </div>
+                <div>
+                  <p>学历：本科</p>
+                  <p>应聘岗位: {item?.post}</p>
+                </div>
                 <div
-                  onClick={() => {
-                    dispatch({
-                      type: 'resume/update',
-                      payload: {
-                        modalVisible: true
-                      }
-                    })
+                  style={{
+                    marginRight: 50,
+                    display: 'flex',
+                    alignItems: 'center'
                   }}
                 >
-                  <p>工作经验： {item?.experience} </p>
-                  <p>查看简历 </p>
-                </div>
-                <div style={{ marginRight: 50 }}>
-                  <p>薪资范围： {item?.salaryExpectation}</p>
-                  <p>学历- 应聘岗位: {item?.post}</p>
+                  <TipButton
+                    tip='查看简历'
+                    type='primary'
+                    icon='document'
+                    onClick={() => {
+                      dispatch({
+                        type: 'resume/update',
+                        payload: {
+                          modalVisible: true
+                        }
+                      })
+                    }}
+                  />
                 </div>
               </div>
             </Card>
@@ -42,6 +55,7 @@ const Index = () => {
         )
       })
       }
+
       {TableData?.length <= 0 && <Empty />}
     </Fragment>
 

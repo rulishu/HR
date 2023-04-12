@@ -1,13 +1,27 @@
 import { Fragment, useEffect } from 'react';
-import { useDispatch, Dispatch } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Card, Tabs } from 'uiw';
 import Search from './Search';
 import Table from './Table';
 
 const Page = () => {
+  const {
+    employeeInduction: {
+      companyList = [],
+    },
+  } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
     dispatch.employeeProfile.selectStaffFile();
+    if (companyList.length === 0) {
+      dispatch.sysOrganization.selectList({
+        callback: (data: any) => {
+          dispatch.employeeInduction.updateState({
+            companyList: data
+          })
+        }
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
