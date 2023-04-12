@@ -26,10 +26,10 @@ export function insert(params: KktproKeys) {
 }
 
 /**
- * 档案审批
+ * 档案导出
 */
-export function approve(params: KktproKeys) {
-  return request('/api/staffFile/approve', {
+export function filesDownload(params: KktproKeys) {
+  return request('/api/staffFile/filesDownload', {
     method: 'post',
     body: { ...params },
   });
