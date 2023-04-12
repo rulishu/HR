@@ -1,9 +1,11 @@
 import { useDispatch, useSelector, Dispatch, RootState } from "@kkt/pro";
 import { ProForm } from "@uiw-admin/components";
 import { Drawer } from "uiw";
-import { ModalTitle, getRouteList } from './utils';
+import { ModalTitle, getRouteList } from '../utils';
+import type { iconListType } from '../index';
+import IconInput from './IconInput';
 
-const Modals = () => {
+const Modals = ({ icons }: { icons: iconListType[] }) => {
   const {
     sysRoute: { isVisible, popUpStatus, dataList, detailsData },
   } = useSelector((state: RootState) => state);
@@ -40,6 +42,7 @@ const Modals = () => {
       dispatch({
         type: "sysRoute/updateMenu",
         payload: {
+          icon: params.icon,
           menuName: params.menuName,
           menuId: params.menuId,
           orderNum: params.orderNum,
@@ -60,6 +63,7 @@ const Modals = () => {
       type="danger"
     >
       <ProForm
+        customWidgetsList={{iconInput: IconInput}}
         showSaveButton
         showResetButton
         formType="pure"
@@ -113,7 +117,7 @@ const Modals = () => {
             span: "24",
             initialValue: (detailsData as any)?.parentId,
             disabled: popUpStatus === 'tableAdd',
-            hide: (detailsData as any)?.query === '1',
+            hide: (detailsData as any)?.query !== '2',
             option: getRouteList(dataList, (detailsData as any)?.path),
           },
           {
@@ -122,10 +126,26 @@ const Modals = () => {
             widget: "input",
             span: "24",
             initialValue: (detailsData as any)?.path,
-            hide: (detailsData as any)?.query === '1',
+            hide: (detailsData as any)?.query !== '2',
             rules: [
               { required: true, message: '请填写路由地址' },
             ],
+          },
+          {
+            label: (
+              <span>
+                选择图标
+                <span style={{ color: "#858585", fontSize: 10 }}>
+                  （首页图标，图标对应src/icons目录下svg名称）
+                </span>
+              </span>
+            ),
+            key: "icon",
+            widget: "iconInput",
+            option: icons,
+            span: "24",
+            hide: (detailsData as any)?.query !== '2',
+            initialValue: (detailsData as any)?.icon,
           },
           {
             label: "排序",

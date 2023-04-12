@@ -37,7 +37,8 @@ export const getIocns: any = {
   '/admin/sys/dataDictionary': 'menu4',
   '/admin/sys/route': 'menu4',
   '/admin/sys/role': 'menu4',
-  '/admin/sys/users': 'menu4'
+  '/admin/sys/users': 'menu4',
+  '/admin/profile-ratify': 'menu4'
 }
 
 const defaultAuth = (data: MenuConfigType[], auth: string[] = []) => {

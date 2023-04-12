@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
-import { KktproPageProps, useLocation, useSelector, RootState } from '@kkt/pro';
+import { KktproPageProps, useLocation } from '@kkt/pro';
 import { getPageConfig } from './utils';
 import { Wraper, HoverDiv, CircleIcon, Title } from './style/left';
 
 const Left = ({ routes, navigate }: KktproPageProps) => {
-  const {
-    global: { roles },
-  } = useSelector((state: RootState) => state);
   const { pathname } = useLocation();
   const [title, setTitle] = useState<string | undefined>('');
 
@@ -24,11 +21,9 @@ const Left = ({ routes, navigate }: KktproPageProps) => {
   
   return (
     <Wraper>
-      {roles && roles !== 'entry' && (
-        <HoverDiv onClick={onBack}>
-          <CircleIcon type="arrow-left" />
-        </HoverDiv>
-      )}
+      <HoverDiv onClick={onBack}>
+        <CircleIcon type="arrow-left" />
+      </HoverDiv>
       <Title>{title}</Title>
     </Wraper>
   )

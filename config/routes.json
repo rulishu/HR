@@ -31,6 +31,12 @@
             "element": "@/pages/EmployeeProfile"
           },
           {
+            "path": "/admin/profile-ratify",
+            "name": "档案审批",
+            "icon": "usergroup-add",
+            "element": "@/pages/ProfileRatify"
+          },
+          {
             "path": "/admin/employee-induction",
             "name": "员工入职",
             "icon": "user-add",

@@ -10,15 +10,6 @@ const req = (require as any).context('@/icons', true, /.svg$/)
 const requireAll = (requireContext: any) => requireContext.keys().map(requireContext);
 requireAll(req);
 
-/**
- * 获取所有i哦陈女士目录下所有svg 名称
-*/
-// const imageNames = req.keys().map((imagePath: any) => {
-//   return imagePath.substring(2, imagePath.lastIndexOf('.'));
-// });
-
-// console.log(6677777, imageNames)
-
 interface RoutesOutletElementProps {
   children: React.ReactNode;
   routes: KktproRoutesProps[];

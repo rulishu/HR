@@ -63,6 +63,7 @@ const route = {
         Notify.success({ description: msg || '添加成功' });
         dispatch.sysRoute.hideModal();
         dispatch.sysRoute.selectMenu({});
+        dispatch.global.getUserInfo();
       }
     },
     /**
@@ -80,6 +81,7 @@ const route = {
         Notify.success({ description: msg || '删除成功' });
         dispatch.sysRoute.hideModal();
         dispatch.sysRoute.selectMenu({});
+        dispatch.global.getUserInfo();
       }
     },
     /**
@@ -91,6 +93,7 @@ const route = {
         Notify.success({ description: msg || '编辑成功' });
         dispatch.sysRoute.hideModal();
         dispatch.sysRoute.selectMenu({});
+        dispatch.global.getUserInfo();
       }
     },
   }),

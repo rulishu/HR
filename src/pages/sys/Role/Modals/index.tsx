@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { Dispatch, KktproKeys, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm } from "@uiw-admin/components";
-import { Drawer, Card, Row } from "uiw";
-import { formList, getMenus } from './utils';
+import { Drawer, Card } from "uiw";
+import { formList, getMenus, getCheckIds } from './utils';
 import { TreeCheckedBox } from './style';
 
 function Modals() {
@@ -70,7 +70,7 @@ function Modals() {
           onSelected={(key, selected, item, evn) => {
             dispatch({
               type: "roleModal/updateState",
-              payload: { checkRouteMenuIds: key },
+              payload: { checkRouteMenuIds: getCheckIds(treeData, key) },
             });
           }}
         />

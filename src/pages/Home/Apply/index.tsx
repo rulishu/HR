@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Divider } from "uiw";
 import { ApplyItem, RowItem, ColItem } from './style';
 import Icons from '@/components/Icons';
-import { getNewsAuthMenu, getIocns, getRoutes } from './utils';
+import { getNewsAuthMenu, getRoutes } from './utils';
 import type { MenuConfigType } from './utils'
 interface AppleProps {
   title?: string;
@@ -48,7 +48,7 @@ const Modules = (props: AppleProps) => {
             {_item.children.map((item: any, index: number) => (
               <ColItem key={index}>
                 <ApplyItem to={item.path as string}>
-                  <Icons type={getIocns[item.path]} style={iconStyle} />
+                  {item.icon && <Icons type={item.icon} style={iconStyle} />}
                   <span>{item.menuName}</span>
                 </ApplyItem>
               </ColItem>

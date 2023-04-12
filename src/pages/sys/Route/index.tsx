@@ -1,13 +1,34 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import Table from './Table';
 import Modal from './Modal';
+
+export type iconListType = {
+  label: string;
+  value: string;
+}
 
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
     global: { userData },
   } = useSelector((state: RootState) => state);
+
+  const [iconList, setIconList] = useState<iconListType[]>([]);
+
+  useEffect(() => {
+    if (iconList.length === 0) {
+      const req = (require as any).context('@/icons', true, /.svg$/)
+      const imageNames = req.keys().map((imagePath: any) => {
+        const icon = imagePath.substring(2, imagePath.lastIndexOf('.'))
+        return {
+          label: icon,
+          value: icon
+        };
+      });
+      setIconList(imageNames)
+    }
+  }, [iconList])
 
   useEffect(() => {
     if (userData) {
@@ -19,7 +40,7 @@ const Page = () => {
   return (
     <Fragment>
       <Table />
-      <Modal />
+      <Modal icons={iconList} />
     </Fragment>
   )
 }
