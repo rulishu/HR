@@ -7,7 +7,6 @@ import Work from './Tables/Work';
 import Family from './Tables/Family';
 import Modals from './Modals';
 import Form from './Form';
-import { useForm } from "@uiw-admin/components";
 import { formData, formDataVoid, addConfig } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
 import { PlusItems, PlusIcon  } from './style';
@@ -25,9 +24,6 @@ const Page = () => {
     global: { dictObject, roles, userData },
   } = useSelector((state: RootState) => state);
   const formRefList = useRef<any>([]);
-
-  const form1 = useForm();
-  const form2 = useForm();
 
   // 过滤删除为null的ref
   const formList = formRefList?.current.filter((n: any) => n) || []
@@ -171,7 +167,6 @@ const Page = () => {
             <Form
               refs={(e: any) => e && (formRefList.current[index] = e)}
               title={item.title}
-              form={index === 0 ? form1 : form2}
               formDatas={item.child || []}
               value={allFormData}
               // readOnly={true}

@@ -88,15 +88,15 @@ export const formData = ({
         //     { required: true, message: '请选择入职部门' },
         //   ],
         // },
-        // {
-        //   label: "入职岗位",
-        //   key: "post",
-        //   widget: "select",
-        //   option: dictObject['post']?.child || [],
-        //   rules: [
-        //     { required: true, message: '请选择入职岗位' },
-        //   ],
-        // },
+        {
+          label: "入职岗位",
+          key: "post",
+          widget: "select",
+          option: dictObject['post']?.child || [],
+          rules: [
+            { required: true, message: '请选择入职岗位' },
+          ],
+        },
         {
           label: "社保公积金账号",
           key: "socialInsuranceAccount",

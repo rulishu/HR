@@ -38,6 +38,7 @@ const route = {
         pageSize,
         ...other,
       }
+      console.log(4567, params, other)
       const { code, data } = await selectList(params);
       if (code === 200 && data) {
         dispatch.sysDataDictionary.updateState({
