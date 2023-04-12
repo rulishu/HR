@@ -93,8 +93,8 @@ const route = {
      * 删除项目
     */
     async projectDelete(_?: any, state?: any) {
-      const { sysItems } = state;
-      const { detailsData = {} } = sysItems;
+      const { sysItemsModal } = state;
+      const { detailsData = {} } = sysItemsModal;
       const { code, msg } = await projectDelete({
         id: detailsData.id
       });
