@@ -35,8 +35,23 @@ const route = {
       }
       const { code, data } = await selectList(params);
       if (code === 200 && data) {
+        const newData = (data.list || []).map((item: KktproKeys) => {
+          const newItem: any = {
+            ...item,
+            type: 'group'
+          };
+          if (Array.isArray(item.projects) && item.projects.length > 0) {
+            newItem.children = item.projects.map((itm: KktproKeys) => ({
+              ...itm,
+              type: 'department',
+              group: item.groupName,
+              groupName: itm.projectName,
+            }))
+          }
+          return newItem;
+        })
         dispatch.sysItems.updateState({
-          dataList: data.list || []
+          dataList: newData || []
         });
       }
     },

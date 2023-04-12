@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Menu } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 
@@ -7,6 +7,7 @@ const Index = () => {
     resume: { listData }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
+  const [isColor, setIsColor] = useState(10)
 
   const render = () => {
     return (
@@ -18,8 +19,10 @@ const Index = () => {
           return (
             <Fragment key={idx}>
               <Menu.Item
+                active={item.value === isColor ? true : false}
                 text={item.post}
                 onClick={() => {
+                  setIsColor(item.value)
                   dispatch.resume.quickSelect({ value })
                 }}
               />
