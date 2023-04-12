@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Card, Empty } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
+// import DocViewerResume from '../Modal/ResumeViewer/DocViewer'
 
 const Index = () => {
   const {
@@ -42,6 +43,8 @@ const Index = () => {
         )
       })
       }
+
+      {/* <DocViewerResume /> */}
       {TableData?.length <= 0 && <Empty />}
     </Fragment>
 

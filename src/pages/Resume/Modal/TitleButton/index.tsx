@@ -10,9 +10,7 @@ const Index = () => {
           <Icon type="star-off" />
           <Icon type="download" />
         </div>
-        {/* <div> */}
         <Icon type="close" />
-        {/* </div> */}
       </div>
     </Fragment>
   )

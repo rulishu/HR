@@ -30,8 +30,6 @@ const route = {
      * table列表数据查询
     */
     async quickSelect(payload?: any, state?: any) {
-      console.log('payload', payload);
-
       const { code, data } = await quickSelect(payload);
       if (code === 200 && data) {
         dispatch.resume.update({
