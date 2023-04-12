@@ -12,6 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@cyntler/react-doc-viewer": "^1.13.0",
     "@uiw-admin/components": "^6.1.4",
     "@uiw-admin/exceptions": "~5.3.21",
     "@uiw-admin/user-login": "^6.1.4",
