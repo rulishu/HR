@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Alert, Card, Empty } from 'uiw';
+import { Alert, Card, Empty, Pagination } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
 import { TipButton } from '@/components';
 import formatter from "@uiw/formatter";
@@ -103,7 +103,7 @@ const Index = () => {
           <Empty />
         </div>
       }
-      {/* {dataList.length > 0 &&
+      {dataList.length > 0 &&
         <Pagination
           current={1}
           pageSize={10}
@@ -115,9 +115,10 @@ const Index = () => {
               payload: {
                 page: current
               }
-            })}
+            })
           }
-        />} */}
+          }
+        />}
       <Alert
         isOpen={isDelete}
         confirmText="确定"

@@ -15,9 +15,18 @@ const route = {
       { value: 40, post: '架构师' },
     ],
 
+    formData: {
+      companyList: [],
+      departmentList: [],
+      data: {},
+      dictObject: {}
+    },
     TableData: [],
 
-    modalVisible: false,
+    editType: "none",
+    editVisible: false, // 编辑简历
+    modalVisible: false, // 查看简历
+
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
