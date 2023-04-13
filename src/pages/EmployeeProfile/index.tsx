@@ -3,6 +3,7 @@ import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Card, Tabs } from 'uiw';
 import Search from './Search';
 import Table from './Table';
+import Modals from './Modals/information';
 
 const Page = () => {
   const {
@@ -34,6 +35,7 @@ const Page = () => {
           <Card noHover bordered={false}><Table /></Card>
         </Tabs.Pane>
       </Tabs>
+      <Modals />
     </Fragment>
   )
 }

@@ -57,6 +57,15 @@ const Page = () => {
         </Button>
       </div>
       <Table
+      onCell={(rowData, { rowNum, colNum }) => {
+        console.log('-->3', rowData);
+        console.log('-->4', rowNum);
+        console.log('-->5', colNum);
+        dispatch({
+          type: "employeeProfile/updateState",
+          payload: { isVisible: true },
+        });
+      }}
         columns={columns({
           companyList,
           dictObject,
