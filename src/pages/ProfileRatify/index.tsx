@@ -26,7 +26,12 @@ const Page = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyList]);
-  
+
+  useEffect(() => {
+    dispatch.profileRatify.selectStaffFile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Fragment>
       <CardWrap

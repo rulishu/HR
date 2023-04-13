@@ -10,3 +10,6 @@ export { default as TipButton } from './TipButton';
 
 export { default as FormPage } from './FormPage';
 export * from './FormPage';
+
+export { default as Scroll } from './Scroll';
+export * from './Scroll';

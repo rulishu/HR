@@ -2,10 +2,8 @@ import styled, { css } from 'styled-components';
 import { Avatar } from 'uiw';
 
 export const UsersWrap = styled.div`
-  padding-bottom: 14px;
   width: 340px;
   height: 100%;
-  overflow-y: auto;
   border-right: 1px solid #e8e8e8;
   position: relative;
 `;
@@ -24,6 +22,17 @@ export const Title = styled.div`
   background: #fff;
   z-index: 9;
 `;
+
+export const TitleSpan = styled.span`
+  font-weight: normal;
+  font-size: 14px;
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+  i {
+    font-style: normal;
+  }
+`
 
 export const InputWrap = styled.div`
   position: sticky;

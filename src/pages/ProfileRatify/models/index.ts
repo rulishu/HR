@@ -1,9 +1,13 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 // import dayjs from 'dayjs';
-// import { insert, update, selectStaffFile } from '@/servers/employeeInduction';
+import { selectStaffFile } from '@/servers/profileRatify';
 // import { Notify } from 'uiw';
 
 const init = {
+  page: 1,
+  pageSize: 20,
+  total: 0,
+  list: [],
   allFormData: undefined,
 
   // 弹层
@@ -29,18 +33,26 @@ const route = {
     })
   },
   effects: (dispatch: Dispatch) => ({
-    // async getDepartmentList(payload: KktproKeys, state: any) {
-    //   const { employeeInduction: { companyList } } = state;
-    //   const obj = companyList.find((item: any) => String(item.id) === payload.company) || { department: [] };
-    //   const departmentList = obj.department.map((item: any) => ({
-    //     label: item.departmentName,
-    //     value: item.id
-    //   }))
-    //   dispatch.employeeInduction.updateState({
-    //     departmentList,
-    //     // allFormData: payload,
-    //   })
-    // },
+    async selectStaffFile(payload?: KktproKeys, state?: any) {
+      const { profileRatify: {
+        list = [],
+        page,
+        pageSize,
+      }} = state;
+      const params = {
+        page,
+        pageSize,
+        ...payload
+      }
+      const { code, data } = await selectStaffFile(params);
+      if (code === 200) {
+        dispatch.profileRatify.updateState({
+          list: [...list, ...data.list || []],
+          total: data.total,
+          page: params.page
+        })
+      }
+    },
   })
 };
 
