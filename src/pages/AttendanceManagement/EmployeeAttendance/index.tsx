@@ -5,6 +5,7 @@ import Table from './Table';
 import MakeupRecord from '../MakeupRecord'
 import LeaveRecord from '../LeaveRecord'
 import OvertimeRecord from '../OvertimeRecord'
+import AttendanceSettings from '../AttendanceSettings'
 import '../style/index.css';
 
 const Page = () => {
@@ -25,6 +26,9 @@ const Page = () => {
         </Tabs.Pane>
         <Tabs.Pane label="加班记录" key="4">
           <OvertimeRecord />
+        </Tabs.Pane>
+        <Tabs.Pane label="考勤设置" key="5">
+          <AttendanceSettings />
         </Tabs.Pane>
       </Tabs>
     </Fragment>

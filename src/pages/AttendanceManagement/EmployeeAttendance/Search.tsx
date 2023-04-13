@@ -17,7 +17,7 @@ const formSearchList = [
     ],
   },
   {
-    label: "月份",
+    label: "日期",
     key: "month",
     widget: "monthPicker",
     widgetProps: {

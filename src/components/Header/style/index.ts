@@ -21,4 +21,19 @@ export const Log = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  .inputSearch .w-input-inner {
+    box-shadow: none;
+    background: #f2f4f7;
+    min-width: 600px;
+    font-size: 14px;
+  }
+  .inputSearch .w-input-inner:hover {
+      box-shadow: none;
+      /* border: solid 1px #2878FF; */
+    }
 `
+export const LogLeft = styled.div`
+  display: flex;
+  width: 255px;
+`;
