@@ -1,6 +1,6 @@
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Modal } from 'uiw';
-import { formData, formDataVoid } from '@/pages/EmployeeInduction/utils'
+import { formData, formDataVoid } from './utils'
 import Form from './Form';
 import Education from './Tables/Education'
 import Work from './Tables/Work';
@@ -11,13 +11,14 @@ const Information = () => {
   const {
     global: { dictObject },
     employeeProfile: {
+      queryInfo,
       isVisible
     },
   } = useSelector((state: RootState) => state);
 
   const datas = formData({
     dictObject,
-    data: {}
+    data: queryInfo
   });
 
   //关闭弹窗

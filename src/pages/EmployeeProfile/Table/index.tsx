@@ -57,13 +57,10 @@ const Page = () => {
         </Button>
       </div>
       <Table
-      onCell={(rowData, { rowNum, colNum }) => {
-        console.log('-->3', rowData);
-        console.log('-->4', rowNum);
-        console.log('-->5', colNum);
+      onCell={(rowData) => {
         dispatch({
           type: "employeeProfile/updateState",
-          payload: { isVisible: true },
+          payload: { queryInfo: rowData, isVisible: true },
         });
       }}
         columns={columns({

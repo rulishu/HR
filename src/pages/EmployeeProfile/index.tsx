@@ -4,6 +4,7 @@ import { Card, Tabs } from 'uiw';
 import Search from './Search';
 import Table from './Table';
 import Modals from './Modals/information';
+import './style/index.css'
 
 const Page = () => {
   const {

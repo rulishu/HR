@@ -1,16 +1,22 @@
 import { Table, Empty } from 'uiw';
+import { useSelector, RootState } from '@kkt/pro';
 import { workColumn } from './utils';
 
 const Tables = () => {
-
+  const {
+    employeeProfile: {
+      queryInfo,
+    },
+  } = useSelector((state: RootState) => state);
   return (
-    <div style={{display: 'flex'}}>
-      <div style={{display: 'flex', width:50,padding:30,background:'#fafafa'}}>工作经历</div>
-    <Table
-      columns={workColumn()}
-      data={[]}
-      empty={<Empty />}
-    />
+    <div className='leftTable'>
+      <div className='work-title'>工作经历</div>
+      <Table
+        className='work'
+        columns={workColumn()}
+        data={queryInfo?.workExperience}
+        empty={<Empty />}
+      />
     </div>
   )
 }

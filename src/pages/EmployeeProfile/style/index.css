@@ -1,0 +1,35 @@
+.formInformation {
+  border-radius: 0;
+  border-bottom: 0;
+}
+.formInformation .w-descriptions-item-colon::after {
+  content: '';
+}
+.leftTable {
+  display: flex;
+}
+.education-title, .work-title, .family-title {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dfe2e5;
+  background: #fafafa;
+  padding: 16px;
+  border-right: 0;
+}
+.education-title, .work-title {
+  border-bottom: 0;
+}
+.leftTable .w-table > table > thead > tr > th {
+  background: #fafafa;
+}
+.education > table tr > th, .work > table tr > th {
+  border-bottom: 0;
+}
+.leftTable .w-table > table > tbody > tr:nth-child(2n) > td {
+  background: #fff;
+}
+.leftTable  .w-table table td {
+  padding: 12px !important;
+}
