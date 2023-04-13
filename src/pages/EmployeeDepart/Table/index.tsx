@@ -43,7 +43,7 @@ const Page = () => {
           onEdit: (data) => onModals('edit', data),
           onDelete,
         })}
-        data={dataList}
+        data={[]}
         empty={<Empty />}
         footer={
           <Pagination

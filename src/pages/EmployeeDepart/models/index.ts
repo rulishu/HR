@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectStaffFile, insert, approve } from '@/servers/EmployeeProfile';
+import { selectStaffFile, insert } from '@/servers/EmployeeProfile';
 
 const route = {
   name: "employeeDepart",
@@ -59,19 +59,6 @@ const route = {
         Notify.success({ description: msg || '添加成功' });
         dispatch.employeeProfile.updateState({
           isVisible: false
-        });
-      }
-    },
-    /**
-     * 审批
-    */
-    async usersUpdate(payload: KktproKeys) {
-      const { code, msg } = await approve(payload);
-      if (code === 200) {
-        Notify.success({ description: msg || '编辑成功' });
-        dispatch.employeeProfile.updateState({
-          isVisible: false,
-          checkRouteMenuIds: []
         });
       }
     },
