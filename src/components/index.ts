@@ -13,3 +13,7 @@ export * from './FormPage';
 
 export { default as Scroll } from './Scroll';
 export * from './Scroll';
+
+// 员工档案
+export { default as Archives } from './Archives';
+export * from './Archives';

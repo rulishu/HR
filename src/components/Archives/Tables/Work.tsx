@@ -1,42 +1,42 @@
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { Table, Empty } from 'uiw';
-import { familyColumn } from './utils';
+import { workColumn } from './utils';
 
-const Tables = () => {
+const Tables = ({ type = 'edit' }: { type?: 'edit' | 'look' }) => {
   const dispatch = useDispatch<Dispatch>();
   const {
-    employeeInduction: {
-      familyData = [],
+    archives: {
+      workData = [],
     },
   } = useSelector((state: RootState) => state);
 
   const onEdit = (data: any, index: number) => {
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: {
-        familyObj: data,
-        familyIndex: index,
-        familyType: 'edit',
-        isFamilyVisible: true,
+        workObj: data,
+        workIndex: index,
+        workType: 'edit',
+        isWorkVisible: true,
       }
     });
   }
 
   const onRemove = (_: any, index: number) => {
-    const newData = [...familyData];
+    const newData = [...workData];
     newData.splice(index, 1);
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: {
-        familyData: newData
+        workData: newData
       }
     });
   }
 
   return (
     <Table
-      columns={familyColumn({ onEdit, onRemove })}
-      data={familyData}
+      columns={workColumn({ onEdit, onRemove, type })}
+      data={workData}
       empty={<Empty />}
     />
   )

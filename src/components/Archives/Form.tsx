@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ProForm } from "@uiw-admin/components";
 
 interface FormProps {
@@ -6,21 +5,13 @@ interface FormProps {
   title?: string;
   formDatas?: any[];
   form?: any;
-  value?: any;
+  type?: 'edit' | 'look';
   readOnly?: boolean;
   onChange?: (old: any, current: any) => void;
 }
 
 const Form = (props: FormProps) => {
-  const { refs, title, form, readOnly, formDatas, value, onChange } = props;
-
-  // const form = useForm();
-
-  useEffect(() => {
-    if (form && value) {
-      // form.setFields?.(value || {});
-    }
-  }, [value, form])
+  const { refs, title, type = 'edit', form, readOnly, formDatas, onChange } = props;
 
   return (
     <ProForm
@@ -28,7 +19,7 @@ const Form = (props: FormProps) => {
       readOnly={readOnly}
       ref={(e: any) => refs(e)}
       form={form}
-      formType="card"
+      formType={type === 'edit' ? 'card' : 'pure'}
       cardProps={{
         noHover: true
       }}

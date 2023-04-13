@@ -1,5 +1,6 @@
 import { KktproKeys } from '@kkt/pro';
 import { valid } from '@/utils/valid';
+import dayjs from 'dayjs';
 
 interface formDataProps {
   companyList?: any[];
@@ -93,6 +94,7 @@ export const formData = ({
           key: "post",
           widget: "select",
           option: dictObject['post']?.child || [],
+          initialValue: data?.post,
           rules: [
             { required: true, message: '请选择入职岗位' },
           ],
@@ -143,6 +145,7 @@ export const formData = ({
           label: "民族",
           key: "nationality",
           widget: "input",
+          initialValue: data?.nationality,
           rules: [
             { required: true, message: '请填写民族' },
           ],
@@ -151,11 +154,13 @@ export const formData = ({
           label: "政治面貌",
           key: "politicalStatus",
           widget: "input",
+          initialValue: data?.politicalStatus,
         },
         {
           label: "籍贯",
           key: "nativePlace",
           widget: "input",
+          initialValue: data?.nativePlace,
           rules: [
             { required: true, message: '请填写籍贯' },
           ],
@@ -165,6 +170,7 @@ export const formData = ({
           key: "isMarried",
           widget: "select",
           option: dictObject['married']?.child || [],
+          initialValue: data?.isMarried,
           rules: [
             { required: true, message: '请选择入婚姻状况' },
           ],
@@ -173,6 +179,7 @@ export const formData = ({
           label: "身份证号",
           key: "idNumber",
           widget: "input",
+          initialValue: data?.idNumber,
           rules: [
             { required: true, message: '请填写身份证号' },
             // { 
@@ -191,6 +198,7 @@ export const formData = ({
           key: "hukou",
           widget: "input",
           span: 8,
+          initialValue: data?.hukou,
           rules: [
             { required: true, message: '请填写户籍所在地' },
           ],
@@ -200,6 +208,7 @@ export const formData = ({
           key: "livingPlace",
           widget: "input",
           span: 16,
+          initialValue: data?.livingPlace,
           rules: [
             { required: true, message: '请填写现居地址' },
           ],
@@ -208,6 +217,7 @@ export const formData = ({
           label: "E-mail",
           key: "email",
           widget: "input",
+          initialValue: data?.email,
           rules: [
             { required: true, message: '请填写邮箱' },
             { 
@@ -226,6 +236,7 @@ export const formData = ({
           key: "qualification",
           widget: "select",
           option: dictObject['education']?.child || [],
+          initialValue: data?.qualification,
           rules: [
             { required: true, message: '请选择学历' },
           ],
@@ -234,11 +245,13 @@ export const formData = ({
           label: "学位",
           key: "academicDegree",
           widget: "input",
+          initialValue: data?.academicDegree,
         },
         {
           label: "专业",
           key: "specialize",
           widget: "input",
+          initialValue: data?.specialize,
           rules: [
             { required: true, message: '请填写专业' },
           ],
@@ -247,6 +260,7 @@ export const formData = ({
           label: "联系人及关系",
           key: "emergencyPhone",
           widget: "input",
+          initialValue: data?.emergencyPhone,
           rules: [
             { required: true, message: '请填写紧急联系电话' },
           ],
@@ -290,4 +304,20 @@ export const addConfig: KktproKeys = {
     familyObj: undefined,
     isFamilyVisible: true,
   }
+}
+
+/**
+ * 日期转换
+*/
+export const datesShift = (data: KktproKeys[] = []) => {
+  return data.map(item => ({
+    ...item,
+    startTime: item.startTime && dayjs(item.startTime).format('YYYY-MM-DD'),
+    endTime: item.endTime && dayjs(item.endTime).format('YYYY-MM-DD'),
+  }))
+}
+
+export const dateShift = (date: Date) => {
+  if (!date) return;
+  return dayjs(date).format('YYYY-MM-DD')
 }

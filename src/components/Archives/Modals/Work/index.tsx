@@ -5,7 +5,7 @@ import { formList, ModalTitle } from './utils';
 
 function Modals() {
   const {
-    employeeInduction: {
+    archives: {
       workType,
       isWorkVisible,
       workData,
@@ -24,7 +24,7 @@ function Modals() {
       newData[workIndex] = current;
     }
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: {
         workData: newData,
         isWorkVisible: false,
@@ -36,7 +36,7 @@ function Modals() {
   //关闭弹窗
   const onClosed = () => {
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: {
         isWorkVisible: false,
         workObj: undefined
@@ -46,7 +46,7 @@ function Modals() {
 
   const onFormChange = (current: any) => {
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: { workObj: current },
     });
   }

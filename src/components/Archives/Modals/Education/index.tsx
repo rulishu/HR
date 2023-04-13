@@ -5,7 +5,7 @@ import { formList, ModalTitle } from './utils';
 
 function Modals() {
   const {
-    employeeInduction: {
+    archives: {
       isEducationVisible,
       educationType,
       educationData,
@@ -24,7 +24,7 @@ function Modals() {
       newData[educationIndex] = current;
     }
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: {
         educationData: newData,
         isEducationVisible: false,
@@ -36,7 +36,7 @@ function Modals() {
   //关闭弹窗
   const onClosed = () => {
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: {
         isEducationVisible: false,
         educationObj: undefined
@@ -46,7 +46,7 @@ function Modals() {
 
   const onFormChange = (current: any) => {
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: { educationObj: current },
     });
   }

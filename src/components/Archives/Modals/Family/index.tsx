@@ -5,7 +5,7 @@ import { formList, ModalTitle } from './utils';
 
 function Modals() {
   const {
-    employeeInduction: {
+    archives: {
       familyType,
       familyData,
       isFamilyVisible,
@@ -24,7 +24,7 @@ function Modals() {
       newData[familyIndex] = current;
     }
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: {
         familyData: newData,
         isFamilyVisible: false
@@ -35,7 +35,7 @@ function Modals() {
   //关闭弹窗
   const onClosed = () => {
     dispatch({
-      type: "employeeInduction/updateState",
+      type: "archives/updateState",
       payload: { isFamilyVisible: false },
     });
   };

@@ -8,7 +8,7 @@ import { getDictLabel } from '@/utils';
 const Users = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
-    profileRatify: { list, total, page },
+    profileRatify: { list, total, page, checkIndex },
     global: { dictObject = {} },
   } = useSelector((state: RootState) => state);
 
@@ -18,23 +18,47 @@ const Users = () => {
     });
   }
 
+  // 筛选 
+  const onSearch = (value: string) => {
+    dispatch.profileRatify.updateState({
+      list: []
+    })
+    dispatch.profileRatify.selectStaffFile({
+      page: 1,
+      search: value
+    });
+  }
+
+  const onSelectUser = (item: KktproKeys, index: number) => {
+    dispatch.profileRatify.updateState({
+      checkIndex: index,
+      allFormData: undefined
+
+    })
+    dispatch.profileRatify.getUserDetails({
+      id: item.id
+    })
+  }
+
   return (
     <UsersWrap>
       <Scroll isScroll={total !== list.length} load={onLoad}>
         <Title>
           申请人
-          {total && <TitleSpan><i style={{ color: '#008ef0'}}>{total}</i>条</TitleSpan>}
+          <TitleSpan><i style={{ color: '#008ef0'}}>{total}</i>条</TitleSpan>
         </Title>
         <InputWrap>
           <Input
             className='searchName'
             size='large'
             preIcon="search"
-            placeholder="请输入内容"
-            onChange={(e) => {
+            placeholder="请输入姓名或手机号"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               newDebounce(() => {
                 // 防抖
-                // onVal(e);
+                const val = e.target.value
+                onSearch(val);
+                //onVal(e);
               }, 600)
             }}
           />
@@ -43,7 +67,7 @@ const Users = () => {
           const postData: any = (dictObject as any)?.post;
           const post = getDictLabel(postData.child, item.post)
           return (
-            <UsersItems key={index} active={index === 1}>
+            <UsersItems key={index} active={index === checkIndex} onClick={() => onSelectUser(item, index)}>
               <UsersAvatar size="large" icon="user" />
               <UsersTit>{item.name || '--'}</UsersTit>
               <UsersDate>申请职位：{post || '--'}</UsersDate>

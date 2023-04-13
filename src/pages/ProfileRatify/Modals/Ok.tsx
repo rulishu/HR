@@ -1,4 +1,5 @@
-import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
+import { useState } from 'react';
+import { useDispatch, Dispatch, useSelector, RootState, KktproKeys } from '@kkt/pro';
 import { Modal } from 'uiw';
 import { ProForm, useForm } from "@uiw-admin/components";
 import { okColumns } from './utils';
@@ -8,10 +9,11 @@ const OK = () => {
   const {
     profileRatify: {
       isOkVisble,
-      companyList,
-      departmentList
     },
+    archives: { companyList = [] }
   } = useSelector((state: RootState) => state);
+  
+  const [departmentList] = useState<KktproKeys[]>([]);
 
   const form = useForm();
 

@@ -27,4 +27,15 @@ export const okColumns = ({
       { required: true, message: '请选择入职部门' },
     ],
   },
+  {
+    label: "评价",
+    key: "desc",
+    widget: "textarea",
+    span: "24",
+    readSpan: 1,
+    widgetProps: {
+      rows: 5
+    },
+    required: true,
+  },
 ]

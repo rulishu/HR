@@ -1,65 +1,64 @@
-import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
-import { Card, Button } from 'uiw';
-import { formData, formDataVoid } from '@/pages/EmployeeInduction/utils'
-import Form from './Form';
-import Education from './Tables/Education'
-import Work from './Tables/Work';
-import Family from './Tables/Family';
+import { useDispatch, Dispatch, useSelector, RootState, KktproKeys } from '@kkt/pro';
+import { useRef, useState, useEffect } from 'react';
+import { Button, Loader } from 'uiw';
+import { Archives, ArchivesType } from '@/components';
 import { ContentWrap, Title, ContentForms, BtnWrap } from '../style/content';
+import { undefinedToString } from '@/utils';
 
 const Content = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
-    global: { dictObject },
+    loading,
+    profileRatify: { allFormData }
   } = useSelector((state: RootState) => state);
 
-  const datas = formData({
-    dictObject,
-    data: {}
-  });
+  const archivesRef = useRef<ArchivesType>(null)
 
-  const onOpenModal = (type: string) => {
+  const [data, setData] = useState<KktproKeys | undefined>(undefined);
+
+  useEffect(() => {
+    archivesRef.current?.reset();
+    if (allFormData) {
+      setData(undefinedToString(allFormData));
+    }
+  }, [allFormData])
+
+  const onOpenModal = async (type: string) => {
+    const values = await archivesRef.current?.submitvalidate();
+    console.log(66666666, values);
     dispatch.profileRatify.updateState({
       [type]: true
     })
   }
 
   return (
-    <ContentWrap>
-      <Title>档案信息</Title>
-      <ContentForms>
-        {datas.map((item: formDataVoid, index: number) => {
-          if (item.type) {
-            return (
-              <Card key={index} noHover title={item.title}>
-                {item.type === 'education' && <Education />}
-                {item.type === 'work' && <Work />}
-                {item.type === 'family' && <Family />}
-              </Card>
-            )
-          }
-          return (
-            <Form
-              key={index}
-              title={item.title}
-              formDatas={item.child || []}
-              value={{}}
-            />
-          )
-        })}
-      </ContentForms>
-      <BtnWrap>
-        <Button
-          type="primary"
-          className="form-btn"
-          onClick={() => onOpenModal('isOkVisble')}
-        >审批通过</Button>
-        <Button
-          className="form-btn"
-          onClick={() => onOpenModal('isNoVisble')}
-        >审批不通过</Button>
-      </BtnWrap>
-    </ContentWrap>
+    <Loader
+      loading={loading.effects.profileRatify.getUserDetails}
+      tip="加载中..."
+      style={{ width: "100%", height: '100%', flex: 1 }}
+      bgColor="rgba(255, 255, 255, .7)"
+    >
+      <ContentWrap>
+        <Title>档案信息</Title>
+        <ContentForms>
+          <Archives
+            ref={archivesRef}
+            data={data}
+          />
+        </ContentForms>
+        <BtnWrap>
+          <Button
+            type="primary"
+            className="form-btn"
+            onClick={() => onOpenModal('isOkVisble')}
+          >审批通过</Button>
+          <Button
+            className="form-btn"
+            onClick={() => onOpenModal('isNoVisble')}
+          >审批不通过</Button>
+        </BtnWrap>
+      </ContentWrap>
+    </Loader>
   )
 }
 
