@@ -55,35 +55,10 @@
             "element": "@/pages/TrainingDevelopment"
           },
           {
-            "path": "/admin/AttendanceManagement",
+            "path": "/admin/employee-attendance",
             "name": "考勤管理",
-            "icon": "copy",
-            "children": [
-              {
-                "path": "/admin/AttendanceManagement/employee-attendance",
-                "name": "出勤记录",
-                "icon": "document",
-                "element": "@/pages/AttendanceManagement/EmployeeAttendance"
-              },
-              {
-                "path": "/admin/AttendanceManagement/Makeup-record",
-                "name": "补卡记录",
-                "icon": "document",
-                "element": "@/pages/AttendanceManagement/MakeupRecord"
-              },
-              {
-                "path": "/admin/AttendanceManagement/Leave-record",
-                "name": "请假记录",
-                "icon": "document",
-                "element": "@/pages/AttendanceManagement/LeaveRecord"
-              },
-              {
-                "path": "/admin/AttendanceManagement/Overtime-record",
-                "name": "加班记录",
-                "icon": "document",
-                "element": "@/pages/AttendanceManagement/OvertimeRecord"
-              }
-            ]
+            "icon": "document",
+            "element": "@/pages/AttendanceManagement/EmployeeAttendance"
           },
           {
             "path": "/admin/sys/organization",
