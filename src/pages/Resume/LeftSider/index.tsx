@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { Menu } from 'uiw';
+import { Menu, Card } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 
 const Index = () => {
@@ -11,7 +11,7 @@ const Index = () => {
 
   const render = () => {
     return (
-      <Fragment>
+      <Card noHover style={{ height: 600, overflow: 'scroll' }}>
         {listData?.map((item: any, idx: any) => {
           let valueItem = listData.find((itm: any) => itm?.post === item.post)
           let value = valueItem?.value
@@ -30,7 +30,7 @@ const Index = () => {
             </Fragment>
           )
         })}
-      </Fragment>
+      </Card>
     )
   }
   return (

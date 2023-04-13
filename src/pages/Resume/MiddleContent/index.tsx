@@ -10,11 +10,11 @@ const Index = () => {
   const dispatch = useDispatch<Dispatch>()
 
   return (
-    <Fragment>
+    <Card noHover bordered={false} style={{ padding: 0, marginTop: -8, height: 600, overflow: 'scroll' }}>
       {TableData?.map((item: any, idx: any) => {
         return (
           <Fragment>
-            < Card style={{ width: "100%", minHeight: 100, marginBottom: 10 }} bodyStyle={{ padding: 10 }} noHover={true}>
+            < Card style={{ marginBottom: 10 }} noHover>
               <div style={{ display: 'flex', justifyContent: "space-between" }} >
                 <div style={{ marginLeft: 20 }}>
                   <p>姓名： {item?.name}</p>
@@ -57,7 +57,7 @@ const Index = () => {
       }
 
       {TableData?.length <= 0 && <Empty />}
-    </Fragment>
+    </Card>
 
   )
 }
