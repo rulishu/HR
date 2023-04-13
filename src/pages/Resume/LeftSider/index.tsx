@@ -11,7 +11,7 @@ const Index = () => {
 
   const render = () => {
     return (
-      <Card noHover style={{ height: 600, overflow: 'scroll' }}>
+      <Card noHover style={{ height: 680, overflow: 'scroll' }}>
         {listData?.map((item: any, idx: any) => {
           let valueItem = listData.find((itm: any) => itm?.post === item.post)
           let value = valueItem?.value
