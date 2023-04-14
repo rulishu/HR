@@ -15,7 +15,7 @@
   justify-content: center;
   border: 1px solid #dfe2e5;
   background: #fafafa;
-  padding: 16px;
+  padding: 0 16px;
   border-right: 0;
 }
 .education-title, .work-title {
@@ -24,12 +24,15 @@
 .leftTable .w-table > table > thead > tr > th {
   background: #fafafa;
 }
-.education > table tr > th, .work > table tr > th {
+.education > table tr > td, .work > table tr > td {
   border-bottom: 0;
 }
 .leftTable .w-table > table > tbody > tr:nth-child(2n) > td {
   background: #fff;
 }
-.leftTable  .w-table table td {
+.leftTable .w-table table td {
   padding: 12px !important;
+}
+.leftTable .w-table > table > tbody > tr:hover > td, .leftTable .w-table > table > tbody > tr:hover:nth-child(2n) > td {
+  background-color: #fff;
 }

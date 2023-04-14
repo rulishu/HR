@@ -12,6 +12,7 @@ const Tables = () => {
     <div className='leftTable'>
       <div className='education-title'>教育经历</div>
       <Table
+        bordered
         className='education'
         columns={educationColumn()}
         data={queryInfo?.educationalExperience}

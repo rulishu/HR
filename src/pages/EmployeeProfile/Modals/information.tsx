@@ -31,7 +31,7 @@ const Information = () => {
   return (
     <Modal
       title="人员信息档案"
-      minWidth={900}
+      minWidth={1000}
       isOpen={isVisible}
       onClosed={() => onClosed()}
       type="danger"

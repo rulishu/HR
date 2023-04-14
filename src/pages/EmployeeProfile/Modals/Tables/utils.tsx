@@ -16,10 +16,12 @@ export const educationColumn = () => [
   {
     title: "学校名称",
     key: "school",
+    width: 212,
   },
   {
     title: "专业",
     key: "specialize",
+    width: 160,
   },
   {
     title: "证书情况",
@@ -43,6 +45,7 @@ export const workColumn = () => [
   {
     title: "工作单位",
     key: "company",
+    width: 212,
   },
   {
     title: "职位及主要工作职责",
@@ -53,19 +56,27 @@ export const workColumn = () => [
 export const familyColumn = () => [
   {
     title: "姓名",
-    key: "name"
-  },
-  {
-    title: "电话",
-    key: "memberPhone",
+    key: "name",
+    width: 110,
   },
   {
     title: "年龄",
     key: "age",
+    width: 110,
   },
+  {
+    title: "电话",
+    key: "memberPhone",
+    width: 212,
+  },
+  // {
+  //   title: "年龄",
+  //   key: "age",
+  // },
   {
     title: "关系",
     key: "relation",
+    width: 160,
   },
   {
     title: "现工作单位及职务",

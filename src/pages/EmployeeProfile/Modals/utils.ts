@@ -32,7 +32,7 @@ export const formData = ({
       title: '入职信息',
       child: [
         {
-          label: "姓名111",
+          label: "姓名",
           key: "name",
           widget: "input",
           rules: [

@@ -12,6 +12,7 @@ const Tables = () => {
     <div className='leftTable'>
       <div className='family-title'>家庭成员</div>
       <Table
+        bordered
         className='family'
         columns={familyColumn()}
         data={queryInfo?.familyMember}
