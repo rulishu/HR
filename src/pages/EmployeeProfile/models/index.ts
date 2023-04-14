@@ -10,7 +10,7 @@ const route = {
     total: 0,
     dataList: [],
     isDelete: false,
-    queryInfo: {}, // 编辑的数据
+    queryInfo: {} as any, // 编辑的数据
     isVisible: false,
     type: undefined, // 类型 add：新增 / edit: 编辑
     groupItem: [] as any[],

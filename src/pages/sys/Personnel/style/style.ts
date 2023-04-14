@@ -1,8 +1,17 @@
 import styled from 'styled-components';
-import { List, Col, Icon } from "uiw";
+import { List, Col, Icon, Card } from "uiw";
 
+export const CardWrap = styled(Card)`
+  height: calc(100vh - 100px);
+  padding: 0;
+  .w-card-body, .w-row {
+    height: 100%;
+    padding: 0;
+  }
+`;
 export const FlexCol = styled.div`
   height: 100%;
+  /* border-right: solid 1px #e8e8e8; */
   box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 2px 6px 0 rgb(0 0 0 / 5%);
 `;
 export const FlexTop = styled.div`

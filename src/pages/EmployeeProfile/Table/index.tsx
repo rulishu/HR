@@ -57,6 +57,12 @@ const Page = () => {
         </Button>
       </div>
       <Table
+      onCell={(rowData) => {
+        dispatch({
+          type: "employeeProfile/updateState",
+          payload: { queryInfo: rowData, isVisible: true },
+        });
+      }}
         columns={columns({
           companyList,
           dictObject,
