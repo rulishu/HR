@@ -8,7 +8,7 @@ import { getDictLabel } from '@/utils';
 const Users = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
-    profileRatify: { list, total, page, checkIndex },
+    profileRatify: { list, total, page, checkId },
     global: { dictObject = {} },
   } = useSelector((state: RootState) => state);
 
@@ -20,20 +20,33 @@ const Users = () => {
 
   // 筛选 
   const onSearch = (value: string) => {
+    // dispatch.profileRatify.updateState({
+    //   list: []
+    // })
     dispatch.profileRatify.updateState({
-      list: []
+      search: value,
     })
     dispatch.profileRatify.selectStaffFile({
       page: 1,
-      search: value
+      search: value,
+      callback: (data: KktproKeys[]) => {
+        if (data.length > 0) {
+          dispatch.profileRatify.updateState({
+            checkId: data[0].id,
+          })
+          dispatch.profileRatify.getUserDetails({
+            id: data[0].id
+          })
+        }
+      }
     });
   }
 
   const onSelectUser = (item: KktproKeys, index: number) => {
+    if (checkId === item.id) return;
     dispatch.profileRatify.updateState({
       checkIndex: index,
       allFormData: undefined
-
     })
     dispatch.profileRatify.getUserDetails({
       id: item.id
@@ -42,10 +55,10 @@ const Users = () => {
 
   return (
     <UsersWrap>
-      <Scroll isScroll={total !== list.length} load={onLoad}>
+      <Scroll isScroll={list.length < total} load={onLoad}>
         <Title>
           申请人
-          <TitleSpan><i style={{ color: '#008ef0'}}>{total}</i>条</TitleSpan>
+          <TitleSpan><i style={{ color: '#008ef0'}}>{total}</i> 条</TitleSpan>
         </Title>
         <InputWrap>
           <Input
@@ -67,7 +80,7 @@ const Users = () => {
           const postData: any = (dictObject as any)?.post;
           const post = getDictLabel(postData.child, item.post)
           return (
-            <UsersItems key={index} active={index === checkIndex} onClick={() => onSelectUser(item, index)}>
+            <UsersItems key={index} active={item.id === checkId} onClick={() => onSelectUser(item, index)}>
               <UsersAvatar size="large" icon="user" />
               <UsersTit>{item.name || '--'}</UsersTit>
               <UsersDate>申请职位：{post || '--'}</UsersDate>

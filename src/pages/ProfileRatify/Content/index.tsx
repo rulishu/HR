@@ -24,10 +24,16 @@ const Content = () => {
   }, [allFormData])
 
   const onOpenModal = async (type: string) => {
-    const values = await archivesRef.current?.submitvalidate();
-    console.log(66666666, values);
+    let values: any;
+    if (type === 'isNoVisble') {
+      values = await archivesRef.current?.getValues();
+      console.log(555555, values)
+    } else {
+      values = await archivesRef.current?.submitvalidate();
+    }
     dispatch.profileRatify.updateState({
-      [type]: true
+      [type]: true,
+      newFormData: values
     })
   }
 

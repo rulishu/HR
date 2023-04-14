@@ -17,3 +17,5 @@ export * from './Scroll';
 // 员工档案
 export { default as Archives } from './Archives';
 export * from './Archives';
+
+export { default as NoData } from './NoData';

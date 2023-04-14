@@ -1,11 +1,13 @@
 interface okColumnsProps {
   companyList?: any[];
-  departmentList?: any[]
+  departmentList?: any[],
+  data?: any;
 }
 
 export const okColumns = ({
   companyList = [],
-  departmentList = []
+  departmentList = [],
+  data
 }: okColumnsProps) => [
   {
     label: "入职公司",
@@ -15,7 +17,8 @@ export const okColumns = ({
     option: companyList.map(item => ({ label: item.companyName, value: item.id })),
     rules: [
       { required: true, message: '请选择入职公司' },
-    ]
+    ],
+    initialValue: data?.company,
   },
   {
     label: "入职部门",
@@ -26,6 +29,7 @@ export const okColumns = ({
     rules: [
       { required: true, message: '请选择入职部门' },
     ],
+    initialValue: data?.department,
   },
   {
     label: "评价",
@@ -36,6 +40,6 @@ export const okColumns = ({
     widgetProps: {
       rows: 5
     },
-    required: true,
+    initialValue: data?.desc,
   },
 ]
