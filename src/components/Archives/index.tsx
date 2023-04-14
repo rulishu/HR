@@ -75,6 +75,11 @@ const Archives = (
   });
 
   useEffect(() => {
+    dispatch.archives.clearState();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
     if (companyList.length === 0) {
       dispatch.sysOrganization.selectList({
         callback: (data: any) => {
