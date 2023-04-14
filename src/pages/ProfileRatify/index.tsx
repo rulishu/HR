@@ -20,6 +20,7 @@ const Page = () => {
       page: 1
     })
     dispatch.profileRatify.selectStaffFile({
+      isApproved: 0,
       callback: (data: KktproKeys[]) => {
         if (data.length > 0) {
           dispatch.profileRatify.getUserDetails({

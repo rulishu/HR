@@ -33,10 +33,12 @@ const Page = () => {
    * 提交
   */
   const onSubmit = async () => {
+    const { userId } = userData as any || {};
     const values: KktproKeys = await archivesRef.current?.submitvalidate() || {};
     if (Object.keys(values).length !== 0) {
       dispatch.employeeInduction.submit({
         ...values,
+        userId,
         callback: () => {
           if (!values.id) {
             onReset();

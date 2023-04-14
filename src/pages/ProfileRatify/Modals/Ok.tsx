@@ -9,8 +9,10 @@ const OK = () => {
   const {
     profileRatify: {
       isOkVisble,
+      newFormData
     },
-    archives: { companyList = [] }
+    archives: { companyList = [] },
+    global: { userData },
   } = useSelector((state: RootState) => state);
 
   const formRef = useRef<any>();
@@ -48,9 +50,14 @@ const OK = () => {
    * 提交
   */
   const onConfirm = async () => {
+    const { userId } = userData as any || {};
     await formRef.current?.submitvalidate();
-    // newFormData
-    console.log('values:', formData)
+    dispatch.profileRatify.approve({...newFormData, ...formData, userId, isApproved: 1})
+    // dispatch.profileRatify.approve({
+    //   ...newFormData,
+    //   callback: () => {
+    //   }
+    // })
   }
 
   return (

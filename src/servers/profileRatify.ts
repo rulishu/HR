@@ -23,3 +23,13 @@ export function update(params: KktproKeys) {
     body: { ...params },
   });
 }
+
+/**
+ * 档案审批
+*/
+export function approve(params: KktproKeys) {
+  return request('/api/staffFile/approve', {
+    method: 'post',
+    body: { ...params },
+  });
+}

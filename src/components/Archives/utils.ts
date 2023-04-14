@@ -233,6 +233,15 @@ export const formData = ({
           ],
         },
         {
+          label: "毕业学校",
+          key: "graduateSchool",
+          widget: "input",
+          initialValue: data?.graduateSchool,
+          rules: [
+            { required: true, message: '请填写毕业学校' },
+          ],
+        },
+        {
           label: "学历",
           key: "qualification",
           widget: "select",
@@ -241,12 +250,6 @@ export const formData = ({
           rules: [
             { required: true, message: '请选择学历' },
           ],
-        },
-        {
-          label: "学位",
-          key: "academicDegree",
-          widget: "input",
-          initialValue: data?.academicDegree,
         },
         {
           label: "专业",
@@ -258,12 +261,18 @@ export const formData = ({
           ],
         },
         {
-          label: "紧急联系人",
+          label: "学位",
+          key: "academicDegree",
+          widget: "input",
+          initialValue: data?.academicDegree,
+        },
+        {
+          label: "紧急联系人/手机号/关系",
           key: "emergencyPhone",
           widget: "input",
           initialValue: data?.emergencyPhone,
           rules: [
-            { required: true, message: '请填写紧急联系电话' },
+            { required: true, message: '请填写紧急联系人/手机号/关系' },
           ],
         },
       ]

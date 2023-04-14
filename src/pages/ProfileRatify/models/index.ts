@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { selectStaffFile } from '@/servers/profileRatify';
-// import { Notify } from 'uiw';
+import { selectStaffFile, approve } from '@/servers/profileRatify';
+import { Notify } from 'uiw';
 
 const init = {
   noData: false,
@@ -12,7 +12,7 @@ const init = {
   list: [],
   allFormData: undefined, // 人员详情
 
-  newFormData: undefined, // 存错点击审核获取到的数据
+  newFormData: {}, // 存错点击审核获取到的数据
 
   // 弹层
   isOkVisble: false, // 通过弹层
@@ -85,6 +85,20 @@ const route = {
           })
           callback?.();
         }
+      }
+    },
+    /**
+     * 档案审批
+    */
+    async approve(payload: KktproKeys) {
+      const { code, msg } = await approve(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '审批成功' });
+        dispatch.profileRatify.selectStaffFile({isApproved: 0});
+        dispatch.profileRatify.updateState({
+          isOkVisble: false,
+          isNoVisble: false,
+        });
       }
     },
   })

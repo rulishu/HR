@@ -14,6 +14,7 @@ const Users = () => {
 
   const onLoad = () => {
     dispatch.profileRatify.selectStaffFile({
+      isApproved: 0,
       page: page + 1
     });
   }
@@ -28,6 +29,7 @@ const Users = () => {
     })
     dispatch.profileRatify.selectStaffFile({
       page: 1,
+      isApproved: 0,
       search: value,
       callback: (data: KktproKeys[]) => {
         if (data.length > 0) {

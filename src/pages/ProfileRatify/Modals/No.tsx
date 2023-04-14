@@ -27,7 +27,7 @@ const NO = () => {
    * 提交
   */
   const onConfirm = () => {
-    console.log(5666666, value)
+    dispatch.profileRatify.approve({context:value, isApproved: 2})
   }
 
   return (
