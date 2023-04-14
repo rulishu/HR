@@ -3,7 +3,7 @@ import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Row, Col, Menu, Card, List, Input, Button } from 'uiw';
 import newDebounce from "@/utils/debounce";
 import Modals from './Modals';
-import { FlexCol, FlexTop, FlexSpan, CircleList, CircleCol, FlexIcon, FlexLeft } from './style/style';
+import { FlexCol, FlexTop, FlexSpan, CircleList, CircleCol, FlexIcon, FlexLeft, CardWrap } from './style/style';
 import './style/index.css';
 // import Search from './Search';
 // import Table from './Table';
@@ -64,8 +64,8 @@ const Page = () => {
 
   return (
     <Fragment>
-      <Card noHover bordered={false}>
-        <Row gutter={10}>
+      <CardWrap noHover bordered={false}>
+        <Row gutter={2}>
           <Col span="5">
             <FlexCol>
               <Menu className='nameMenu'>
@@ -102,7 +102,7 @@ const Page = () => {
                 {dataListStaff.map((itm: any) => (
                   <div key={itm.userId}>
                     <Menu.Item
-                      style={{lineHeight:'26px', fontSize:16, fontWeight: 500}}
+                      style={{fontSize:16, fontWeight: 500}}
                       text={itm.staffName}
                       active={itm.userId === nameId ? true : false}
                       onClick={() => {
@@ -116,7 +116,7 @@ const Page = () => {
             </FlexCol>
           </Col>
           <Col>
-            <Card noHover bordered={false}>
+            <Card noHover bordered={false} style={{height: '100%', padding: 10}}>
               <FlexTop>
                 <FlexLeft>
                 <FlexIcon type="verification" />
@@ -180,7 +180,7 @@ const Page = () => {
             {/* <Table /> */}
           </Col>
         </Row>
-      </Card>
+      </CardWrap>
       <Modals />
     </Fragment>
   )
