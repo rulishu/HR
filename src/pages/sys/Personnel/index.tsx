@@ -26,10 +26,10 @@ const Page = () => {
           dispatch.sysOrganization.selectListStaff({
             id: data?.[0]?.id,
             callback: (res: any) => {
-              setNameId(res?.staff?.[0]?.userId);
-              setUserItem(res?.staff?.[0])
+              setNameId(res?.[0]?.id);
+              setUserItem(res?.[0])
               dispatch.sysOrganization.updateState({
-                dataListStaff: res?.staff
+                dataListStaff: res
               })
             }
           });
@@ -43,9 +43,16 @@ const Page = () => {
 
   const onButName = (data: any) => {
     setCompanyId(data.id)
-    dispatch.sysOrganization.selectListStaff({ id: data.id });
-    setUserItem(dataListStaff?.[0])
-    setNameId(dataListStaff?.[0]?.userId)
+    dispatch.sysOrganization.selectListStaff({ 
+      id: data.id,
+      callback: (res: any) => {
+        setNameId(res?.[0]?.id);
+        setUserItem(res?.[0])
+        dispatch.sysOrganization.updateState({
+          dataListStaff: res
+        })
+      }
+     });
   }
 
   const onModals = () => {
@@ -69,7 +76,7 @@ const Page = () => {
           <Col span="5">
             <FlexCol>
               <Menu className='nameMenu'>
-                {companyList.map((itm: any) => (
+                {companyList?.map((itm: any) => (
                   <div key={itm.id}>
                     <Menu.Item
                       // style={{lineHeight:'30px',fontSize:16}}
@@ -99,15 +106,15 @@ const Page = () => {
             }}
           />
               <Menu className='nameMenu'>
-                {dataListStaff.map((itm: any) => (
-                  <div key={itm.userId}>
+                {dataListStaff?.map((itm: any) => (
+                  <div key={itm.id}>
                     <Menu.Item
                       style={{fontSize:16, fontWeight: 500}}
                       text={itm.staffName}
-                      active={itm.userId === nameId ? true : false}
+                      active={itm.id === nameId ? true : false}
                       onClick={() => {
                         setUserItem(itm)
-                        setNameId(itm.userId)
+                        setNameId(itm.id)
                       }}
                     />
                   </div>

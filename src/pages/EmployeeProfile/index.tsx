@@ -14,7 +14,7 @@ const Page = () => {
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    dispatch.employeeProfile.selectStaffFile();
+    dispatch.employeeProfile.selectStaffFile({isApproved: 1});
     if (companyList.length === 0) {
       dispatch.sysOrganization.selectList({
         callback: (data: any) => {

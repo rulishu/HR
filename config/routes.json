@@ -113,6 +113,12 @@
             "name": "简历查询",
             "icon": "folder-open",
             "element": "@/pages/Resume"
+          },
+          {
+            "path": "/admin/resume-management",
+            "name": "简历管理",
+            "icon": "folder-open",
+            "element": "@/pages/ResumeManagement"
           }
         ]
       },

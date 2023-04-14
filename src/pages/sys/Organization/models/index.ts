@@ -101,7 +101,7 @@ const route = {
           callback(data)
         } else {
           dispatch.sysOrganization.updateState({
-            dataListStaff: data.staff,
+            dataListStaff: data,
           });
         }
         
@@ -114,7 +114,7 @@ const route = {
       const { code, data } = await entranceOrDeparture({...payload});
       if (code === 200 && data) {
         dispatch.sysOrganization.updateState({
-          dataListStaff: data.staff,
+          dataListStaff: data,
         });
         dispatch.sysOrganization.hideModal();
       }
