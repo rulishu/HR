@@ -16,9 +16,9 @@ export type MenuAllconfigType = {
 */
 export const menuNewsConfig: MenuConfigType[] = [
   { text: '员工档案', icon: 'menu1', path: '/admin/employee-profile' },
-  { text: '考勤管理', icon: 'menu3', path: '/admin/AttendanceManagement/employee-attendance' },
-  { text: '入职管理', icon: 'menu4', path: '/admin/employee-induction', },
-  { text: '简历查询', icon: 'menu2', path: '/admin/resume', }
+  // { text: '考勤管理', icon: 'menu3', path: '/admin/employee-attendance' },
+  { text: '入职管理', icon: 'menu2', path: '/admin/employee-induction', },
+  { text: '简历查询', icon: 'menu6', path: '/admin/resume', }
 ]
 
 /**

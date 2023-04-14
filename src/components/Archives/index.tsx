@@ -130,7 +130,7 @@ const Archives = (
    * 监听表单数据
   */
   const onChange = async (_: any, current: any) => {
-    const all: any = data || {};
+    const all: any = newData || {};
     const params = {
       ...all,
       ...current

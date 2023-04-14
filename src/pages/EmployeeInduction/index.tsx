@@ -33,15 +33,17 @@ const Page = () => {
    * 提交
   */
   const onSubmit = async () => {
-     const values: KktproKeys = await archivesRef.current?.submitvalidate() || {};
-    dispatch.employeeInduction.submit({
-      ...values,
-      callback: () => {
-        if (!values.id) {
-          onReset();
+    const values: KktproKeys = await archivesRef.current?.submitvalidate() || {};
+    if (Object.keys(values).length !== 0) {
+      dispatch.employeeInduction.submit({
+        ...values,
+        callback: () => {
+          if (!values.id) {
+            onReset();
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   const onReset = async () => {
@@ -50,7 +52,7 @@ const Page = () => {
 
 
   return (
-    <FormPage 
+    <FormPage
       buttons={[
         {
           type: "primary",
