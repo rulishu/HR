@@ -212,6 +212,7 @@ export const formData = ({
           rules: [
             { required: true, message: '请填写现居地址' },
           ],
+          readSpan: 2
         },
         {
           label: "E-mail",
