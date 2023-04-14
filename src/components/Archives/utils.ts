@@ -258,7 +258,7 @@ export const formData = ({
           ],
         },
         {
-          label: "联系人及关系",
+          label: "紧急联系人",
           key: "emergencyPhone",
           widget: "input",
           initialValue: data?.emergencyPhone,

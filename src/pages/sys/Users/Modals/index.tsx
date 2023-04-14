@@ -19,10 +19,11 @@ function Modals() {
 
   //提交按钮
   const onAddSubmit = async (current: any) => {
-    const roleIds = current.roleIds;
+    const roleIds = current.roleIds;    
     const params = {
       ...current,
-      roleIds: !Array.isArray(roleIds) ? [roleIds] : roleIds,
+      roleIds: roleIds,
+      // roleIds: !Array.isArray(roleIds) ? [roleIds] : roleIds,
     }
     if (type === "add") {
       dispatch({
