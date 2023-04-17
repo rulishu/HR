@@ -122,10 +122,18 @@ const Archives = (
       },
     });
   }
-
-  const handleChange = ( value = '') => {
+  // 上传
+  const handleChange = (type: string, value = '') => {
     if (value.length > 0) {
-      dispatch({ type: 'global/uploadFile', payload: value[0] })
+      dispatch.global.uploadFile({
+        params: value[0],
+        callback: (data: any) => {
+          dispatch({
+            type: "archives/updateState",
+            payload: {[type]: data?.uuid},
+          });
+            }
+          })
     }
   }
 

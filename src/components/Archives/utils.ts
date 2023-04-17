@@ -7,7 +7,7 @@ interface formDataProps {
   departmentList?: any[]
   data: any,
   dictObject: any;
-  handleChange?: () => void
+  handleChange?: (value: any, e: any) => void;
 }
 export interface formDataVoid {
   title: string;
@@ -300,7 +300,7 @@ export const formData = ({
           widget: 'upload',
           readSpan: 3,
           widgetProps: {
-            onChange: handleChange,
+            onChange: (e: any) => handleChange && handleChange('idCardImgFrontUUID', e),
             uploadType: 'card',
             maxNumber: 1,
             showFileIcon: {

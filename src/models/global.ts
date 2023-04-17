@@ -70,11 +70,9 @@ const login = {
     /**
      * 上传
     */
-    async uploadFile(payload: KktproKeys) {
-      const data = await uploadFile(payload)
-      dispatch.resumeManagement.updateState({
-        uuid: data?.uuid
-      });
+    async uploadFile({ params, callback }: any) {
+      const data = await uploadFile(params)
+      callback && callback(data)
     },
   }),
 };
