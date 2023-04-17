@@ -9,7 +9,7 @@ const { Sider, Content } = Layout;
 const Index = () => {
   const dispatch = useDispatch<Dispatch>()
   useEffect(() => {
-    dispatch.resume.quickSelect({ value: 0 })
+    dispatch.resume.quickSelect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
