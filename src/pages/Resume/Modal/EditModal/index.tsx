@@ -1,8 +1,7 @@
-import { Fragment } from 'react';
-import { Drawer, Card, Button } from 'uiw';
+import { Fragment, useRef } from 'react';
+import { Drawer, Button } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
-import { ProForm } from '@uiw-admin/components';
-import { Informnation, formDataVoid } from './item'
+import { Archives, ArchivesType } from '@/components'
 
 const Index = () => {
   const {
@@ -12,6 +11,7 @@ const Index = () => {
     }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
+  const archivesRef = useRef<ArchivesType>(null)
 
   const onclose = () => {
     dispatch({
@@ -21,7 +21,6 @@ const Index = () => {
       }
     })
   }
-  const _formData = Informnation(formData);
 
   return (
     <Fragment>
@@ -32,29 +31,15 @@ const Index = () => {
         size={1000}
         footer={
           <div>
-            <Button size="small" type="danger" onClick={() => onclose()}>关闭抽屉</Button>
-            <Button size="small" type="success">其它</Button>
+            <Button type="primary" onClick={() => onclose()}>提交</Button>
+            <Button >关闭</Button>
           </div>
         }
       >
-        {_formData.map((item: formDataVoid, index: number) => {
-          return <div style={{ marginBottom: 10 }}>
-            < ProForm
-              title={item.title}
-              formType="card"
-              cardProps={{
-                noHover: true,
-              }}
-              onChange={(initial, current) => {
-                console.log('onChange', initial, current);
-              }}
-              colProps={{ span: 8 }}
-              formDatas={item.child}
-            />
-          </div>
-
-        })
-        }
+        <Archives
+          ref={archivesRef}
+          data={formData}
+        />
       </Drawer>
     </Fragment >
   )

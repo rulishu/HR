@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
-import { Card, Empty } from 'uiw';
+import { Alert, Card, Empty } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
 
 const Index = () => {
   const {
-    resume: { TableData }
+    resume: { TableData, isDelete, delId }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
 
@@ -33,7 +33,27 @@ const Index = () => {
         }
       })
     }
+    if (type === 'delete') {
+      dispatch({
+        type: 'resume/update',
+        payload: {
+          isDelete: true,
+          delId: data.id
+        }
+      })
+    }
+  }
 
+  const onDelClosed = () => {
+    dispatch({
+      type: 'resume/update',
+      payload: {
+        isDelete: false,
+      }
+    })
+  }
+  const onConfirm = () => {
+    dispatch.resume.deleteVC([delId])
   }
   return (
     <Card noHover bordered={false} style={{ padding: 0, marginTop: -8, height: 680, overflow: 'scroll' }}>
@@ -89,6 +109,16 @@ const Index = () => {
 
       {TableData?.length <= 0 && <Empty />}
 
+      <Alert
+        isOpen={isDelete}
+        confirmText="确定"
+        cancelText="取消"
+        icon="warning"
+        type="warning"
+        onClosed={() => onDelClosed()}
+        onConfirm={() => onConfirm()}
+        content="您确定要删除吗？"
+      />
     </Card>
 
   )
