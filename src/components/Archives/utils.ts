@@ -7,6 +7,7 @@ interface formDataProps {
   departmentList?: any[]
   data: any,
   dictObject: any;
+  handleChange?: () => void
 }
 export interface formDataVoid {
   title: string;
@@ -27,6 +28,7 @@ export const formData = ({
   departmentList,
   data = {},
   dictObject,
+  handleChange,
 }: formDataProps): formDataVoid[] => {
   return [
     {
@@ -48,7 +50,7 @@ export const formData = ({
           initialValue: data?.phone,
           rules: [
             { required: true, message: '请填写手机号' },
-            { 
+            {
               validator: (value: any) => {
                 if (value) {
                   return valid.isValidPhoneNumber(value);
@@ -221,7 +223,7 @@ export const formData = ({
           initialValue: data?.email,
           rules: [
             { required: true, message: '请填写邮箱' },
-            { 
+            {
               validator: (value: any) => {
                 if (value) {
                   return valid.isValidEmail(value);
@@ -288,6 +290,101 @@ export const formData = ({
     {
       title: '家庭成员',
       type: 'family',
+    },
+    {
+      title: '个人材料',
+      child: [
+        {
+          label: '身份证国徽面',
+          key: 'idCardImgFrontUUID',
+          widget: 'upload',
+          readSpan: 3,
+          widgetProps: {
+            onChange: handleChange,
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '身份证人像面',
+          key: 'idCardImgBackUUID',
+          widget: 'upload',
+          readSpan: 3,
+          widgetProps: {
+            onChange: handleChange,
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '学历证书',
+          key: 'diplomaImgUUID',
+          widget: 'upload',
+          readSpan: 3,
+          widgetProps: {
+            onChange: handleChange,
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '学位证书',
+          key: 'degreeCertificateImgUUID',
+          widget: 'upload',
+          readSpan: 3,
+          widgetProps: {
+            onChange: handleChange,
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '前公司离职证明',
+          key: 'departImgUUID',
+          widget: 'upload',
+          readSpan: 3,
+          widgetProps: {
+            onChange: handleChange,
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '员工照片',
+          key: 'staffPhotoImgUUID',
+          widget: 'upload',
+          readSpan: 3,
+          widgetProps: {
+            onChange: handleChange,
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+      ]
     },
   ]
 }

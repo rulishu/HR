@@ -21,7 +21,7 @@ export const formList = (props?: FormListProps) => {
       widget: "input",
       required: true,
       initialValue: data?.name,
-      // span: "12",
+      span: "24",
       // readSpan: 1,
       rules: [
         { required: true, message: '请输入姓名' },
@@ -33,6 +33,7 @@ export const formList = (props?: FormListProps) => {
       widget: "radio",
       option: dictObject['sex']?.child || [],
       initialValue: data?.gender,
+      span: "24",
       // rules: [
       //   { required: true, message: '请选择性别' },
       // ],
@@ -42,6 +43,7 @@ export const formList = (props?: FormListProps) => {
       key: "phone",
       widget: "input",
       initialValue: data?.phone,
+      span: "24",
       rules: [
         { required: true, message: '请填写手机号' },
         {
@@ -60,7 +62,7 @@ export const formList = (props?: FormListProps) => {
       key: "age",
       widget: "input",
       initialValue: data?.age,
-      // span: "12",
+      span: "24",
       // readSpan: 1,
     },
     {
@@ -68,7 +70,7 @@ export const formList = (props?: FormListProps) => {
       key: "experience",
       widget: "input",
       initialValue: data?.experience,
-      // span: "12",
+      span: "24",
       // readSpan: 1,
     },
     {
@@ -77,6 +79,7 @@ export const formList = (props?: FormListProps) => {
       widget: "select",
       option: dictObject['education']?.child || [],
       initialValue: data?.educational,
+      span: "24",
       // rules: [
       //   { required: true, message: '请选择学历' },
       // ],
@@ -87,6 +90,7 @@ export const formList = (props?: FormListProps) => {
       widget: "select",
       option: dictObject['post']?.child || [],
       initialValue: data?.post,
+      span: "24",
       // rules: [
       //   { required: true, message: '请选择入职岗位' },
       // ],
@@ -96,6 +100,7 @@ export const formList = (props?: FormListProps) => {
       key: "email",
       widget: "input",
       initialValue: data?.email,
+      span: "24",
       // rules: [
       //   { required: true, message: '请填写邮箱' },
       //   { 
@@ -114,6 +119,7 @@ export const formList = (props?: FormListProps) => {
       key: "livingPlace",
       widget: "input",
       initialValue: data?.livingPlace,
+      span: "24",
       // rules: [
       //   { required: true, message: '请填写现居地址' },
       // ],
@@ -129,7 +135,6 @@ export const formList = (props?: FormListProps) => {
       widgetProps: {
         onChange: handleChange,
         uploadType: 'text',
-        multiple: true,
         maxNumber: 1,
         showFileIcon: {
           showPreviewIcon: true,

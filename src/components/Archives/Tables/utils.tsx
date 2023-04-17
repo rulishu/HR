@@ -83,8 +83,20 @@ export const workColumn = ({ onEdit, onRemove, type }: FormListProps) => {
       key: "company",
     },
     {
-      title: "职位及主要工作职责",
+      title: "职位",
+      key: "post",
+    },
+    {
+      title: "工资",
+      key: "salary",
+    },
+    {
+      title: "主要工作职责",
       key: "desc",
+    },
+    {
+      title: "离职原因",
+      key: "reasonForLeave",
     },
     {
       title: "操作",

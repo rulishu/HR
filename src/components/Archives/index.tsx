@@ -123,12 +123,18 @@ const Archives = (
     });
   }
 
+  const handleChange = ( value = '') => {
+    if (value.length > 0) {
+      dispatch({ type: 'global/uploadFile', payload: value[0] })
+    }
+  }
 
   const _formData = formData({
     companyList,
     departmentList: [], // 入职部门
     data,
     dictObject,
+    handleChange
   });
 
   /**

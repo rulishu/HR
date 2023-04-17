@@ -3,20 +3,20 @@ import { Card } from 'uiw';
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm } from "@uiw-admin/components";
 import { formList } from './utils';
+import './style/index.css'
 
 function ResumeManagement() {
   const {
     resumeManagement: {
       resumeObj,
-      uuid
     },
-    global: { dictObject },
+    global: { dictObject, uuid },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   const handleChange = ( value = '') => {
     if (value.length > 0) {
-      dispatch({ type: 'resumeManagement/uploadFile', payload: value[0] })
+      dispatch({ type: 'global/uploadFile', payload: value[0] })
     }
   }
 
@@ -27,9 +27,9 @@ function ResumeManagement() {
     });
   }
   return (
-    <div className='formRecord'>
-      <Card>
+    <Card>
       <ProForm
+        className='formResume'
         showSaveButton
         showResetButton
         formType="pure"
@@ -38,8 +38,7 @@ function ResumeManagement() {
         onSubmit={(_, current) => onScreenSubmit(current)}
         formDatas={formList({ data: resumeObj, dictObject, handleChange })}
       />
-      </Card>
-    </div>
+    </Card>
   );
 }
 

@@ -23,14 +23,3 @@ export function updateVC(params: KktproKeys) {
     body: { ...params },
   });
 }
-
-/**
- * 文件上传
-*/
-export function uploadFile(params: KktproKeys) {
-  return request('/api/file/uploadFile', {
-    method: 'post',
-    body: { ...params },
-    requestType: 'form',
-  });
-}

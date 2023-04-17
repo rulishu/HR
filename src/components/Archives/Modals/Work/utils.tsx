@@ -65,7 +65,31 @@ export const formList = (props?: FormListProps) => {
       ],
     },
     {
-      label: "职位及主要工作职责",
+      label: "职位",
+      key: "post",
+      widget: "input",
+      required: true,
+      initialValue: data?.post,
+      span: "12",
+      readSpan: 1,
+      rules: [
+        { required: true, message: '请输入职位' },
+      ],
+    },
+    {
+      label: "薪资",
+      key: "salary",
+      widget: "input",
+      required: true,
+      initialValue: data?.salary,
+      span: "12",
+      readSpan: 1,
+      rules: [
+        { required: true, message: '请输入薪资' },
+      ],
+    },
+    {
+      label: "主要工作职责",
       key: "desc",
       widget: "textarea",
       initialValue: data?.desc,
@@ -77,6 +101,21 @@ export const formList = (props?: FormListProps) => {
       required: true,
       rules: [
         { required: true, message: '请输入职位及主要工作职责' },
+      ],
+    },
+    {
+      label: "离职原因",
+      key: "reasonForLeave",
+      widget: "textarea",
+      initialValue: data?.reasonForLeave,
+      span: "24",
+      readSpan: 1,
+      widgetProps: {
+        rows: 10
+      },
+      required: true,
+      rules: [
+        { required: true, message: '请输入离职原因' },
       ],
     },
   ]

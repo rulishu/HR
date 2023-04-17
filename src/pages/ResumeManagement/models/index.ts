@@ -1,5 +1,5 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { insert, uploadFile } from '@/servers/resumeManagement';
+import { insert } from '@/servers/resumeManagement';
 import { Notify } from 'uiw';
 
 const init = {
@@ -11,7 +11,6 @@ const route = {
   state: {
     ...init,
     resumeObj: {}, // 简历
-    uuid: ''
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -35,16 +34,6 @@ const route = {
           resumeObj: {}
         });
       }
-    },
-    
-    /**
-     * 上传
-    */
-    async uploadFile(payload: KktproKeys) {
-      const data = await uploadFile(payload)
-      dispatch.resumeManagement.updateState({
-        uuid: data?.uuid
-      });
     },
   })
 };
