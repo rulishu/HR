@@ -8,14 +8,6 @@ const Page = () => {
     employeeInduction: {
       allFormData,
     },
-    archives: {
-      idCardImgFrontUUID,
-      idCardImgBackUUID,
-      diplomaImgUUID,
-      degreeCertificateImgUUID,
-      departImgUUID,
-      staffPhotoImgUUID
-    },
     global: { roles, userData },
   } = useSelector((state: RootState) => state);
 
@@ -46,12 +38,6 @@ const Page = () => {
     if (Object.keys(values).length !== 0) {
       dispatch.employeeInduction.submit({
         ...values,
-        idCardImgFrontUUID,
-        idCardImgBackUUID,
-        diplomaImgUUID,
-        degreeCertificateImgUUID,
-        departImgUUID,
-        staffPhotoImgUUID,
         userId,
         callback: () => {
           if (!values.id) {

@@ -296,9 +296,9 @@ export const formData = ({
       child: [
         {
           label: '身份证国徽面',
-          key: 'idCardImgFrontUUID',
+          key: 'idCardImgFrontUUIDs',
           widget: 'upload',
-          initialValue: data.idCardImgFrontUUID,
+          initialValue: data?.idCardImgFrontUUIDs,
           readSpan: 3,
           widgetProps: {
             onChange: (e: any) => handleChange && handleChange('idCardImgFrontUUID', e),
@@ -312,11 +312,12 @@ export const formData = ({
         },
         {
           label: '身份证人像面',
-          key: 'idCardImgBackUUID',
+          key: 'idCardImgBackUUIDs',
           widget: 'upload',
+          initialValue: data?.idCardImgBackUUIDs,
           readSpan: 3,
           widgetProps: {
-            onChange: handleChange,
+            onChange: (e: any) => handleChange && handleChange('idCardImgBackUUID', e),
             uploadType: 'card',
             maxNumber: 1,
             showFileIcon: {
@@ -327,11 +328,12 @@ export const formData = ({
         },
         {
           label: '学历证书',
-          key: 'diplomaImgUUID',
+          key: 'diplomaImgUUIDs',
           widget: 'upload',
+          initialValue: data?.diplomaImgUUIDs,
           readSpan: 3,
           widgetProps: {
-            onChange: handleChange,
+            onChange: (e: any) => handleChange && handleChange('diplomaImgUUID', e),
             uploadType: 'card',
             maxNumber: 1,
             showFileIcon: {
@@ -342,11 +344,12 @@ export const formData = ({
         },
         {
           label: '学位证书',
-          key: 'degreeCertificateImgUUID',
+          key: 'degreeCertificateImgUUIDs',
           widget: 'upload',
+          initialValue: data?.degreeCertificateImgUUIDs,
           readSpan: 3,
           widgetProps: {
-            onChange: handleChange,
+            onChange: (e: any) => handleChange && handleChange('degreeCertificateImgUUID', e),
             uploadType: 'card',
             maxNumber: 1,
             showFileIcon: {
@@ -357,11 +360,12 @@ export const formData = ({
         },
         {
           label: '前公司离职证明',
-          key: 'departImgUUID',
+          key: 'departImgUUIDs',
           widget: 'upload',
+          initialValue: data?.departImgUUIDs,
           readSpan: 3,
           widgetProps: {
-            onChange: handleChange,
+            onChange: (e: any) => handleChange && handleChange('departImgUUID', e),
             uploadType: 'card',
             maxNumber: 1,
             showFileIcon: {
@@ -372,11 +376,12 @@ export const formData = ({
         },
         {
           label: '员工照片',
-          key: 'staffPhotoImgUUID',
+          key: 'staffPhotoImgUUIDs',
           widget: 'upload',
+          initialValue: data?.staffPhotoImgUUIDs,
           readSpan: 3,
           widgetProps: {
-            onChange: handleChange,
+            onChange: (e: any) => handleChange && handleChange('staffPhotoImgUUID', e),
             uploadType: 'card',
             maxNumber: 1,
             showFileIcon: {

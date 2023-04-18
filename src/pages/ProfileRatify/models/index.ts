@@ -1,6 +1,7 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { selectStaffFile, approve, getSelectFile } from '@/servers/profileRatify';
 import { Notify } from 'uiw';
+import { asyncAwaitFormList } from '@/utils/valid';
 
 const init = {
   noData: false,
@@ -80,35 +81,59 @@ const route = {
       const { code, data } = await selectStaffFile(other);
       if (code === 200) {
         if (data.list && data.list.length > 0) {
-          let details = data.list[0] || {};
+          let details: KktproKeys = data.list[0] || {};
           for (let i in details) {
             details[i] = details[i] || '';
           }
-          if (details.idCardImgFrontUUID) {
-            // 获取图片数组
-            dispatch.profileRatify.getSelectFile(details.idCardImgFrontUUID).then((res) => {
-              let blob = res;
-              let reader = new FileReader();
-              reader.readAsDataURL(blob);  // 转换为base64
-              reader.onload = () => {
-                details.idCardImgFrontUUID = [{
-                  dataURL: reader.result
-                }]
-                dispatch.profileRatify.updateState({
-                  allFormData: details,
-                  checkId: details.id,
-                })
-                callback?.();
-              }
-            })
-          } else {
-            details.idCardImgFrontUUID = []
-            dispatch.profileRatify.updateState({
-              allFormData: details,
-              checkId: details.id,
-            })
-            callback?.();
+
+          const imgsUUID: KktproKeys = {
+            idCardImgBackUUIDs: details.idCardImgBackUUID,
+            idCardImgFrontUUIDs: details.idCardImgFrontUUID,
+            diplomaImgUUIDs: details.diplomaImgUUID,
+            degreeCertificateImgUUIDs: details.degreeCertificateImgUUID,
+            departImgUUIDs: details.departImgUUID,
+            staffPhotoImgUUIDs: details.staffPhotoImgUUID
           }
+          const alls: KktproKeys = [];
+          Object.keys(imgsUUID).forEach((item) => {
+            if (imgsUUID[item]) {
+              alls[item] = imgsUUID[item];
+            }
+          })
+          const all = Object.keys(alls).map(key => {
+            return new Promise((resolve, reject) => {
+              dispatch.profileRatify.getSelectFile(alls[key]).then(res => {
+                let blob = res;
+                let reader = new FileReader();
+                reader.readAsDataURL(blob);  // 转换为base64
+                reader.onload = () => {
+                  resolve({
+                    [key]: [{
+                      dataURL: reader.result
+                    }]
+                  })
+                }
+              })
+            })
+          })
+          const imgs = await asyncAwaitFormList(all) || [];
+          let imgObj: KktproKeys = {};
+          imgs.forEach(item => {
+            imgObj = {
+              ...imgObj,
+              ...item
+            }
+          });
+          const params = {
+            ...details,
+            ...imgObj
+          }
+          // console.log(555, params)
+          dispatch.profileRatify.updateState({
+            allFormData: params,
+            checkId: details.id,
+          })
+          callback?.();
         }
       }
     },
