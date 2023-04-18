@@ -1,5 +1,5 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { getUserInfo } from '@/servers/login';
+import { getUserInfo, getAuthorConfig, authorAndLogin } from '@/servers/login';
 import { getDict } from '@/servers/global';
 
 export interface globalState {
@@ -64,6 +64,26 @@ const login = {
         dispatch.global.updateState({
           dictObject: obj
         });
+      }
+    },
+    /**
+     * 获取第三方token
+    */
+    async fetchThirdLoginToken(param: any) {
+      const data = await getAuthorConfig();
+      if (data && data.data) {
+        window.location.href = data.data.gitLabUrl;
+      }
+    },
+    /**
+    * 第三方登录
+    */
+    async thirdLogin({ code, callback }: any) {
+      const data = await authorAndLogin({ code });
+      if (data && data.code === 200) {
+        localStorage.setItem('token', data.data.token);
+        dispatch.global.updateState({ token: data.data.token });
+        callback?.();
       }
     },
   }),

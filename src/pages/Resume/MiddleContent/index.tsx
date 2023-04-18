@@ -17,14 +17,14 @@ const Index = () => {
         editType: type,
       }
     })
-    if (type === 'edit') {
-      dispatch({
-        type: 'resume/update',
-        payload: {
-          editVisible: true,
-        }
-      })
-    }
+    // if (type === 'edit') {
+    //   dispatch({
+    //     type: 'resume/update',
+    //     payload: {
+    //       editVisible: true,
+    //     }
+    //   })
+    // }
     if (type === 'view') {
       dispatch({
         type: 'resume/update',
@@ -39,6 +39,14 @@ const Index = () => {
         payload: {
           isDelete: true,
           delId: data.id
+        }
+      })
+    }
+    if (type === 'export') {
+      dispatch({
+        type: 'resume/exportWord',
+        payload: {
+          userId: data.userId
         }
       })
     }
@@ -81,12 +89,12 @@ const Index = () => {
                     alignItems: 'center'
                   }}
                 >
-                  <TipButton
+                  {/* <TipButton
                     tip='编辑'
                     type='primary'
                     icon='edit'
                     onClick={() => { handle('edit', item) }}
-                  />
+                  /> */}
                   <TipButton
                     tip='查看简历'
                     type='primary'
@@ -94,10 +102,16 @@ const Index = () => {
                     onClick={() => { handle('view', item) }}
                   />
                   <TipButton
-                    tip='删除'
+                    tip='删除简历'
                     type='primary'
                     icon='delete'
                     onClick={() => { handle('delete', item) }}
+                  />
+                  <TipButton
+                    tip='导出简历'
+                    type='primary'
+                    icon='download'
+                    onClick={() => { handle('export', item) }}
                   />
                 </div>
               </div>

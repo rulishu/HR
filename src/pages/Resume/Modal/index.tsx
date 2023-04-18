@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 import DocViewerResume from './ResumeViewer/DocViewer';
-import EditModal from '../Modal/EditModal/index'
+// import EditModal from '../Modal/EditModal/index'
 
 const Index = () => {
   return (
     <Fragment>
-      <EditModal />
+      {/* <EditModal /> */}
       <DocViewerResume />
     </Fragment>
   )
