@@ -2,9 +2,11 @@ import { Dispatch, KktproKeys } from '@kkt/pro';
 import {
   quickSelect,
   // selectUserVC,
-  deleteVC
+  deleteVC,
+  exportWord
 } from '@/servers/resume';
 import { Notify } from 'uiw';
+import { downloadExcelFile } from '../../../utils/export';
 
 const route = {
   name: 'resume',
@@ -67,6 +69,16 @@ const route = {
           isDelete: false
         });
         dispatch.resume.quickSelect();
+      }
+    },
+    /**
+     * 导出简历
+    */
+    async exportWord(payload?: any, state?: any) {
+      const { code, msg, data } = await exportWord(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '导出成功' });
+        downloadExcelFile(data, `${'简历导出'}.doc`)
       }
     },
   }),

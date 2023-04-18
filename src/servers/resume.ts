@@ -28,3 +28,12 @@ export function deleteVC(params: KktproKeys) {
     body: params,
   });
 }
+/**
+ * 导出简历
+*/
+export function exportWord(params: KktproKeys) {
+  return request('/api/vc/exportWord', {
+    method: 'post',
+    body: { ...params },
+  });
+}
