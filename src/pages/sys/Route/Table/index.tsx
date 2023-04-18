@@ -26,6 +26,17 @@ const Page = () => {
     });
   }
 
+  const onTableAdd = (rowData: any) => {
+    dispatch.sysRoute.updateState({
+      isVisible: true,
+      popUpStatus: 'tableAdd',
+      detailsData: {
+        query: '2',
+        parentId: rowData.menuId
+      }
+    });
+  }
+
   // 删除
   const onRemove = (rowData: any) => {
     dispatch.sysRoute.updateState({
@@ -50,7 +61,7 @@ const Page = () => {
         </Button>
       </div>
       <Table
-        columns={columns({ onEdit, onRemove })}
+        columns={columns({ onEdit, onRemove, onAdd: onTableAdd })}
         data={dataList}
         empty={<Empty />}
       />

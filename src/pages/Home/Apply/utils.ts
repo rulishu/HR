@@ -1,3 +1,5 @@
+import { KktproRoutesProps } from '@kkt/pro';
+
 export type MenuConfigType = {
   text: string;
   icon: string;
@@ -14,52 +16,67 @@ export type MenuAllconfigType = {
 */
 export const menuNewsConfig: MenuConfigType[] = [
   { text: '员工档案', icon: 'menu1', path: '/admin/employee-profile' },
-  { text: '考勤管理', icon: 'menu3', path: '/admin/AttendanceManagement/employee-attendance' },
-  { text: '入职管理', icon: 'menu4', path: '/admin/employee-induction', },
+  // { text: '考勤管理', icon: 'menu3', path: '/admin/employee-attendance' },
+  { text: '入职管理', icon: 'menu2', path: '/admin/employee-induction', },
+  { text: '简历查询', icon: 'menu6', path: '/admin/resume', }
 ]
 
 /**
- * 其它配置
+ * 所有路由对应的图标
 */
-export const menusConfig: MenuAllconfigType[] = [
-  {
-    title: '全员常用',
-    child: [
-      { text: '招聘管理', icon: 'menu4', path: '/admin/employee-profile' },
-      { text: '转正管理', icon: 'menu4', path: '/admin/sys/organization-structure' },
-      { text: '调岗管理', icon: 'menu4', path: '/admin/employee-attendance' },
-      { text: '离职管理', icon: 'menu5', path: '/admin/employee-depart', },
-      { text: '合同管理', icon: 'menu4', path: '/admin/employee-attendance' },
-      { text: '薪资管理', icon: 'menu4', path: '/admin/training-and-development' },
-      { text: '组织机构', icon: 'menu4', path: '/admin/sys/organization-structure' },
-      { text: '培训与发展', icon: 'menu6', path: '/admin/training-and-development' },
-    ]
-  },
-  {
-    title: '全部应用',
-    child: [
-      { text: '员工档案', icon: 'menu1', path: '/admin/employee-profile' },
-      { text: '考勤管理', icon: 'menu3', path: '/admin/employee-attendance' },
-      { text: '入职管理', icon: 'menu4', path: '/admin/employee-induction', },
-      { text: '招聘管理', icon: 'menu3', path: '/admin/employee-profile' },
-      { text: '转正管理', icon: 'menu4', path: '/admin/sys/organization-structure' },
-      { text: '调岗管理', icon: 'menu4', path: '/admin/employee-attendance' },
-      { text: '离职管理', icon: 'menu5', path: '/admin/employee-depart', },
-      { text: '合同管理', icon: 'menu4', path: '/admin/employee-attendance' },
-      { text: '薪资管理', icon: 'menu4', path: '/admin/training-and-development' },
-      { text: '培训与发展', icon: 'menu6', path: '/admin/training-and-development' },
-    ]
-  },
-  {
-    title: '系统设置',
-    child: [
-      { text: '组织机构', icon: 'menu2', path: '/admin/sys/organization' },
-      { text: '项目管理', icon: 'menu4', path: '/admin/sys/items' },
-      { text: '人员管理', icon: 'menu4', path: '/admin/sys/personnel' },
-      { text: '账号管理', icon: 'menu4', path: '/admin/sys/users', },
-      { text: '角色管理', icon: 'menu4', path: '/admin/sys/role' },
-      { text: '路由管理', icon: 'menu4', path: '/admin/sys/route' },
-      { text: '数据字典', icon: 'menu4', path: '/admin/sys/dataDictionary' },
-    ]
-  },
-]
+export const getIocns: any = {
+  '/admin/employee-profile': 'menu1',
+  '/admin/employee-induction': 'menu4',
+  '/admin/employee-depart': 'menu1',
+  '/admin/training-and-development': 'menu1',
+  '/admin/sys/items': 'menu4',
+  '/admin/sys/personnel': 'menu4',
+  '/admin/sys/organization-structure': 'menu4',
+  '/admin/resume': 'menu4',
+  '/admin/sys/organization': 'menu4',
+  '/admin/sys/dataDictionary': 'menu4',
+  '/admin/sys/route': 'menu4',
+  '/admin/sys/role': 'menu4',
+  '/admin/sys/users': 'menu4',
+  '/admin/profile-ratify': 'menu4'
+}
+
+const defaultAuth = (data: MenuConfigType[], auth: string[] = []) => {
+  const newArr: MenuConfigType[] = [];
+  data.forEach((item: MenuConfigType) => {
+    let obj = { ...item };
+    const data = auth.find((cur) => cur === item.path);
+    if (data) {
+      newArr.push(obj);
+    }
+  });
+  return newArr;
+}
+
+export const returnPaths = (data: KktproRoutesProps[] = []) => {
+  const newRoutes: string[] = [];
+  (function setRoutes(arr) {
+    arr.forEach(item => {
+      const { children, ...other } = item;
+      if (children && Array.isArray(children)) {
+        setRoutes(children);
+      }
+      if (other.path) {
+        newRoutes.push(other.path)
+      }
+    })
+  })(data);
+  return newRoutes;
+}
+
+export const getNewsAuthMenu = (auth: any[] = []) => {
+  return defaultAuth(menuNewsConfig, returnPaths(auth));
+}
+
+/**
+ * 菜单排除首页及子级是空的数据
+*/
+export const getRoutes = (routes: any[] = []) => {
+  const newData = routes.filter(item => item.path !== 'path').filter(item => item.children && item.children.length > 0);
+  return newData
+}

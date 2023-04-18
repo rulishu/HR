@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes } from '@/servers/sys/items';
+import { selectList, deletes, projectSelectList, projectDelete } from '@/servers/sys/items';
 
 const route = {
   name: "sysItems",
@@ -35,8 +35,23 @@ const route = {
       }
       const { code, data } = await selectList(params);
       if (code === 200 && data) {
+        const newData = (data.list || []).map((item: KktproKeys) => {
+          const newItem: any = {
+            ...item,
+            type: 'group'
+          };
+          if (Array.isArray(item.projects) && item.projects.length > 0) {
+            newItem.children = item.projects.map((itm: KktproKeys) => ({
+              ...itm,
+              type: 'department',
+              group: item.groupName,
+              groupName: itm.projectName,
+            }))
+          }
+          return newItem;
+        })
         dispatch.sysItems.updateState({
-          dataList: data.list || []
+          dataList: newData || []
         });
       }
     },
@@ -54,7 +69,41 @@ const route = {
         dispatch.sysItems.hideModal();
         dispatch.sysItems.selectList();
       }
-    }
+    },
+    /**
+     * 获取项目列表
+    */
+    async projectSelectList(payload?: KktproKeys, state?: any) {
+      const { sysItems } = state;
+      const { page, pageSize } = sysItems;
+      const { callback, ...other } = payload || {};
+      const params: KktproKeys = {
+        page,
+        pageSize,
+        ...other
+      }
+      const { code, data } = await projectSelectList(params);
+      if (code === 200 && data) {
+        dispatch.sysItems.updateState({
+          dataList: data.list || []
+        });
+      }
+    },
+    /**
+     * 删除项目
+    */
+    async projectDelete(_?: any, state?: any) {
+      const { sysItemsModal } = state;
+      const { detailsData = {} } = sysItemsModal;
+      const { code, msg } = await projectDelete({
+        id: detailsData.id
+      });
+      if (code === 200) {
+        Notify.success({ description: msg || '删除成功' });
+        dispatch.sysItems.hideModal();
+        dispatch.sysItems.selectList();
+      }
+    },
   })
 };
 

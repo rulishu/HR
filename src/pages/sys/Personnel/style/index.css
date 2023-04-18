@@ -1,0 +1,21 @@
+.searchName {
+  font-size: 14px;
+  padding: 5px;
+}
+.searchName .w-input-inner {
+  box-shadow: none;
+  background: #f2f4f7;
+  border-radius: 20px;
+}
+.nameMenu .w-menu-item:hover, .nameMenu .w-menu-item.active {
+  background: #f2f4f7;
+}
+.nameMenu .w-menu-item {
+  padding: 12px;
+}
+.modalForm .w-modal-inner {
+  background: #fff;
+}
+.modalForm .w-btn {
+  width: 80px;
+}

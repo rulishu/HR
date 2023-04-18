@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { Dispatch, KktproKeys, RootState, useDispatch, useSelector } from "@kkt/pro";
 import { ProForm } from "@uiw-admin/components";
-import { Drawer, TreeChecked, Card, Row } from "uiw";
-import { formList } from './utils';
+import { Drawer, Card } from "uiw";
+import { formList, getMenus, getCheckIds } from './utils';
+import { TreeCheckedBox } from './style';
 
 function Modals() {
   const {
@@ -17,16 +18,7 @@ function Modals() {
   const dispatch = useDispatch<Dispatch>();
 
   const treeData: KktproKeys[]  = useMemo(() => {
-    const GenerateLabel = (item: any, width: number) => (
-      <Row style={{ display: "inline-flex" }}>
-        <span style={{ width }}>{item.menuName}</span>
-        <span>{item.path}</span>
-      </Row>
-    );
-    return routeList.map((item: KktproKeys) => ({
-      label: GenerateLabel(item, 150),
-      key: item.menuId
-    }))
+    return getMenus(routeList)
   }, [routeList])
 
   //提交按钮
@@ -72,13 +64,13 @@ function Modals() {
       useButton={false}
     >
       <Card title="分配路由" noHover={true}>
-        <TreeChecked
+        <TreeCheckedBox
           data={treeData}
           selectedKeys={checkRouteMenuIds}
           onSelected={(key, selected, item, evn) => {
             dispatch({
               type: "roleModal/updateState",
-              payload: { checkRouteMenuIds: key },
+              payload: { checkRouteMenuIds: getCheckIds(treeData, key) },
             });
           }}
         />

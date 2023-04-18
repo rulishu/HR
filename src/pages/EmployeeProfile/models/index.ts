@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectStaffFile, insert, approve } from '@/servers/EmployeeProfile';
+import { selectStaffFile, insert, filesDownload } from '@/servers/EmployeeProfile';
 
 const route = {
   name: "employeeProfile",
@@ -10,10 +10,11 @@ const route = {
     total: 0,
     dataList: [],
     isDelete: false,
-    queryInfo: {}, // 编辑的数据
+    queryInfo: {} as any, // 编辑的数据
     isVisible: false,
     type: undefined, // 类型 add：新增 / edit: 编辑
-    groupItem: [] as any[]
+    groupItem: [] as any[],
+    checked: [],
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -63,10 +64,10 @@ const route = {
       }
     },
     /**
-     * 档案审批
+     * 档案导出
     */
-    async usersUpdate(payload: KktproKeys) {
-      const { code, msg } = await approve(payload);
+    async filesDownload(payload: KktproKeys) {
+      const { code, msg } = await filesDownload(payload);
       if (code === 200) {
         Notify.success({ description: msg || '编辑成功' });
         dispatch.employeeProfile.updateState({

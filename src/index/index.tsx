@@ -1,7 +1,8 @@
 import { cloneElement, useState, useEffect } from 'react';
-import { KktproRoutesProps, useDispatch, Dispatch, useNavigate, useLocation } from '@kkt/pro';
+import { KktproRoutesProps, useDispatch, Dispatch, useNavigate, useLocation, useSelector, RootState } from '@kkt/pro';
 import { request } from "@uiw-admin/utils";
 import { SWRConfig } from "swr";
+import { Loader } from 'uiw';
 import { getAuthRoutes } from './utils';
 import './response';
 
@@ -13,10 +14,15 @@ interface RoutesOutletElementProps {
   children: React.ReactNode;
   routes: KktproRoutesProps[];
 }
+
 const RoutesOutletElement = (props: RoutesOutletElementProps) => {
+  const {
+    global: { authRoutes },
+  } = useSelector((state: RootState) => state);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch<Dispatch>();
+  const [loading, setLoading] = useState<boolean>(true);
   const [routes, setRoutes] = useState<KktproRoutesProps[]>(props.routes);
   
   useEffect(() => {
@@ -26,11 +32,13 @@ const RoutesOutletElement = (props: RoutesOutletElementProps) => {
 
     const token = localStorage.getItem("token");
     if (token) {
-      dispatch.global.getUserInfo({});
+      dispatch.global.getUserInfo({
+        callback: (auths: any[]) => {
+          // 如果只有1个菜单权限的则直接跳到对应的页面
+          navigate(pathname, { replace: true })
+        }
+      });
     }
-
-    const newRoutes = getAuthRoutes(props.routes);
-    setRoutes(newRoutes)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -42,19 +50,37 @@ const RoutesOutletElement = (props: RoutesOutletElementProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
+  useEffect(() => {
+    const newRoutes = getAuthRoutes(props.routes, authRoutes);
+    setRoutes(newRoutes);
+    setTimeout(() => {
+      const is = authRoutes.length === 0;
+      setLoading(is);
+    }, 10)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authRoutes])
+
   return (
-    <SWRConfig
-      value={{
-        fetcher: (resource, init) => {
-          return request(resource, init);
-        },
-        provider: () => new Map(),
-      }}
+    <Loader
+      style={{ width: '100%', height: '100vh' }}
+      loading={loading && !['/login', '*'].includes(pathname)}
+      tip="加载中..."
+      bgColor="rgba(255, 255, 255, 1)"
+      
     >
-      {cloneElement(props.children as JSX.Element, {
-        routes,
-      })}
-    </SWRConfig>
+      <SWRConfig
+        value={{
+          fetcher: (resource, init) => {
+            return request(resource, init);
+          },
+          provider: () => new Map(),
+        }}
+      >
+        {cloneElement(props.children as JSX.Element, {
+          routes,
+        })}
+      </SWRConfig>
+    </Loader>
   )
 };
 export default RoutesOutletElement;

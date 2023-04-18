@@ -1,5 +1,5 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { add, edit } from '@/servers/sys/items';
+import { add, edit, projectAdd, projectUpdate } from '@/servers/sys/items';
 import { Notify } from 'uiw';
 
 const route = {
@@ -56,6 +56,48 @@ const route = {
       const { sysItemsModal } = state;
       const { isForm } = sysItemsModal;
       const { code, msg } = await edit(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '编辑成功' });
+        if (isForm) {
+          // 如果当前页面是在用户管理页面，则重新请求列表
+          dispatch.sysItems.selectList();
+        }
+        dispatch.sysItemsModal.updateState({
+          isVisible: false
+        });
+      }
+    },
+    /**
+     * 新增项目
+    */
+    async projectAdd(payload: KktproKeys, state: any) {
+      const { sysItemsModal } = state;
+      const { isForm } = sysItemsModal;
+      const parmas: any = {
+        ...payload,
+      }
+      const { code, msg } = await projectAdd(parmas);
+      if (code === 200) {
+        Notify.success({ description: msg || '添加成功' });
+        if (isForm) {
+          // 如果当前页面是在用户管理页面，则重新请求列表
+          dispatch.sysItems.selectList();
+        }
+        dispatch.sysItemsModal.updateState({
+          isVisible: false
+        });
+      }
+    },
+    /**
+     * 编辑项目
+    */
+    async projectUpdate(payload: KktproKeys, state: any) {
+      const { sysItemsModal } = state;
+      const { isForm } = sysItemsModal;
+      const parmas: any = {
+        ...payload,
+      }
+      const { code, msg } = await projectUpdate(parmas);
       if (code === 200) {
         Notify.success({ description: msg || '编辑成功' });
         if (isForm) {

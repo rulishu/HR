@@ -4,15 +4,21 @@ import { TipButton } from '@/components';
 interface columnsProps {
   onEdit?: (rowData: KktproKeys) => void;
   onDelete?: (rowData: KktproKeys) => void;
+  onAddDepartment?: (rowData: KktproKeys) => void;
 }
 
 export const columns = ({
   onEdit,
-  onDelete
+  onDelete,
+  onAddDepartment
 }: columnsProps) => [
   {
-    title: "项目组名称",
+    title: "项目组名称/项目名称",
     key: "groupName"
+  },
+  {
+    title: "负责人",
+    key: "manager",
   },
   {
     title: "机构名称",
@@ -25,7 +31,7 @@ export const columns = ({
   {
     title: "操作",
     key: "edit",
-    width: 100,
+    width: 140,
     render: (text: any, key: any, rowData: any) => {
       return (
         <>
@@ -35,6 +41,14 @@ export const columns = ({
             type="primary"
             onClick={() => onEdit?.(rowData)}
           />
+          {rowData.type === 'group' && (
+            <TipButton
+              tip="添加项目"
+              type="success"
+              icon="plus"
+              onClick={() => onAddDepartment?.(rowData)}
+            />
+            )}
           <TipButton
             tip="删除"
             icon="delete"

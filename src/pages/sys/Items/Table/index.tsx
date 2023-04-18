@@ -5,12 +5,25 @@ import { columns } from './utils';
 const Page = () => {
   const {
     sysItems: { dataList, isDelete },
+    sysItemsModal: { detailsData }
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   // 新增 / 编辑
-  const onModals = (type: 'add' | 'edit', data?: any) => {
-    dispatch.sysItemsModal.onModals({ type, data, isForm: true });
+  const onModals = (type: 'add' | 'edit' | 'departmentAdd' | 'departmentEdit', data?: any) => {
+    const _type = data && data.type === 'department' ? 'departmentEdit' : type;
+    dispatch.sysItemsModal.onModals({ type: _type, data, isForm: true });
+  }
+
+  const onAddDepartment = (data: any) => {
+    dispatch.sysItemsModal.onModals({
+      type: 'departmentAdd',
+      data: {
+        id: data.id,
+        groupName: data.groupName
+      },
+      isForm: true
+    });
   }
 
   // 删除
@@ -28,7 +41,11 @@ const Page = () => {
   }
 
   const onConfirm = () => {
-    dispatch.sysItems.deletes();
+    if ((detailsData as any).type === 'department') {
+      dispatch.sysItems.projectDelete();
+    } else {
+      dispatch.sysItems.deletes();
+    }
   }
 
   return (
@@ -42,6 +59,7 @@ const Page = () => {
         columns={columns({
           onEdit: (data) => onModals('edit', data),
           onDelete,
+          onAddDepartment
         })}
         data={dataList}
         empty={<Empty />}

@@ -22,13 +22,19 @@
         "children": [
           {
             "index": true,
-            "redirect": "/manage/employee-profile"
+            "redirect": "/admin/employee-profile"
           },
           {
             "path": "/admin/employee-profile",
-            "name": "员工档案管理",
+            "name": "员工档案",
             "icon": "usergroup-add",
             "element": "@/pages/EmployeeProfile"
+          },
+          {
+            "path": "/admin/profile-ratify",
+            "name": "档案审批",
+            "icon": "usergroup-add",
+            "element": "@/pages/ProfileRatify"
           },
           {
             "path": "/admin/employee-induction",
@@ -46,38 +52,13 @@
             "path": "/admin/training-and-development",
             "name": "员工培训与发展",
             "icon": "laptop",
-            "element": "@/pages/TrainingAndDevelopment"
+            "element": "@/pages/TrainingDevelopment"
           },
           {
-            "path": "/admin/AttendanceManagement",
+            "path": "/admin/employee-attendance",
             "name": "考勤管理",
-            "icon": "copy",
-            "children": [
-              {
-                "path": "/admin/AttendanceManagement/employee-attendance",
-                "name": "出勤记录",
-                "icon": "document",
-                "element": "@/pages/AttendanceManagement/EmployeeAttendance"
-              },
-              {
-                "path": "/admin/AttendanceManagement/Makeup-record",
-                "name": "补卡记录",
-                "icon": "document",
-                "element": "@/pages/AttendanceManagement/MakeupRecord"
-              },
-              {
-                "path": "/admin/AttendanceManagement/Leave-record",
-                "name": "请假记录",
-                "icon": "document",
-                "element": "@/pages/AttendanceManagement/LeaveRecord"
-              },
-              {
-                "path": "/admin/AttendanceManagement/Overtime-record",
-                "name": "加班记录",
-                "icon": "document",
-                "element": "@/pages/AttendanceManagement/OvertimeRecord"
-              }
-            ]
+            "icon": "document",
+            "element": "@/pages/AttendanceManagement/EmployeeAttendance"
           },
           {
             "path": "/admin/sys/organization",
@@ -128,8 +109,16 @@
             "element": "@/pages/sys/RegularEmployee"
           },
           {
-            "path": "*",
-            "element": "@uiw-admin/exceptions/lib/Exceptions/404"
+            "path": "/admin/resume",
+            "name": "简历查询",
+            "icon": "folder-open",
+            "element": "@/pages/Resume"
+          },
+          {
+            "path": "/admin/resume-management",
+            "name": "简历管理",
+            "icon": "folder-open",
+            "element": "@/pages/ResumeManagement"
           }
         ]
       },
@@ -138,9 +127,5 @@
         "element": "@uiw-admin/exceptions/lib/Exceptions/404"
       }
     ]
-  },
-  {
-    "path": "*",
-    "element": "@uiw-admin/exceptions/lib/Exceptions/404"
   }
 ]

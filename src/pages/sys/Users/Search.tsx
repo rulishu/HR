@@ -9,12 +9,12 @@ const formSearchList = [
     widget: "input",
   },
   {
-    label: "是否禁用",
+    label: "是否停用",
     widget: "radio",
     key: "locked",
     option: [
       { label: "正常", value: '1' },
-      { label: "禁用", value: '2' },
+      { label: "停用", value: '2' },
     ],
   },
 ];

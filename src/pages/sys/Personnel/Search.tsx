@@ -5,7 +5,7 @@ import { ProForm } from "@uiw-admin/components";
 const formSearchList = ({ companyList }: any) => [
   {
     label: "姓名",
-    key: "groupName",
+    key: "staffName",
     widget: "input",
   },
   {
@@ -18,7 +18,7 @@ const formSearchList = ({ companyList }: any) => [
   },
   {
     label: "员工状态",
-    key: "companyName",
+    key: "type",
     widget: "select",
     option: companyList.map((item: KktproKeys) => ({ label: item.companyName, value: item.companyName })),
   },
@@ -33,7 +33,7 @@ const Search = () => {
   const dispatch = useDispatch<Dispatch>();
 
   const onScreenSubmit = (current: object) => {
-    dispatch.sysItems.selectList({ ...current });
+    dispatch.sysOrganization.selectListStaff({ ...current });
   }
 
   return (
@@ -44,6 +44,7 @@ const Search = () => {
         showResetButton
         saveButtonProps={{
           type: "primary",
+          label: '搜索'
         }}
         cardProps={{
           noHover: true,

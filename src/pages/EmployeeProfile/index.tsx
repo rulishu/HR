@@ -1,13 +1,29 @@
 import { Fragment, useEffect } from 'react';
-import { useDispatch, Dispatch } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Card, Tabs } from 'uiw';
 import Search from './Search';
 import Table from './Table';
+import Modals from './Modals/information';
+import './style/index.css'
 
 const Page = () => {
+  const {
+    employeeInduction: {
+      companyList = [],
+    },
+  } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    dispatch.employeeProfile.selectStaffFile();
+    dispatch.employeeProfile.selectStaffFile({isApproved: 1});
+    if (companyList.length === 0) {
+      dispatch.sysOrganization.selectList({
+        callback: (data: any) => {
+          dispatch.employeeInduction.updateState({
+            companyList: data
+          })
+        }
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
@@ -20,6 +36,7 @@ const Page = () => {
           <Card noHover bordered={false}><Table /></Card>
         </Tabs.Pane>
       </Tabs>
+      <Modals />
     </Fragment>
   )
 }

@@ -1,8 +1,8 @@
 import { useLocation, useNavigate, KktproPageProps } from '@kkt/pro';
-import { Icon } from 'uiw';
+import { Icon, Input } from 'uiw';
 import Left from './Left';
 import Right from './Right';
-import { Wrapper, Log } from './style';
+import { Wrapper, Log, LogLeft } from './style';
 
 const Headers = (props: KktproPageProps) => {
   const { pathname } = useLocation();
@@ -17,7 +17,16 @@ const Headers = (props: KktproPageProps) => {
     <Wrapper>
       {pathname === '/home' ? (
         <Log onClick={onNavigate}>
-          <Icon type="uiw" style={{ marginRight: 10, fontSize: 22 }} />人事管理系统
+          <LogLeft>
+            <Icon type="uiw" style={{ marginRight: 20, fontSize: 22 }} />
+            <span>人事管理系统</span>
+          </LogLeft>
+          <Input
+            size="large"
+            className='inputSearch'
+            preIcon="search"
+            placeholder="请输入搜索应用名称"
+          />
         </Log>
       ) : (
         <Left {...props} />

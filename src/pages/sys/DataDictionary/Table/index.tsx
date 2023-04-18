@@ -47,10 +47,9 @@ const Page = () => {
   }
 
   const onTurnPages = (current: number) => {
-    dispatch.sysUser.updateState({
+    dispatch.sysDataDictionary.selectList({
       page: current
     });
-    dispatch.sysDataDictionary.selectList();
   }
 
   return (
