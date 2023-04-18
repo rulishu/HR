@@ -33,3 +33,10 @@ export function approve(params: KktproKeys) {
     body: { ...params },
   });
 }
+
+export const getSelectFile = (params: any) => {
+  return request(`/api/file/selectFile/${params}`, {
+    method: 'get',
+    responseType: "blob",
+  })
+}

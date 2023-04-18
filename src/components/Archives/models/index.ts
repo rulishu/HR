@@ -23,6 +23,12 @@ const init = {
   familyData: [],
   familyObj: {},
   isFamilyVisible: false,
+  idCardImgFrontUUID: '',
+  idCardImgBackUUID: '',
+  diplomaImgUUID: '',
+  degreeCertificateImgUUID: '',
+  departImgUUID: '',
+  staffPhotoImgUUID: ''
 }
 
 const route = {

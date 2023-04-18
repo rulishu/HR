@@ -170,14 +170,14 @@ const Page = () => {
                 </List.Item>
                 <List.Item>
                   <Row>
-                    <CircleCol fixed>入场/离场时间:</CircleCol>
-                    <Col grow={1}> {userItem?.createTime}</Col>
+                    <CircleCol fixed>外派状态:</CircleCol>
+                    <Col grow={1}> {userItem?.state === 1 ? "无" : userItem?.state === 3 ? "入场" : ''}</Col>
                   </Row>
                 </List.Item>
                 <List.Item>
                   <Row>
-                    <CircleCol fixed>外派状态:</CircleCol>
-                    <Col grow={1}> {userItem?.type === '1' ? "在职" : userItem?.type === '2' ? "离职" : userItem?.type === '3' ? '入场' : ''}</Col>
+                    <CircleCol fixed>{userItem?.state === '1' ? '离场时间' :  "入场时间"} :</CircleCol>
+                    <Col grow={1}> {userItem?.createTime}</Col>
                   </Row>
                 </List.Item>
               </CircleList>

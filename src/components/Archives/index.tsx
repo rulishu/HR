@@ -45,7 +45,13 @@ const Archives = (
       companyList = [],
       educationData = [],
       workData = [],
-      familyData = []
+      familyData = [],
+      idCardImgFrontUUID,
+      idCardImgBackUUID,
+      diplomaImgUUID,
+      degreeCertificateImgUUID,
+      departImgUUID,
+      staffPhotoImgUUID
     },
     global: { dictObject },
   } = useSelector((state: RootState) => state);
@@ -93,6 +99,7 @@ const Archives = (
   }, [companyList]);
 
   useEffect(() => {
+    // const newData = data || {};
     setNewData(data || {});
     if (data) {
       initData(data);
@@ -104,6 +111,11 @@ const Archives = (
    * 数据变化更新数据
   */
   const initData = async (data: KktproKeys = {}) => {
+    // const newData = {
+    //   ...data,
+    //   // idCardImgFrontUUID:[ { dataURL: 'https://avatars2.githubusercontent.com/u/1680273?s=40&v=4', name: 'uiw.png' }]
+    //   // idCardImgFrontUUID: data.idCardImgFrontUUID || []
+    // }
     dispatch.archives.clearState();
     // 更新form表单
     if (formRefList.current.length > 0) {
@@ -118,17 +130,37 @@ const Archives = (
       payload: {
         educationData: data.educationalExperience || [],
         workData: data.workExperience || [],
-        familyData: data.familyMember || []
+        familyData: data.familyMember || [],
+        idCardImgFrontUUID: data.idCardImgFrontUUID,
+        idCardImgBackUUID: data.idCardImgBackUUID,
+        diplomaImgUUID: data.diplomaImgUUID,
+        degreeCertificateImgUUID: data.degreeCertificateImgUUID,
+        departImgUUID: data.departImgUUID,
+        staffPhotoImgUUID: data.staffPhotoImgUUID,
       },
     });
   }
-
+  // 上传
+  const handleChange = (type: string, value = []) => {
+    if (value.length > 0) {
+      dispatch.global.uploadFile({
+        params: value[0],
+        callback: (data: any) => {
+          dispatch({
+            type: "archives/updateState",
+            payload: {[type]: data?.uuid},
+          });
+        }
+      })
+    }
+  }
 
   const _formData = formData({
     companyList,
     departmentList: [], // 入职部门
     data,
     dictObject,
+    handleChange
   });
 
   /**
@@ -182,6 +214,12 @@ const Archives = (
     obj['educationalExperience'] = datesShift(educationData);
     obj['workExperience'] = datesShift(workData);
     obj['familyMember'] = familyData;
+    obj.idCardImgFrontUUID = idCardImgFrontUUID
+    obj.idCardImgBackUUID = idCardImgBackUUID
+    obj.diplomaImgUUID = diplomaImgUUID
+    obj.degreeCertificateImgUUID = degreeCertificateImgUUID 
+    obj.departImgUUID = departImgUUID
+    obj.staffPhotoImgUUID = staffPhotoImgUUID;
     return obj;
   }
 

@@ -1,7 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { getUserInfo, getAuthorConfig, authorAndLogin } from '@/servers/login';
-import { getDict } from '@/servers/global';
-
+import { getDict, uploadFile } from '@/servers/global';
 export interface globalState {
   navigate: any;
   userData?: KktproKeys;
@@ -17,6 +16,7 @@ const login = {
     authRoutes: [], // 权限菜单
     dictObject: {}, // 字典数据
     roles: undefined,
+    uuid: ''
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -85,6 +85,10 @@ const login = {
         dispatch.global.updateState({ token: data.data.token });
         callback?.();
       }
+    },
+    async uploadFile({ params, callback }: any) {
+      const data = await uploadFile(params)
+      callback && callback(data)
     },
   }),
 };

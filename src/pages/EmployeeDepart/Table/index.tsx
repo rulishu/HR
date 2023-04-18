@@ -1,11 +1,11 @@
-import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
+import { useDispatch, Dispatch } from '@kkt/pro';
 import { Button, Table, Pagination, Empty } from "uiw";
 import { columns } from './utils';
 
 const Page = () => {
-  const {
-    sysItems: { dataList },
-  } = useSelector((state: RootState) => state);
+  // const {
+  //   sysItems: { dataList },
+  // } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   // 新增 / 编辑
