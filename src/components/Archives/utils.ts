@@ -29,7 +29,7 @@ export const formData = ({
   data = {},
   dictObject,
   handleChange,
-}: formDataProps): formDataVoid[] => {
+}: formDataProps): formDataVoid[] => {  
   return [
     {
       title: '入职信息',
@@ -298,6 +298,7 @@ export const formData = ({
           label: '身份证国徽面',
           key: 'idCardImgFrontUUID',
           widget: 'upload',
+          initialValue: data.idCardImgFrontUUID,
           readSpan: 3,
           widgetProps: {
             onChange: (e: any) => handleChange && handleChange('idCardImgFrontUUID', e),

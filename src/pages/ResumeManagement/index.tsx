@@ -14,9 +14,13 @@ function ResumeManagement() {
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
-  const handleChange = ( value = '') => {
+  const handleChange = ( value = []) => {
     if (value.length > 0) {
-      dispatch({ type: 'global/uploadFile', payload: value[0] })
+      dispatch.global.uploadFile({
+        params: value[0],
+        // callback: (data: any) => {
+        // }
+      })
     }
   }
 

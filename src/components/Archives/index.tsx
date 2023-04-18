@@ -104,6 +104,12 @@ const Archives = (
    * 数据变化更新数据
   */
   const initData = async (data: KktproKeys = {}) => {
+    
+    // const newData = {
+    //   ...data,
+    //   // idCardImgFrontUUID:[ { dataURL: 'https://avatars2.githubusercontent.com/u/1680273?s=40&v=4', name: 'uiw.png' }]
+    //   // idCardImgFrontUUID: data.idCardImgFrontUUID || []
+    // }
     dispatch.archives.clearState();
     // 更新form表单
     if (formRefList.current.length > 0) {
@@ -123,7 +129,7 @@ const Archives = (
     });
   }
   // 上传
-  const handleChange = (type: string, value = '') => {
+  const handleChange = (type: string, value = []) => {
     if (value.length > 0) {
       dispatch.global.uploadFile({
         params: value[0],
@@ -132,8 +138,8 @@ const Archives = (
             type: "archives/updateState",
             payload: {[type]: data?.uuid},
           });
-            }
-          })
+        }
+      })
     }
   }
 

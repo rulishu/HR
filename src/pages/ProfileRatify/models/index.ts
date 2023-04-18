@@ -1,5 +1,5 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { selectStaffFile, approve } from '@/servers/profileRatify';
+import { selectStaffFile, approve, getSelectFile } from '@/servers/profileRatify';
 import { Notify } from 'uiw';
 
 const init = {
@@ -16,7 +16,7 @@ const init = {
 
   // 弹层
   isOkVisble: false, // 通过弹层
-  isNoVisble: false // 不通过弹层
+  isNoVisble: false, // 不通过弹层
 }
 
 const route = {
@@ -67,6 +67,11 @@ const route = {
         callback?.(newData);
       }
     },
+    // 文件查询
+    async getSelectFile(payload: any) {
+      const data = await getSelectFile(payload)
+      return data
+    },
     /**
      * 获取审核人员详情
     */
@@ -79,11 +84,31 @@ const route = {
           for (let i in details) {
             details[i] = details[i] || '';
           }
-          dispatch.profileRatify.updateState({
-            allFormData: details,
-            checkId: details.id,
-          })
-          callback?.();
+          if (details.idCardImgFrontUUID) {
+            // 获取图片数组
+            dispatch.profileRatify.getSelectFile(details.idCardImgFrontUUID).then((res) => {
+              let blob = res;
+              let reader = new FileReader();
+              reader.readAsDataURL(blob);  // 转换为base64
+              reader.onload = () => {
+                details.idCardImgFrontUUID = [{
+                  dataURL: reader.result
+                }]
+                dispatch.profileRatify.updateState({
+                  allFormData: details,
+                  checkId: details.id,
+                })
+                callback?.();
+              }
+            })
+          } else {
+            details.idCardImgFrontUUID = []
+            dispatch.profileRatify.updateState({
+              allFormData: details,
+              checkId: details.id,
+            })
+            callback?.();
+          }
         }
       }
     },
