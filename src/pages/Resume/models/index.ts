@@ -75,11 +75,11 @@ const route = {
      * 导出简历
     */
     async exportWord(payload?: any, state?: any) {
-      const { code, msg, data } = await exportWord(payload);
-      if (code === 200) {
-        Notify.success({ description: msg || '导出成功' });
-        downloadExcelFile(data, `${'简历导出'}.doc`)
-      }
+      const data = await exportWord(payload);
+      // if (code === 200) {
+      //   Notify.success({ description: msg || '导出成功' });
+      downloadExcelFile(data, '简历导出.doc')
+      // }
     },
   }),
 }

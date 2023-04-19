@@ -1,6 +1,7 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { getUserInfo, getAuthorConfig, authorAndLogin } from '@/servers/login';
+import { getUserInfo, getAuthorConfig, authorAndLogin, bindingGitlab } from '@/servers/login';
 import { getDict, uploadFile } from '@/servers/global';
+import { Notify } from 'uiw';
 export interface globalState {
   navigate: any;
   userData?: KktproKeys;
@@ -83,6 +84,15 @@ const login = {
         localStorage.setItem('token', data.data.token);
         dispatch.global.updateState({ token: data.data.token });
         callback?.();
+      }
+    },
+    /**
+    * 绑定用户
+    */
+    async bindingGitlab(payload?: KktproKeys, state?: any) {
+      const { code, msg } = await bindingGitlab(payload)
+      if (code === 200) {
+        Notify.success({ description: msg || '绑定成功' });
       }
     },
     async uploadFile({ params, callback }: any) {

@@ -25,7 +25,7 @@ axios.interceptors.response.use(
   async (response) => {
     const { message, msg, code } = response?.data || {};
     if (code === 401) {
-      await newDebounce(Notify.error, 500, { 
+      await newDebounce(Notify.error, 500, {
         title: message || msg || "未登录 请先登录"
       });
       localStorage.removeItem("token");
@@ -39,6 +39,7 @@ axios.interceptors.response.use(
           duration: 3,
         });
       }
+      // 判断是否为 xml 数据, 是不提示响应失败
     }
     return response;
   },
