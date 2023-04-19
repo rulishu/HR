@@ -52,6 +52,12 @@ const OK = () => {
   const onConfirm = async () => {
     const { userId } = userData as any || {};
     await formRef.current?.submitvalidate();
+    delete newFormData.idCardImgFrontUUIDs
+    delete newFormData.idCardImgBackUUIDs
+    delete newFormData.diplomaImgUUIDs
+    delete newFormData.degreeCertificateImgUUIDs
+    delete newFormData.departImgUUIDs
+    delete newFormData.staffPhotoImgUUIDs
     dispatch.profileRatify.approve({...newFormData, ...formData, userId, isApproved: 1})
     // dispatch.profileRatify.approve({
     //   ...newFormData,

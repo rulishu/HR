@@ -54,7 +54,7 @@ export const formList = ({
       span: "24",
       option: [
         { value: 1, label: "入场" },
-        { value: 2, label: "离场" },
+        // { value: 2, label: "离场" },
       ],
       onChange: (e: any) => {
         handleChange?.('flag', e.target.value)

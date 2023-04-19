@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'uiw';
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
-import { ProForm } from "@uiw-admin/components";
+import { ProForm, useForm } from "@uiw-admin/components";
 import { formList } from './utils';
 import './style/index.css'
 
@@ -13,6 +13,7 @@ function ResumeManagement() {
     global: { dictObject, uuid },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
+  const form = useForm();
 
   const handleChange = ( value = []) => {
     if (value.length > 0) {
@@ -28,11 +29,13 @@ function ResumeManagement() {
     dispatch.resumeManagement.insert({
       ...current,
       cvFileUUID: uuid 
-    });
+    }).then(() => form?.resetForm?.()
+    );
   }
   return (
     <Card>
       <ProForm
+        form={form}
         className='formResume'
         showSaveButton
         showResetButton

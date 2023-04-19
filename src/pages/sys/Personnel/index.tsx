@@ -55,14 +55,26 @@ const Page = () => {
      });
   }
 
-  const onModals = () => {
-    dispatch({
-      type: 'sysOrganization/updateState',
+  const onModals = (type: number) => {
+    if(type === 1) {
+      dispatch({
+        type: 'sysOrganization/updateState',
+        payload: {
+          isVisible: true,
+          queryInfo: userItem,
+        }
+      })
+    } else {
+      dispatch({
+      type: "sysOrganization/entranceOrDeparture",
       payload: {
-        isVisible: true,
-        queryInfo: userItem,
-      }
-    })
+        companyName: userItem?.companyName,
+        staffId: userItem?.id,
+        flag: 2
+      },
+    });
+    }
+    
   }
 
   const onVal = (e: any) => {
@@ -123,13 +135,12 @@ const Page = () => {
             </FlexCol>
           </Col>
           <Col>
-            <Card noHover bordered={false} style={{height: '100%', padding: 10}}>
+            <Card noHover bordered={false} className='rightCard'>
               <FlexTop>
                 <FlexLeft>
                 <FlexIcon type="verification" />
                 <FlexSpan>{userItem?.staffName}</FlexSpan>
                 </FlexLeft>
-                <Button icon="edit" type="primary" onClick={() => onModals()}/>
               </FlexTop>
               <CircleList noHover size='large'>
                 <List.Item>
@@ -169,9 +180,13 @@ const Page = () => {
                   </Row>
                 </List.Item>
                 <List.Item>
-                  <Row>
+                  <Row justify="space-between">
                     <CircleCol fixed>外派状态:</CircleCol>
                     <Col grow={1}> {userItem?.state === 1 ? "无" : userItem?.state === 3 ? "入场" : ''}</Col>
+                    <CircleCol fixed>
+                    {userItem?.state === 1 ? <Button icon="edit" type="primary" onClick={() => onModals(1)} >入场</Button> :
+                    userItem?.state === 3 ? <Button icon="edit" type="primary" onClick={() => onModals(3)} >离场</Button> : ''}
+                    </CircleCol>
                   </Row>
                 </List.Item>
                 <List.Item>

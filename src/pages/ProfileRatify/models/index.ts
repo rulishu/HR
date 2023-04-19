@@ -13,7 +13,7 @@ const init = {
   list: [],
   allFormData: undefined, // 人员详情
 
-  newFormData: {}, // 存错点击审核获取到的数据
+  newFormData: {} as any, // 存错点击审核获取到的数据
 
   // 弹层
   isOkVisble: false, // 通过弹层
