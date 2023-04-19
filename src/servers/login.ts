@@ -26,3 +26,12 @@ export function authorAndLogin(params: any = {}) {
     method: 'POST',
   });
 }
+/** 
+ * 绑定账户
+ */
+export function bindingGitlab(params: any = {}) {
+  return request('/api/gitlab/bindingGitlab', {
+    method: 'POST',
+    body: { ...params }
+  });
+}

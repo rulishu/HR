@@ -14,6 +14,7 @@ const Right = () => {
 
   useEffect(() => {
     setOpen3(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   const onMenuClick = (menuType: string) => {
@@ -25,6 +26,15 @@ const Right = () => {
     if (menuType === 'refreshAuth') {
       // 刷新权限
       dispatch.global.getUserInfo({});
+    }
+    if (menuType === 'account') {
+      localStorage.removeItem('token');
+      dispatch({
+        type: 'global/bindingGitlab',
+        payload: {
+          userId: 1,
+        }
+      });
     }
   }
 
