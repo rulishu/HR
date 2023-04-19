@@ -7,6 +7,7 @@ interface formDataProps {
   departmentList?: any[]
   data: any,
   dictObject: any;
+  handleChange?: (value: any, e: any) => void;
 }
 export interface formDataVoid {
   title: string;
@@ -27,7 +28,8 @@ export const formData = ({
   departmentList,
   data = {},
   dictObject,
-}: formDataProps): formDataVoid[] => {
+  handleChange,
+}: formDataProps): formDataVoid[] => {  
   return [
     {
       title: '入职信息',
@@ -48,7 +50,7 @@ export const formData = ({
           initialValue: data?.phone,
           rules: [
             { required: true, message: '请填写手机号' },
-            { 
+            {
               validator: (value: any) => {
                 if (value) {
                   return valid.isValidPhoneNumber(value);
@@ -221,7 +223,7 @@ export const formData = ({
           initialValue: data?.email,
           rules: [
             { required: true, message: '请填写邮箱' },
-            { 
+            {
               validator: (value: any) => {
                 if (value) {
                   return valid.isValidEmail(value);
@@ -288,6 +290,107 @@ export const formData = ({
     {
       title: '家庭成员',
       type: 'family',
+    },
+    {
+      title: '个人材料',
+      child: [
+        {
+          label: '身份证国徽面',
+          key: 'idCardImgFrontUUIDs',
+          widget: 'upload',
+          initialValue: data?.idCardImgFrontUUIDs,
+          readSpan: 3,
+          widgetProps: {
+            onChange: (e: any) => handleChange && handleChange('idCardImgFrontUUID', e),
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '身份证人像面',
+          key: 'idCardImgBackUUIDs',
+          widget: 'upload',
+          initialValue: data?.idCardImgBackUUIDs,
+          readSpan: 3,
+          widgetProps: {
+            onChange: (e: any) => handleChange && handleChange('idCardImgBackUUID', e),
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '学历证书',
+          key: 'diplomaImgUUIDs',
+          widget: 'upload',
+          initialValue: data?.diplomaImgUUIDs,
+          readSpan: 3,
+          widgetProps: {
+            onChange: (e: any) => handleChange && handleChange('diplomaImgUUID', e),
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '学位证书',
+          key: 'degreeCertificateImgUUIDs',
+          widget: 'upload',
+          initialValue: data?.degreeCertificateImgUUIDs,
+          readSpan: 3,
+          widgetProps: {
+            onChange: (e: any) => handleChange && handleChange('degreeCertificateImgUUID', e),
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '前公司离职证明',
+          key: 'departImgUUIDs',
+          widget: 'upload',
+          initialValue: data?.departImgUUIDs,
+          readSpan: 3,
+          widgetProps: {
+            onChange: (e: any) => handleChange && handleChange('departImgUUID', e),
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+        {
+          label: '员工照片',
+          key: 'staffPhotoImgUUIDs',
+          widget: 'upload',
+          initialValue: data?.staffPhotoImgUUIDs,
+          readSpan: 3,
+          widgetProps: {
+            onChange: (e: any) => handleChange && handleChange('staffPhotoImgUUID', e),
+            uploadType: 'card',
+            maxNumber: 1,
+            showFileIcon: {
+              showPreviewIcon: true,
+              showRemoveIcon: true,
+            },
+          },
+        },
+      ]
     },
   ]
 }

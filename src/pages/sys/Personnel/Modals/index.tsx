@@ -34,6 +34,7 @@ function Modals() {
       type: "sysOrganization/entranceOrDeparture",
       payload: {
         userId: (queryInfo as any)?.userId,
+        staffId: (queryInfo as any)?.id,
         ...params
       },
     });

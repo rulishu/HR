@@ -38,9 +38,6 @@ export const formList = ({
       // disabled: true,
       span: "24",
       option: dataList?.[0]?.department?.map((item: KktproKeys) => ({ label: item.departmentName, value: item.id })),
-      rules: [
-        { required: true, message: '请选择派遣方式' },
-      ],
     },
     {
       label: "项目组名称",
@@ -49,9 +46,6 @@ export const formList = ({
       // disabled: true,
       span: "24",
       option: dataList?.[0]?.projectGroups?.map((item: KktproKeys) => ({ label: item.groupName, value: item.id })),
-      rules: [
-        { required: true, message: '请选择派遣方式' },
-      ],
     },
     {
       label: "派遣方式",
@@ -77,6 +71,9 @@ export const formList = ({
       widgetProps: {
         format: 'YYYY-MM-DD'
       },
+      rules: [
+        { required: true, message: '请选择入场日期' },
+      ],
     },
   ]
 }

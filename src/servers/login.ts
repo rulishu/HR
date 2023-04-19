@@ -8,3 +8,21 @@ export function getUserInfo() {
     method: 'get'
   });
 }
+
+/**
+ * 获取第三方token
+ */
+export function getAuthorConfig() {
+  return request('/api/gitlab/getAuthorConfig', {
+    method: 'GET',
+  });
+}
+
+/** 第三方登录
+ * @param code
+ */
+export function authorAndLogin(params: any = {}) {
+  return request(`/api/gitlab/authorAndLogin?code=${params.code}`, {
+    method: 'POST',
+  });
+}

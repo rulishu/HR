@@ -8,3 +8,14 @@ export function getDict() {
     method: 'post'
   });
 }
+
+/**
+ * 文件上传
+*/
+export function uploadFile(params: any) {
+  return request('/api/file/uploadFile', {
+    method: 'post',
+    body: { ...params },
+    requestType: 'form',
+  });
+}
