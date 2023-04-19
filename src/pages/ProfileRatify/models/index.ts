@@ -42,7 +42,7 @@ const route = {
     async selectStaffFile(payload?: KktproKeys, state?: any) {
       const { callback, ...other} = payload || {}
       const { profileRatify: {
-        list = [],
+        // list = [],
         page,
         pageSize,
       }} = state;
@@ -54,11 +54,11 @@ const route = {
       const { code, data } = await selectStaffFile(params);
       if (code === 200) {
         let newData = []
-        if (other.search) {
+        // if (other.search) {
           newData = data.list || []
-        } else {
-          newData = [...list, ...data.list || []]
-        }
+        // } else {
+        //   newData = [...list, ...data.list || []]
+        // }
         dispatch.profileRatify.updateState({
           list: newData,
           total: data.total,

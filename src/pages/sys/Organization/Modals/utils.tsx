@@ -25,10 +25,27 @@ export const formList = ({
       required: true,
       initialValue: companyName,
       disabled: isDepartment,
-      span: "24",
+      span: "12",
       readSpan: 1,
       rules: [
         { required: true, message: '请输入公司名称' },
+      ],
+    },
+    {
+      label: "公司类型",
+      key: "companyType",
+      widget: "select",
+      required: true,
+      initialValue: (detailsData as any)?.companyType,
+      disabled: isDepartment,
+      span: "12",
+      option: [
+        { value: 1, label: "本公司 " },
+        { value: 2, label: "外派公司" },
+      ],
+      readSpan: 1,
+      rules: [
+        { required: true, message: '请选择公司类型' },
       ],
     },
     {
