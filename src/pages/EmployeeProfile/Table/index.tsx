@@ -1,6 +1,7 @@
-import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
+import { useSelector, RootState, useDispatch, Dispatch, KktproKeys } from '@kkt/pro';
 import { Button, Table, Pagination, Empty } from "uiw";
 import { columns } from './utils';
+import { asyncAwaitFormList } from '@/utils/valid';
 
 const Page = () => {
   const {
@@ -9,6 +10,59 @@ const Page = () => {
     global: { dictObject },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
+
+  const onEdit = async (rowData: any, e: any) => {
+    const imgsUUID: KktproKeys = {
+      idCardImgBackUUIDs: rowData.idCardImgBackUUID,
+      idCardImgFrontUUIDs: rowData.idCardImgFrontUUID,
+      diplomaImgUUIDs: rowData.diplomaImgUUID,
+      degreeCertificateImgUUIDs: rowData.degreeCertificateImgUUID,
+      departImgUUIDs: rowData.departImgUUID,
+      staffPhotoImgUUIDs: rowData.staffPhotoImgUUID
+    }
+    const alls: KktproKeys = [];
+    Object.keys(imgsUUID).forEach((item) => {
+      if (imgsUUID[item]) {
+        alls[item] = imgsUUID[item];
+      }
+    })
+    const all = Object.keys(alls).map(key => {
+      return new Promise((resolve, reject) => {
+        dispatch.profileRatify.getSelectFile(alls[key]).then(res => {
+          let blob = res;
+          let reader = new FileReader();
+          reader.readAsDataURL(blob);  // 转换为base64
+          reader.onload = () => {
+            resolve({
+              [key]: [{
+                dataURL: reader.result
+              }]
+            })
+          }
+        })
+      })
+    })
+    const imgs = await asyncAwaitFormList(all) || [];
+    let imgObj: KktproKeys = {};
+    imgs.forEach(item => {
+      imgObj = {
+        ...imgObj,
+        ...item
+      }
+    });
+    const params = {
+      ...rowData,
+      ...imgObj
+    }
+    
+    dispatch({
+      type: "employeeProfile/updateState",
+      payload: {
+        queryInfo: params,
+        activeKey: '2'
+      },
+    });
+  }
 
   const onCheck = (rowData: any, e: any) => {
     const isChecked = e.target.checked;
@@ -28,10 +82,10 @@ const Page = () => {
   }
 
   // 导出
-  const onFileExport = () => { 
+  const onFileExport = () => {
     dispatch({
       type: 'employeeProfile/filesDownload',
-      payload: {id: checked?.[0]},
+      payload: { id: checked?.[0] },
     })
   }
 
@@ -57,16 +111,19 @@ const Page = () => {
         </Button>
       </div>
       <Table
-      onCell={(rowData) => {
-        dispatch({
-          type: "employeeProfile/updateState",
-          payload: { queryInfo: rowData, isVisible: true },
-        });
-      }}
+        // onCell={(rowData, { rowNum, colNum }) => {
+        //   if (colNum !== 16) {
+        //     dispatch({
+        //       type: "employeeProfile/updateState",
+        //       payload: { queryInfo: rowData, isVisible: true },
+        //     });
+        //   }
+        // }}
         columns={columns({
           companyList,
           dictObject,
-          onCheck
+          onCheck,
+          onEdit
         })}
         data={dataList}
         empty={<Empty />}

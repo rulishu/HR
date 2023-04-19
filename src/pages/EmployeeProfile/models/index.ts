@@ -15,6 +15,7 @@ const route = {
     type: undefined, // 类型 add：新增 / edit: 编辑
     groupItem: [] as any[],
     checked: [],
+    activeKey: '1'
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({

@@ -26,6 +26,8 @@ interface ArchivesProps {
   data?: KktproKeys | undefined;
   /** form 表单数据变化 */
   onChangeValue?: (data: KktproKeys) => void;
+  /** 是否显示当前模块信息 */
+  contract?: number
 }
 
 const Archives = (
@@ -35,6 +37,7 @@ const Archives = (
   const {
     type = 'edit',
     data,
+    contract
   } = props;
 
   const [newData, setNewData] = useState<KktproKeys>({});
@@ -207,7 +210,7 @@ const Archives = (
     return getData();
   }
 
-  const getData = () => {
+  const getData = () => {   
     const obj: KktproKeys = newData;
     obj.birth = dateShift(obj.birth);
     obj.entryDate = dateShift(obj.entryDate);
@@ -229,10 +232,10 @@ const Archives = (
     });
     dispatch.archives.clearState();
   }
-
+  
   return (
     <PageWraps>
-      {_formData.map((item: formDataVoid, index: number) => (
+      {_formData.filter((itm) => contract ? itm : itm.title !== '合同信息').map((item: formDataVoid, index: number) => (
         <React.Fragment key={index}>
           {!item.type ? (
             <Form
