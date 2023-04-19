@@ -123,6 +123,9 @@ export const columns = ({
     {
       title: "员工状态",
       key: "state",
+      render: (text: any, key: any, rowData: any) => {
+        return <div>{text === 1 ? '在职' : text === 2 ? '离职' : text === 3 ? '入场' : ''}</div>;
+      }
     },
     {
       title: "操作",

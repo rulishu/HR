@@ -32,5 +32,6 @@ export function filesDownload(params: KktproKeys) {
   return request('/api/staffFile/filesDownload', {
     method: 'post',
     body: { ...params },
+    responseType: "blob",
   });
 }

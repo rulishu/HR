@@ -132,13 +132,13 @@ export const formData = ({
         {
           label: "体重",
           key: "weight",
-          widget: "input",
+          widget: "inputNumber",
           initialValue: data?.weight,
         },
         {
           label: "身高",
           key: "height",
-          widget: "input",
+          widget: "inputNumber",
           initialValue: data?.height,
         },
         {
@@ -182,15 +182,15 @@ export const formData = ({
           initialValue: data?.idNumber,
           rules: [
             { required: true, message: '请填写身份证号' },
-            // { 
-            //   validator: (value: string) => {
-            //     if (value) {
-            //       return valid.isValidId(value);
-            //     }
-            //     return true;
-            //   },
-            //   message: '请填写正确的身份证号'
-            // }
+            { 
+              validator: (value: string) => {
+                if (value) {
+                  return valid.isValidId(value);
+                }
+                return true;
+              },
+              message: '请填写正确的身份证号'
+            }
           ],
         },
         {

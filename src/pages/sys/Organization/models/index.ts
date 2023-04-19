@@ -40,6 +40,7 @@ const route = {
               ...item2,
               type: 'department',
               company: item.companyName,
+              comType: item.companyType,
               companyName: item2.departmentName,
               companyPhone: item2.departmentPhone
             }))

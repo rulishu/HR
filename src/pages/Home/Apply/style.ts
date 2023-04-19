@@ -39,6 +39,7 @@ export const ColItem = styled.div`
   float: left;
   box-sizing: border-box;
   padding: 10px;
+  height: 82px;
   @media (max-width: 600px) {
     width: 50%;
   }

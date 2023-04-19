@@ -102,10 +102,16 @@ const Archives = (
   }, [companyList]);
 
   useEffect(() => {
-    // const newData = data || {};
-    setNewData(data || {});
+    const newData = data || {};
+    setNewData(newData);
     if (data) {
-      initData(data);
+      newData.idCardImgFrontUUIDs = data.idCardImgFrontUUIDs || [];
+      newData.idCardImgBackUUIDs = data.idCardImgBackUUIDs || [];
+      newData.diplomaImgUUIDs = data.diplomaImgUUIDs || [];
+      newData.degreeCertificateImgUUIDs = data.degreeCertificateImgUUIDs || [];
+      newData.departImgUUIDs = data.departImgUUIDs || [];
+      newData.staffPhotoImgUUIDs = data.staffPhotoImgUUIDs || [];
+      initData(newData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])

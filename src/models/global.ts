@@ -16,7 +16,6 @@ const login = {
     authRoutes: [], // 权限菜单
     dictObject: {}, // 字典数据
     roles: undefined,
-    uuid: ''
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({

@@ -79,7 +79,7 @@ export const formList = (props?: FormListProps) => {
     {
       label: "薪资",
       key: "salary",
-      widget: "input",
+      widget: "inputNumber",
       required: true,
       initialValue: data?.salary,
       span: "12",

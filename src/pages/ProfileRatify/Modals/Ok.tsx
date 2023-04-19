@@ -12,7 +12,6 @@ const OK = () => {
       newFormData
     },
     archives: { companyList = [] },
-    global: { userData },
   } = useSelector((state: RootState) => state);
 
   const formRef = useRef<any>();
@@ -50,7 +49,6 @@ const OK = () => {
    * 提交
   */
   const onConfirm = async () => {
-    const { userId } = userData as any || {};
     await formRef.current?.submitvalidate();
     delete newFormData.idCardImgFrontUUIDs
     delete newFormData.idCardImgBackUUIDs
@@ -58,12 +56,7 @@ const OK = () => {
     delete newFormData.degreeCertificateImgUUIDs
     delete newFormData.departImgUUIDs
     delete newFormData.staffPhotoImgUUIDs
-    dispatch.profileRatify.approve({...newFormData, ...formData, userId, isApproved: 1})
-    // dispatch.profileRatify.approve({
-    //   ...newFormData,
-    //   callback: () => {
-    //   }
-    // })
+    dispatch.profileRatify.approve({...newFormData, ...formData, isApproved: 1})
   }
 
   return (

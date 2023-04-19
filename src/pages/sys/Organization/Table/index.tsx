@@ -20,7 +20,8 @@ const Page = () => {
       type: 'departmentAdd',
       data: {
         id: data.id,
-        companyName: data.companyName
+        companyName: data.companyName,
+        companyType: data.companyType
       },
       isForm: true
     });

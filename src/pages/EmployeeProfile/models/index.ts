@@ -1,6 +1,7 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
 import { selectStaffFile, insert, filesDownload } from '@/servers/EmployeeProfile';
+import { handleExport } from '@/utils/export';
 
 const route = {
   name: "employeeProfile",
@@ -68,14 +69,11 @@ const route = {
      * 档案导出
     */
     async filesDownload(payload: KktproKeys) {
-      const { code, msg } = await filesDownload(payload);
-      if (code === 200) {
-        Notify.success({ description: msg || '编辑成功' });
-        dispatch.employeeProfile.updateState({
-          isVisible: false,
-          checkRouteMenuIds: []
-        });
-      }
+      const data = await filesDownload(payload);
+      handleExport(data, '档案导出.xlsx')
+      dispatch.employeeProfile.updateState({
+        checkRouteMenuIds: []
+      });
     },
   })
 };

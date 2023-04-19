@@ -22,6 +22,9 @@ const Page = () => {
   const archivesRef = useRef<ArchivesType>(null);
 
   useEffect(() => {
+    dispatch.employeeProfile.updateState({
+      activeKey: '1'
+    })
     dispatch.employeeProfile.selectStaffFile({ isApproved: 1 });
     if (companyList.length === 0) {
       dispatch.sysOrganization.selectList({
