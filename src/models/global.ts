@@ -1,7 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { getUserInfo, getAuthorConfig, authorAndLogin, bindingGitlab } from '@/servers/login';
+import { getUserInfo, getAuthorConfig, authorAndLogin } from '@/servers/login';
 import { getDict, uploadFile } from '@/servers/global';
-import { Notify } from 'uiw';
 export interface globalState {
   navigate: any;
   userData?: KktproKeys;
@@ -13,7 +12,9 @@ const login = {
   name: "global",
   state: {
     navigate: null,
-    userData: undefined, // 用户信息
+    userData: {
+      userId: 0
+    }, // 用户信息
     authRoutes: [], // 权限菜单
     dictObject: {}, // 字典数据
     roles: undefined,
@@ -69,8 +70,8 @@ const login = {
     /**
      * 获取第三方token
     */
-    async fetchThirdLoginToken(param: any) {
-      const data = await getAuthorConfig();
+    async fetchThirdLoginToken(payload?: KktproKeys, state?: any) {
+      const data = await getAuthorConfig(payload);
       if (data && data.data) {
         window.location.href = data.data.gitLabUrl;
       }
@@ -78,23 +79,25 @@ const login = {
     /**
     * 第三方登录
     */
-    async thirdLogin({ code, callback }: any) {
-      const data = await authorAndLogin({ code });
+    async thirdLogin({ code, userId, callback }: any) {
+      const data = await authorAndLogin({ code, userId });
       if (data && data.code === 200) {
-        localStorage.setItem('token', data.data.token);
-        dispatch.global.updateState({ token: data.data.token });
+        console.log('data', data.data);
+
+        localStorage.setItem('token', data.data.authorization);
+        dispatch.global.updateState({ token: data.data.authorization });
         callback?.();
       }
     },
     /**
     * 绑定用户
     */
-    async bindingGitlab(payload?: KktproKeys, state?: any) {
-      const { code, msg } = await bindingGitlab(payload)
-      if (code === 200) {
-        Notify.success({ description: msg || '绑定成功' });
-      }
-    },
+    // async bindingGitlab(payload?: KktproKeys, state?: any) {
+    //   const { code, msg } = await bindingGitlab(payload)
+    //   if (code === 200) {
+    //     Notify.success({ description: msg || '绑定成功' });
+    //   }
+    // },
     async uploadFile({ params, callback }: any) {
       const data = await uploadFile(params)
       callback && callback(data)

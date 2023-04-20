@@ -12,8 +12,8 @@ export function getUserInfo() {
 /**
  * 获取第三方token
  */
-export function getAuthorConfig() {
-  return request('/api/gitlab/getAuthorConfig', {
+export function getAuthorConfig(params: any = {}) {
+  return request(`/api/gitlab/getAuthorConfig/${params.userId}`, {
     method: 'GET',
   });
 }
@@ -22,16 +22,17 @@ export function getAuthorConfig() {
  * @param code
  */
 export function authorAndLogin(params: any = {}) {
-  return request(`/api/gitlab/authorAndLogin?code=${params.code}`, {
-    method: 'POST',
-  });
-}
-/** 
- * 绑定账户
- */
-export function bindingGitlab(params: any = {}) {
-  return request('/api/gitlab/bindingGitlab', {
+  return request('/api/gitlab/authorAndLogin', {
     method: 'POST',
     body: { ...params }
   });
 }
+/**
+ * 绑定账户
+ */
+// export function bindingGitlab(params: any = {}) {
+//   return request('/api/gitlab/bindingGitlab', {
+//     method: 'POST',
+//     body: { ...params }
+//   });
+// }

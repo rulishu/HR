@@ -29,11 +29,10 @@ const Right = () => {
     }
     if (menuType === 'account') {
       localStorage.removeItem('token');
+      const userId = userData?.userId
       dispatch({
-        type: 'global/bindingGitlab',
-        payload: {
-          userId: 1,
-        }
+        type: 'global/fetchThirdLoginToken',
+        payload: { userId }
       });
     }
   }
