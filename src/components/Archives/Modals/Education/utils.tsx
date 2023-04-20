@@ -1,5 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
-
+import { valid } from '@/utils/valid';
 interface FormListProps {
   data?: any;
 }
@@ -62,6 +62,15 @@ export const formList = (props?: FormListProps) => {
       readSpan: 1,
       rules: [
         { required: true, message: '请输入学校名称' },
+        {
+          validator: (value: any) => {
+            if (value) {
+              return valid.isNativePlace(value);
+            }
+            return true;
+          },
+          message: '请填写汉字'
+        }
       ],
     },
     {

@@ -64,6 +64,17 @@ export const formList = (props?: FormListProps) => {
       initialValue: data?.relation,
       span: "12",
       readSpan: 1,
+      rules: [
+        {
+          validator: (value: any) => {
+            if (value) {
+              return valid.isNativePlace(value);
+            }
+            return true;
+          },
+          message: '请填写汉字'
+        }
+      ],
     },
     {
       label: "现工作单位及职务",

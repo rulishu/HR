@@ -69,8 +69,8 @@ const Page = () => {
         })
       }}>
         <Tabs.Pane label="人员信息档案记录" key="1">
-          <Card noHover bordered={false} style={{ marginBottom: 14 }}><Search /></Card>
-          <Card noHover bordered={false}><Table /></Card>
+          <Card noHover style={{ marginBottom: 14 }}><Search /></Card>
+          <Card noHover><Table /></Card>
         </Tabs.Pane>
         <Tabs.Pane label="人员信息档案" key="2">
           <FormPage
