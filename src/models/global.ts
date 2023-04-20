@@ -84,8 +84,9 @@ const login = {
     async thirdLogin({ code, callback }: any) {
       const data = await authorAndLogin({ code });
       if (data && data.code === 200) {
-        localStorage.setItem('token', data.data.token);
-        dispatch.global.updateState({ token: data.data.token });
+        localStorage.setItem('token', data.data.authorization);
+        dispatch.global.getUserInfo()
+        dispatch.global.updateState({ token: data.data.authorization });
         callback?.();
       }
     },

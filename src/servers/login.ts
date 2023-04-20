@@ -24,5 +24,6 @@ export function getAuthorConfig() {
 export function authorAndLogin(params: any = {}) {
   return request(`/api/gitlab/authorAndLogin?code=${params.code}`, {
     method: 'POST',
+    body: { ...params }
   });
 }
