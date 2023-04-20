@@ -1,14 +1,15 @@
 import { Fragment } from 'react';
-import { Alert, Card, Empty } from 'uiw';
+import { Alert, Card, Empty, Button } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
+import { getDictLabel } from '@/utils';
 
 const Index = () => {
   const {
-    resume: { TableData, isDelete, delId }
+    resume: { TableData, isDelete, delId, formData },
+    global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
-
 
   const handle = async (type: any, data: any) => {
     dispatch({
@@ -17,14 +18,31 @@ const Index = () => {
         editType: type,
       }
     })
-    // if (type === 'edit') {
-    //   dispatch({
-    //     type: 'resume/update',
-    //     payload: {
-    //       editVisible: true,
-    //     }
-    //   })
-    // }
+    if (type === 'add' || type === 'edit') {
+      dispatch({
+        type: 'resume/update',
+        payload: {
+          editVisible: true,
+        }
+      })
+      type === 'add' &&
+        dispatch({
+          type: 'resume/update',
+          payload: {
+            formData: {}
+          }
+        })
+      type === 'edit' &&
+        dispatch({
+          type: 'resume/update',
+          payload: {
+            formData: {
+              ...formData,
+              ...data
+            }
+          }
+        })
+    }
     if (type === 'view') {
       dispatch({
         type: 'resume/update',
@@ -64,7 +82,20 @@ const Index = () => {
     dispatch.resume.deleteVC([delId])
   }
   return (
-    <Card noHover bordered={false} style={{ padding: 0, marginTop: -8, height: 680, overflow: 'scroll' }}>
+    <Card
+      noHover
+      bordered={false}
+      style={{ padding: 0, marginTop: -1, height: 680, overflow: 'scroll' }}
+      title={
+        <Button
+          type='primary'
+          icon='plus'
+          onClick={() => { handle('add', {}) }}
+        >
+          新增简历
+        </Button>
+      }
+    >
       {TableData?.map((item: any, idx: any) => {
         return (
           <Fragment key={idx}>
@@ -72,15 +103,15 @@ const Index = () => {
               <div style={{ display: 'flex', justifyContent: "space-between" }} >
                 <div style={{ marginLeft: 20 }}>
                   <p>姓名： {item?.name}</p>
-                  <p>性别： {item?.gender}</p>
+                  <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p>
                 </div>
                 <div>
                   <p>工作经验： {item?.experience} 年</p>
                   <p>薪资范围： {item?.salaryExpectation} K</p>
                 </div>
                 <div>
-                  <p>学历：本科</p>
-                  <p>应聘岗位: {item?.post}</p>
+                  <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p>
+                  <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p>
                 </div>
                 <div
                   style={{
@@ -89,12 +120,12 @@ const Index = () => {
                     alignItems: 'center'
                   }}
                 >
-                  {/* <TipButton
+                  <TipButton
                     tip='编辑'
                     type='primary'
                     icon='edit'
                     onClick={() => { handle('edit', item) }}
-                  /> */}
+                  />
                   <TipButton
                     tip='查看简历'
                     type='primary'
@@ -134,7 +165,6 @@ const Index = () => {
         content="您确定要删除吗？"
       />
     </Card>
-
   )
 }
 export default Index
