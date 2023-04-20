@@ -25,7 +25,18 @@ const Index = () => {
       type === 'add' &&
         dispatchFn({ formData: {} })
       type === 'edit' &&
-        dispatchFn({ formData: { ...formData, ...data } })
+        dispatchFn({
+          formData: {
+            ...formData,
+            ...data,
+          }
+        })
+      dispatch({
+        type: "archives/updateState",
+        payload: {
+          workData: [...data?.workExperience]
+        }
+      });
     }
 
     if (type === 'view') {
