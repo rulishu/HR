@@ -4,7 +4,7 @@ import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 
 const Index = () => {
   const {
-    resume: { listData }
+    global: { dictObject }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
   const [isColor, setIsColor] = useState(10)
@@ -12,15 +12,15 @@ const Index = () => {
   const render = () => {
     return (
       <Card noHover style={{ height: 680, overflow: 'scroll' }}>
-        {listData?.map((item: any, idx: any) => {
-          let valueItem = listData.find((itm: any) => itm?.post === item.post)
+        {dictObject?.post?.child?.map((item: any, idx: any) => {
+          let valueItem = dictObject?.post?.child?.find((itm: any) => itm.label === item.label)
           let value = valueItem?.value
 
           return (
             <Fragment key={idx}>
               <Menu.Item
                 active={item.value === isColor ? true : false}
-                text={item.post}
+                text={item.label}
                 onClick={() => {
                   setIsColor(item.value)
                   dispatch.resume.quickSelect({ value })

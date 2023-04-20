@@ -29,11 +29,6 @@ const Right = () => {
     }
     if (menuType === 'account') {
       localStorage.removeItem('token');
-      const userId = userData?.userId
-      dispatch({
-        type: 'global/fetchThirdLoginToken',
-        payload: { userId }
-      });
     }
   }
 

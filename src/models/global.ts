@@ -5,7 +5,9 @@ export interface globalState {
   navigate: any;
   userData?: KktproKeys;
   /** aaaa */
-  authRoutes?: KktproKeys[];
+  authRoutes: KktproKeys[];
+  dictObject: { [key: string]: any };
+  roles?: string
 }
 
 const login = {
@@ -18,7 +20,7 @@ const login = {
     authRoutes: [], // 权限菜单
     dictObject: {}, // 字典数据
     roles: undefined,
-  },
+  } as globalState,
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
       ...state,
@@ -82,22 +84,11 @@ const login = {
     async thirdLogin({ code, userId, callback }: any) {
       const data = await authorAndLogin({ code, userId });
       if (data && data.code === 200) {
-        console.log('data', data.data);
-
         localStorage.setItem('token', data.data.authorization);
         dispatch.global.updateState({ token: data.data.authorization });
         callback?.();
       }
     },
-    /**
-    * 绑定用户
-    */
-    // async bindingGitlab(payload?: KktproKeys, state?: any) {
-    //   const { code, msg } = await bindingGitlab(payload)
-    //   if (code === 200) {
-    //     Notify.success({ description: msg || '绑定成功' });
-    //   }
-    // },
     async uploadFile({ params, callback }: any) {
       const data = await uploadFile(params)
       callback && callback(data)

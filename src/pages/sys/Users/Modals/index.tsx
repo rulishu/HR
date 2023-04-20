@@ -19,7 +19,7 @@ function Modals() {
 
   //提交按钮
   const onAddSubmit = async (current: any) => {
-    const roleIds = current.roleIds;    
+    const roleIds = current.roleIds;
     const params = {
       ...current,
       roleIds: roleIds,
@@ -35,7 +35,8 @@ function Modals() {
         type: "usersModal/usersUpdate",
         payload: {
           userId: (detailsData as any)?.userId,
-          ...params
+          ...params,
+          roleIds: [params.roleIds]
         },
       });
     }

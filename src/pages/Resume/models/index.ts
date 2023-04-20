@@ -47,18 +47,6 @@ const route = {
       }
     },
     /**
-     * 查询用户简历
-    */
-    // async selectUserVC(payload?: any, state?: any) {
-    //   const { code, data } = await selectUserVC(payload);
-    //   if (code === 200 && data) {
-    //     const { list } = data;
-    //     dispatch.resume.update({
-    //       listData: list,
-    //     });
-    //   }
-    // },
-    /**
      * 删除简历
     */
     async deleteVC(payload?: any, state?: any) {
