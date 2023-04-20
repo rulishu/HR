@@ -14,7 +14,7 @@ const Index = () => {
       <Card noHover style={{ height: 680, overflow: 'scroll' }}>
         {dictObject?.post?.child?.map((item: any, idx: any) => {
           let valueItem = dictObject?.post?.child?.find((itm: any) => itm.label === item.label)
-          let value = valueItem?.value
+          let post = valueItem?.value
 
           return (
             <Fragment key={idx}>
@@ -23,7 +23,7 @@ const Index = () => {
                 text={item.label}
                 onClick={() => {
                   setIsColor(item.value)
-                  dispatch.resume.quickSelect({ value })
+                  dispatch.resume.quickSelect({ post })
                 }}
               />
               <Menu.Divider />

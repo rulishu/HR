@@ -4,6 +4,7 @@ export const formList = (
   formData: any,
   handleChange: () => void,
   dictObject: any,
+  editType: any
 ) => {
 
   return [
@@ -118,6 +119,32 @@ export const formList = (
       // span: 16,
       // readSpan: 2
     },
+    {
+      label: "自我介绍",
+      key: "introduce",
+      widget: "textarea",
+      initialValue: formData?.introduce,
+      span: "24",
+      hide: editType === 'edit' ? false : true
+    },
+    {
+      label: "期望薪资",
+      key: "salaryExpectation",
+      widget: "input",
+      initialValue: formData?.salaryExpectation,
+      span: "24",
+      hide: editType === 'edit' ? false : true
+    },
+    // 工作经验
+    {
+      label: "期望薪资",
+      key: "salaryExpectation",
+      widget: "input",
+      initialValue: formData?.salaryExpectation,
+      span: "24",
+      hide: editType === 'edit' ? false : true
+    },
+
     {
       label: '上传简历',
       key: 'upload',

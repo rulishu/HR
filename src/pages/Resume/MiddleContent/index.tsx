@@ -11,53 +11,32 @@ const Index = () => {
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
 
-  const handle = async (type: any, data: any) => {
+  const dispatchFn = (params: any) => {
     dispatch({
       type: 'resume/update',
-      payload: {
-        editType: type,
-      }
+      payload: params
     })
+  }
+  const handle = async (type: any, data: any) => {
+    dispatchFn({ editType: type })
+
     if (type === 'add' || type === 'edit') {
-      dispatch({
-        type: 'resume/update',
-        payload: {
-          editVisible: true,
-        }
-      })
+      dispatchFn({ editVisible: true })
       type === 'add' &&
-        dispatch({
-          type: 'resume/update',
-          payload: {
-            formData: {}
-          }
-        })
+        dispatchFn({ formData: {} })
       type === 'edit' &&
-        dispatch({
-          type: 'resume/update',
-          payload: {
-            formData: {
-              ...formData,
-              ...data
-            }
-          }
-        })
+        dispatchFn({ formData: { ...formData, ...data } })
     }
+
     if (type === 'view') {
-      dispatch({
-        type: 'resume/update',
-        payload: {
-          modalVisible: true,
-        }
+      dispatchFn({
+        modalVisible: true,
       })
     }
     if (type === 'delete') {
-      dispatch({
-        type: 'resume/update',
-        payload: {
-          isDelete: true,
-          delId: data.id
-        }
+      dispatchFn({
+        isDelete: true,
+        delId: data.id
       })
     }
     if (type === 'export') {
@@ -71,12 +50,7 @@ const Index = () => {
   }
 
   const onDelClosed = () => {
-    dispatch({
-      type: 'resume/update',
-      payload: {
-        isDelete: false,
-      }
-    })
+    dispatchFn({ isDelete: false })
   }
   const onConfirm = () => {
     dispatch.resume.deleteVC([delId])
@@ -127,19 +101,19 @@ const Index = () => {
                     onClick={() => { handle('edit', item) }}
                   />
                   <TipButton
-                    tip='查看简历'
+                    tip='查看'
                     type='primary'
                     icon='document'
                     onClick={() => { handle('view', item) }}
                   />
                   <TipButton
-                    tip='删除简历'
+                    tip='删除'
                     type='primary'
                     icon='delete'
                     onClick={() => { handle('delete', item) }}
                   />
                   <TipButton
-                    tip='导出简历'
+                    tip='导出'
                     type='primary'
                     icon='download'
                     onClick={() => { handle('export', item) }}
