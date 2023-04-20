@@ -19,3 +19,9 @@
 .modalForm .w-btn {
   width: 80px;
 }
+.rightCard {
+  padding: 10px;
+}
+.rightCard .w-row.w-row-justify-space-between {
+  width: 100%;
+}

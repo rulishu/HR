@@ -52,7 +52,7 @@ export const formList = (props?: FormListProps) => {
     {
       label: "年龄",
       key: "age",
-      widget: "input",
+      widget: "inputNumber",
       initialValue: data?.age,
       span: "12",
       readSpan: 1,

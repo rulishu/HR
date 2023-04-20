@@ -13,7 +13,7 @@ const init = {
   list: [],
   allFormData: undefined, // 人员详情
 
-  newFormData: {}, // 存错点击审核获取到的数据
+  newFormData: {} as any, // 存错点击审核获取到的数据
 
   // 弹层
   isOkVisble: false, // 通过弹层
@@ -42,7 +42,7 @@ const route = {
     async selectStaffFile(payload?: KktproKeys, state?: any) {
       const { callback, ...other} = payload || {}
       const { profileRatify: {
-        list = [],
+        // list = [],
         page,
         pageSize,
       }} = state;
@@ -54,11 +54,11 @@ const route = {
       const { code, data } = await selectStaffFile(params);
       if (code === 200) {
         let newData = []
-        if (other.search) {
+        // if (other.search) {
           newData = data.list || []
-        } else {
-          newData = [...list, ...data.list || []]
-        }
+        // } else {
+        //   newData = [...list, ...data.list || []]
+        // }
         dispatch.profileRatify.updateState({
           list: newData,
           total: data.total,

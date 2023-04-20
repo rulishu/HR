@@ -11,6 +11,7 @@ const route = {
   state: {
     ...init,
     resumeObj: {}, // 简历
+    cvFileUUID: ''
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({

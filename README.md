@@ -1,8 +1,11 @@
 # 人事管理系统
 
+测试地址：http://192.168.188.222:34801/
+账号：admin
+密码：admin
+
 接口文档： http://192.168.188.84:8080/swagger-ui/index.html
 
-参考网站： https://www.icloud.com.cn/
 
 一期基础数据
 1. 员工档案管理

@@ -21,8 +21,6 @@ export interface formDataVoid {
   child?: any[];
 }
 
-
-
 export const formData = ({
   companyList = [],
   departmentList,
@@ -134,13 +132,13 @@ export const formData = ({
         {
           label: "体重",
           key: "weight",
-          widget: "input",
+          widget: "inputNumber",
           initialValue: data?.weight,
         },
         {
           label: "身高",
           key: "height",
-          widget: "input",
+          widget: "inputNumber",
           initialValue: data?.height,
         },
         {
@@ -184,15 +182,15 @@ export const formData = ({
           initialValue: data?.idNumber,
           rules: [
             { required: true, message: '请填写身份证号' },
-            // { 
-            //   validator: (value: string) => {
-            //     if (value) {
-            //       return valid.isValidId(value);
-            //     }
-            //     return true;
-            //   },
-            //   message: '请填写正确的身份证号'
-            // }
+            { 
+              validator: (value: string) => {
+                if (value) {
+                  return valid.isValidId(value);
+                }
+                return true;
+              },
+              message: '请填写正确的身份证号'
+            }
           ],
         },
         {
@@ -390,6 +388,87 @@ export const formData = ({
             },
           },
         },
+      ]
+    },
+    {
+      title: '合同信息',
+      child: [
+        {
+          label: "合同公司",
+          key: "contractCompany",
+          widget: "input",
+          rules: [
+            { required: true, message: '请填合同公司' },
+          ],
+          initialValue: data?.contractCompany
+        },
+        {
+          label: "合同类型",
+          key: "contractType",
+          widget: "input",
+          initialValue: data?.contractType,
+        },
+        {
+          label: "首次合同起始日",
+          key: "firstContractStartTime",
+          widget: "dateInput",
+          initialValue: data?.firstContractStartTime,
+          widgetProps: {
+            format: 'YYYY-MM-DD'
+          },
+          rules: [
+            { required: true, message: '请选择首次合同起始日' },
+          ],
+        },
+        {
+          label: "首次合同到期日",
+          key: "firstContractEndTime",
+          widget: "dateInput",
+          initialValue: data?.firstContractEndTime,
+          widgetProps: {
+            format: 'YYYY-MM-DD'
+          },
+          rules: [
+            { required: true, message: '请选择首次合同到期日' },
+          ],
+        },
+        {
+          label: "当前合同起始日",
+          key: "currentContractStartTime",
+          widget: "dateInput",
+          initialValue: data?.currentContractStartTime,
+          widgetProps: {
+            format: 'YYYY-MM-DD'
+          },
+          rules: [
+            { required: true, message: '请选择当前合同起始日' },
+          ],
+        },
+        {
+          label: "当前合同到期日",
+          key: "currentContractEndTime",
+          widget: "dateInput",
+          initialValue: data?.currentContractEndTime,
+          widgetProps: {
+            format: 'YYYY-MM-DD'
+          },
+          rules: [
+            { required: true, message: '请选择当前合同到期日' },
+          ],
+        },
+        {
+          label: "合同期限",
+          key: "contractPeriod",
+          widget: "input",
+          initialValue: data?.contractPeriod,
+        },
+        {
+          label: "续签次数",
+          key: "renewalsTimes",
+          widget: "input",
+          initialValue: data?.renewalsTimes,
+        },
+        
       ]
     },
   ]

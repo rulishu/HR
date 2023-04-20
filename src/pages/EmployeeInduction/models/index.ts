@@ -62,7 +62,7 @@ const route = {
     */
     async selectStaffFile({callback, ...other}: KktproKeys, state: any) {
       const { code, data } = await selectStaffFile(other);
-      if (code === 200) {
+      if (code === 200 && data.list.length > 0) {
         const {
           ...works
         } = data.list && data.list.length > 0 ? data.list[0] : {};

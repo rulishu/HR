@@ -40,6 +40,7 @@ const route = {
               ...item2,
               type: 'department',
               company: item.companyName,
+              comType: item.companyType,
               companyName: item2.departmentName,
               companyPhone: item2.departmentPhone
             }))
@@ -113,10 +114,9 @@ const route = {
     async entranceOrDeparture(payload?: KktproKeys, state?: any) {
       const { code, data } = await entranceOrDeparture({...payload});
       if (code === 200 && data) {
-        dispatch.sysOrganization.updateState({
-          dataListStaff: data,
-        });
+        Notify.success({ description: data.msg || '成功' });
         dispatch.sysOrganization.hideModal();
+        window.location.reload();
       }
     },
   })

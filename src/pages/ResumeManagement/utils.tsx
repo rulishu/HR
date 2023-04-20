@@ -60,7 +60,7 @@ export const formList = (props?: FormListProps) => {
     {
       label: "年龄",
       key: "age",
-      widget: "input",
+      widget: "inputNumber",
       initialValue: data?.age,
       span: "24",
       // readSpan: 1,
@@ -68,7 +68,7 @@ export const formList = (props?: FormListProps) => {
     {
       label: "工作经验（年）",
       key: "experience",
-      widget: "input",
+      widget: "inputNumber",
       initialValue: data?.experience,
       span: "24",
       // readSpan: 1,
@@ -101,18 +101,18 @@ export const formList = (props?: FormListProps) => {
       widget: "input",
       initialValue: data?.email,
       span: "24",
-      // rules: [
-      //   { required: true, message: '请填写邮箱' },
-      //   { 
-      //     validator: (value: any) => {
-      //       if (value) {
-      //         return valid.isValidEmail(value);
-      //       }
-      //       return true;
-      //     },
-      //     message: '请填写正确的邮箱'
-      //   }
-      // ],
+      rules: [
+        // { required: true, message: '请填写邮箱' },
+        { 
+          validator: (value: any) => {
+            if (value) {
+              return valid.isValidEmail(value);
+            }
+            return true;
+          },
+          message: '请填写正确的邮箱'
+        }
+      ],
     },
     {
       label: "现居地址",

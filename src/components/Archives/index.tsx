@@ -26,6 +26,8 @@ interface ArchivesProps {
   data?: KktproKeys | undefined;
   /** form 表单数据变化 */
   onChangeValue?: (data: KktproKeys) => void;
+  /** 是否显示当前模块信息 */
+  contract?: number
 }
 
 const Archives = (
@@ -35,6 +37,7 @@ const Archives = (
   const {
     type = 'edit',
     data,
+    contract
   } = props;
 
   const [newData, setNewData] = useState<KktproKeys>({});
@@ -99,10 +102,16 @@ const Archives = (
   }, [companyList]);
 
   useEffect(() => {
-    // const newData = data || {};
-    setNewData(data || {});
+    const newData = data || {};
+    setNewData(newData);
     if (data) {
-      initData(data);
+      newData.idCardImgFrontUUIDs = data.idCardImgFrontUUIDs || [];
+      newData.idCardImgBackUUIDs = data.idCardImgBackUUIDs || [];
+      newData.diplomaImgUUIDs = data.diplomaImgUUIDs || [];
+      newData.degreeCertificateImgUUIDs = data.degreeCertificateImgUUIDs || [];
+      newData.departImgUUIDs = data.departImgUUIDs || [];
+      newData.staffPhotoImgUUIDs = data.staffPhotoImgUUIDs || [];
+      initData(newData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
@@ -207,7 +216,7 @@ const Archives = (
     return getData();
   }
 
-  const getData = () => {
+  const getData = () => {   
     const obj: KktproKeys = newData;
     obj.birth = dateShift(obj.birth);
     obj.entryDate = dateShift(obj.entryDate);
@@ -229,10 +238,10 @@ const Archives = (
     });
     dispatch.archives.clearState();
   }
-
+  
   return (
     <PageWraps>
-      {_formData.map((item: formDataVoid, index: number) => (
+      {_formData.filter((itm) => contract ? itm : itm.title !== '合同信息').map((item: formDataVoid, index: number) => (
         <React.Fragment key={index}>
           {!item.type ? (
             <Form

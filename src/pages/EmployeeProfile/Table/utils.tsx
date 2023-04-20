@@ -1,5 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
-import { Checkbox } from "uiw";
+import { Checkbox, Button } from "uiw";
 
 interface columnsProps {
   companyList?: any,
@@ -123,23 +123,26 @@ export const columns = ({
     {
       title: "员工状态",
       key: "state",
+      render: (text: any, key: any, rowData: any) => {
+        return <div>{text === 1 ? '在职' : text === 2 ? '离职' : text === 3 ? '入场' : ''}</div>;
+      }
     },
-    // {
-    //   title: "操作",
-    //   key: "edit",
-    //   width: 80,
-    //   render: (text: any, key: any, rowData: any) => {
-    //     return (
-    //       <Button
-    //         icon="edit"
-    //         type="primary"
-    //         onClick={(e) => {
-    //           onEdit?.(rowData, e);
-    //         }}
-    //       >
-    //         编辑
-    //       </Button>
-    //     );
-    //   },
-    // },
+    {
+      title: "操作",
+      key: "edit",
+      width: 80,
+      render: (text: any, key: any, rowData: any) => {
+        return (
+          <Button
+            icon="edit"
+            type="primary"
+            onClick={(e) => {
+              onEdit?.(rowData, e);
+            }}
+          >
+            编辑
+          </Button>
+        );
+      },
+    },
   ]
