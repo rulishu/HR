@@ -1,3 +1,10 @@
 .cardTablediv {
   background-color: blue;
 }
+.formResume {
+  width: 900px;
+  margin: 0 auto;
+}
+.formResume .w-btn {
+  width: 100px;
+}

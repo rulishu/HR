@@ -85,8 +85,8 @@ const login = {
       const data = await authorAndLogin({ code });
       if (data && data.code === 200) {
         localStorage.setItem('token', data.data.authorization);
-        dispatch.global.getUserInfo()
         dispatch.global.updateState({ token: data.data.authorization });
+        dispatch.global.getUserInfo()
         callback?.();
       }
     },

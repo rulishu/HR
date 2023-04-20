@@ -1,266 +1,138 @@
 import { valid } from '@/utils/valid';
 
-interface formDataProps {
-  companyList?: any[];
-  departmentList?: any[]
-  data: any,
-  dictObject: any;
-}
-export interface formDataVoid {
-  title: string;
-  tips?: string;
-  /**
-   * @education 教育经历
-   * @work 工作经历
-   * @family 家庭成员
-  */
-  type?: 'education' | 'work' | 'family';
-  child?: any[];
-}
+export const formList = (
+  formData: any,
+  handleChange: () => void,
+  dictObject: any,
+) => {
 
-export const Informnation = ({
-  companyList = [],
-  departmentList,
-  data = {},
-  dictObject,
-}: formDataProps): formDataVoid[] => {
   return [
     {
-      title: '入职信息',
-      child: [
+      label: "姓名",
+      key: "name",
+      widget: "input",
+      required: true,
+      initialValue: formData?.name,
+      span: "24",
+      // readSpan: 1,
+      rules: [
+        { required: true, message: '请输入姓名' },
+      ],
+    },
+    {
+      label: "性别",
+      key: "gender",
+      widget: "radio",
+      option: dictObject['sex']?.child || [],
+      initialValue: formData?.gender,
+      span: "24",
+      // rules: [
+      //   { required: true, message: '请选择性别' },
+      // ],
+    },
+    {
+      label: "手机号",
+      key: "phone",
+      widget: "input",
+      initialValue: formData?.phone,
+      span: "24",
+      rules: [
+        { required: true, message: '请填写手机号' },
         {
-          label: "姓名",
-          key: "name",
-          widget: "input",
-          rules: [
-            { required: true, message: '请填写姓名' },
-          ],
-          initialValue: ''
-        },
-        {
-          label: "手机号",
-          key: "phone",
-          widget: "input",
-          initialValue: '',
-          rules: [
-            { required: true, message: '请填写手机号' },
-            {
-              validator: (value: any) => {
-                if (value) {
-                  return valid.isValidPhoneNumber(value);
-                }
-                return true;
-              },
-              message: '请填写正确的手机号'
+          validator: (value: any) => {
+            if (value) {
+              return valid.isValidPhoneNumber(value);
             }
-          ],
-        },
-        {
-          label: "入职日期",
-          key: "entryDate",
-          widget: "dateInput",
-          initialValue: '',
-          widgetProps: {
-            format: 'YYYY-MM-DD'
+            return true;
           },
-          rules: [
-            { required: true, message: '请选择入职日期' },
-          ],
-        },
-        // {
-        //   label: "入职公司",
-        //   key: "company",
-        //   widget: "select",
-        //   option: companyList.map(item => ({ label: item.companyName, value: item.id })),
-        //   rules: [
-        //     { required: true, message: '请选择入职公司' },
-        //   ]
-        // },
-        // {
-        //   label: "入职部门",
-        //   key: "department",
-        //   widget: "select",
-        //   option: departmentList,
-        //   rules: [
-        //     { required: true, message: '请选择入职部门' },
-        //   ],
-        // },
-        {
-          label: "入职岗位",
-          key: "post",
-          widget: "select",
-          option: [],
-          rules: [
-            { required: true, message: '请选择入职岗位' },
-          ],
-        },
-        {
-          label: "社保公积金账号",
-          key: "socialInsuranceAccount",
-          widget: "input",
-          initialValue: '',
-        },
-      ]
+          message: '请填写正确的手机号'
+        }
+      ],
     },
     {
-      title: '基本信息',
-      child: [
+      label: "年龄",
+      key: "age",
+      widget: "inputNumber",
+      initialValue: formData?.age,
+      span: "24",
+      // readSpan: 1,
+    },
+    {
+      label: "工作经验（年）",
+      key: "experience",
+      widget: "inputNumber",
+      initialValue: formData?.experience,
+      span: "24",
+      // readSpan: 1,
+    },
+    {
+      label: "学历",
+      key: "educational",
+      widget: "select",
+      option: dictObject['education']?.child || [],
+      initialValue: formData?.educational,
+      span: "24",
+      // rules: [
+      //   { required: true, message: '请选择学历' },
+      // ],
+    },
+    {
+      label: "应聘岗位",
+      key: "post",
+      widget: "select",
+      option: dictObject['post']?.child || [],
+      initialValue: formData?.post,
+      span: "24",
+      // rules: [
+      //   { required: true, message: '请选择入职岗位' },
+      // ],
+    },
+    {
+      label: "E-mail",
+      key: "email",
+      widget: "input",
+      initialValue: formData?.email,
+      span: "24",
+      rules: [
+        // { required: true, message: '请填写邮箱' },
         {
-          label: "性别",
-          key: "gender",
-          widget: "radio",
-          option: [],
-          initialValue: '',
-          rules: [
-            { required: true, message: '请选择性别' },
-          ],
-        },
-        {
-          label: "出生日期",
-          key: "birth",
-          widget: "dateInput",
-          initialValue: '',
-          rules: [
-            { required: true, message: '请选择出生日期' },
-          ],
-        },
-        {
-          label: "体重",
-          key: "weight",
-          widget: "input",
-          initialValue: ''
-        },
-        {
-          label: "身高",
-          key: "height",
-          widget: "input",
-          initialValue: '',
-        },
-        {
-          label: "民族",
-          key: "nationality",
-          widget: "input",
-          rules: [
-            { required: true, message: '请填写民族' },
-          ],
-        },
-        {
-          label: "政治面貌",
-          key: "politicalStatus",
-          widget: "input",
-        },
-        {
-          label: "籍贯",
-          key: "nativePlace",
-          widget: "input",
-          rules: [
-            { required: true, message: '请填写籍贯' },
-          ],
-        },
-        {
-          label: "婚姻状况",
-          key: "isMarried",
-          widget: "select",
-          option: [],
-          rules: [
-            { required: true, message: '请选择入婚姻状况' },
-          ],
-        },
-        {
-          label: "身份证号",
-          key: "idNumber",
-          widget: "input",
-          rules: [
-            { required: true, message: '请填写身份证号' },
-            // { 
-            //   validator: (value: string) => {
-            //     if (value) {
-            //       return valid.isValidId(value);
-            //     }
-            //     return true;
-            //   },
-            //   message: '请填写正确的身份证号'
-            // }
-          ],
-        },
-        {
-          label: "户籍所在地",
-          key: "hukou",
-          widget: "input",
-          span: 8,
-          rules: [
-            { required: true, message: '请填写户籍所在地' },
-          ],
-        },
-        {
-          label: "现居地址",
-          key: "livingPlace",
-          widget: "input",
-          span: 16,
-          rules: [
-            { required: true, message: '请填写现居地址' },
-          ],
-        },
-        {
-          label: "E-mail",
-          key: "email",
-          widget: "input",
-          rules: [
-            { required: true, message: '请填写邮箱' },
-            {
-              validator: (value: any) => {
-                if (value) {
-                  return valid.isValidEmail(value);
-                }
-                return true;
-              },
-              message: '请填写正确的邮箱'
+          validator: (value: any) => {
+            if (value) {
+              return valid.isValidEmail(value);
             }
-          ],
-        },
-        {
-          label: "学历",
-          key: "qualification",
-          widget: "select",
-          option: [],
-          rules: [
-            { required: true, message: '请选择学历' },
-          ],
-        },
-        {
-          label: "学位",
-          key: "academicDegree",
-          widget: "input",
-        },
-        {
-          label: "专业",
-          key: "specialize",
-          widget: "input",
-          rules: [
-            { required: true, message: '请填写专业' },
-          ],
-        },
-        {
-          label: "联系人及关系",
-          key: "emergencyPhone",
-          widget: "input",
-          rules: [
-            { required: true, message: '请填写紧急联系电话' },
-          ],
-        },
-      ]
+            return true;
+          },
+          message: '请填写正确的邮箱'
+        }
+      ],
     },
     {
-      title: '教育经历',
-      type: 'education',
+      label: "现居地址",
+      key: "livingPlace",
+      widget: "input",
+      initialValue: formData?.livingPlace,
+      span: "24",
+      // rules: [
+      //   { required: true, message: '请填写现居地址' },
+      // ],
+      // span: 16,
+      // readSpan: 2
     },
     {
-      title: '工作经历',
-      type: 'work',
-    },
-    {
-      title: '家庭成员',
-      type: 'family',
+      label: '上传简历',
+      key: 'upload',
+      widget: 'upload',
+      span: '24',
+      readSpan: 3,
+      widgetProps: {
+        onChange: handleChange,
+        uploadType: 'text',
+        maxNumber: 1,
+        showFileIcon: {
+          showPreviewIcon: true,
+          showRemoveIcon: true,
+        },
+      },
     },
   ]
 }
