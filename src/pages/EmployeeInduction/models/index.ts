@@ -1,6 +1,7 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { insert, update, selectStaffFile } from '@/servers/employeeInduction';
 import { Notify } from 'uiw';
+import { asyncAwaitFormList } from '@/utils/valid';
 
 const init = {
   allFormData: undefined, // 详情数据
@@ -70,8 +71,50 @@ const route = {
         for(const key in works) {
           newWorks[key] = works[key] ? works[key] : '';
         }
+        const imgsUUID: KktproKeys = {
+          idCardImgBackUUIDs: newWorks.idCardImgBackUUID,
+          idCardImgFrontUUIDs: newWorks.idCardImgFrontUUID,
+          diplomaImgUUIDs: newWorks.diplomaImgUUID,
+          degreeCertificateImgUUIDs: newWorks.degreeCertificateImgUUID,
+          departImgUUIDs: newWorks.departImgUUID,
+          staffPhotoImgUUIDs: newWorks.staffPhotoImgUUID
+        }
+        const alls: KktproKeys = [];
+        Object.keys(imgsUUID).forEach((item) => {
+          if (imgsUUID[item]) {
+            alls[item] = imgsUUID[item];
+          }
+        })
+        const all = Object.keys(alls).map(key => {
+          return new Promise((resolve, reject) => {
+            dispatch.profileRatify.getSelectFile(alls[key]).then(res => {
+              let blob = res;
+              let reader = new FileReader();
+              reader.readAsDataURL(blob);  // 转换为base64
+              reader.onload = () => {
+                resolve({
+                  [key]: [{
+                    dataURL: reader.result
+                  }]
+                })
+              }
+            })
+          })
+        })
+        const imgs = await asyncAwaitFormList(all) || [];
+        let imgObj: KktproKeys = {};
+        imgs.forEach(item => {
+          imgObj = {
+            ...imgObj,
+            ...item
+          }
+        });
+        const params = {
+          ...newWorks,
+          ...imgObj
+        }
         dispatch.employeeInduction.updateState({
-          allFormData: newWorks,
+          allFormData: params,
         })
         if (newWorks.company) {
           dispatch.employeeInduction.getDepartmentList(newWorks);

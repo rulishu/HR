@@ -8,6 +8,7 @@ interface formDataProps {
   data: any,
   dictObject: any;
   handleChange?: (value: any, e: any) => void;
+  handleIdcardBlur?: (e: any) => void;
 }
 export interface formDataVoid {
   title: string;
@@ -27,6 +28,7 @@ export const formData = ({
   data = {},
   dictObject,
   handleChange,
+  handleIdcardBlur
 }: formDataProps): formDataVoid[] => {  
   return [
     {
@@ -111,6 +113,27 @@ export const formData = ({
       title: '基本信息',
       child: [
         {
+          label: "身份证号",
+          key: "idNumber",
+          widget: "input",
+          initialValue: data?.idNumber,
+          widgetProps: {
+            onBlur: (e: any) => handleIdcardBlur&&handleIdcardBlur(e.target.value),
+          },
+          rules: [
+            { required: true, message: '请填写身份证号' },
+            { 
+              validator: (value: string) => {
+                if (value) {
+                  return valid.isValidId(value);
+                }
+                return true;
+              },
+              message: '请填写正确的身份证号'
+            }
+          ],
+        },
+        {
           label: "性别",
           key: "gender",
           widget: "radio",
@@ -127,6 +150,24 @@ export const formData = ({
           initialValue: data?.birth,
           rules: [
             { required: true, message: '请选择出生日期' },
+          ],
+        },
+        {
+          label: "籍贯",
+          key: "nativePlace",
+          widget: "input",
+          initialValue: data?.nativePlace,
+          rules: [
+            { required: true, message: '请填写籍贯' },
+            {
+              validator: (value: any) => {
+                if (value) {
+                  return valid.isNativePlace(value);
+                }
+                return true;
+              },
+              message: '请填写汉字'
+            }
           ],
         },
         {
@@ -177,24 +218,6 @@ export const formData = ({
           ],
         },
         {
-          label: "籍贯",
-          key: "nativePlace",
-          widget: "input",
-          initialValue: data?.nativePlace,
-          rules: [
-            { required: true, message: '请填写籍贯' },
-            {
-              validator: (value: any) => {
-                if (value) {
-                  return valid.isNativePlace(value);
-                }
-                return true;
-              },
-              message: '请填写汉字'
-            }
-          ],
-        },
-        {
           label: "婚姻状况",
           key: "isMarried",
           widget: "select",
@@ -202,24 +225,6 @@ export const formData = ({
           initialValue: data?.isMarried,
           rules: [
             { required: true, message: '请选择入婚姻状况' },
-          ],
-        },
-        {
-          label: "身份证号",
-          key: "idNumber",
-          widget: "input",
-          initialValue: data?.idNumber,
-          rules: [
-            { required: true, message: '请填写身份证号' },
-            { 
-              validator: (value: string) => {
-                if (value) {
-                  return valid.isValidId(value);
-                }
-                return true;
-              },
-              message: '请填写正确的身份证号'
-            }
           ],
         },
         {
