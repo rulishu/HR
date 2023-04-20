@@ -487,6 +487,9 @@ export const formData = ({
           widgetProps: {
             format: 'YYYY-MM-DD'
           },
+          rules: [
+            { required: true, message: '首次合同起始日' },
+          ],
         },
         {
           label: "首次合同到期日",
@@ -496,6 +499,9 @@ export const formData = ({
           widgetProps: {
             format: 'YYYY-MM-DD'
           },
+          rules: [
+            { required: true, message: '首次合同到期日' },
+          ],
         },
         {
           label: "当前合同起始日",

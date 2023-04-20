@@ -184,8 +184,7 @@ const Page = () => {
                     <CircleCol fixed>外派状态:</CircleCol>
                     <Col grow={1}> {userItem?.state === 1 ? "无" : userItem?.state === 3 ? "入场" : ''}</Col>
                     <CircleCol fixed>
-                    {userItem?.state === 1 ? <Button icon="edit" type="primary" onClick={() => onModals(1)} >入场</Button> :
-                    userItem?.state === 3 ? <Button icon="edit" type="primary" onClick={() => onModals(3)} >离场</Button> : ''}
+                      {userItem?.state === 3 ? <Button icon="edit" type="primary" onClick={() => onModals(3)} >离场</Button> : <Button icon="edit" type="primary" onClick={() => onModals(1)} >入场</Button>}
                     </CircleCol>
                   </Row>
                 </List.Item>
