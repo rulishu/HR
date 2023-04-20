@@ -1,23 +1,26 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { getUserInfo, getAuthorConfig, authorAndLogin, bindingGitlab } from '@/servers/login';
+import { getUserInfo, getAuthorConfig, authorAndLogin } from '@/servers/login';
 import { getDict, uploadFile } from '@/servers/global';
-import { Notify } from 'uiw';
 export interface globalState {
   navigate: any;
   userData?: KktproKeys;
   /** aaaa */
-  authRoutes?: KktproKeys[];
+  authRoutes: KktproKeys[];
+  dictObject: { [key: string]: any };
+  roles?: string
 }
 
 const login = {
   name: "global",
   state: {
     navigate: null,
-    userData: undefined, // 用户信息
+    userData: {
+      userId: 0
+    }, // 用户信息
     authRoutes: [], // 权限菜单
     dictObject: {}, // 字典数据
     roles: undefined,
-  },
+  } as globalState,
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
       ...state,
@@ -84,15 +87,6 @@ const login = {
         localStorage.setItem('token', data.data.token);
         dispatch.global.updateState({ token: data.data.token });
         callback?.();
-      }
-    },
-    /**
-    * 绑定用户
-    */
-    async bindingGitlab(payload?: KktproKeys, state?: any) {
-      const { code, msg } = await bindingGitlab(payload)
-      if (code === 200) {
-        Notify.success({ description: msg || '绑定成功' });
       }
     },
     async uploadFile({ params, callback }: any) {

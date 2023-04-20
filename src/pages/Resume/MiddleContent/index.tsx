@@ -67,7 +67,7 @@ const Index = () => {
     <Card noHover bordered={false} style={{ padding: 0, marginTop: -8, height: 680, overflow: 'scroll' }}>
       {TableData?.map((item: any, idx: any) => {
         return (
-          <Fragment>
+          <Fragment key={idx}>
             < Card style={{ marginBottom: 10 }} noHover>
               <div style={{ display: 'flex', justifyContent: "space-between" }} >
                 <div style={{ marginLeft: 20 }}>
