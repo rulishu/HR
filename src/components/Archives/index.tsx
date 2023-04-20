@@ -9,6 +9,7 @@ import Modals from './Modals';
 import { formData, formDataVoid, addConfig, dateShift, datesShift } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
 import { PageWraps, PlusItems, PlusIcon  } from './style';
+import { hometown } from '@/utils'
 
 export type ArchivesType = {
   /** 效验并获取value */
@@ -105,12 +106,6 @@ const Archives = (
     const newData = data || {};
     setNewData(newData);
     if (data) {
-      newData.idCardImgFrontUUIDs = data.idCardImgFrontUUIDs || [];
-      newData.idCardImgBackUUIDs = data.idCardImgBackUUIDs || [];
-      newData.diplomaImgUUIDs = data.diplomaImgUUIDs || [];
-      newData.degreeCertificateImgUUIDs = data.degreeCertificateImgUUIDs || [];
-      newData.departImgUUIDs = data.departImgUUIDs || [];
-      newData.staffPhotoImgUUIDs = data.staffPhotoImgUUIDs || [];
       initData(newData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,27 +120,34 @@ const Archives = (
     //   // idCardImgFrontUUID:[ { dataURL: 'https://avatars2.githubusercontent.com/u/1680273?s=40&v=4', name: 'uiw.png' }]
     //   // idCardImgFrontUUID: data.idCardImgFrontUUID || []
     // }
+    const newData = { ...data};
+    newData.idCardImgFrontUUIDs = data.idCardImgFrontUUIDs || [];
+    newData.idCardImgBackUUIDs = data.idCardImgBackUUIDs || [];
+    newData.diplomaImgUUIDs = data.diplomaImgUUIDs || [];
+    newData.degreeCertificateImgUUIDs = data.degreeCertificateImgUUIDs || [];
+    newData.departImgUUIDs = data.departImgUUIDs || [];
+    newData.staffPhotoImgUUIDs = data.staffPhotoImgUUIDs || [];
     dispatch.archives.clearState();
     // 更新form表单
     if (formRefList.current.length > 0) {
       const list = formRefList?.current.filter((n: any) => n) || [];
       await (list || []).forEach((item: any) => {
-        item.setFields?.(data);
+        item.setFields?.(newData);
       });
     }
     // 更新table
     dispatch({
       type: "archives/updateState",
       payload: {
-        educationData: data.educationalExperience || [],
-        workData: data.workExperience || [],
-        familyData: data.familyMember || [],
-        idCardImgFrontUUID: data.idCardImgFrontUUID,
-        idCardImgBackUUID: data.idCardImgBackUUID,
-        diplomaImgUUID: data.diplomaImgUUID,
-        degreeCertificateImgUUID: data.degreeCertificateImgUUID,
-        departImgUUID: data.departImgUUID,
-        staffPhotoImgUUID: data.staffPhotoImgUUID,
+        educationData: newData.educationalExperience || [],
+        workData: newData.workExperience || [],
+        familyData: newData.familyMember || [],
+        idCardImgFrontUUID: newData.idCardImgFrontUUID,
+        idCardImgBackUUID: newData.idCardImgBackUUID,
+        diplomaImgUUID: newData.diplomaImgUUID,
+        degreeCertificateImgUUID: newData.degreeCertificateImgUUID,
+        departImgUUID: newData.departImgUUID,
+        staffPhotoImgUUID: newData.staffPhotoImgUUID,
       },
     });
   }
@@ -164,12 +166,28 @@ const Archives = (
     }
   }
 
+  // 通过身份证号获取出生日期、年龄、性别 、籍贯
+  const handleIdcardBlur = async(value = '') => {
+    let MyBirthday = value.substring(6, 10) + '/' + value.substring(10, 12) + '/' + value.substring(12, 14)
+    let MySex = parseInt(value.substr(16, 1)) % 2 === 1 ? '1' : '2'
+    let MyHometown = (hometown as any)[parseInt(value.substring(0, 2))]
+    if (formRefList.current.length > 0) {
+      initData({
+        ...newData,
+        birth: new Date(MyBirthday),
+        gender: MySex,
+        nativePlace: MyHometown,
+      })
+    }
+  }
+
   const _formData = formData({
     companyList,
     departmentList: [], // 入职部门
     data,
     dictObject,
-    handleChange
+    handleChange,
+    handleIdcardBlur
   });
 
   /**

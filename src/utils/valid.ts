@@ -44,8 +44,26 @@ const isValidEmail = (email: string) => {
   return pattern.test(email);
 }
 
+// 汉字
+const isNativePlace = (vals: string) => {
+  // 校验规则的正则表达式
+  const pattern = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+  // 使用正则表达式进行校验，并返回校验结果
+  return pattern.test(vals);
+}
+
+// 必须包含数字、汉字、特殊符号/
+const isValidString = (vals: string) => {
+  // 校验规则的正则表达式/^[\u4e00-\u9fa50-9]+$/
+const pattern = /^(?=.*\d)(?=.*[\u4e00-\u9fa5])(?=.*[~!@#$%^&*/])[\d\u4e00-\u9fa5~!@#$%^&*/]{8,}$/;
+  // 使用正则表达式进行校验，并返回校验结果
+  return pattern.test(vals);
+}
+
 export const valid = {
   isValidPhoneNumber,
   isValidId,
-  isValidEmail
+  isValidEmail,
+  isNativePlace,
+  isValidString
 }

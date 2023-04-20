@@ -8,6 +8,7 @@ interface formDataProps {
   data: any,
   dictObject: any;
   handleChange?: (value: any, e: any) => void;
+  handleIdcardBlur?: (e: any) => void;
 }
 export interface formDataVoid {
   title: string;
@@ -27,6 +28,7 @@ export const formData = ({
   data = {},
   dictObject,
   handleChange,
+  handleIdcardBlur
 }: formDataProps): formDataVoid[] => {  
   return [
     {
@@ -111,6 +113,27 @@ export const formData = ({
       title: '基本信息',
       child: [
         {
+          label: "身份证号",
+          key: "idNumber",
+          widget: "input",
+          initialValue: data?.idNumber,
+          widgetProps: {
+            onBlur: (e: any) => handleIdcardBlur&&handleIdcardBlur(e.target.value),
+          },
+          rules: [
+            { required: true, message: '请填写身份证号' },
+            { 
+              validator: (value: string) => {
+                if (value) {
+                  return valid.isValidId(value);
+                }
+                return true;
+              },
+              message: '请填写正确的身份证号'
+            }
+          ],
+        },
+        {
           label: "性别",
           key: "gender",
           widget: "radio",
@@ -127,6 +150,24 @@ export const formData = ({
           initialValue: data?.birth,
           rules: [
             { required: true, message: '请选择出生日期' },
+          ],
+        },
+        {
+          label: "籍贯",
+          key: "nativePlace",
+          widget: "input",
+          initialValue: data?.nativePlace,
+          rules: [
+            { required: true, message: '请填写籍贯' },
+            {
+              validator: (value: any) => {
+                if (value) {
+                  return valid.isNativePlace(value);
+                }
+                return true;
+              },
+              message: '请填写汉字'
+            }
           ],
         },
         {
@@ -148,6 +189,15 @@ export const formData = ({
           initialValue: data?.nationality,
           rules: [
             { required: true, message: '请填写民族' },
+            {
+              validator: (value: any) => {
+                if (value) {
+                  return valid.isNativePlace(value);
+                }
+                return true;
+              },
+              message: '请填写汉字'
+            }
           ],
         },
         {
@@ -155,14 +205,16 @@ export const formData = ({
           key: "politicalStatus",
           widget: "input",
           initialValue: data?.politicalStatus,
-        },
-        {
-          label: "籍贯",
-          key: "nativePlace",
-          widget: "input",
-          initialValue: data?.nativePlace,
           rules: [
-            { required: true, message: '请填写籍贯' },
+            {
+              validator: (value: any) => {
+                if (value) {
+                  return valid.isNativePlace(value);
+                }
+                return true;
+              },
+              message: '请填写汉字'
+            }
           ],
         },
         {
@@ -176,24 +228,6 @@ export const formData = ({
           ],
         },
         {
-          label: "身份证号",
-          key: "idNumber",
-          widget: "input",
-          initialValue: data?.idNumber,
-          rules: [
-            { required: true, message: '请填写身份证号' },
-            { 
-              validator: (value: string) => {
-                if (value) {
-                  return valid.isValidId(value);
-                }
-                return true;
-              },
-              message: '请填写正确的身份证号'
-            }
-          ],
-        },
-        {
           label: "户籍所在地",
           key: "hukou",
           widget: "input",
@@ -201,6 +235,15 @@ export const formData = ({
           initialValue: data?.hukou,
           rules: [
             { required: true, message: '请填写户籍所在地' },
+            {
+              validator: (value: any) => {
+                if (value) {
+                  return valid.isNativePlace(value);
+                }
+                return true;
+              },
+              message: '请填写汉字'
+            }
           ],
         },
         {
@@ -239,6 +282,15 @@ export const formData = ({
           initialValue: data?.graduateSchool,
           rules: [
             { required: true, message: '请填写毕业学校' },
+            {
+              validator: (value: any) => {
+                if (value) {
+                  return valid.isNativePlace(value);
+                }
+                return true;
+              },
+              message: '请填写汉字'
+            }
           ],
         },
         {
@@ -258,6 +310,15 @@ export const formData = ({
           initialValue: data?.specialize,
           rules: [
             { required: true, message: '请填写专业' },
+            {
+              validator: (value: any) => {
+                if (value) {
+                  return valid.isNativePlace(value);
+                }
+                return true;
+              },
+              message: '请填写汉字'
+            }
           ],
         },
         {
@@ -271,8 +332,18 @@ export const formData = ({
           key: "emergencyPhone",
           widget: "input",
           initialValue: data?.emergencyPhone,
+          placeholder: 'xxx/18888888888/xxx',
           rules: [
             { required: true, message: '请填写紧急联系人/手机号/关系' },
+            {
+              validator: (value: any) => {
+                if (value) {
+                  return valid.isValidString(value);
+                }
+                return true;
+              },
+              message: '请正确填写'
+            }
           ],
         },
       ]
@@ -416,9 +487,6 @@ export const formData = ({
           widgetProps: {
             format: 'YYYY-MM-DD'
           },
-          rules: [
-            { required: true, message: '请选择首次合同起始日' },
-          ],
         },
         {
           label: "首次合同到期日",
@@ -428,9 +496,6 @@ export const formData = ({
           widgetProps: {
             format: 'YYYY-MM-DD'
           },
-          rules: [
-            { required: true, message: '请选择首次合同到期日' },
-          ],
         },
         {
           label: "当前合同起始日",
@@ -440,9 +505,6 @@ export const formData = ({
           widgetProps: {
             format: 'YYYY-MM-DD'
           },
-          rules: [
-            { required: true, message: '请选择当前合同起始日' },
-          ],
         },
         {
           label: "当前合同到期日",
@@ -452,9 +514,6 @@ export const formData = ({
           widgetProps: {
             format: 'YYYY-MM-DD'
           },
-          rules: [
-            { required: true, message: '请选择当前合同到期日' },
-          ],
         },
         {
           label: "合同期限",
