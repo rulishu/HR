@@ -15,7 +15,6 @@ export const popoverConent = ({ type, username, callback }: PopoverConentProps) 
         <Menu.Item icon="user" text={`账号 ${username}`} />
         <Menu.Item icon="setting-o" text="修改密码" />
         <Menu.Item icon="reload" text="刷新权限" onClick={() => callback?.('user', 'refreshAuth')} />
-        <Menu.Item icon="logout" text="绑定账户" onClick={() => callback?.('user', 'account')} />
         <Menu.Item icon="logout" text="退出登录" onClick={() => callback?.('user', 'logout')} />
       </Menu>
     )

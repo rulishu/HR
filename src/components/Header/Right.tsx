@@ -29,12 +29,6 @@ const Right = () => {
     }
     if (menuType === 'account') {
       localStorage.removeItem('token');
-      dispatch({
-        type: 'global/bindingGitlab',
-        payload: {
-          userId: 1,
-        }
-      });
     }
   }
 
