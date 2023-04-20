@@ -72,8 +72,8 @@ const login = {
     /**
      * 获取第三方token
     */
-    async fetchThirdLoginToken(payload?: KktproKeys, state?: any) {
-      const data = await getAuthorConfig(payload);
+    async fetchThirdLoginToken(param: any) {
+      const data = await getAuthorConfig();
       if (data && data.data) {
         window.location.href = data.data.gitLabUrl;
       }
@@ -81,11 +81,11 @@ const login = {
     /**
     * 第三方登录
     */
-    async thirdLogin({ code, userId, callback }: any) {
-      const data = await authorAndLogin({ code, userId });
+    async thirdLogin({ code, callback }: any) {
+      const data = await authorAndLogin({ code });
       if (data && data.code === 200) {
-        localStorage.setItem('token', data.data.authorization);
-        dispatch.global.updateState({ token: data.data.authorization });
+        localStorage.setItem('token', data.data.token);
+        dispatch.global.updateState({ token: data.data.token });
         callback?.();
       }
     },

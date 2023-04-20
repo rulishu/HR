@@ -12,8 +12,8 @@ export function getUserInfo() {
 /**
  * 获取第三方token
  */
-export function getAuthorConfig(params: any = {}) {
-  return request(`/api/gitlab/getAuthorConfig/${params.userId}`, {
+export function getAuthorConfig() {
+  return request('/api/gitlab/getAuthorConfig', {
     method: 'GET',
   });
 }
@@ -22,8 +22,7 @@ export function getAuthorConfig(params: any = {}) {
  * @param code
  */
 export function authorAndLogin(params: any = {}) {
-  return request('/api/gitlab/authorAndLogin', {
+  return request(`/api/gitlab/authorAndLogin?code=${params.code}`, {
     method: 'POST',
-    body: { ...params }
   });
 }
