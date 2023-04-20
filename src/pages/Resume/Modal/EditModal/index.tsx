@@ -3,7 +3,9 @@ import { Drawer } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm, useForm } from "@uiw-admin/components";
 import { formList } from './item';
-import '../../style/index.css'
+import '../../style/index.css';
+// import Work from '@/components/Archives/Tables/Work';
+// import { PlusItems, PlusIcon } from '../../style/style';
 
 const Index = () => {
   const {
@@ -86,8 +88,17 @@ const Index = () => {
           readOnlyProps={{ column: 2 }}
           onSubmit={(_, current) => onScreenSubmit(current)}
           onChange={(_, current) => { onChange(current) }}
-          formDatas={formList(formData, handleChange, dictObject)}
+          formDatas={formList(formData, handleChange, dictObject, editType)}
         />
+        {/* <Card noHover title={'工作经历'} extra={
+          <PlusItems onClick={() => onAdd()}>
+            <PlusIcon type="plus" />
+            工作经历
+          </PlusItems>
+        }>
+          <Work type="edit" />
+        </Card> */}
+
       </Drawer>
     </Fragment >
   )
