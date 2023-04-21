@@ -40,9 +40,14 @@ const Page = () => {
         ...values,
         userId,
         callback: () => {
-          if (!values.id) {
+          if (roles === 'entry') {
+            entryInit();
+          } else {
             onReset();
           }
+          // if (!values.id) {
+          //   onReset();
+          // }
         }
       })
     }

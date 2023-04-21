@@ -1,45 +1,53 @@
 import { Fragment } from 'react';
-import { Alert, Card, Empty } from 'uiw';
+import { Alert, Card, Empty, Button } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
+import { getDictLabel } from '@/utils';
 
 const Index = () => {
   const {
-    resume: { TableData, isDelete, delId }
+    resume: { TableData, isDelete, delId, formData },
+    global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
 
-
-  const handle = async (type: any, data: any) => {
+  const dispatchFn = (params: any) => {
     dispatch({
       type: 'resume/update',
-      payload: {
-        editType: type,
-      }
+      payload: params
     })
-    // if (type === 'edit') {
-    //   dispatch({
-    //     type: 'resume/update',
-    //     payload: {
-    //       editVisible: true,
-    //     }
-    //   })
-    // }
-    if (type === 'view') {
+  }
+  const handle = async (type: any, data: any) => {
+    dispatchFn({ editType: type })
+
+    if (type === 'add' || type === 'edit') {
+      dispatchFn({ editVisible: true })
+      type === 'add' &&
+        dispatchFn({ formData: {} })
+      type === 'edit' &&
+        dispatchFn({
+          formData: {
+            ...formData,
+            ...data,
+          }
+        })
       dispatch({
-        type: 'resume/update',
+        type: "archives/updateState",
         payload: {
-          modalVisible: true,
+          workData: [...data?.workExperience]
         }
+      });
+    }
+
+    if (type === 'view') {
+      dispatchFn({
+        modalVisible: true,
       })
     }
     if (type === 'delete') {
-      dispatch({
-        type: 'resume/update',
-        payload: {
-          isDelete: true,
-          delId: data.id
-        }
+      dispatchFn({
+        isDelete: true,
+        delId: data.id
       })
     }
     if (type === 'export') {
@@ -53,18 +61,26 @@ const Index = () => {
   }
 
   const onDelClosed = () => {
-    dispatch({
-      type: 'resume/update',
-      payload: {
-        isDelete: false,
-      }
-    })
+    dispatchFn({ isDelete: false })
   }
   const onConfirm = () => {
     dispatch.resume.deleteVC([delId])
   }
   return (
-    <Card noHover bordered={false} style={{ padding: 0, marginTop: -8, height: 680, overflow: 'scroll' }}>
+    <Card
+      noHover
+      bordered={false}
+      style={{ padding: 0, marginTop: -1, height: 680, overflow: 'scroll' }}
+      title={
+        <Button
+          type='primary'
+          icon='plus'
+          onClick={() => { handle('add', {}) }}
+        >
+          新增简历
+        </Button>
+      }
+    >
       {TableData?.map((item: any, idx: any) => {
         return (
           <Fragment key={idx}>
@@ -72,15 +88,15 @@ const Index = () => {
               <div style={{ display: 'flex', justifyContent: "space-between" }} >
                 <div style={{ marginLeft: 20 }}>
                   <p>姓名： {item?.name}</p>
-                  <p>性别： {item?.gender}</p>
+                  <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p>
                 </div>
                 <div>
                   <p>工作经验： {item?.experience} 年</p>
                   <p>薪资范围： {item?.salaryExpectation} K</p>
                 </div>
                 <div>
-                  <p>学历：本科</p>
-                  <p>应聘岗位: {item?.post}</p>
+                  <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p>
+                  <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p>
                 </div>
                 <div
                   style={{
@@ -89,26 +105,26 @@ const Index = () => {
                     alignItems: 'center'
                   }}
                 >
-                  {/* <TipButton
+                  <TipButton
                     tip='编辑'
                     type='primary'
                     icon='edit'
                     onClick={() => { handle('edit', item) }}
-                  /> */}
+                  />
                   <TipButton
-                    tip='查看简历'
+                    tip='查看'
                     type='primary'
                     icon='document'
                     onClick={() => { handle('view', item) }}
                   />
                   <TipButton
-                    tip='删除简历'
+                    tip='删除'
                     type='primary'
                     icon='delete'
                     onClick={() => { handle('delete', item) }}
                   />
                   <TipButton
-                    tip='导出简历'
+                    tip='导出'
                     type='primary'
                     icon='download'
                     onClick={() => { handle('export', item) }}
@@ -134,7 +150,6 @@ const Index = () => {
         content="您确定要删除吗？"
       />
     </Card>
-
   )
 }
 export default Index

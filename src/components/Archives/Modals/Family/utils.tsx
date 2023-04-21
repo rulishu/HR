@@ -38,6 +38,7 @@ export const formList = (props?: FormListProps) => {
       span: "12",
       readSpan: 1,
       rules: [
+        { required: true, message: '请输入手机号' },
         { 
           validator: (value: string) => {
             if (value) {
@@ -56,6 +57,9 @@ export const formList = (props?: FormListProps) => {
       initialValue: data?.age,
       span: "12",
       readSpan: 1,
+      rules: [
+        { required: true, message: '请输入年龄' },
+      ],
     },
     {
       label: "关系",
@@ -64,6 +68,18 @@ export const formList = (props?: FormListProps) => {
       initialValue: data?.relation,
       span: "12",
       readSpan: 1,
+      rules: [
+        { required: true, message: '请输入关系' },
+        {
+          validator: (value: any) => {
+            if (value) {
+              return valid.isNativePlace(value);
+            }
+            return true;
+          },
+          message: '请填写汉字'
+        }
+      ],
     },
     {
       label: "现工作单位及职务",
