@@ -6,7 +6,7 @@ import { getDictLabel } from '@/utils';
 
 const Index = () => {
   const {
-    resume: { TableData, isDelete, delId, formData },
+    resume: { TableData, isDelete, delId, formData, cvFileUUID },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -26,8 +26,12 @@ const Index = () => {
         dispatchFn({ formData: {} })
       type === 'edit' &&
         dispatchFn({
-          formData: { ...formData, ...data, },
-          projectExperience: [...data?.projectExperience]
+          formData: {
+            ...formData,
+            ...data,
+            projectExperience: [...data?.projectExperience],
+            cvFileUUID: cvFileUUID || data?.cvFileUUID
+          }
         })
       data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
         dispatchFn({ file: res })

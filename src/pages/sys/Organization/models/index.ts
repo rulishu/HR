@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture } from '@/servers/sys/organization';
+import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture, selectEntranceOrDeparture } from '@/servers/sys/organization';
 
 const route = {
   name: "sysOrganization",
@@ -10,6 +10,7 @@ const route = {
     isVisible: false,
     queryInfo: {},
     dataListStaff: [] as any[],
+    selectEntrance: []
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -116,7 +117,23 @@ const route = {
       if (code === 200 && data) {
         Notify.success({ description: data.msg || '成功' });
         dispatch.sysOrganization.hideModal();
-        window.location.reload();
+      }
+    },
+    /**
+     * 获取工作入场离场时间线
+    */
+    async selectEntranceOrDeparture(payload?: KktproKeys, state?: any) {
+      const { callback, ...other} = payload || {}
+      const { code, data } = await selectEntranceOrDeparture(other);
+      if (code === 200 && data) {
+        if (callback) {
+          callback(data)
+        } else {
+          dispatch.sysOrganization.updateState({
+            selectEntrance: data,
+          });
+        }
+        
       }
     },
   })

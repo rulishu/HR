@@ -65,6 +65,16 @@ export function entranceOrDeparture (params: KktproKeys) {
 }
 
 /**
+ * 获取工作入场离场时间线
+*/
+export function selectEntranceOrDeparture (params: KktproKeys) {
+  return request('/api/company/selectEntranceOrDeparture', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
  * 添加部门
 */
 export const departmentAdd = (params: KktproKeys) => {
