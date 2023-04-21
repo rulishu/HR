@@ -14,7 +14,8 @@ const Index = () => {
       editVisible,
       formData,
       cvFileUUID,
-      editType
+      editType,
+      file
     },
     archives: { workData },
     global: { dictObject, },
@@ -66,7 +67,7 @@ const Index = () => {
         params: value[0],
         callback: (data: any) => {
           dispatch({
-            type: "resume/updateState",
+            type: "resume/update",
             payload: { cvFileUUID: data?.uuid },
           });
         }
@@ -100,7 +101,7 @@ const Index = () => {
           readOnlyProps={{ column: 2 }}
           onSubmit={(_, current) => onScreenSubmit(current)}
           onChange={(_, current) => { onChange(current) }}
-          formDatas={formList(formData, handleChange, dictObject, editType)}
+          formDatas={formList(formData, handleChange, dictObject, editType, file)}
         />
         {editType === 'edit' && <Card noHover title={'工作经历'} extra={
           <PlusItems onClick={() => onAdd()}>

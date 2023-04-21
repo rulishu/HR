@@ -16,7 +16,7 @@ const Page = () => {
       queryInfo,
       activeKey
     },
-    global: { userData },
+    // global: { userData },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
   const archivesRef = useRef<ArchivesType>(null);
@@ -42,12 +42,12 @@ const Page = () => {
    * 提交
   */
   const onSubmit = async () => {
-    const { userId } = userData as any || {};
+    // const { userId } = userData as any || {};
     const values: KktproKeys = await archivesRef.current?.submitvalidate() || {};
     if (Object.keys(values).length !== 0) {
       dispatch.employeeInduction.submit({
         ...values,
-        userId,
+        // userId,
         callback: () => {
           if (!values.id) {
             onReset();
