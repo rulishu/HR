@@ -18,7 +18,7 @@ export const formList = ({
       key: "companyId",
       widget: "searchSelect",
       span: "24",
-      option: companyList.map((item: KktproKeys) => ({ label: item.companyName, value: item.id })),
+      option: companyList.filter((item: any) => item.companyType === 2).map((item: any) => ({ label: item.companyName, value: item.id })),
       widgetProps: {
         showSearch: false,
         allowClear: true,
