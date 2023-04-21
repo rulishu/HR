@@ -51,7 +51,7 @@ const route = {
       const { code, data } = await quickSelect(payload);
       if (code === 200 && data) {
         dispatch.resume.update({
-          TableData: data,
+          TableData: data.list,
         });
       }
     },
