@@ -55,3 +55,12 @@ export function updateVC(params: KktproKeys) {
     body: { ...params },
   });
 }
+/**
+ * 文件预览下载
+*/
+export const getDownloadFile = (params: any) => {
+  return request(` /api/file/download/${params}`, {
+    method: 'get',
+    responseType: "blob",
+  })
+}

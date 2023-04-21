@@ -5,10 +5,11 @@ import {
   deleteVC,
   exportWord,
   insert,
-  updateVC
+  updateVC,
+  getDownloadFile
 } from '@/servers/resume';
 import { Notify } from 'uiw';
-import { downloadExcelFile } from '../../../utils/export';
+import { downloadExcelFile, downloadPdfFile } from '../../../utils/export';
 
 const init = {
   allFormData: undefined, // 详情数据
@@ -30,13 +31,13 @@ const route = {
 
     editType: "none",
     editVisible: false, // 编辑
-    modalVisible: false, // 查看
+    // modalVisible: false, // 查看
     isDelete: false, // 删除
     delId: 0,
 
     ...init,
     cvFileUUID: '',
-    file:'',
+    file: '',
     isProjectVisible: false, // 项目经验
     projectObj: {},
     projectExperience: []
@@ -107,6 +108,12 @@ const route = {
         });
         dispatch.resume.quickSelect();
       }
+    },
+    // 简历下载
+    async getDownloadFile(payload: any) {
+      const data = await getDownloadFile(payload)
+      downloadPdfFile(data)
+      return data
     },
   }),
 }

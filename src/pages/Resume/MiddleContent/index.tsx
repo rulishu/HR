@@ -31,8 +31,8 @@ const Index = () => {
             ...data,
           }
         })
-        data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
-          dispatchFn({ file: res })
+      data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
+        dispatchFn({ file: res })
       })
       dispatch({
         type: "archives/updateState",
@@ -43,9 +43,10 @@ const Index = () => {
     }
 
     if (type === 'view') {
-      dispatchFn({
-        modalVisible: true,
-      })
+      // dispatchFn({
+      //   modalVisible: true,
+      // })
+      dispatch.resume.getDownloadFile(data?.cvFileUUID)
     }
     if (type === 'delete') {
       dispatchFn({
