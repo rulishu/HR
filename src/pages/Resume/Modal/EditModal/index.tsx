@@ -1,11 +1,12 @@
 import { Fragment } from 'react';
-import { Drawer } from 'uiw';
+import { Drawer, Card } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm, useForm } from "@uiw-admin/components";
 import { formList } from './item';
 import '../../style/index.css';
-// import Work from '@/components/Archives/Tables/Work';
-// import { PlusItems, PlusIcon } from '../../style/style';
+import Work from '@/components/Archives/Tables/Work';
+import Modals from '@/components/Archives/Modals';
+import { PlusItems, PlusIcon } from '../../style/style';
 
 const Index = () => {
   const {
@@ -15,6 +16,7 @@ const Index = () => {
       cvFileUUID,
       editType
     },
+    archives: { workData },
     global: { dictObject, },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -51,6 +53,7 @@ const Index = () => {
         type: 'resume/updateVC',
         payload: {
           ...formData,
+          workExperience: [...workData]
         }
       })
     }
@@ -70,6 +73,15 @@ const Index = () => {
       })
     }
   }
+  const onAdd = () => {
+    dispatch({
+      type: "archives/updateState",
+      payload: {
+        isWorkVisible: true,
+      },
+    });
+  }
+
   return (
     <Fragment>
       <Drawer
@@ -90,15 +102,15 @@ const Index = () => {
           onChange={(_, current) => { onChange(current) }}
           formDatas={formList(formData, handleChange, dictObject, editType)}
         />
-        {/* <Card noHover title={'工作经历'} extra={
+        {editType === 'edit' && <Card noHover title={'工作经历'} extra={
           <PlusItems onClick={() => onAdd()}>
             <PlusIcon type="plus" />
             工作经历
           </PlusItems>
         }>
           <Work type="edit" />
-        </Card> */}
-
+          <Modals />
+        </Card>}
       </Drawer>
     </Fragment >
   )
