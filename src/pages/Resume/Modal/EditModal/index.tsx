@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
-import { Drawer, Card } from 'uiw';
+import { Drawer, Card, Button } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm, useForm } from "@uiw-admin/components";
 import { formList } from './item';
 import '../../style/index.css';
-import Work from '@/components/Archives/Tables/Work';
-import Modals from '@/components/Archives/Modals';
+import WorkTable from '@/components/Archives/Tables/Work';
+import WorkModals from '@/components/Archives/Modals/Work';
 import { PlusItems, PlusIcon } from '../../style/style';
 
 const Index = () => {
@@ -93,24 +93,46 @@ const Index = () => {
         <ProForm
           form={form}
           className='formResume'
-          showSaveButton
-          showResetButton
           formType="pure"
           saveButtonProps={{ type: "primary" }}
           readOnlyProps={{ column: 2 }}
-          onSubmit={(_, current) => onScreenSubmit(current)}
+          // onSubmit={(_, current) => onScreenSubmit(current)}
           onChange={(_, current) => { onChange(current) }}
           formDatas={formList(formData, handleChange, dictObject, editType)}
         />
+        {/* 工作经历 */}
         {editType === 'edit' && <Card noHover title={'工作经历'} extra={
           <PlusItems onClick={() => onAdd()}>
             <PlusIcon type="plus" />
             工作经历
           </PlusItems>
         }>
-          <Work type="edit" />
-          <Modals />
+          <WorkTable type="edit" />
+          <WorkModals />
         </Card>}
+        {/* useForm验证提交 */}
+        <Button
+          style={{ marginTop: 10, width: 80 }}
+          type="primary"
+          onClick={async () => {
+            // 触发验证
+            await form.submitvalidate();
+            // 获取错误信息
+            const errors = form.getError()
+            if (errors && Object.keys(errors).length > 0) return
+            const value = form.getFieldValues?.()
+            onScreenSubmit(value)
+            // 调用请求接口
+          }}
+        >
+          保存
+        </Button>
+        <Button
+          style={{ marginTop: 10, width: 80 }}
+          onClick={() => { onclose() }}
+        >
+          取消
+        </Button>
       </Drawer>
     </Fragment >
   )
