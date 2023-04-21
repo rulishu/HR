@@ -14,7 +14,6 @@ export const okColumns = ({
     key: "company",
     widget: "select",
     span: 24,
-    // option: companyList.map(item => ({ label: item.companyName, value: item.id })),
     option: companyList.filter((item) => item.companyType === 1).map(item => ({ label: item.companyName, value: item.id })),
     rules: [
       { required: true, message: '请选择入职公司' },
@@ -27,9 +26,6 @@ export const okColumns = ({
     widget: "select",
     option: departmentList,
     span: 24,
-    // rules: [
-    //   { required: true, message: '请选择入职部门' },
-    // ],
     initialValue: data?.department,
   },
   {

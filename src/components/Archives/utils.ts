@@ -467,7 +467,8 @@ export const formData = ({
         {
           label: "合同公司",
           key: "contractCompany",
-          widget: "input",
+          widget: "select",
+          option: companyList.filter((item) => item.companyType === 1).map(item => ({ label: item.companyName, value: Number(item.id) })),
           rules: [
             { required: true, message: '请填合同公司' },
           ],
