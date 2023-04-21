@@ -120,6 +120,7 @@ const Index = () => {
                     tip='查看'
                     type='primary'
                     icon='document'
+                    disabled={item.cvFileUUID ? false : true}
                     onClick={() => { handle('view', item) }}
                   />
                   <TipButton
