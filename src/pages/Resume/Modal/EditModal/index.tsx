@@ -7,6 +7,8 @@ import '../../style/index.css';
 import WorkTable from '@/components/Archives/Tables/Work';
 import WorkModals from '@/components/Archives/Modals/Work';
 import { PlusItems, PlusIcon } from '../../style/style';
+import ProjectTable from '../Project/Table/index';
+import ProjectModal from '../Project/Modal/index';
 
 const Index = () => {
   const {
@@ -14,7 +16,7 @@ const Index = () => {
       editVisible,
       formData,
       cvFileUUID,
-      editType
+      editType,
     },
     archives: { workData },
     global: { dictObject, },
@@ -28,7 +30,8 @@ const Index = () => {
       payload: {
         editVisible: false,
         formData: {},
-        editType: "none"
+        editType: "none",
+        isProjectVisible: false
       }
     })
   }
@@ -73,11 +76,19 @@ const Index = () => {
       })
     }
   }
-  const onAdd = () => {
+  const workOnAdd = () => {
     dispatch({
       type: "archives/updateState",
       payload: {
         isWorkVisible: true,
+      },
+    });
+  }
+  const projectOnAdd = () => {
+    dispatch({
+      type: "resume/update",
+      payload: {
+        isProjectVisible: true,
       },
     });
   }
@@ -101,15 +112,28 @@ const Index = () => {
           formDatas={formList(formData, handleChange, dictObject, editType)}
         />
         {/* 工作经历 */}
-        {editType === 'edit' && <Card noHover title={'工作经历'} extra={
-          <PlusItems onClick={() => onAdd()}>
-            <PlusIcon type="plus" />
-            工作经历
-          </PlusItems>
-        }>
-          <WorkTable type="edit" />
-          <WorkModals />
-        </Card>}
+        {editType === 'edit' &&
+          <Card noHover title={'工作经历'} extra={
+            <PlusItems onClick={() => workOnAdd()}>
+              <PlusIcon type="plus" />
+              工作经历
+            </PlusItems>
+          }>
+            <WorkTable type="edit" />
+            <WorkModals />
+          </Card>}
+        {/* 项目经验 */}
+        {editType === 'edit' &&
+          <Card noHover title={'项目经验'} extra={
+            <PlusItems onClick={() => projectOnAdd()}>
+              <PlusIcon type="plus" />
+              项目经验
+            </PlusItems>
+          }>
+            <ProjectTable />
+            <ProjectModal />
+          </Card>}
+
         {/* useForm验证提交 */}
         <Button
           style={{ marginTop: 10, width: 80 }}
