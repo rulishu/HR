@@ -57,7 +57,8 @@ const Index = () => {
       dispatch({
         type: 'resume/exportWord',
         payload: {
-          userId: data.userId
+          userId: data.userId,
+          id: data.id
         }
       })
     }

@@ -122,6 +122,58 @@ export const formList = (
       // readSpan: 2
     },
     {
+      label: "籍贯",
+      key: "nativePlace",
+      widget: "input",
+      initialValue: formData?.nativePlace,
+      span: "24",
+      rules: [
+        { message: '请填写籍贯' },
+        {
+          validator: (value: any) => {
+            if (value) {
+              return valid.isNativePlace(value);
+            }
+            return true;
+          },
+          message: '请填写汉字'
+        }
+      ],
+      hide: editType === 'edit' ? false : true
+    },
+    {
+      label: "民族",
+      key: "nationality",
+      widget: "input",
+      initialValue: formData?.nationality,
+      span: "24",
+      rules: [
+        { message: '请填写民族' },
+        {
+          validator: (value: any) => {
+            if (value) {
+              return valid.isNativePlace(value);
+            }
+            return true;
+          },
+          message: '请填写汉字'
+        }
+      ],
+      hide: editType === 'edit' ? false : true
+    },
+    {
+      label: "婚姻状况",
+      key: "isMarried",
+      widget: "select",
+      option: dictObject['married']?.child || [],
+      initialValue: formData?.isMarried,
+      span: "24",
+      rules: [
+        { message: '请选择入婚姻状况' },
+      ],
+      hide: editType === 'edit' ? false : true
+    },
+    {
       label: "自我介绍",
       key: "introduce",
       widget: "textarea",
@@ -129,15 +181,6 @@ export const formList = (
       span: "24",
       hide: editType === 'edit' ? false : true
     },
-    {
-      label: "期望薪资",
-      key: "salaryExpectation",
-      widget: "input",
-      initialValue: formData?.salaryExpectation,
-      span: "24",
-      hide: editType === 'edit' ? false : true
-    },
-    // 工作经验
     {
       label: "期望薪资",
       key: "salaryExpectation",

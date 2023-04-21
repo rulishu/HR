@@ -36,7 +36,10 @@ const route = {
 
     ...init,
     cvFileUUID: '',
-    file:''
+    file:'',
+    isProjectVisible: false, // 项目经验
+    projectObj: {},
+    projectExperience: []
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
