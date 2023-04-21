@@ -26,26 +26,25 @@ const Index = () => {
         dispatchFn({ formData: {} })
       type === 'edit' &&
         dispatchFn({
-          formData: {
-            ...formData,
-            ...data,
-          }
+          formData: { ...formData, ...data, },
+          projectExperience: [...data?.projectExperience]
         })
-        data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
-          dispatchFn({ file: res })
+      data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
+        dispatchFn({ file: res })
       })
       dispatch({
         type: "archives/updateState",
         payload: {
-          workData: [...data?.workExperience]
+          workData: [...data?.workExperience],
         }
       });
     }
 
     if (type === 'view') {
-      dispatchFn({
-        modalVisible: true,
-      })
+      // dispatchFn({
+      //   modalVisible: true,
+      // })
+      dispatch.resume.getDownloadFile(data?.cvFileUUID)
     }
     if (type === 'delete') {
       dispatchFn({
@@ -76,13 +75,22 @@ const Index = () => {
       bordered={false}
       style={{ padding: 0, marginTop: -1, height: 680, overflow: 'scroll' }}
       title={
-        <Button
-          type='primary'
-          icon='plus'
-          onClick={() => { handle('add', {}) }}
-        >
-          新增简历
-        </Button>
+        <>
+          <Button
+            type='primary'
+            icon='plus'
+            onClick={() => { handle('add', {}) }}
+          >
+            新增简历
+          </Button>
+          {/* <Button
+            type='primary'
+            icon='plus'
+            onClick={() => { handle('batchUpload', '') }}
+          >
+            批量上传
+          </Button> */}
+        </>
       }
     >
       {TableData?.map((item: any, idx: any) => {
@@ -119,6 +127,7 @@ const Index = () => {
                     tip='查看'
                     type='primary'
                     icon='document'
+                    disabled={item.cvFileUUID ? false : true}
                     onClick={() => { handle('view', item) }}
                   />
                   <TipButton
