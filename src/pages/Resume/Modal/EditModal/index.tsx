@@ -7,8 +7,8 @@ import '../../style/index.css';
 import WorkTable from '@/components/Archives/Tables/Work';
 import WorkModals from '@/components/Archives/Modals/Work';
 import { PlusItems, PlusIcon } from '../../style/style';
-import ProjectTable from '../Project/Table/index';
-import ProjectModal from '../Project/Modal/index';
+import ProjectTable from './Project/Table/index';
+import ProjectModal from './Project/Modal/index';
 
 const Index = () => {
   const {
@@ -17,6 +17,7 @@ const Index = () => {
       formData,
       cvFileUUID,
       editType,
+      projectExperience
     },
     archives: { workData },
     global: { dictObject, },
@@ -56,7 +57,8 @@ const Index = () => {
         type: 'resume/updateVC',
         payload: {
           ...formData,
-          workExperience: [...workData]
+          workExperience: [...workData],
+          projectExperience: [...projectExperience]
         }
       })
     }
@@ -102,9 +104,13 @@ const Index = () => {
         size={1000}
       >
         <ProForm
+          title={'基础信息'}
           form={form}
           className='formResume'
-          formType="pure"
+          formType="card"
+          cardProps={{
+            noHover: true
+          }}
           saveButtonProps={{ type: "primary" }}
           readOnlyProps={{ column: 2 }}
           // onSubmit={(_, current) => onScreenSubmit(current)}

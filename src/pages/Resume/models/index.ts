@@ -38,6 +38,7 @@ const route = {
     cvFileUUID: '',
 
     isProjectVisible: false, // 项目经验
+    projectObj: {},
     projectExperience: []
   },
   reducers: {

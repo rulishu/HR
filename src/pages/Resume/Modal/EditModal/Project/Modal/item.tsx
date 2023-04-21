@@ -1,10 +1,12 @@
-export const formDatasList = () => {
+export const formDatasList = (
+  projectObj: any
+) => {
   return [
     {
       label: "学历教育",
-      key: "academicEducation ",
+      key: "academicEducation",
       widget: "textarea",
-      initialValue: '',
+      initialValue: projectObj?.academicEducation,
       span: "24",
       readSpan: 1,
       widgetProps: {
@@ -13,9 +15,9 @@ export const formDatasList = () => {
     },
     {
       label: "专业技能",
-      key: "professionalSkills ",
+      key: "professionalSkills",
       widget: "textarea",
-      initialValue: '',
+      initialValue: projectObj?.professionalSkills,
       span: "24",
       readSpan: 1,
       widgetProps: {
@@ -27,9 +29,9 @@ export const formDatasList = () => {
     },
     {
       label: "自我评价",
-      key: "selfEvaluation ",
+      key: "selfEvaluation",
       widget: "textarea",
-      initialValue: '',
+      initialValue: projectObj?.selfEvaluation,
       span: "24",
       readSpan: 1,
       widgetProps: {

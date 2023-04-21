@@ -5,46 +5,39 @@ import { formDatasList } from './item'
 
 function Modals() {
   const {
-    resume: { isProjectVisible, projectExperience }
+    resume: { isProjectVisible, projectExperience, projectObj }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>();
-
-  // 提交
-  const onAddSubmit = (current: any) => {
+  //提交按钮
+  const onAddSubmit = async (current: any) => {
     const newData: any[] = [...projectExperience];
     newData.push(current);
     dispatch({
-      type: 'resume/update',
+      type: "resume/update",
       payload: {
-        formData: {
-          projectExperience: [...newData]
-        }
+        projectExperience: newData,
+        isProjectVisible: false,
+        projectObj: {}
       }
-    })
-    onClosed()
-  }
+    });
+  };
+
   //关闭弹窗
   const onClosed = () => {
     dispatch({
       type: "resume/update",
       payload: {
         isProjectVisible: false,
-        projectExperience: []
+        projectObj: undefined
       },
     });
   };
 
   const onFormChange = (current: any) => {
-    const newData: any[] = [...projectExperience];
-    newData.push(current);
     dispatch({
-      type: 'resume/update',
-      payload: {
-        formData: {
-          projectExperience: [...newData]
-        }
-      }
-    })
+      type: "resume/update",
+      payload: { projectObj: current },
+    });
   }
 
   return (
@@ -64,7 +57,7 @@ function Modals() {
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, data) => onAddSubmit(data)}
         onChange={(_, data) => onFormChange(data)}
-        formDatas={formDatasList()}
+        formDatas={formDatasList(projectObj)}
       />
     </Drawer>
   );
