@@ -6,7 +6,8 @@ import {
   exportWord,
   insert,
   updateVC,
-  getDownloadFile
+  getDownloadFile,
+  uploadZip
 } from '@/servers/resume';
 import { Notify } from 'uiw';
 import { downloadExcelFile, downloadPdfFile } from '../../../utils/export';
@@ -114,6 +115,18 @@ const route = {
       const data = await getDownloadFile(payload)
       downloadPdfFile(data)
       return data
+    },
+    /**
+     * 批量上传
+    */
+    async uploadZip(payload?: any, state?: any) {
+      const data = await uploadZip(payload);
+      return data
+      
+      // if (code === 200) {
+      //   Notify.success({ description: msg || '导出成功' });
+      // downloadExcelFile(data, '简历导出.doc')
+      // }
     },
   }),
 }

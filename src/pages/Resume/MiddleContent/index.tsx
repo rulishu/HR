@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Alert, Card, Empty, Button } from 'uiw';
+import { Alert, Card, Empty, Button, FileInput } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
 import { getDictLabel } from '@/utils';
@@ -65,6 +65,15 @@ const Index = () => {
         }
       })
     }
+    // if (type === 'batchUpload') {
+    //   dispatch({
+    //     type: 'resume/uploadZip',
+    //     // payload: {
+    //     //   userId: data.userId,
+    //     //   id: data.id
+    //     // }
+    //   })
+    // }
   }
 
   const onDelClosed = () => {
@@ -87,13 +96,29 @@ const Index = () => {
           >
             新增简历
           </Button>
-          {/* <Button
+          <FileInput
+        uploadType="text"
+        multiple
+        maxNumber={1}
+        value={[]}
+        onChange={(e:any) => {
+          console.log(e);
+          dispatch({
+            type: 'resume/uploadZip',
+            payload: e?.[0]
+          })
+          
+        }}
+      >
+        <Button
             type='primary'
             icon='plus'
-            onClick={() => { handle('batchUpload', '') }}
+            // onClick={() => { handle('batchUpload', '') }}
           >
             批量上传
-          </Button> */}
+          </Button>
+      </FileInput>
+          
         </>
       }
     >
