@@ -35,7 +35,8 @@ const route = {
     delId: 0,
 
     ...init,
-    cvFileUUID: ''
+    cvFileUUID: '',
+    file:''
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({

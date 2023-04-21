@@ -31,6 +31,9 @@ const Index = () => {
             ...data,
           }
         })
+        data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
+          dispatchFn({ file: res })
+      })
       dispatch({
         type: "archives/updateState",
         payload: {
