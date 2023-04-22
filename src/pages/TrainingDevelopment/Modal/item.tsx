@@ -5,7 +5,7 @@ export const formDataList = (
   return [
     {
       label: '选择对应的公司',
-      key: 'company',
+      key: 'companyId',
       widget: 'select',
       option: companyNameList,
       initialValue: formData.companyId,
@@ -30,16 +30,11 @@ export const formDataList = (
       key: 'context',
       widget: 'textarea',
       initialValue: formData?.context,
-      widgetProps: {},
+      span: "24",
+      readSpan: 2,
+      widgetProps: {
+        style: { minHeight: "200px" },
+      },
     },
-    // {
-    //   label: '创建时间',
-    //   key: 'createTime',
-    //   widget: 'dateInput',
-    //   initialValue: formData?.createTime,
-    //   widgetProps: {
-    //     format: 'YYYY-MM-DD'
-    //   },
-    // },
   ]
 }

@@ -21,7 +21,9 @@ const Index = {
 
     page: 1,
     pageSize: 1,
-    total: 0
+    total: 0,
+
+    linkVisible: false
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -77,7 +79,7 @@ const Index = {
         dispatch.trainingDevelopment.update({
           isDelete: false
         });
-        dispatch.trainingDevelopment.selectList({ enable: 1 });
+        dispatch.trainingDevelopment.selectList();
       }
     },
   })

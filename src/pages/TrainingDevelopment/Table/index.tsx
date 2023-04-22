@@ -1,7 +1,8 @@
-import { Fragment, useEffect } from 'react';
-import { Alert, Card, Empty, Pagination, Button } from 'uiw';
+import { Fragment, useEffect, useState } from 'react';
+import { Alert, Card, Empty, Button, Pagination } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
-import { TipButton } from '@/components';
+// import { TipButton } from '@/components';
+import LinkContent from '../Modal/LinkContent/index'
 
 export const configCompanyId: any = {
   2: "上海军卓电子科技有限公司",
@@ -15,6 +16,7 @@ const Index = () => {
     global: { userData },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
+  const [content, setContent] = useState('')
 
   useEffect(() => {
     if (userData) {
@@ -89,34 +91,49 @@ const Index = () => {
                         {configCompanyId[item.companyId]}
                       </div>
                     }
-                    style={{ width: 300, }}
+                    style={{ width: 300 }}
                   >
-                    <div style={{ height: 300 }}>
+                    <div style={{ height: 300, overflow: 'scroll' }}>
                       {item?.notices.map((data: any, key: any) => (
                         <div style={{ display: 'flex', flexDirection: 'column', }} key={key}>
-                          <Button
-                            basic
-                            type="link"
-                            onClick={() => { console.log(2222, '弹出内容查看') }}
-                          >
-                            <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                              <div style={{}}>
-                                {data?.title}
-                              </div>
-                              <div>
-                                <TipButton
-                                  tip='编辑'
-                                  icon='edit'
-                                  onClick={() => { handle('edit', data) }}
-                                />
-                                <TipButton
-                                  tip='删除'
-                                  icon='delete'
-                                  onClick={() => { handle('delete', data) }}
-                                />
-                              </div>
+                          <div style={{
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                          }}>
+                            <div>
+                              <Button
+                                basic
+                                type="link"
+                                onClick={() => {
+                                  setContent(data.context)
+                                  dispatch({
+                                    type: 'trainingDevelopment/update',
+                                    payload: {
+                                      linkVisible: true
+                                    }
+                                  })
+                                }}
+                              >
+                                <div>
+                                  {data?.title}
+                                </div>
+                              </Button>
                             </div>
-                          </Button>
+                            <div>
+                              <Button
+                                icon="edit"
+                                size="small"
+                                onClick={() => { handle('edit', data) }}
+                              />
+                              <Button
+                                icon="delete"
+                                size="small"
+                                onClick={() => { handle('delete', data) }}
+                              />
+                            </div>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -126,12 +143,13 @@ const Index = () => {
             )
           })
           }
-        </div> :
+        </div > :
         <div style={{ margin: 50, width: '100 %', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Empty />
         </div>
       }
-      {dataList.length > 0 &&
+      {
+        dataList.length > 0 &&
         <Pagination
           current={1}
           pageSize={10}
@@ -146,7 +164,8 @@ const Index = () => {
             })
           }
           }
-        />}
+        />
+      }
       <Alert
         isOpen={isDelete}
         confirmText="确定"
@@ -157,7 +176,9 @@ const Index = () => {
         onConfirm={() => onConfirm()}
         content="您确定要删除吗？"
       />
-    </Fragment>
+
+      < LinkContent content={content} />
+    </Fragment >
   )
 }
 export default Index;

@@ -2,9 +2,6 @@ import { Button } from "uiw";
 import { useDispatch, Dispatch } from '@kkt/pro'
 
 const Index = () => {
-  // const {
-  //   trainingDevelopment: { editType }
-  // } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
 
   const addModal = () => {
