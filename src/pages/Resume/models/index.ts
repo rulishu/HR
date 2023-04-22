@@ -120,13 +120,11 @@ const route = {
      * 批量上传
     */
     async uploadZip(payload?: any, state?: any) {
-      const data = await uploadZip(payload);
-      return data
-      
-      // if (code === 200) {
-      //   Notify.success({ description: msg || '导出成功' });
-      // downloadExcelFile(data, '简历导出.doc')
-      // }
+      const { code, msg } = await uploadZip(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '上传成功' });
+        dispatch.resume.quickSelect();
+      }
     },
   }),
 }
