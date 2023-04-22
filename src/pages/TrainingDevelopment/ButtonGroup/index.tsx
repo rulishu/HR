@@ -2,9 +2,6 @@ import { Button } from "uiw";
 import { useDispatch, Dispatch } from '@kkt/pro'
 
 const Index = () => {
-  // const {
-  //   trainingDevelopment: { editType }
-  // } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
 
   const addModal = () => {
@@ -18,14 +15,14 @@ const Index = () => {
   }
 
   return (
-    <div style={{ marginTop: 10, marginBottom: 20 }}>
-      <Button
-        type="primary"
-        onClick={() => { addModal() }}
-      >
-        添加培训公告
-      </Button>
-    </div>
+    <Button
+      type="primary"
+      onClick={() => { addModal() }}
+      icon='plus'
+      size="default"
+    >
+      添加公告
+    </Button>
   )
 }
 export default Index;

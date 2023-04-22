@@ -8,9 +8,7 @@ import { useDispatch, Dispatch } from '@kkt/pro';
 const Index = () => {
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    dispatch.trainingDevelopment.selectList({
-      enable: 1
-    })
+    dispatch.trainingDevelopment.selectList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
