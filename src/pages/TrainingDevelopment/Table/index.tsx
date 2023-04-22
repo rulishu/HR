@@ -93,50 +93,55 @@ const Index = () => {
                     }
                     style={{ width: 300 }}
                   >
-                    <div style={{ height: 300, overflow: 'scroll' }}>
-                      {item?.notices.map((data: any, key: any) => (
-                        <div style={{ display: 'flex', flexDirection: 'column', }} key={key}>
-                          <div style={{
-                            width: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                          }}>
-                            <div>
-                              <Button
-                                basic
-                                type="link"
-                                onClick={() => {
-                                  setContent(data.context)
-                                  dispatch({
-                                    type: 'trainingDevelopment/update',
-                                    payload: {
-                                      linkVisible: true
-                                    }
-                                  })
-                                }}
-                              >
-                                <div>
-                                  {data?.title}
-                                </div>
-                              </Button>
-                            </div>
-                            <div>
-                              <Button
-                                icon="edit"
-                                size="small"
-                                onClick={() => { handle('edit', data) }}
-                              />
-                              <Button
-                                icon="delete"
-                                size="small"
-                                onClick={() => { handle('delete', data) }}
-                              />
+                    {item?.notices.length > 0 ?
+                      <div style={{ height: 300, overflow: 'scroll' }}>
+                        {item?.notices.map((data: any, key: any) => (
+                          <div style={{ display: 'flex', flexDirection: 'column', }} key={key}>
+                            <div style={{
+                              width: '100%',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                            }}>
+                              <div>
+                                <Button
+                                  basic
+                                  type="link"
+                                  onClick={() => {
+                                    setContent(data.context)
+                                    dispatch({
+                                      type: 'trainingDevelopment/update',
+                                      payload: {
+                                        linkVisible: true
+                                      }
+                                    })
+                                  }}
+                                >
+                                  <div>
+                                    {data?.title}
+                                  </div>
+                                </Button>
+                              </div>
+                              <div>
+                                <Button
+                                  icon="edit"
+                                  size="small"
+                                  onClick={() => { handle('edit', data) }}
+                                />
+                                <Button
+                                  icon="delete"
+                                  size="small"
+                                  onClick={() => { handle('delete', data) }}
+                                />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div> :
+                      <div style={{ height: 300 }}>
+                        <Empty />
+                      </div>
+                    }
                   </Card>
                 </div>
               </Fragment>

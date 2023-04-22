@@ -1,5 +1,6 @@
 import { Modal } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
+import MarkdownEditor from '@uiw/react-markdown-editor';
 
 const Index = (props: any) => {
   const { content } = props;
@@ -26,7 +27,7 @@ const Index = (props: any) => {
       width={400}
       onClosed={() => onClose()}
     >
-      <p>{content}</p>
+      <MarkdownEditor.Markdown source={content} />
     </Modal>
   )
 }
