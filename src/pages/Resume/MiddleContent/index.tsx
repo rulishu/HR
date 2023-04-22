@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Alert, Card, Empty, Button } from 'uiw';
+import { Alert, Card, Empty, Button, FileInput, Row, Col } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
 import { getDictLabel } from '@/utils';
@@ -65,6 +65,15 @@ const Index = () => {
         }
       })
     }
+    // if (type === 'batchUpload') {
+    //   dispatch({
+    //     type: 'resume/uploadZip',
+    //     // payload: {
+    //     //   userId: data.userId,
+    //     //   id: data.id
+    //     // }
+    //   })
+    // }
   }
 
   const onDelClosed = () => {
@@ -79,22 +88,35 @@ const Index = () => {
       bordered={false}
       style={{ padding: 0, marginTop: -1, height: 680, overflow: 'scroll' }}
       title={
-        <>
-          <Button
-            type='primary'
-            icon='plus'
-            onClick={() => { handle('add', {}) }}
-          >
-            新增简历
-          </Button>
-          {/* <Button
-            type='primary'
-            icon='plus'
-            onClick={() => { handle('batchUpload', '') }}
-          >
-            批量上传
-          </Button> */}
-        </>
+          <Row gutter={10}>
+            <Col>
+              <Button
+                type='primary'
+                icon='plus'
+                onClick={() => { handle('add', {}) }}
+              >
+                新增简历
+              </Button>
+            </Col>
+            <Col>
+              <FileInput
+                uploadType="text"
+                multiple
+                maxNumber={1}
+                value={[]}
+                onChange={(e: any) => {
+                  dispatch.resume.uploadZip(e?.[0])
+                }}
+              >
+                <Button
+                  type='primary'
+                  icon='plus'
+                >
+                  批量上传
+                </Button>
+              </FileInput>
+            </Col>
+          </Row>
       }
     >
       {TableData?.map((item: any, idx: any) => {

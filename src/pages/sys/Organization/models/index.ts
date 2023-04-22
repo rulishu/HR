@@ -8,9 +8,11 @@ const route = {
     dataList: [],
     isDelete: false,
     isVisible: false,
-    queryInfo: {},
+    queryInfo: {} as any,
     dataListStaff: [] as any[],
-    selectEntrance: []
+    selectEntrance: [],
+    companyNameList: [],
+    visible: false,
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -28,9 +30,13 @@ const route = {
      * 获取列表
     */
     async selectList(payload?: KktproKeys, state?: any) {
-      const { callback, ...other} = payload || {}
+      const { callback, ...other } = payload || {}
       const { code, data } = await selectList(other);
       if (code === 200 && data) {
+        let companyNameList = data.map((item: any) => { return { value: item.id, label: item.companyName } })
+        dispatch.sysOrganization.updateState({
+          companyNameList: companyNameList
+        })
         const newData = (data || []).map((item: KktproKeys) => {
           const newItem: any = {
             ...item,
@@ -96,7 +102,7 @@ const route = {
      * 查询人员当前所在公司
     */
     async selectListStaff(payload?: KktproKeys, state?: any) {
-      const { callback, ...other} = payload || {}
+      const { callback, ...other } = payload || {}
       const { code, data } = await selectListStaff(other);
       if (code === 200 && data) {
         if (callback) {
@@ -106,14 +112,14 @@ const route = {
             dataListStaff: data,
           });
         }
-        
+
       }
     },
     /**
      * 入场或者离场
     */
     async entranceOrDeparture(payload?: KktproKeys, state?: any) {
-      const { code, data } = await entranceOrDeparture({...payload});
+      const { code, data } = await entranceOrDeparture({ ...payload });
       if (code === 200 && data) {
         Notify.success({ description: data.msg || '成功' });
         dispatch.sysOrganization.hideModal();
@@ -123,7 +129,7 @@ const route = {
      * 获取工作入场离场时间线
     */
     async selectEntranceOrDeparture(payload?: KktproKeys, state?: any) {
-      const { callback, ...other} = payload || {}
+      const { callback, ...other } = payload || {}
       const { code, data } = await selectEntranceOrDeparture(other);
       if (code === 200 && data) {
         if (callback) {
@@ -133,7 +139,7 @@ const route = {
             selectEntrance: data,
           });
         }
-        
+
       }
     },
   })

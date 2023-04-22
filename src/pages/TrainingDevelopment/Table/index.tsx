@@ -1,14 +1,29 @@
-import { Fragment } from 'react';
-import { Alert, Card, Empty, Pagination } from 'uiw';
+import { Fragment, useEffect, useState } from 'react';
+import { Alert, Card, Empty, Button, Pagination } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
-import { TipButton } from '@/components';
-import formatter from "@uiw/formatter";
+// import { TipButton } from '@/components';
+import LinkContent from '../Modal/LinkContent/index'
 
+export const configCompanyId: any = {
+  2: "上海军卓电子科技有限公司",
+  3: "上海博鼠科技有限公司",
+  9: "安能聚创集团",
+  12: "上海尼好系统集成有限公司"
+}
 const Index = () => {
   const {
-    trainingDevelopment: { dataList, isDelete, formData, delId }
+    trainingDevelopment: { dataList, isDelete, formData, delId },
+    global: { userData },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
+  const [content, setContent] = useState('')
+
+  useEffect(() => {
+    if (userData) {
+      dispatch.sysOrganization.selectList();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData])
 
   const handle = (type: any, itemData: any) => {
 
@@ -26,7 +41,6 @@ const Index = () => {
           formData: {
             ...formData,
             ...itemData,
-            createTime: formatter("YYYY-MM-DD", new Date(itemData.createTime))
           }
         }
       })
@@ -72,38 +86,75 @@ const Index = () => {
                 <div style={{ margin: 15 }}>
                   <Card
                     active
-                    title={item?.title}
-                    style={{ width: 240 }}
-                    bodyStyle={{ padding: 0 }}
+                    title={
+                      <div>
+                        {configCompanyId[item.companyId]}
+                      </div>
+                    }
+                    style={{ width: 300 }}
                   >
-                    <div style={{ margin: 15 }}>
-                      <img alt="example" width="100%" src="https://avatars1.githubusercontent.com/u/1680273?v=4" />
-                      <p>{item?.context}</p>
-                    </div>
-                    <div style={{ padding: `10px 16px`, display: 'flex', justifyContent: 'space-between' }}>
-                      <TipButton
-                        tip='编辑'
-                        icon='edit'
-                        onClick={() => { handle('edit', item) }}
-                      />
-                      <TipButton
-                        tip='删除'
-                        icon='delete'
-                        onClick={() => { handle('delete', item) }}
-                      />
-                    </div>
+                    {item?.notices.length > 0 ?
+                      <div style={{ height: 300, overflow: 'scroll' }}>
+                        {item?.notices.map((data: any, key: any) => (
+                          <div style={{ display: 'flex', flexDirection: 'column', }} key={key}>
+                            <div style={{
+                              width: '100%',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                            }}>
+                              <div>
+                                <Button
+                                  basic
+                                  type="link"
+                                  onClick={() => {
+                                    setContent(data.context)
+                                    dispatch({
+                                      type: 'trainingDevelopment/update',
+                                      payload: {
+                                        linkVisible: true
+                                      }
+                                    })
+                                  }}
+                                >
+                                  <div>
+                                    {data?.title}
+                                  </div>
+                                </Button>
+                              </div>
+                              <div>
+                                <Button
+                                  icon="edit"
+                                  size="small"
+                                  onClick={() => { handle('edit', data) }}
+                                />
+                                <Button
+                                  icon="delete"
+                                  size="small"
+                                  onClick={() => { handle('delete', data) }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div> :
+                      <div style={{ height: 300 }}>
+                        <Empty />
+                      </div>
+                    }
                   </Card>
                 </div>
               </Fragment>
             )
           })
           }
-        </div> :
+        </div > :
         <div style={{ margin: 50, width: '100 %', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Empty />
         </div>
       }
-      {dataList.length > 0 &&
+      {
+        dataList.length > 0 &&
         <Pagination
           current={1}
           pageSize={10}
@@ -118,7 +169,8 @@ const Index = () => {
             })
           }
           }
-        />}
+        />
+      }
       <Alert
         isOpen={isDelete}
         confirmText="确定"
@@ -129,7 +181,9 @@ const Index = () => {
         onConfirm={() => onConfirm()}
         content="您确定要删除吗？"
       />
-    </Fragment>
+
+      < LinkContent content={content} />
+    </Fragment >
   )
 }
 export default Index;

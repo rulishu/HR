@@ -64,3 +64,13 @@ export const getDownloadFile = (params: any) => {
     responseType: "blob",
   })
 }
+/**
+ * 批量上传
+*/
+export function uploadZip(params: KktproKeys) {
+  return request('/api/vc/uploadZip', {
+    method: 'post',
+    body: { ...params },
+    requestType: 'form',
+  });
+}

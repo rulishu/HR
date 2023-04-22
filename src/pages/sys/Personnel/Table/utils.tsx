@@ -1,4 +1,4 @@
-import { Tag } from "uiw";
+import { Tag, Checkbox } from "uiw";
 import { KktproKeys } from '@kkt/pro';
 import { TipButton } from '@/components';
 
@@ -11,6 +11,19 @@ export const columns = ({
   onEdit,
   onDelete
 }: columnsProps) => [
+  {
+    key: "checked",
+    render: (text: any, key: any, rowData: any) => {
+      return (
+        <Checkbox
+          checked={rowData.checked}
+          onClick={(e) => {
+            // onCheck?.(rowData, e);
+          }}
+        />
+      );
+    },
+  },
   {
     title: "姓名",
     key: "staffName",

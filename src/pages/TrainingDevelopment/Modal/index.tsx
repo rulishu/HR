@@ -2,11 +2,12 @@ import { Modal } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm } from '@uiw-admin/components';
 import { formDataList } from './item';
-import formatter from "@uiw/formatter";
+// import formatter from "@uiw/formatter";
 
 const Index = () => {
   const {
-    trainingDevelopment: { editType, editVisible, formData }
+    trainingDevelopment: { editType, editVisible, formData },
+    sysOrganization: { companyNameList },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
 
@@ -26,8 +27,6 @@ const Index = () => {
         type: 'trainingDevelopment/insert',
         payload: {
           ...formData,
-          createTime: formatter("YYYY-MM-DD", new Date(current.createTime)),
-          enable: 1
         }
       })
     }
@@ -36,7 +35,6 @@ const Index = () => {
         type: 'trainingDevelopment/editList',
         payload: {
           ...formData,
-          createTime: formatter("YYYY-MM-DD", new Date(current.createTime))
         }
       })
     }
@@ -63,13 +61,17 @@ const Index = () => {
             dispatch({
               type: 'trainingDevelopment/update',
               payload: {
-                formData: { ...formData, ...current, }
+                formData: {
+                  ...formData,
+                  ...current,
+                  company: Number(current?.company)
+                }
               }
             })
           }}
           onSubmit={(initial, current) => { onSubmit(current) }}
           colProps={{ span: 24 }}
-          formDatas={formDataList(formData)}
+          formDatas={formDataList(formData, companyNameList)}
         />
       </Modal>
     </>
