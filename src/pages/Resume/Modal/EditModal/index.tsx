@@ -58,6 +58,7 @@ const Index = () => {
         type: 'resume/updateVC',
         payload: {
           ...formData,
+          cvFileUUID,
           workExperience: [...workData],
           projectExperience: [...projectExperience]
         }
