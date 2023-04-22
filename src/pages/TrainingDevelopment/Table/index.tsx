@@ -1,14 +1,27 @@
-import { Fragment } from 'react';
-import { Alert, Card, Empty, Pagination } from 'uiw';
+import { Fragment, useEffect } from 'react';
+import { Alert, Card, Empty, Pagination, Button } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
 import { TipButton } from '@/components';
-import formatter from "@uiw/formatter";
 
+export const configCompanyId: any = {
+  2: "上海军卓电子科技有限公司",
+  3: "上海博鼠科技有限公司",
+  9: "安能聚创集团",
+  12: "上海尼好系统集成有限公司"
+}
 const Index = () => {
   const {
-    trainingDevelopment: { dataList, isDelete, formData, delId }
+    trainingDevelopment: { dataList, isDelete, formData, delId },
+    global: { userData },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
+
+  useEffect(() => {
+    if (userData) {
+      dispatch.sysOrganization.selectList();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData])
 
   const handle = (type: any, itemData: any) => {
 
@@ -26,7 +39,6 @@ const Index = () => {
           formData: {
             ...formData,
             ...itemData,
-            createTime: formatter("YYYY-MM-DD", new Date(itemData.createTime))
           }
         }
       })
@@ -72,25 +84,41 @@ const Index = () => {
                 <div style={{ margin: 15 }}>
                   <Card
                     active
-                    title={item?.title}
-                    style={{ width: 240 }}
-                    bodyStyle={{ padding: 0 }}
+                    title={
+                      <div>
+                        {configCompanyId[item.companyId]}
+                      </div>
+                    }
+                    style={{ width: 300, }}
                   >
-                    <div style={{ margin: 15 }}>
-                      <img alt="example" width="100%" src="https://avatars1.githubusercontent.com/u/1680273?v=4" />
-                      <p>{item?.context}</p>
-                    </div>
-                    <div style={{ padding: `10px 16px`, display: 'flex', justifyContent: 'space-between' }}>
-                      <TipButton
-                        tip='编辑'
-                        icon='edit'
-                        onClick={() => { handle('edit', item) }}
-                      />
-                      <TipButton
-                        tip='删除'
-                        icon='delete'
-                        onClick={() => { handle('delete', item) }}
-                      />
+                    <div style={{ height: 300 }}>
+                      {item?.notices.map((data: any, key: any) => (
+                        <div style={{ display: 'flex', flexDirection: 'column', }} key={key}>
+                          <Button
+                            basic
+                            type="link"
+                            onClick={() => { console.log(2222, '弹出内容查看') }}
+                          >
+                            <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <div style={{}}>
+                                {data?.title}
+                              </div>
+                              <div>
+                                <TipButton
+                                  tip='编辑'
+                                  icon='edit'
+                                  onClick={() => { handle('edit', data) }}
+                                />
+                                <TipButton
+                                  tip='删除'
+                                  icon='delete'
+                                  onClick={() => { handle('delete', data) }}
+                                />
+                              </div>
+                            </div>
+                          </Button>
+                        </div>
+                      ))}
                     </div>
                   </Card>
                 </div>

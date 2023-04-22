@@ -38,7 +38,6 @@ const Index = {
       if (code === 200 && data) {
         dispatch.trainingDevelopment.update({
           dataList: data || [],
-          // total: total,
         });
       }
     },
@@ -52,7 +51,7 @@ const Index = {
         dispatch.trainingDevelopment.update({
           editVisible: false
         });
-        dispatch.trainingDevelopment.selectList({ enable: 1 });
+        dispatch.trainingDevelopment.selectList();
       }
     },
     /**
@@ -65,7 +64,7 @@ const Index = {
         dispatch.trainingDevelopment.update({
           editVisible: false
         });
-        dispatch.trainingDevelopment.selectList({ enable: 1 });
+        dispatch.trainingDevelopment.selectList();
       }
     },
     /**
