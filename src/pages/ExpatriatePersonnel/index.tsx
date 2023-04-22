@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Row, Col, Menu, Card} from 'uiw';
 import Modals from './Modals';
+import EmployeeDetails from './Modals/EmployeeDetails'
 import { FlexCol, CardWrap } from './style/style';
 import './style/index.css';
 import Search from './Search';
@@ -86,6 +87,7 @@ const Page = () => {
         </Row>
       </CardWrap>
       <Modals />
+      <EmployeeDetails />
     </Fragment>
   )
 }

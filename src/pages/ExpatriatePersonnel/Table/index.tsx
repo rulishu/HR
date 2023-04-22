@@ -10,21 +10,14 @@ const Page = () => {
 
   const onEdit = (rowData?: any, type?: number) => {
     //入场
-    if (type) {
-      dispatch({
-        type: 'sysOrganization/updateState',
-        payload: {
-          isVisible: true,
-          queryInfo: rowData,
-        }
-      })
-    } else {
-      dispatch({
-        type: "sysOrganization/entranceOrDeparture",
-        payload: {
-        },
-      });
-    }
+    const typeVisible = type ? 'isVisible' : 'visible'
+    dispatch({
+      type: 'sysOrganization/updateState',
+      payload: {
+        [typeVisible]: true,
+        queryInfo: rowData,
+      }
+    })
   }
 
   return (

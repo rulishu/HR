@@ -22,9 +22,9 @@ function Modals() {
       ),
       companyName: current.companyId[0].label,
       companyId: current.companyId[0].value,
-      userId: (queryInfo as any)?.userId,
-      staffId: (queryInfo as any)?.id,
-      flag: (queryInfo as any)?.state === 3 ? 2 : 1
+      userId: queryInfo?.userId,
+      staffId: queryInfo?.id,
+      flag: queryInfo?.state === 3 ? 2 : 1
     }
     dispatch({
       type: "sysOrganization/entranceOrDeparture",
@@ -51,7 +51,7 @@ function Modals() {
 
   return (
     <Modal
-      title={`员工${(queryInfo as any).state === 3 ? '离场' : '入场'}`}
+      title={`员工${queryInfo.state === 3 ? '离场' : '入场'}`}
       width={900}
       isOpen={isVisible}
       onClosed={() => onClosed()}

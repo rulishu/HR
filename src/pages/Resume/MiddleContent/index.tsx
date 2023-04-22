@@ -105,10 +105,7 @@ const Index = () => {
                 maxNumber={1}
                 value={[]}
                 onChange={(e: any) => {
-                  dispatch({
-                    type: 'resume/uploadZip',
-                    payload: e?.[0]
-                  })
+                  dispatch.resume.uploadZip(e?.[0])
                 }}
               >
                 <Button
