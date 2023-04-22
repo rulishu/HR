@@ -8,9 +8,10 @@ const route = {
     dataList: [],
     isDelete: false,
     isVisible: false,
-    queryInfo: {},
+    queryInfo: {} as any,
     dataListStaff: [] as any[],
-    selectEntrance: []
+    selectEntrance: [],
+    visible: false,
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({

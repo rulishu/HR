@@ -36,16 +36,12 @@ export const columns = ({
       key: "post",
     },
     {
-      title: "工作地址",
-      key: "workAddress",
-    },
-    {
       title: "联系方式",
       key: "phone",
     },
     {
-      title: "办公方式",
-      key: "workWay",
+      title: "外派公司",
+      key: "entryDate",
     },
     {
       title: "入场时间",
@@ -56,9 +52,15 @@ export const columns = ({
       key: "departureTime",
     },
     {
-      title: "外派公司",
-      key: "entryDate",
+      title: "工作地址",
+      key: "workAddress",
     },
+    {
+      title: "办公方式",
+      key: "workWay",
+    },
+    
+    
     {
       title: "外派状态",
       key: "state",
