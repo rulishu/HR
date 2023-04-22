@@ -6,10 +6,11 @@ interface TipButtonProps {
   type?: ButtonType;
   icon?: IconsName;
   onClick?: () => void;
+  disabled?: boolean
 }
 
 const TipButton = (props: TipButtonProps) => {
-  const { tip, icon, type, onClick } = props;
+  const { tip, icon, type, onClick, disabled } = props;
 
   return (
     <Tooltip placement="top" content={tip}>
@@ -18,6 +19,7 @@ const TipButton = (props: TipButtonProps) => {
         type={type}
         size="large"
         onClick={onClick}
+        disabled={disabled}
       />
     </Tooltip>
   )

@@ -6,7 +6,7 @@ import { getDictLabel } from '@/utils';
 
 const Index = () => {
   const {
-    resume: { TableData, isDelete, delId, formData },
+    resume: { TableData, isDelete, delId, formData, cvFileUUID },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -29,20 +29,26 @@ const Index = () => {
           formData: {
             ...formData,
             ...data,
+            projectExperience: [...data?.projectExperience],
+            cvFileUUID: cvFileUUID || data?.cvFileUUID
           }
         })
+      data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
+        dispatchFn({ file: res })
+      })
       dispatch({
         type: "archives/updateState",
         payload: {
-          workData: [...data?.workExperience]
+          workData: [...data?.workExperience],
         }
       });
     }
 
     if (type === 'view') {
-      dispatchFn({
-        modalVisible: true,
-      })
+      // dispatchFn({
+      //   modalVisible: true,
+      // })
+      dispatch.resume.getDownloadFile(data?.cvFileUUID)
     }
     if (type === 'delete') {
       dispatchFn({
@@ -54,7 +60,8 @@ const Index = () => {
       dispatch({
         type: 'resume/exportWord',
         payload: {
-          userId: data.userId
+          userId: data.userId,
+          id: data.id
         }
       })
     }
@@ -72,13 +79,22 @@ const Index = () => {
       bordered={false}
       style={{ padding: 0, marginTop: -1, height: 680, overflow: 'scroll' }}
       title={
-        <Button
-          type='primary'
-          icon='plus'
-          onClick={() => { handle('add', {}) }}
-        >
-          新增简历
-        </Button>
+        <>
+          <Button
+            type='primary'
+            icon='plus'
+            onClick={() => { handle('add', {}) }}
+          >
+            新增简历
+          </Button>
+          {/* <Button
+            type='primary'
+            icon='plus'
+            onClick={() => { handle('batchUpload', '') }}
+          >
+            批量上传
+          </Button> */}
+        </>
       }
     >
       {TableData?.map((item: any, idx: any) => {
@@ -115,6 +131,7 @@ const Index = () => {
                     tip='查看'
                     type='primary'
                     icon='document'
+                    disabled={item.cvFileUUID ? false : true}
                     onClick={() => { handle('view', item) }}
                   />
                   <TipButton
