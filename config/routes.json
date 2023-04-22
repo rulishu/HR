@@ -119,6 +119,12 @@
             "name": "简历管理",
             "icon": "folder-open",
             "element": "@/pages/ResumeManagement"
+          },
+          {
+            "path": "/admin/expatriate-personnel",
+            "name": "外派人员管理",
+            "icon": "folder-open",
+            "element": "@/pages/ExpatriatePersonnel"
           }
         ]
       },
