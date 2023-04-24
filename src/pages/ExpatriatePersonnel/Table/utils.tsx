@@ -2,38 +2,45 @@ import { KktproKeys } from '@kkt/pro';
 import { Checkbox, Button, Tag } from "uiw";
 
 interface columnsProps {
+  onCheck?: (rowData: KktproKeys, e: KktproKeys) => void;
   onEdit?: (rowData: KktproKeys, type?: number) => void;
-  onDelete?: (rowData: KktproKeys) => void;
+  dictObject?: any,
 }
 
 export const columns = ({
+  onCheck,
   onEdit,
-  onDelete
+  dictObject
 }: columnsProps) => [
-    {
-      key: "checked",
-      render: (text: any, key: any, rowData: any) => {
-        return (
-          <Checkbox
-            checked={rowData.checked}
-            onClick={(e) => {
-              // onCheck?.(rowData, e);
-            }}
-          />
-        );
-      },
+  {
+    key: "checked",
+    render: (text: any, key: any, rowData: any) => {
+      return (
+        <Checkbox
+          key={rowData?.id}
+          checked={rowData.checked}
+          onClick={(e) => {
+            onCheck?.(rowData, e);
+          }}
+        />
+      );
     },
+  },
     {
       title: "姓名",
       key: "staffName",
     },
-    {
-      title: "公司",
-      key: "companyName",
-    },
+    // {
+    //   title: "公司",
+    //   key: "companyName",
+    // },
     {
       title: "职位",
       key: "post",
+      render: (text: any, key: any, rowData: any) => {
+        const data = dictObject['post']?.child.filter((item: any) => item.value === text)?.[0]
+        return <div>{data?.label}</div>;
+      }
     },
     {
       title: "联系方式",
@@ -41,7 +48,7 @@ export const columns = ({
     },
     {
       title: "外派公司",
-      key: "entryDate",
+      key: "expatriateCompanyName",
     },
     {
       title: "入场时间",
@@ -59,8 +66,6 @@ export const columns = ({
       title: "办公方式",
       key: "workWay",
     },
-    
-    
     {
       title: "外派状态",
       key: "state",

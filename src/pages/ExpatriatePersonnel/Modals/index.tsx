@@ -20,8 +20,8 @@ function Modals() {
         "YYYY-MM-DD HH:mm:ss",
         new Date(current?.time)
       ),
-      companyName: current.companyId[0].label,
-      companyId: current.companyId[0].value,
+      companyName: current?.companyId?.[0]?.label,
+      companyId: current?.companyId?.[0]?.value,
       userId: queryInfo?.userId,
       staffId: queryInfo?.id,
       flag: queryInfo?.state === 3 ? 2 : 1

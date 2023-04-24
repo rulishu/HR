@@ -1,6 +1,7 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture, selectEntranceOrDeparture } from '@/servers/sys/organization';
+import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture, selectEntranceOrDeparture, downloadExcelStaff } from '@/servers/sys/organization';
+import { handleExport } from '@/utils/export';
 
 const route = {
   name: "sysOrganization",
@@ -12,6 +13,7 @@ const route = {
     dataListStaff: [] as any[],
     selectEntrance: [],
     visible: false,
+    checked: [],
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -114,10 +116,13 @@ const route = {
      * 入场或者离场
     */
     async entranceOrDeparture(payload?: KktproKeys, state?: any) {
+      const { sysOrganization } = state;
+      const { queryInfo } = sysOrganization;
       const { code, data } = await entranceOrDeparture({...payload});
       if (code === 200 && data) {
         Notify.success({ description: data.msg || '成功' });
         dispatch.sysOrganization.hideModal();
+        dispatch.sysOrganization.selectListStaff({id: queryInfo.companyId});
       }
     },
     /**
@@ -136,6 +141,16 @@ const route = {
         }
         
       }
+    },
+    /**
+     * 入场离场导出
+    */
+    async downloadExcelStaff(payload: KktproKeys) {
+      const data = await downloadExcelStaff(payload);
+        handleExport(data, '外派人员导出.xlsx')
+        dispatch.employeeProfile.updateState({
+          checkRouteMenuIds: []
+        });
     },
   })
 };

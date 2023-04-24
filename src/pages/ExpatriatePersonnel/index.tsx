@@ -81,7 +81,7 @@ const Page = () => {
           <Col>
             <Card noHover bordered={false} className='rightCard'>
               <Search />
-              <Table />
+              <Table companyId={companyId}/>
             </Card>
           </Col>
         </Row>
