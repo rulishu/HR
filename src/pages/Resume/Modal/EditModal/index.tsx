@@ -18,7 +18,8 @@ const Index = () => {
       cvFileUUID,
       editType,
       file,
-      projectExperience
+      projectExperience,
+      companyId
     },
     archives: { workData },
     global: { dictObject, },
@@ -48,8 +49,11 @@ const Index = () => {
   const onScreenSubmit = (current?: any) => {
     if (editType === 'add') {
       dispatch.resume.insert({
-        ...current,
-        cvFileUUID
+        TCurriculumVitae: {
+          ...current,
+          cvFileUUID
+        },
+        companyId: Number(companyId)
       }).then(() => form?.resetForm?.()
       );
     }

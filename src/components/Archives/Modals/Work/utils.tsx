@@ -40,7 +40,7 @@ export const formList = (props?: FormListProps) => {
         format: 'YYYY-MM-DD',
       },
       rules: [
-        { required: true, message: '请选择结束时间' },
+        // { required: true, message: '请选择结束时间' },
         { 
           validator: (value: any) => {
             if (data.startTime && value) {
@@ -86,11 +86,11 @@ export const formList = (props?: FormListProps) => {
         {
           validator: (value: any) => {
             if (value) {
-              return valid.isNativePlace(value);
+              return valid.isValString(value);
             }
             return true;
           },
-          message: '请填写汉字'
+          message: '请填写汉字英文'
         }
       ],
     },

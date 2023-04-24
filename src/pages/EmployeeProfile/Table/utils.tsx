@@ -1,20 +1,48 @@
-import { KktproKeys } from '@kkt/pro';
+import { KktproKeys, dispatch } from '@kkt/pro';
 import { Checkbox, Button } from "uiw";
 
 interface columnsProps {
   companyList?: any,
   dictObject?: any,
+  checked?: any,
+  dataSourceList?: any,
   onCheck?: (rowData: KktproKeys, e: KktproKeys) => void;
-  onEdit?: (rowData: KktproKeys, e: KktproKeys) => void;
+  onEdit?: (rowData: KktproKeys) => void;
+  onDelete?: (rowData: KktproKeys) => void;
 }
 
 export const columns = ({
   companyList,
   dictObject,
+  checked,
+  dataSourceList,
   onCheck,
-  onEdit
+  onEdit,
+  onDelete
 }: columnsProps) => [
     {
+      title: () => {
+        const indeterminate =
+          dataSourceList.length !== checked.length && checked.length > 0;
+        const isChecked =
+          dataSourceList.length === checked.length && dataSourceList.length > 0;
+        return (
+          <Checkbox
+            checked={isChecked}
+            indeterminate={indeterminate}
+            onClick={(e: any) => {
+              let checkedIdx = dataSourceList.map((item: any) => item.id);
+              if (!e.target.checked) {
+                checkedIdx = [];
+              }
+              dispatch({
+                type: "employeeProfile/updateState",
+                payload: { checked: checkedIdx },
+              });
+            }}
+          />
+        );
+      },
       key: "checked",
       render: (text: any, key: any, rowData: any) => {
         return (
@@ -34,35 +62,35 @@ export const columns = ({
     {
       title: "公司",
       key: "company",
-      render: (text: any, key: any, rowData: any) => {
-        let company = "";
-        companyList.map((item: any, index: number) => {
-          if (item.id === Number(text)) {
-            company = item.companyName;
-            return company;
-          } else {
-            return null;
-          }
-        });
-        return <div>{company}</div>;
-      },
+      // render: (text: any, key: any, rowData: any) => {
+      //   let company = "";
+      //   companyList.map((item: any, index: number) => {
+      //     if (item.id === Number(text)) {
+      //       company = item.companyName;
+      //       return company;
+      //     } else {
+      //       return null;
+      //     }
+      //   });
+      //   return <div>{company}</div>;
+      // },
     },
     {
       title: "部门",
       key: "department",
-      render: (text: any, key: any, rowData: any) => {
-        let department = "";
-        const data = companyList?.filter((item: any) => item.id === Number(rowData?.company))?.[0]
-        data?.department?.map((items: any) => {
-          if (items.id === Number(text)) {
-            department = items.departmentName;
-            return department;
-          } else {
-            return null;
-          }
-        })
-        return <div>{department}</div>;
-      },
+      // render: (text: any, key: any, rowData: any) => {
+      //   let department = "";
+      //   const data = companyList?.filter((item: any) => item.id === Number(rowData?.company))?.[0]
+      //   data?.department?.map((items: any) => {
+      //     if (items.id === Number(text)) {
+      //       department = items.departmentName;
+      //       return department;
+      //     } else {
+      //       return null;
+      //     }
+      //   })
+      //   return <div>{department}</div>;
+      // },
     },
     {
       title: "职位",
@@ -130,18 +158,27 @@ export const columns = ({
     {
       title: "操作",
       key: "edit",
-      width: 80,
+      width: 140,
       render: (text: any, key: any, rowData: any) => {
         return (
+          <>
           <Button
             icon="edit"
             type="primary"
             onClick={(e) => {
-              onEdit?.(rowData, e);
+              onEdit?.(rowData);
             }}
           >
             编辑
           </Button>
+          <Button
+            icon="delete"
+            type="danger"
+            onClick={() => onDelete?.(rowData)}
+          >
+            删除
+          </Button>
+          </>
         );
       },
     },

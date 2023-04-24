@@ -7,7 +7,7 @@ import { formDataList } from './item';
 const Index = () => {
   const {
     trainingDevelopment: { editType, editVisible, formData },
-    sysOrganization: { companyNameList },
+    employeeInduction: { companyList = [] },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
 
@@ -39,6 +39,13 @@ const Index = () => {
       })
     }
   }
+  let comOption = companyList.map((item: any) => {
+    return {
+      label: item.companyName,
+      value: item.id
+    }
+  })
+
   return (
     <>
       <Modal
@@ -71,7 +78,7 @@ const Index = () => {
           }}
           onSubmit={(initial, current) => { onSubmit(current) }}
           colProps={{ span: 24 }}
-          formDatas={formDataList(formData, companyNameList)}
+          formDatas={formDataList(formData, comOption)}
         />
       </Modal>
     </>

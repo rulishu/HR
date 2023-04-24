@@ -52,6 +52,14 @@ const isNativePlace = (vals: string) => {
   return pattern.test(vals);
 }
 
+// 英文汉字
+const isValString = (vals: string) => {
+  // 校验规则的正则表达式
+  const pattern = /[/a-zA-Z\u4E00-\u9FA5\uF900-\uFA2D]/;
+  // 使用正则表达式进行校验，并返回校验结果
+  return pattern.test(vals);
+}
+
 // 必须包含数字、汉字、特殊符号/
 const isValidString = (vals: string) => {
   // 校验规则的正则表达式/^[\u4e00-\u9fa50-9]+$/
@@ -65,5 +73,6 @@ export const valid = {
   isValidId,
   isValidEmail,
   isNativePlace,
-  isValidString
+  isValidString,
+  isValString
 }

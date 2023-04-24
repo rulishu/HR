@@ -1,6 +1,7 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture, selectEntranceOrDeparture } from '@/servers/sys/organization';
+import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture, selectEntranceOrDeparture, downloadExcelStaff } from '@/servers/sys/organization';
+import { handleExport } from '@/utils/export';
 
 const route = {
   name: "sysOrganization",
@@ -11,8 +12,8 @@ const route = {
     queryInfo: {} as any,
     dataListStaff: [] as any[],
     selectEntrance: [],
-    companyNameList: [],
     visible: false,
+    checked: [],
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -33,10 +34,6 @@ const route = {
       const { callback, ...other } = payload || {}
       const { code, data } = await selectList(other);
       if (code === 200 && data) {
-        let companyNameList = data.map((item: any) => { return { value: item.id, label: item.companyName } })
-        dispatch.sysOrganization.updateState({
-          companyNameList: companyNameList
-        })
         const newData = (data || []).map((item: KktproKeys) => {
           const newItem: any = {
             ...item,
@@ -119,11 +116,12 @@ const route = {
      * 入场或者离场
     */
     async entranceOrDeparture(payload?: KktproKeys, state?: any) {
-      const { code, data } = await entranceOrDeparture({ ...payload });
+      const { code, data } = await entranceOrDeparture({...payload});
       if (code === 200 && data) {
         Notify.success({ description: data.msg || '成功' });
         dispatch.sysOrganization.hideModal();
       }
+      
     },
     /**
      * 获取工作入场离场时间线
@@ -141,6 +139,16 @@ const route = {
         }
 
       }
+    },
+    /**
+     * 入场离场导出
+    */
+    async downloadExcelStaff(payload: KktproKeys) {
+      const data = await downloadExcelStaff(payload);
+        handleExport(data, '外派人员导出.xlsx')
+        dispatch.employeeProfile.updateState({
+          checkRouteMenuIds: []
+        });
     },
   })
 };

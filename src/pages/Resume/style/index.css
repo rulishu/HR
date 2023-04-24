@@ -8,3 +8,14 @@
 .formResume .w-btn {
   width: 100px;
 }
+
+.tabsRecord {
+  top: 0px;
+  box-shadow: rgb(0 0 0 / 6%) 0px 3px 10px 0px;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  padding: 0px 20px;
+}

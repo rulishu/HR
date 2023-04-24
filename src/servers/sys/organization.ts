@@ -75,6 +75,17 @@ export function selectEntranceOrDeparture (params: KktproKeys) {
 }
 
 /**
+ * 导出入场离场
+*/
+export function downloadExcelStaff (params: KktproKeys) {
+  return request('/api/company/downloadExcelStaff', {
+    method: 'post',
+    body: { ...params },
+    responseType: "blob",
+  });
+}
+
+/**
  * 添加部门
 */
 export const departmentAdd = (params: KktproKeys) => {

@@ -5,6 +5,7 @@ import { CircleList, CircleCol } from '../style/style';
 function Modals() {
   const {
     sysOrganization: { visible, queryInfo, selectEntrance },
+    global: { dictObject },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
@@ -15,8 +16,8 @@ function Modals() {
       payload: { visible: false },
     });
   };
-
-
+  const post = dictObject['post']?.child.filter((item: any) => item.value === queryInfo?.post)?.[0]
+  
   return (
     <Modal
       title='员工详情'
@@ -37,7 +38,8 @@ function Modals() {
         <List.Item>
           <Row>
             <CircleCol fixed>职位 :</CircleCol>
-            <Col grow={1}> {queryInfo?.post}</Col>
+            <Col grow={1}> {post?.label}
+            </Col>
           </Row>
         </List.Item>
         <List.Item>
@@ -49,57 +51,57 @@ function Modals() {
         <List.Item>
           <Row>
             <CircleCol fixed>身份证号 :</CircleCol>
-            <Col grow={1}> {queryInfo?.ProjectName}</Col>
+            <Col grow={1}> {queryInfo?.idNumber}</Col>
           </Row>
         </List.Item>
         <List.Item>
           <Row>
             <CircleCol fixed>邮箱 :</CircleCol>
-            <Col grow={1}> {queryInfo?.ProjectName}</Col>
+            <Col grow={1}> {queryInfo?.email}</Col>
           </Row>
         </List.Item>
         <List.Item>
           <Row>
             <CircleCol fixed>外派公司 :</CircleCol>
-            <Col grow={1}> {queryInfo?.companyName}</Col>
+            <Col grow={1}> {queryInfo?.expatriateCompanyName}</Col>
           </Row>
         </List.Item>
         <List.Item>
           <Row>
             <CircleCol fixed>入场时间 :</CircleCol>
-            <Col grow={1}> {queryInfo?.workAddress}</Col>
+            <Col grow={1}> {queryInfo?.entranceTime}</Col>
           </Row>
         </List.Item>
         <List.Item>
           <Row>
             <CircleCol fixed>离场时间 :</CircleCol>
-            <Col grow={1}> {queryInfo?.groupProjectName}</Col>
+            <Col grow={1}> {queryInfo?.departureTime}</Col>
           </Row>
         </List.Item>
         <List.Item>
           <Row>
             <CircleCol fixed>工作地址 :</CircleCol>
-            <Col grow={1}> {queryInfo?.manager}</Col>
+            <Col grow={1}> {queryInfo?.workAddress}</Col>
           </Row>
         </List.Item>
 
         <List.Item>
           <Row>
             <CircleCol fixed>办公方式 :</CircleCol>
-            <Col grow={1}>{queryInfo?.phone}</Col>
+            <Col grow={1}>{queryInfo?.workWay}</Col>
           </Row>
         </List.Item>
         <List.Item>
           <Row justify="space-between">
             <CircleCol fixed>外派状态 :</CircleCol>
-            <Col grow={1}> {queryInfo?.state === 1 ? "无" : queryInfo?.state === 3 ? "入场" : ''}</Col>
+            <Col grow={1}> {queryInfo?.state === 3 ? "外派中" : '未外派'}</Col>
           </Row>
         </List.Item>
         <List.Item>
           <Row>
             <CircleCol fixed>详细时间 :</CircleCol>
             <Col grow={1}> <Steps direction="vertical" progressDot style={{ padding: '20px 0' }}>
-              {selectEntrance?.map((item: any) => <Steps.Step title={item.context} description={<div><div>入场时间：</div><div>离场时间：</div></div>} />)}
+              {selectEntrance?.map((item: any) => <Steps.Step key={item.createTime} title={item.context} description={<><div>入场时间：{item.createTime}</div><div>离场时间：{item.updateTime}</div></>} />)}
             </Steps></Col>
           </Row>
         </List.Item>

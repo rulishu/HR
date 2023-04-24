@@ -4,10 +4,11 @@ import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 
 const Index = () => {
   const {
-    global: { dictObject }
+    global: { dictObject },
+    resume: { companyId }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
-  const [isColor, setIsColor] = useState(10)
+  const [isColor, setIsColor] = useState('')
 
   const render = () => {
     return (
@@ -23,7 +24,7 @@ const Index = () => {
                 text={item.label}
                 onClick={() => {
                   setIsColor(item.value)
-                  dispatch.resume.quickSelect({ post })
+                  dispatch.resume.quickSelect({ post, companyId: companyId, type: 1 })
                 }}
               />
               <Menu.Divider />

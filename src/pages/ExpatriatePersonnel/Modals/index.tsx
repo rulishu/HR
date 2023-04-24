@@ -4,7 +4,7 @@ import { Modal } from "uiw";
 import formatter from "@uiw/formatter";
 import { formList } from './utils';
 
-function Modals() {
+function Modals(props: any) {
   const {
     sysOrganization: { isVisible, queryInfo },
     employeeInduction: { companyList },
@@ -20,16 +20,16 @@ function Modals() {
         "YYYY-MM-DD HH:mm:ss",
         new Date(current?.time)
       ),
-      companyName: current.companyId[0].label,
-      companyId: current.companyId[0].value,
+      companyName: current?.companyId?.[0]?.label,
+      companyId: current?.companyId?.[0]?.value,
       userId: queryInfo?.userId,
       staffId: queryInfo?.id,
-      flag: queryInfo?.state === 3 ? 2 : 1
+      flag: queryInfo?.state === 3 ? 2 : 1,
+      id: queryInfo?.uid
     }
-    dispatch({
-      type: "sysOrganization/entranceOrDeparture",
-      payload: {...params},
-    });
+    dispatch.sysOrganization.entranceOrDeparture({...params}).then((res) => {
+      dispatch.sysOrganization.selectListStaff({id:props.companyId});
+    })
   };
 
   //关闭弹窗

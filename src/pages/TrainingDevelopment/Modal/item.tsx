@@ -1,13 +1,13 @@
 export const formDataList = (
   formData: any,
-  companyNameList: any[]
+  comOption: any[]
 ) => {
   return [
     {
       label: '选择对应的公司',
       key: 'companyId',
       widget: 'select',
-      option: companyNameList,
+      option: comOption,
       initialValue: formData.companyId,
       widgetProps: {},
       rules: [

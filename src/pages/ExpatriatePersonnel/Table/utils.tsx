@@ -1,39 +1,71 @@
-import { KktproKeys } from '@kkt/pro';
+import { KktproKeys, dispatch } from '@kkt/pro';
 import { Checkbox, Button, Tag } from "uiw";
 
 interface columnsProps {
+  onCheck?: (rowData: KktproKeys, e: KktproKeys) => void;
   onEdit?: (rowData: KktproKeys, type?: number) => void;
-  onDelete?: (rowData: KktproKeys) => void;
+  dictObject?: any,
+  checked?: any,
+  dataSourceList?: any,
 }
 
 export const columns = ({
+  onCheck,
   onEdit,
-  onDelete
+  dictObject,
+  checked,
+  dataSourceList,
 }: columnsProps) => [
-    {
-      key: "checked",
-      render: (text: any, key: any, rowData: any) => {
-        return (
-          <Checkbox
-            checked={rowData.checked}
-            onClick={(e) => {
-              // onCheck?.(rowData, e);
-            }}
-          />
-        );
-      },
+  {
+    title: () => {
+      const indeterminate =
+        dataSourceList.length !== checked.length && checked.length > 0;
+      const isChecked =
+        dataSourceList.length === checked.length && dataSourceList.length > 0;
+      return (
+        <Checkbox
+          checked={isChecked}
+          indeterminate={indeterminate}
+          onClick={(e: any) => {
+            let checkedIdx = dataSourceList.map((item: any) => item.id);
+            if (!e.target.checked) {
+              checkedIdx = [];
+            }
+            dispatch({
+              type: "sysOrganization/updateState",
+              payload: { checked: checkedIdx },
+            });
+          }}
+        />
+      );
     },
+    key: "checked",
+    render: (text: any, key: any, rowData: any) => {
+      return (
+        <Checkbox
+          checked={rowData.checked}
+          onClick={(e) => {
+            onCheck?.(rowData, e);
+          }}
+        />
+      );
+    },
+  },
     {
       title: "姓名",
       key: "staffName",
     },
-    {
-      title: "公司",
-      key: "companyName",
-    },
+    // {
+    //   title: "公司",
+    //   key: "companyName",
+    // },
     {
       title: "职位",
       key: "post",
+      render: (text: any, key: any, rowData: any) => {
+        const data = dictObject['post']?.child.filter((item: any) => item.value === text)?.[0]
+        return <div>{data?.label}</div>;
+      }
     },
     {
       title: "联系方式",
@@ -41,7 +73,7 @@ export const columns = ({
     },
     {
       title: "外派公司",
-      key: "entryDate",
+      key: "expatriateCompanyName",
     },
     {
       title: "入场时间",
@@ -59,18 +91,10 @@ export const columns = ({
       title: "办公方式",
       key: "workWay",
     },
-    
-    
     {
       title: "外派状态",
       key: "state",
-      render: (text: any) => {
-        return (
-          <>
-            {text === 3 ? <Tag light color="#28a745">入场</Tag> : ''}
-          </>
-        )
-      }
+      render: (text: any) => <Tag light title={text === 3 ? '外派中' : '未外派'} color={text === 3 ? '#28a745' : '#008EF0'} />
     },
     {
       title: "备注",

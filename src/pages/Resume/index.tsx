@@ -1,39 +1,56 @@
-import { useEffect } from 'react';
-import { Layout, Card, Loader } from 'uiw';
-import LeftSider from './LeftSider';
-import MiddleContent from './MiddleContent';
-import ResumeModal from './Modal';
+import { useEffect, useState } from 'react';
+import { Tabs } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
-const { Sider, Content } = Layout;
+import './style/index.css';
+import TabsContent from './tabs';
 
 const Index = () => {
   const {
-    loading,
-  } = useSelector((state: RootState) => state);
+    employeeInduction: { companyList = [] },
+    resume: { companyId, page, pageSize }
+  } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
+  const [active, setActive] = useState('')
+
   useEffect(() => {
-    dispatch.resume.quickSelect()
+    dispatch.resume.quickSelect({ companyId: companyId, page: page, pageSize: pageSize })
+    dispatch.sysOrganization.selectList({
+      callback: (data: any) => {
+        dispatch.employeeInduction.updateState({
+          companyList: data
+        })
+        setActive('2')
+      }
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
-    <Loader
-    loading={loading.effects.resume.uploadZip}
-    tip="加载中..."
-    style={{ width: "100%", height: '100%', flex: 1 }}
-    bgColor="rgba(255, 255, 255, .7)"
-  >
-    <Card noHover>
-      <Layout style={{ background: 'rgb(255,255,255)' }}>
-        <Sider style={{ borderRadius: 5 }}>
-          <LeftSider />
-        </Sider>
-        <Content style={{ borderRadius: 5 }}>
-          <MiddleContent />
-        </Content>
-      </Layout>
-      <ResumeModal />
-    </Card>
-    </Loader>
+    <>
+      <Tabs
+        type="line"
+        activeKey={active}
+        className='tabsRecord'
+        onTabClick={(key, tab, e) => {
+          dispatch.resume.quickSelect({
+            companyId: Number(key),
+            page: page,
+            pageSize: pageSize
+          })
+          dispatch.resume.update({ companyId: Number(key) })
+        }}>
+        {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {
+          return (
+            <Tabs.Pane label={itm.companyName} key={itm.id.toString()}>
+              <TabsContent />
+            </Tabs.Pane >
+          )
+        })}
+        <Tabs.Pane label={'面试简历'} key={'0'}>
+          <TabsContent />
+        </Tabs.Pane >
+      </Tabs >
+    </>
   )
 }
 export default Index

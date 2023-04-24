@@ -1,4 +1,5 @@
 import { KktproKeys } from '@kkt/pro';
+import { Tag } from "uiw";
 import { valid } from '@/utils/valid';
 import dayjs from 'dayjs';
 
@@ -175,12 +176,22 @@ export const formData = ({
           key: "weight",
           widget: "inputNumber",
           initialValue: data?.weight,
+          widgetProps: {
+            addonAfter: (
+              <Tag title="kg" />
+            ),
+          },
         },
         {
           label: "身高",
           key: "height",
           widget: "inputNumber",
           initialValue: data?.height,
+          widgetProps: {
+            addonAfter: (
+              <Tag title="cm" />
+            ),
+          },
         },
         {
           label: "民族",
@@ -324,7 +335,8 @@ export const formData = ({
         {
           label: "学位",
           key: "academicDegree",
-          widget: "input",
+          widget: "select",
+          option: dictObject['academic_degree']?.child || [],
           initialValue: data?.academicDegree,
         },
         {

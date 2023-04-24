@@ -26,6 +26,16 @@ export function insert(params: KktproKeys) {
 }
 
 /**
+ * 删除档案
+*/
+export function deleteStaffFile(params: KktproKeys) {
+  return request('/api/staffFile/delete', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
  * 档案导出
 */
 export function filesDownload(params: KktproKeys) {
