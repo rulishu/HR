@@ -6,8 +6,8 @@ export const columns = (
 ) => {
   return [
     {
-      title: "学历教育",
-      key: "academicEducation",
+      title: "项目经验",
+      key: "projectTake",
     },
     {
       title: "专业技能",

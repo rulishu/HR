@@ -33,17 +33,20 @@ const Index = () => {
         onTabClick={(key, tab, e) => {
           dispatch.resume.quickSelect({
             companyId: key,
-            type: 1
+            type: key === '0' ? 0 : 1
           })
           dispatch.resume.update({ companyId: key })
         }}>
-        {companyList.map((item: any) => {
+        {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {
           return (
-            <Tabs.Pane label={item.companyName} key={item.id.toString()}>
+            <Tabs.Pane label={itm.companyName} key={itm.id.toString()}>
               <TabsContent />
-            </Tabs.Pane >)
-        })
-        }
+            </Tabs.Pane >
+          )
+        })}
+        <Tabs.Pane label={'面试简历'} key={'0'}>
+          <TabsContent />
+        </Tabs.Pane >
       </Tabs >
     </>
   )

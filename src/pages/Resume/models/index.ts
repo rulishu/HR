@@ -42,7 +42,7 @@ const route = {
     projectObj: {},
     projectExperience: [],
 
-    companyId: '2',
+    companyId: ''
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
