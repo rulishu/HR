@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Tabs } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import './style/index.css';
@@ -9,37 +9,37 @@ const Index = () => {
     employeeInduction: { companyList = [] },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
+  const [active, setActive] = useState('')
+
   useEffect(() => {
-    dispatch.resume.quickSelect()
-    if (companyList.length === 0) {
-      dispatch.sysOrganization.selectList({
-        callback: (data: any) => {
-          dispatch.employeeInduction.updateState({
-            companyList: data
-          })
-        }
-      })
-    }
+    dispatch.resume.quickSelect({ companyId: '2', type: 1 })
+    dispatch.sysOrganization.selectList({
+      callback: (data: any) => {
+        dispatch.employeeInduction.updateState({
+          companyList: data
+        })
+        setActive('2')
+      }
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyList])
+  }, [])
 
   return (
     <>
       <Tabs
         type="line"
-        activeKey={'2'}
+        activeKey={active}
         className='tabsRecord'
         onTabClick={(key, tab, e) => {
-          console.log(111, key,);
-
-          dispatch.resume.selectCVByCompany({
+          dispatch.resume.quickSelect({
             companyId: key,
-            type: 0
+            type: 1
           })
+          dispatch.resume.update({ companyId: key })
         }}>
         {companyList.map((item: any) => {
           return (
-            <Tabs.Pane label={item.companyName} key={item.id}>
+            <Tabs.Pane label={item.companyName} key={item.id.toString()}>
               <TabsContent />
             </Tabs.Pane >)
         })

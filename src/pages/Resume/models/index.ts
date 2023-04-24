@@ -7,7 +7,6 @@ import {
   updateVC,
   getDownloadFile,
   uploadZip,
-  selectCVByCompany
 } from '@/servers/resume';
 import { Notify } from 'uiw';
 import { downloadExcelFile, downloadPdfFile } from '../../../utils/export';
@@ -41,7 +40,9 @@ const route = {
     file: '',
     isProjectVisible: false, // 项目经验
     projectObj: {},
-    projectExperience: []
+    projectExperience: [],
+
+    companyId: '2',
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -124,17 +125,6 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '上传成功' });
         dispatch.resume.quickSelect();
-      }
-    },
-    /**
-     * 根据公司查简历
-    */
-    async selectCVByCompany(payload?: any, state?: any) {
-      const { code, data } = await selectCVByCompany(payload);
-      if (code === 200 && data) {
-        dispatch.resume.update({
-          TableData: data,
-        });
       }
     },
   }),

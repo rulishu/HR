@@ -65,12 +65,3 @@ export function uploadZip(params: KktproKeys) {
     requestType: 'form',
   });
 }
-/**
- * 根据公司查简历
-*/
-export function selectCVByCompany(params: KktproKeys) {
-  return request('/api/vc/selectCVByCompany', {
-    method: 'post',
-    body: { ...params },
-  });
-}
