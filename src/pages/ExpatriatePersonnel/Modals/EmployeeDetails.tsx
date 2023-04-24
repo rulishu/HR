@@ -99,7 +99,7 @@ function Modals() {
           <Row>
             <CircleCol fixed>详细时间 :</CircleCol>
             <Col grow={1}> <Steps direction="vertical" progressDot style={{ padding: '20px 0' }}>
-              {selectEntrance?.map((item: any) => <Steps.Step title={item.context} description={<div><div>入场时间：</div><div>离场时间：</div></div>} />)}
+              {selectEntrance?.map((item: any) => <Steps.Step key={item.createTime} title={item.context} description={<div><div>入场时间：</div><div>离场时间：</div></div>} />)}
             </Steps></Col>
           </Row>
         </List.Item>

@@ -19,6 +19,7 @@ export const columns = ({
       render: (text: any, key: any, rowData: any) => {
         return (
           <Checkbox
+            key={rowData.id}
             checked={rowData.checked}
             onClick={(e) => {
               onCheck?.(rowData, e);
@@ -34,35 +35,35 @@ export const columns = ({
     {
       title: "公司",
       key: "company",
-      render: (text: any, key: any, rowData: any) => {
-        let company = "";
-        companyList.map((item: any, index: number) => {
-          if (item.id === Number(text)) {
-            company = item.companyName;
-            return company;
-          } else {
-            return null;
-          }
-        });
-        return <div>{company}</div>;
-      },
+      // render: (text: any, key: any, rowData: any) => {
+      //   let company = "";
+      //   companyList.map((item: any, index: number) => {
+      //     if (item.id === Number(text)) {
+      //       company = item.companyName;
+      //       return company;
+      //     } else {
+      //       return null;
+      //     }
+      //   });
+      //   return <div>{company}</div>;
+      // },
     },
     {
       title: "部门",
       key: "department",
-      render: (text: any, key: any, rowData: any) => {
-        let department = "";
-        const data = companyList?.filter((item: any) => item.id === Number(rowData?.company))?.[0]
-        data?.department?.map((items: any) => {
-          if (items.id === Number(text)) {
-            department = items.departmentName;
-            return department;
-          } else {
-            return null;
-          }
-        })
-        return <div>{department}</div>;
-      },
+      // render: (text: any, key: any, rowData: any) => {
+      //   let department = "";
+      //   const data = companyList?.filter((item: any) => item.id === Number(rowData?.company))?.[0]
+      //   data?.department?.map((items: any) => {
+      //     if (items.id === Number(text)) {
+      //       department = items.departmentName;
+      //       return department;
+      //     } else {
+      //       return null;
+      //     }
+      //   })
+      //   return <div>{department}</div>;
+      // },
     },
     {
       title: "职位",
