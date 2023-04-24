@@ -8,7 +8,7 @@ const Index = () => {
     resume: { companyId }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
-  const [isColor, setIsColor] = useState('1')
+  const [isColor, setIsColor] = useState('')
 
   const render = () => {
     return (
