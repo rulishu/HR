@@ -20,8 +20,8 @@ const formSearchList = ({ dictObject }: any) => [
     key: "flag",
     widget: "select",
     option: [
-      { value: 1, label: "入场" },
-      { value: 2, label: "离场" },
+      { value: '', label: "未外派" },
+      { value: 3, label: "外派中" },
     ],
   },
 ];
