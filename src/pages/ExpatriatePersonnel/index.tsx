@@ -14,9 +14,6 @@ const Page = () => {
     employeeInduction: { companyList },
   } = useSelector((state: RootState) => state);
   const [companyId, setCompanyId] = useState()
-  // const [userItem, setUserItem] = useState<any>()
-  // const [nameId, setNameId] = useState()
-
 
   useEffect(() => {
     dispatch.sysOrganization.selectList({
@@ -25,8 +22,6 @@ const Page = () => {
         dispatch.sysOrganization.selectListStaff({
           id: data?.[0]?.id,
           callback: (res: any) => {
-            // setNameId(res?.[0]?.id);
-            // setUserItem(res?.[0])
             dispatch.sysOrganization.updateState({
               dataListStaff: res
             })
@@ -46,8 +41,6 @@ const Page = () => {
     dispatch.sysOrganization.selectListStaff({
       id: data.id,
       callback: (res: any) => {
-        // setNameId(res?.[0]?.id);
-        // setUserItem(res?.[0])
         dispatch.sysOrganization.updateState({
           dataListStaff: res
         })
@@ -66,7 +59,6 @@ const Page = () => {
                 {companyList?.map((itm: any) => (
                   <div key={itm.id}>
                     <Menu.Item
-                      // style={{lineHeight:'30px',fontSize:16}}
                       text={itm.companyName}
                       active={itm.id === companyId ? true : false}
                       onClick={() => {
@@ -86,7 +78,7 @@ const Page = () => {
           </Col>
         </Row>
       </CardWrap>
-      <Modals />
+      <Modals companyId={companyId}/>
       <EmployeeDetails />
     </Fragment>
   )

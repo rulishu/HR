@@ -11,6 +11,14 @@ export const formList = ({
 }: FormListProps) => {
   return [
     {
+      label: "姓名",
+      key: "staffName",
+      widget: "input",
+      initialValue: queryInfo?.staffName,
+      disabled: true,
+      span: "24",
+    },
+    {
       label: "外派公司",
       key: "companyId",
       widget: "searchSelect",

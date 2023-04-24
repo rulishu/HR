@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectStaffFile, insert, filesDownload } from '@/servers/EmployeeProfile';
+import { selectStaffFile, insert, filesDownload, deleteStaffFile } from '@/servers/EmployeeProfile';
 import { handleExport } from '@/utils/export';
 
 const route = {
@@ -16,7 +16,7 @@ const route = {
     type: undefined, // 类型 add：新增 / edit: 编辑
     groupItem: [] as any[],
     checked: [],
-    activeKey: '1'
+    activeKey: '1',
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -63,6 +63,21 @@ const route = {
         dispatch.employeeProfile.updateState({
           isVisible: false
         });
+      }
+    },
+    /**
+     * 删除档案
+    */
+    async deleteStaffFile(_?: any, state?: any) {
+      const { employeeProfile } = state;
+      const { queryInfo = {} } = employeeProfile;
+      const { code, msg } = await deleteStaffFile({
+        id: queryInfo.id
+      });
+      if (code === 200) {
+        Notify.success({ description: msg || '删除成功' });
+        dispatch.employeeProfile.hideModal();
+        dispatch.employeeProfile.selectStaffFile();
       }
     },
     /**

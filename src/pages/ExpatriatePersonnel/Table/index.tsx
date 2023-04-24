@@ -10,7 +10,7 @@ const Page = (props: any) => {
   const dispatch = useDispatch<Dispatch>();
 
   const onEdit = (rowData?: any, type?: number) => {
-    //入场
+    //入场/离场
     const typeVisible = type ? 'isVisible' : 'visible'
     dispatch({
       type: 'sysOrganization/updateState',
