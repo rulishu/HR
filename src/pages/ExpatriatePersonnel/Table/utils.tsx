@@ -69,13 +69,7 @@ export const columns = ({
     {
       title: "外派状态",
       key: "state",
-      render: (text: any) => {
-        return (
-          <>
-            {text === 3 ? <Tag light color="#28a745">入场</Tag> : ''}
-          </>
-        )
-      }
+      render: (text: any) => <Tag light title={text === 3 ? '外派中' : '未外派'} color={text === 3 ? '#28a745' : '#008EF0'} />
     },
     {
       title: "备注",

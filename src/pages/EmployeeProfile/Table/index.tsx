@@ -1,17 +1,23 @@
 import { useSelector, RootState, useDispatch, Dispatch, KktproKeys } from '@kkt/pro';
-import { Button, Table, Pagination, Empty } from "uiw";
+import { Button, Table, Pagination, Empty, Alert } from "uiw";
 import { columns } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
 
 const Page = () => {
   const {
-    employeeProfile: { dataList, page, pageSize, total, checked },
+    employeeProfile: { dataList, page, pageSize, total, checked, isDelete },
     employeeInduction: { companyList },
     global: { dictObject },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
+  const dataSourceList = dataList?.map((item: any) => {
+    const { id } = item;
+    const isChecked = (checked as any[]).includes(id);
+    return { checked: isChecked, ...item };
+  });
 
-  const onEdit = async (rowData: any, e: any) => {
+  // 编辑
+  const onEdit = async (rowData: any) => {
     const imgsUUID: KktproKeys = {
       idCardImgBackUUIDs: rowData.idCardImgBackUUID,
       idCardImgFrontUUIDs: rowData.idCardImgFrontUUID,
@@ -54,7 +60,7 @@ const Page = () => {
       ...rowData,
       ...imgObj
     }
-    
+
     dispatch({
       type: "employeeProfile/updateState",
       payload: {
@@ -64,6 +70,7 @@ const Page = () => {
     });
   }
 
+  // 全选按钮
   const onCheck = (rowData: any, e: any) => {
     const isChecked = e.target.checked;
     let check = [...checked] as any[];
@@ -97,6 +104,24 @@ const Page = () => {
     dispatch.employeeProfile.selectStaffFile();
   }
 
+  // 删除
+  const onDelete = (data: any) => {
+    dispatch.employeeProfile.updateState({
+      isDelete: true
+    });
+    dispatch.employeeProfile.updateState({
+      queryInfo: data
+    });
+  }
+
+  const onDelClosed = () => {
+    dispatch.sysItems.hideModal();
+  }
+
+  const onConfirm = () => {
+    dispatch.employeeProfile.deleteStaffFile();
+  }
+
   return (
     <div>
       <div style={{ marginBottom: 15 }}>
@@ -122,10 +147,13 @@ const Page = () => {
         columns={columns({
           companyList,
           dictObject,
+          checked,
+          dataSourceList,
           onCheck,
-          onEdit
+          onEdit,
+          onDelete
         })}
-        data={dataList}
+        data={dataSourceList}
         empty={<Empty />}
         footer={total > 0 && (
           <Pagination
@@ -136,6 +164,16 @@ const Page = () => {
             onChange={(current) => onTurnPages(current)}
           />
         )}
+      />
+      <Alert
+        isOpen={isDelete}
+        confirmText="确定"
+        cancelText="取消"
+        icon="warning"
+        type="warning"
+        onClosed={() => onDelClosed()}
+        onConfirm={() => onConfirm()}
+        content="您确定要删除吗？"
       />
     </div>
   )

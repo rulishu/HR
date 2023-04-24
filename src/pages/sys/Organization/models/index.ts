@@ -116,14 +116,12 @@ const route = {
      * 入场或者离场
     */
     async entranceOrDeparture(payload?: KktproKeys, state?: any) {
-      const { sysOrganization } = state;
-      const { queryInfo } = sysOrganization;
       const { code, data } = await entranceOrDeparture({...payload});
       if (code === 200 && data) {
         Notify.success({ description: data.msg || '成功' });
         dispatch.sysOrganization.hideModal();
-        dispatch.sysOrganization.selectListStaff({id: queryInfo.companyId});
       }
+      
     },
     /**
      * 获取工作入场离场时间线
