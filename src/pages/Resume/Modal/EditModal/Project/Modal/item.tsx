@@ -3,10 +3,10 @@ export const formDatasList = (
 ) => {
   return [
     {
-      label: "学历教育",
-      key: "academicEducation",
+      label: "项目经验",
+      key: "projectTake",
       widget: "textarea",
-      initialValue: projectObj?.academicEducation,
+      initialValue: projectObj?.projectTake,
       span: "24",
       readSpan: 1,
       widgetProps: {

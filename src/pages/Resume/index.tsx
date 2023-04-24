@@ -7,12 +7,13 @@ import TabsContent from './tabs';
 const Index = () => {
   const {
     employeeInduction: { companyList = [] },
+    resume: { companyId, page, pageSize }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
   const [active, setActive] = useState('')
 
   useEffect(() => {
-    dispatch.resume.quickSelect({ companyId: '2', type: 1 })
+    dispatch.resume.quickSelect({ companyId: companyId, page: page, pageSize: pageSize })
     dispatch.sysOrganization.selectList({
       callback: (data: any) => {
         dispatch.employeeInduction.updateState({
@@ -32,18 +33,22 @@ const Index = () => {
         className='tabsRecord'
         onTabClick={(key, tab, e) => {
           dispatch.resume.quickSelect({
-            companyId: key,
-            type: 1
+            companyId: Number(key),
+            page: page,
+            pageSize: pageSize
           })
-          dispatch.resume.update({ companyId: key })
+          dispatch.resume.update({ companyId: Number(key) })
         }}>
-        {companyList.map((item: any) => {
+        {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {
           return (
-            <Tabs.Pane label={item.companyName} key={item.id.toString()}>
+            <Tabs.Pane label={itm.companyName} key={itm.id.toString()}>
               <TabsContent />
-            </Tabs.Pane >)
-        })
-        }
+            </Tabs.Pane >
+          )
+        })}
+        <Tabs.Pane label={'面试简历'} key={'0'}>
+          <TabsContent />
+        </Tabs.Pane >
       </Tabs >
     </>
   )
