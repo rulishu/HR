@@ -1,5 +1,5 @@
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
-import { Button, Table, Empty, Card, Pagination } from "uiw";
+import { Button, Table, Empty, Card } from "uiw";
 import { columns } from './utils';
 
 const Page = (props: any) => {
