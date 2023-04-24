@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
-import { Alert, Card, Empty, Button, FileInput, Row, Col } from 'uiw';
+import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
 import { getDictLabel } from '@/utils';
 
 const Index = () => {
   const {
-    resume: { TableData, isDelete, delId, formData, cvFileUUID },
+    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -82,42 +82,63 @@ const Index = () => {
   const onConfirm = () => {
     dispatch.resume.deleteVC([delId])
   }
+  const footer = (
+    <Pagination
+      current={page}
+      pageSize={pageSize}
+      total={total}
+      divider
+      onChange={(current: any) => {
+        dispatch({
+          type: "resume/quickSelect",
+          payload: {
+            current: true,
+            page: current,
+            pageSize: pageSize,
+            total: total,
+          },
+        });
+      }
+      }
+    />
+  )
   return (
     <Card
       noHover
       bordered={false}
       style={{ padding: 0, marginTop: -1, height: 680, overflow: 'scroll' }}
       title={
-          <Row gutter={10}>
-            <Col>
+        <Row gutter={10}>
+          <Col>
+            <Button
+              type='primary'
+              icon='plus'
+              onClick={() => { handle('add', {}) }}
+            >
+              新增简历
+            </Button>
+          </Col>
+          <Col>
+            <FileInput
+              uploadType="text"
+              multiple
+              maxNumber={1}
+              value={[]}
+              onChange={(e: any) => {
+                dispatch.resume.uploadZip(e?.[0])
+              }}
+            >
               <Button
                 type='primary'
                 icon='plus'
-                onClick={() => { handle('add', {}) }}
               >
-                新增简历
+                批量上传
               </Button>
-            </Col>
-            <Col>
-              <FileInput
-                uploadType="text"
-                multiple
-                maxNumber={1}
-                value={[]}
-                onChange={(e: any) => {
-                  dispatch.resume.uploadZip(e?.[0])
-                }}
-              >
-                <Button
-                  type='primary'
-                  icon='plus'
-                >
-                  批量上传
-                </Button>
-              </FileInput>
-            </Col>
-          </Row>
+            </FileInput>
+          </Col>
+        </Row>
       }
+      footer={footer}
     >
       {TableData?.map((item: any, idx: any) => {
         return (
@@ -130,7 +151,7 @@ const Index = () => {
                 </div>
                 <div>
                   <p>工作经验： {item?.experience} 年</p>
-                  <p>薪资范围： {item?.salaryExpectation} K</p>
+                  <p>薪资范围： {item?.salaryExpectation} </p>
                 </div>
                 <div>
                   <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p>
@@ -168,6 +189,13 @@ const Index = () => {
                     icon='download'
                     onClick={() => { handle('export', item) }}
                   />
+                  {/* <Popover trigger="click" placement="right" >
+                    <TipButton
+                      tip='导出'
+                      type='primary'
+                      icon='download'
+                    />
+                  </Popover> */}
                 </div>
               </div>
             </Card>

@@ -19,15 +19,12 @@ const route = {
   name: 'resume',
   state: {
     listType: 10,
-    // listData: [
-    //   { value: 10, post: '前端' },
-    //   { value: 20, post: '后端' },
-    //   { value: 30, post: '测试' },
-    //   { value: 40, post: '架构师' },
-    // ],
 
     formData: {}, // 新增/编辑简历
     TableData: [],
+    total: 10,
+    page: 1,
+    pageSize: 5,
 
     editType: "none",
     editVisible: false, // 编辑
@@ -42,7 +39,7 @@ const route = {
     projectObj: {},
     projectExperience: [],
 
-    companyId: ''
+    companyId: 2
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -59,6 +56,7 @@ const route = {
       if (code === 200 && data) {
         dispatch.resume.update({
           TableData: data.list,
+          total: data.total
         });
       }
     },
