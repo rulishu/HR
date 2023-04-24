@@ -1,39 +1,51 @@
 import { useEffect } from 'react';
-import { Layout, Card, Loader } from 'uiw';
-import LeftSider from './LeftSider';
-import MiddleContent from './MiddleContent';
-import ResumeModal from './Modal';
+import { Tabs } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
-const { Sider, Content } = Layout;
+import './style/index.css';
+import TabsContent from './tabs';
 
 const Index = () => {
   const {
-    loading,
-  } = useSelector((state: RootState) => state);
+    employeeInduction: { companyList = [] },
+  } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
   useEffect(() => {
     dispatch.resume.quickSelect()
+    if (companyList.length === 0) {
+      dispatch.sysOrganization.selectList({
+        callback: (data: any) => {
+          dispatch.employeeInduction.updateState({
+            companyList: data
+          })
+        }
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [companyList])
+
   return (
-    <Loader
-    loading={loading.effects.resume.uploadZip}
-    tip="加载中..."
-    style={{ width: "100%", height: '100%', flex: 1 }}
-    bgColor="rgba(255, 255, 255, .7)"
-  >
-    <Card noHover>
-      <Layout style={{ background: 'rgb(255,255,255)' }}>
-        <Sider style={{ borderRadius: 5 }}>
-          <LeftSider />
-        </Sider>
-        <Content style={{ borderRadius: 5 }}>
-          <MiddleContent />
-        </Content>
-      </Layout>
-      <ResumeModal />
-    </Card>
-    </Loader>
+    <>
+      <Tabs
+        type="line"
+        activeKey={'2'}
+        className='tabsRecord'
+        onTabClick={(key, tab, e) => {
+          console.log(111, key,);
+
+          dispatch.resume.selectCVByCompany({
+            companyId: key,
+            type: 0
+          })
+        }}>
+        {companyList.map((item: any) => {
+          return (
+            <Tabs.Pane label={item.companyName} key={item.id}>
+              <TabsContent />
+            </Tabs.Pane >)
+        })
+        }
+      </Tabs >
+    </>
   )
 }
 export default Index

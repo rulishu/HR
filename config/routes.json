@@ -50,7 +50,7 @@
           },
           {
             "path": "/admin/training-and-development",
-            "name": "员工培训与发展",
+            "name": "员工培训",
             "icon": "laptop",
             "element": "@/pages/TrainingDevelopment"
           },

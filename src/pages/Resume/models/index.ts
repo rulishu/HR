@@ -1,13 +1,13 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import {
   quickSelect,
-  // selectUserVC,
   deleteVC,
   exportWord,
   insert,
   updateVC,
   getDownloadFile,
-  uploadZip
+  uploadZip,
+  selectCVByCompany
 } from '@/servers/resume';
 import { Notify } from 'uiw';
 import { downloadExcelFile, downloadPdfFile } from '../../../utils/export';
@@ -124,6 +124,17 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '上传成功' });
         dispatch.resume.quickSelect();
+      }
+    },
+    /**
+     * 根据公司查简历
+    */
+    async selectCVByCompany(payload?: any, state?: any) {
+      const { code, data } = await selectCVByCompany(payload);
+      if (code === 200 && data) {
+        dispatch.resume.update({
+          TableData: data,
+        });
       }
     },
   }),
