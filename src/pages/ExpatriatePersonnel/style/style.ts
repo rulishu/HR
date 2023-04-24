@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { List, Col, Icon, Card } from "uiw";
 
 export const CardWrap = styled(Card)`
-  height: calc(100vh - 100px);
+  min-height: calc(100vh - 100px);
   padding: 0;
   .w-card-body, .w-row {
     height: 100%;
