@@ -4,26 +4,24 @@ import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
 // import { TipButton } from '@/components';
 import LinkContent from '../Modal/LinkContent/index'
 
-export const configCompanyId: any = {
-  2: "上海军卓电子科技有限公司",
-  3: "上海博鼠科技有限公司",
-  9: "安能聚创集团",
-  12: "上海尼好系统集成有限公司"
-}
 const Index = () => {
   const {
     trainingDevelopment: { dataList, isDelete, formData, delId },
-    global: { userData },
+    employeeInduction: { companyList = [] },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
   const [content, setContent] = useState('')
 
   useEffect(() => {
-    if (userData) {
-      dispatch.sysOrganization.selectList();
-    }
+    dispatch.sysOrganization.selectList({
+      callback: (data: any) => {
+        dispatch.employeeInduction.updateState({
+          companyList: data
+        })
+      }
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData])
+  }, [])
 
   const handle = (type: any, itemData: any) => {
 
@@ -75,12 +73,19 @@ const Index = () => {
       }
     })
   }
+  let comOption = companyList.map((item: any) => {
+    return {
+      label: item.companyName,
+      value: item.id
+    }
+  })
 
   return (
     <Fragment>
       {dataList.length > 0 ?
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
           {dataList?.map((item: any, idx: any) => {
+            let comName = comOption.find((itm: any) => itm.value === item.companyId)
             return (
               <Fragment key={idx}>
                 <div style={{ margin: 15 }}>
@@ -88,7 +93,7 @@ const Index = () => {
                     active
                     title={
                       <div>
-                        {configCompanyId[item.companyId]}
+                        {comName?.label}
                       </div>
                     }
                     style={{ width: 300 }}

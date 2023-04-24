@@ -11,15 +11,6 @@ export function quickSelect(params: KktproKeys) {
   });
 }
 /**
- * 查询用户简历
-*/
-// export function selectUserVC(params: KktproKeys) {
-//   return request('/api/vc/selectUserVC', {
-//     method: 'post',
-//     body: { ...params },
-//   });
-// }
-/**
  * 删除简历
 */
 export function deleteVC(params: KktproKeys) {
@@ -72,5 +63,14 @@ export function uploadZip(params: KktproKeys) {
     method: 'post',
     body: { ...params },
     requestType: 'form',
+  });
+}
+/**
+ * 根据公司查简历
+*/
+export function selectCVByCompany(params: KktproKeys) {
+  return request('/api/vc/selectCVByCompany', {
+    method: 'post',
+    body: { ...params },
   });
 }

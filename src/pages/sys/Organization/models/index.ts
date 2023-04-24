@@ -12,7 +12,6 @@ const route = {
     queryInfo: {} as any,
     dataListStaff: [] as any[],
     selectEntrance: [],
-    companyNameList: [],
     visible: false,
     checked: [],
   },
@@ -35,10 +34,6 @@ const route = {
       const { callback, ...other } = payload || {}
       const { code, data } = await selectList(other);
       if (code === 200 && data) {
-        let companyNameList = data.map((item: any) => { return { value: item.id, label: item.companyName } })
-        dispatch.sysOrganization.updateState({
-          companyNameList: companyNameList
-        })
         const newData = (data || []).map((item: KktproKeys) => {
           const newItem: any = {
             ...item,
