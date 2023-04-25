@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination, Popover } from 'uiw';
+import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination, Popover, Checkbox } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
 import { getDictLabel } from '@/utils';
@@ -7,7 +7,7 @@ import '../style/index.css'
 
 const Index = () => {
   const {
-    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize },
+    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -67,15 +67,13 @@ const Index = () => {
         }
       })
     }
-    // if (type === 'batchUpload') {
-    //   dispatch({
-    //     type: 'resume/uploadZip',
-    //     // payload: {
-    //     //   userId: data.userId,
-    //     //   id: data.id
-    //     // }
-    //   })
-    // }
+    if (type === 'batchUpload') {
+      const checkedDown = checked.map((item:any) => ({userId:item?.userId,id:item?.id}))
+      dispatch({
+        type: 'resume/downZip',
+        payload: checkedDown
+      })
+    }
   }
 
   const onDelClosed = () => {
@@ -104,6 +102,23 @@ const Index = () => {
       }
     />
   )
+  const onCheck = (rowData: any, e: any) => {
+    const isChecked = e.target.checked;
+    let check = [...checked] as any[];
+    if (isChecked) {
+      // 添加到选中数组中
+      check.push(rowData);
+      check = check.sort((a, b) => a - b);
+    } else {
+      // 删除选中项
+      check.splice(check.indexOf(rowData.id), 1);
+    }
+    dispatch({
+      type: "resume/update",
+      payload: { checked: check },
+    });
+  }
+  
   return (
     <Card
       noHover
@@ -138,6 +153,16 @@ const Index = () => {
               </Button>
             </FileInput>
           </Col>
+          <Col>
+          <Button
+                type='primary'
+                icon='download'
+                disabled={checked.length === 0}
+                onClick={() => { handle('batchUpload', {}) }}
+              >
+                批量下载
+              </Button>
+              </Col>
         </Row>
       }
       footer={footer}
@@ -147,9 +172,17 @@ const Index = () => {
           <Fragment key={idx}>
             < Card style={{ marginBottom: 10 }} noHover>
               <div style={{ display: 'flex', justifyContent: "space-between", }} >
-                <div style={{ marginLeft: 20 }}>
+                <div style={{ display: 'flex', marginLeft: 20, alignItems:'center' }}>
+                <Checkbox
+                    checked={item.checked}
+                    onClick={(e) => {
+                      onCheck?.(item, e);
+                    }}
+                  />
+                  <div style={{ marginLeft: 10 }}>
                   <p>姓名： {item?.name}</p>
                   <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p>
+                  </div>
                 </div>
                 <div>
                   <p>工作经验： {item?.experience} 年</p>
