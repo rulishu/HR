@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, Dispatch, useSelector, RootState, KktproKeys } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, useNavigate, RootState, KktproKeys } from '@kkt/pro';
 import { FormPage, Archives, ArchivesType } from '@/components'
 
 const Page = () => {
@@ -10,6 +10,7 @@ const Page = () => {
     },
     global: { roles, userData },
   } = useSelector((state: RootState) => state);
+  const navigate = useNavigate();
 
   const archivesRef = useRef<ArchivesType>(null);
 
@@ -41,7 +42,10 @@ const Page = () => {
         userId,
         callback: () => {
           if (roles === 'entry') {
-            entryInit();
+            // entryInit();
+            navigate('/home');
+            // 刷新权限
+            dispatch.global.getUserInfo({});
           } else {
             onReset();
           }

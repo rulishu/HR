@@ -1,8 +1,9 @@
-import { Fragment } from 'react';
-import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination } from 'uiw';
+import { Fragment, useState } from 'react';
+import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination, Popover } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
 import { getDictLabel } from '@/utils';
+import '../style/index.css'
 
 const Index = () => {
   const {
@@ -10,6 +11,7 @@ const Index = () => {
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
+  const [ExportVis, setExportVis] = useState(false)
 
   const dispatchFn = (params: any) => {
     dispatch({
@@ -144,7 +146,7 @@ const Index = () => {
         return (
           <Fragment key={idx}>
             < Card style={{ marginBottom: 10 }} noHover>
-              <div style={{ display: 'flex', justifyContent: "space-between" }} >
+              <div style={{ display: 'flex', justifyContent: "space-between", }} >
                 <div style={{ marginLeft: 20 }}>
                   <p>姓名： {item?.name}</p>
                   <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p>
@@ -183,19 +185,52 @@ const Index = () => {
                     icon='delete'
                     onClick={() => { handle('delete', item) }}
                   />
-                  <TipButton
-                    tip='导出'
-                    type='primary'
-                    icon='download'
-                    onClick={() => { handle('export', item) }}
-                  />
-                  {/* <Popover trigger="click" placement="right" >
-                    <TipButton
+                  {/* <TipButton
                       tip='导出'
                       type='primary'
                       icon='download'
+                      onClick={() => { handle('export', item) }}
+                    /> */}
+                  <Button
+                    icon='more'
+                    className='buttonPopover'
+                    onClick={() => setExportVis(true)}
+                  >
+                    <Popover
+                      trigger="click"
+                      placement="topLeft"
+                      isOpen={ExportVis}
+                      isOutside={true}
+                      onOpened={() => setExportVis(true)}
+                      onClosed={() => setExportVis(false)}
+                      content={
+                        <div
+                          style={{
+                            width: 120,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Button
+                            basic
+                            block
+                            type="primary"
+                            onClick={() => { handle('export', item) }}
+                          >
+                            导出Word
+                          </Button>
+                          <Button
+                            basic
+                            block
+                            type="primary"
+                            onClick={() => { handle('exportExcel', item) }}
+                          >
+                            导出excel
+                          </Button>
+                        </div>
+                      }
                     />
-                  </Popover> */}
+                  </Button>
                 </div>
               </div>
             </Card>

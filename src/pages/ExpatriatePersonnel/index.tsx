@@ -25,7 +25,7 @@ const Page = () => {
             dispatch.sysOrganization.updateState({
               dataListStaff: res
             })
-            dispatch.sysOrganization.selectEntranceOrDeparture({ id: res?.[0]?.id, })
+            // dispatch.sysOrganization.selectEntranceOrDeparture({ id: res?.[0]?.id, })
           }
         });
         dispatch.employeeInduction.updateState({
