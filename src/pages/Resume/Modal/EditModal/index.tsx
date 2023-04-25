@@ -16,14 +16,18 @@ const Index = () => {
       cvFileUUID,
       editType,
       file,
-      // projectExperience,
-      companyId
+      // projectExperience,x
+      companyId,
+      page,
+      pageSize,
+      total
     },
     archives: { workData },
     global: { dictObject, },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
   const form = useForm();
+  const form2 = useForm();
 
   const onclose = () => {
     dispatch({
@@ -44,11 +48,20 @@ const Index = () => {
       }
     })
   }
-  const onScreenSubmit = (current?: any) => {
+  const onChangeProject = (current?: any) => {
+    dispatch({
+      type: 'resume/update',
+      payload: {
+        formData: { ...formData, ...current, }
+      }
+    })
+  }
+  const onScreenSubmit = (current?: any, current2?: any) => {
     if (editType === 'add') {
       dispatch.resume.insert({
         tcurriculumVitae: {
           ...current,
+          ...current2,
           cvFileUUID
         },
         companyId: companyId
@@ -65,6 +78,12 @@ const Index = () => {
           workExperience: [...workData],
           // projectExperience: [...projectExperience]
         }
+      })
+      dispatch.resume.quickSelect({
+        companyId: companyId,
+        page: page,
+        pageSize: pageSize,
+        total: total
       })
     }
     onclose()
@@ -126,13 +145,13 @@ const Index = () => {
             <WorkModals />
           </Card>}
         {/* 项目经验 */}
-        <ProForm
+        {editType === 'edit' && <ProForm
           title={'项目经验'}
-          form={form}
+          form={form2}
           readOnlyProps={{ column: 2 }}
-          onChange={(_, current) => { onChange(current) }}
+          onChange={(_, current) => { onChangeProject(current) }}
           formDatas={form2List(formData)}
-        />
+        />}
 
         {/* useForm验证提交 */}
         <Button
@@ -141,11 +160,15 @@ const Index = () => {
           onClick={async () => {
             // 触发验证
             await form.submitvalidate();
+            await form2.submitvalidate();
             // 获取错误信息
             const errors = form.getError()
+            const errors2 = form2.getError()
             if (errors && Object.keys(errors).length > 0) return
+            if (errors2 && Object.keys(errors2).length > 0) return
             const value = form.getFieldValues?.()
-            onScreenSubmit(value)
+            const value2 = form2.getFieldValues?.()
+            onScreenSubmit(value, value2)
             // 调用请求接口
           }}
         >

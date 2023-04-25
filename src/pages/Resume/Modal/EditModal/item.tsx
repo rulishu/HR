@@ -225,7 +225,7 @@ export const form2List = (
       },
       span: "24",
       rules: [
-        { message: '请输入姓名' },
+        { message: '请输入项目经验' },
       ],
     },
   ]

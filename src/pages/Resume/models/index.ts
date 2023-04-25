@@ -110,11 +110,6 @@ const route = {
         dispatch.resume.update({
           editVisible: false
         });
-        dispatch.resume.quickSelect({
-          companyId: payload.companyId,
-          page: 1,
-          pageSize: 5
-        });
       }
     },
     // 简历下载
