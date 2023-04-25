@@ -69,20 +69,18 @@ const Index = () => {
       );
     }
     if (editType === 'edit') {
-      dispatch({
-        type: 'resume/updateVC',
-        payload: {
-          ...formData,
-          cvFileUUID,
-          companyId: companyId,
-          workExperience: [...workData],
-        }
-      })
-      dispatch.resume.quickSelect({
+      dispatch.resume.updateVC({
+        ...formData,
+        cvFileUUID,
         companyId: companyId,
-        page: page,
-        pageSize: pageSize,
-        total: total
+        workExperience: [...workData],
+      }).then(() => {
+        dispatch.resume.quickSelect({
+          companyId: companyId,
+          page: page,
+          pageSize: pageSize,
+          total: total
+        })
       })
     }
     onclose()
