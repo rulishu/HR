@@ -76,7 +76,6 @@ const Index = () => {
           cvFileUUID,
           companyId: companyId,
           workExperience: [...workData],
-          // projectExperience: [...projectExperience]
         }
       })
       dispatch.resume.quickSelect({

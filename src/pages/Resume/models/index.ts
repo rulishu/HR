@@ -7,7 +7,8 @@ import {
   updateVC,
   getDownloadFile,
   uploadZip,
-  downZip
+  downZip,
+  getDownloadFilePDF
 } from '@/servers/resume';
 import { Notify } from 'uiw';
 import { downloadExcelFile, downloadPdfFile } from '../../../utils/export';
@@ -71,18 +72,11 @@ const route = {
         dispatch.resume.update({
           isDelete: false
         });
-        dispatch.resume.quickSelect();
+        dispatch.resume.quickSelect({
+          page: 1,
+          pageSize: 5
+        });
       }
-    },
-    /**
-     * 导出简历
-    */
-    async exportWord(payload?: any, state?: any) {
-      const data = await exportWord(payload);
-      // if (code === 200) {
-      //   Notify.success({ description: msg || '导出成功' });
-      downloadExcelFile(data, '简历导出.doc')
-      // }
     },
     /**
     * 新增简历
@@ -113,7 +107,7 @@ const route = {
         });
       }
     },
-    // 简历下载
+    // 文件预览
     async getDownloadFile(payload: any) {
       const data = await getDownloadFile(payload)
       downloadPdfFile(data)
@@ -130,13 +124,26 @@ const route = {
       }
     },
     /**
-     * 导出简历
+     * 批量导出
     */
     async downZip(payload?: any, state?: any) {
       const { code, msg } = await downZip(payload);
       if (code === 200) {
         Notify.success({ description: msg || '导出成功' });
       }
+    },
+    /*
+     * 导出Word简历
+    */
+    async exportWord(payload?: any, state?: any) {
+      const data = await exportWord(payload);
+      downloadExcelFile(data, '简历导出.doc')
+    },
+    // 导出PDF简历
+    async getDownloadFilePDF(payload: any) {
+      const data = await getDownloadFilePDF(payload)
+      downloadPdfFile(data)
+      return data
     },
   }),
 }
