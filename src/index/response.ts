@@ -32,7 +32,9 @@ axios.interceptors.response.use(
       // navigate("/login");
     } else if (code !== 200 && code !== 401) {
       // 判断是否为 Blob 数据
-      if (!(response?.data instanceof Blob)) {
+      const contentType = response.headers['content-type'];
+      const types = ['application/msword;charset=UTF-8'];
+      if (!(response?.data instanceof Blob) && !types.includes(contentType)) {
         await newDebounce(Notify.error, 300, {
           title: "响应失败",
           description: message || msg,

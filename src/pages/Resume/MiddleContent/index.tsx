@@ -23,16 +23,9 @@ const Index = () => {
 
     if (type === 'add' || type === 'edit') {
       dispatchFn({ editVisible: true })
-      type === 'add' &&
-        dispatchFn({ formData: {} })
-      type === 'edit' &&
-        dispatchFn({
-          formData: {
-            ...formData,
-            ...data,
-            cvFileUUID: cvFileUUID || data?.cvFileUUID
-          }
-        })
+      type === 'add' && dispatchFn({ formData: {} })
+      type === 'edit' && dispatchFn({ formData: { ...formData, ...data, cvFileUUID: cvFileUUID || data?.cvFileUUID } })
+
       data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
         dispatchFn({ file: res })
       })
@@ -48,19 +41,13 @@ const Index = () => {
       dispatch.resume.getDownloadFile(data?.cvFileUUID)
     }
     if (type === 'delete') {
-      dispatchFn({
-        isDelete: true,
-        delId: data.id
-      })
+      dispatchFn({ isDelete: true, delId: data.id })
     }
     if (type === 'export') {
-      dispatch({
-        type: 'resume/exportWord',
-        payload: {
-          userId: data.userId,
-          id: data.id
-        }
-      })
+      dispatch.resume.exportWord({ userId: data.userId, id: data.id })
+    }
+    if (type === 'exportPdf') {
+      dispatch.resume.getDownloadFilePDF({ id: data.id })
     }
   }
 
@@ -178,25 +165,12 @@ const Index = () => {
                       icon='delete'
                       onClick={() => handle('delete', item)}
                     />
-                    {/* <TipButton
-                      tip='导出'
-                      type='primary'
-                      icon='download'
-                      onClick={() => { handle('export', item) }}
-                    /> */}
                     <Popover
                       trigger="hover"
                       placement="top"
                       isOutside={true}
-                      // isOpen={ExportVis}
                       content={
-                        <div
-                          style={{
-                            width: 80,
-                            display: "flex",
-                            flexDirection: "column",
-                          }}
-                        >
+                        <div style={{ width: 80, display: "flex", flexDirection: "column", }}>
                           <Button
                             basic
                             block
@@ -209,9 +183,9 @@ const Index = () => {
                             basic
                             block
                             type="primary"
-                            onClick={() => handle('exportExcel', item)}
+                            onClick={() => handle('exportPdf', item)}
                           >
-                            导出excel
+                            导出PDF
                           </Button>
                         </div>
                       }
