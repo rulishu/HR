@@ -212,6 +212,16 @@ export const formData = ({
           ],
         },
         {
+          label: "婚姻状况",
+          key: "isMarried",
+          widget: "select",
+          option: dictObject['married']?.child || [],
+          initialValue: data?.isMarried,
+          rules: [
+            { required: true, message: '请选择入婚姻状况' },
+          ],
+        },
+        {
           label: "政治面貌",
           key: "politicalStatus",
           widget: "input",
@@ -226,16 +236,6 @@ export const formData = ({
               },
               message: '请填写汉字'
             }
-          ],
-        },
-        {
-          label: "婚姻状况",
-          key: "isMarried",
-          widget: "select",
-          option: dictObject['married']?.child || [],
-          initialValue: data?.isMarried,
-          rules: [
-            { required: true, message: '请选择入婚姻状况' },
           ],
         },
         {

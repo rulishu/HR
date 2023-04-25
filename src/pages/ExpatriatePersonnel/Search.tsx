@@ -17,11 +17,11 @@ const formSearchList = ({ dictObject }: any) => [
   
   {
     label: "外派状态",
-    key: "flag",
+    key: "state",
     widget: "select",
     option: [
-      { value: '', label: "未外派" },
-      { value: 3, label: "外派中" },
+      { value: '1', label: "未外派" },
+      { value: '3', label: "外派中" },
     ],
   },
 ];
