@@ -31,7 +31,6 @@ const Index = () => {
           formData: {
             ...formData,
             ...data,
-            projectExperience: [...data?.projectExperience],
             cvFileUUID: cvFileUUID || data?.cvFileUUID
           }
         })
@@ -191,46 +190,46 @@ const Index = () => {
                       icon='download'
                       onClick={() => { handle('export', item) }}
                     /> */}
-                  <Button
-                    icon='more'
-                    className='buttonPopover'
-                    onClick={() => setExportVis(true)}
-                  >
-                    <Popover
-                      trigger="click"
-                      placement="topLeft"
-                      isOpen={ExportVis}
-                      isOutside={true}
-                      onOpened={() => setExportVis(true)}
-                      onClosed={() => setExportVis(false)}
-                      content={
-                        <div
-                          style={{
-                            width: 120,
-                            display: "flex",
-                            flexDirection: "column",
-                          }}
+                  <Popover
+                    trigger="click"
+                    placement="top"
+                    isOpen={ExportVis}
+                    // isOutside={true}
+                    // onOpened={() => setExportVis(true)}
+                    // onClosed={() => setExportVis(false)}
+                    content={
+                      <div
+                        style={{
+                          width: 80,
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Button
+                          basic
+                          block
+                          type="primary"
+                          onClick={() => { handle('export', item) }}
                         >
-                          <Button
-                            basic
-                            block
-                            type="primary"
-                            onClick={() => { handle('export', item) }}
-                          >
-                            导出Word
-                          </Button>
-                          <Button
-                            basic
-                            block
-                            type="primary"
-                            onClick={() => { handle('exportExcel', item) }}
-                          >
-                            导出excel
-                          </Button>
-                        </div>
-                      }
-                    />
-                  </Button>
+                          导出Word
+                        </Button>
+                        <Button
+                          basic
+                          block
+                          type="primary"
+                          onClick={() => { handle('exportExcel', item) }}
+                        >
+                          导出excel
+                        </Button>
+                      </div>
+                    }
+                  >
+                    <Button
+                      icon='more'
+                      className='buttonPopover'
+                      onClick={() => setExportVis(true)}
+                    ></Button>
+                  </Popover>
                 </div>
               </div>
             </Card>

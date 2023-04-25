@@ -2,13 +2,11 @@ import { Fragment } from 'react';
 import { Drawer, Card, Button } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm, useForm } from "@uiw-admin/components";
-import { formList } from './item';
+import { formList, form2List } from './item';
 import '../../style/index.css';
 import WorkTable from '@/components/Archives/Tables/Work';
 import WorkModals from '@/components/Archives/Modals/Work';
 import { PlusItems, PlusIcon } from '../../style/style';
-import ProjectTable from './Project/Table/index';
-import ProjectModal from './Project/Modal/index';
 
 const Index = () => {
   const {
@@ -18,7 +16,7 @@ const Index = () => {
       cvFileUUID,
       editType,
       file,
-      projectExperience,
+      // projectExperience,
       companyId
     },
     archives: { workData },
@@ -49,7 +47,7 @@ const Index = () => {
   const onScreenSubmit = (current?: any) => {
     if (editType === 'add') {
       dispatch.resume.insert({
-        TCurriculumVitae: {
+        tcurriculumVitae: {
           ...current,
           cvFileUUID
         },
@@ -63,8 +61,9 @@ const Index = () => {
         payload: {
           ...formData,
           cvFileUUID,
+          companyId: companyId,
           workExperience: [...workData],
-          projectExperience: [...projectExperience]
+          // projectExperience: [...projectExperience]
         }
       })
     }
@@ -89,14 +88,6 @@ const Index = () => {
       type: "archives/updateState",
       payload: {
         isWorkVisible: true,
-      },
-    });
-  }
-  const projectOnAdd = () => {
-    dispatch({
-      type: "resume/update",
-      payload: {
-        isProjectVisible: true,
       },
     });
   }
@@ -135,16 +126,13 @@ const Index = () => {
             <WorkModals />
           </Card>}
         {/* 项目经验 */}
-        {editType === 'edit' &&
-          <Card noHover title={'项目经验'} extra={
-            <PlusItems onClick={() => projectOnAdd()}>
-              <PlusIcon type="plus" />
-              项目经验
-            </PlusItems>
-          }>
-            <ProjectTable />
-            <ProjectModal />
-          </Card>}
+        <ProForm
+          title={'项目经验'}
+          form={form}
+          readOnlyProps={{ column: 2 }}
+          onChange={(_, current) => { onChange(current) }}
+          formDatas={form2List(formData)}
+        />
 
         {/* useForm验证提交 */}
         <Button
