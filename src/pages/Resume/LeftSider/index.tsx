@@ -12,7 +12,7 @@ const Index = () => {
 
   const render = () => {
     return (
-      <Card noHover style={{ height: 680, overflow: 'scroll' }}>
+      <Card noHover style={{ height: 660, overflow: 'scroll' }}>
         {dictObject?.post?.child?.map((item: any, idx: any) => {
           let valueItem = dictObject?.post?.child?.find((itm: any) => itm.label === item.label)
           let post = valueItem?.value
