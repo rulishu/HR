@@ -31,6 +31,7 @@ export const formList = (props?: FormListProps) => {
       label: "结束时间",
       key: "endTime",
       widget: "dateInput",
+      required: true,
       initialValue: data?.endTime,
       span: "12",
       readSpan: 1,
@@ -39,7 +40,7 @@ export const formList = (props?: FormListProps) => {
         autoClose: true
       },
       rules: [
-        // { required: true, message: '请选择结束时间' },
+        { required: true, message: '请选择结束时间' },
         { 
           validator: (value: any) => {
             if (data.startTime && value) {

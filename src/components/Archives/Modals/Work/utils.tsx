@@ -32,7 +32,7 @@ export const formList = (props?: FormListProps) => {
       label: "结束时间",
       key: "endTime",
       widget: "dateInput",
-      required: true,
+      // required: true,
       initialValue: data?.endTime,
       span: "12",
       readSpan: 1,
