@@ -103,7 +103,7 @@ export const columns = ({
     {
       title: "操作",
       key: "edit",
-      width: 110,
+      width: 120,
       render: (text: any, key: any, rowData: any) => {
         return (
           <>

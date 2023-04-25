@@ -11,7 +11,7 @@ import '../style/index.css';
 const Page = () => {
   return (
     <Fragment>
-      <Tabs className='tabsRecord' type="line" activeKey="1" onTabClick={(key, tab, e) => {
+      <Tabs className='tabsRecordTop' type="line" activeKey="1" onTabClick={(key, tab, e) => {
         console.log("=>", key, tab);
       }}>
         <Tabs.Pane label="出勤记录" key="1">
