@@ -53,7 +53,7 @@ const Index = () => {
           ...current,
           cvFileUUID
         },
-        companyId: Number(companyId)
+        companyId: companyId
       }).then(() => form?.resetForm?.()
       );
     }

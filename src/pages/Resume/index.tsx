@@ -33,11 +33,11 @@ const Index = () => {
         className='tabsRecord'
         onTabClick={(key, tab, e) => {
           dispatch.resume.quickSelect({
-            companyId: Number(key),
+            companyId: key,
             page: page,
             pageSize: pageSize
           })
-          dispatch.resume.update({ companyId: Number(key) })
+          dispatch.resume.update({ companyId: key })
         }}>
         {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {
           return (
