@@ -7,7 +7,7 @@ const { Sider, Content } = Layout;
 
 const TabsTable = () => {
   return (
-    <Card noHover>
+    <Card noHover style={{ marginTop: 20 }}>
       <Layout style={{ background: 'rgb(255,255,255)' }}>
         <Sider style={{ borderRadius: 5 }}>
           <LeftSider />

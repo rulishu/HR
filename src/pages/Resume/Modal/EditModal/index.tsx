@@ -147,6 +147,10 @@ const Index = () => {
         {editType === 'edit' && <ProForm
           title={'项目经验'}
           form={form2}
+          formType="card"
+          cardProps={{
+            noHover: true
+          }}
           readOnlyProps={{ column: 2 }}
           onChange={(_, current) => { onChangeProject(current) }}
           formDatas={form2List(formData)}
