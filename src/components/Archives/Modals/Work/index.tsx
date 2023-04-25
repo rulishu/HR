@@ -10,7 +10,7 @@ function Modals() {
       isWorkVisible,
       workData,
       workIndex = 0,
-      workObj
+      workObj = {}
     },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
@@ -39,7 +39,7 @@ function Modals() {
       type: "archives/updateState",
       payload: {
         isWorkVisible: false,
-        workObj: undefined
+        workObj: {}
       },
     });
   };

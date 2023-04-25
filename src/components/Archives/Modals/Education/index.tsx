@@ -10,7 +10,7 @@ function Modals() {
       educationType,
       educationData,
       educationIndex = 0,
-      educationObj
+      educationObj = {}
     },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
@@ -28,7 +28,7 @@ function Modals() {
       payload: {
         educationData: newData,
         isEducationVisible: false,
-        educationObj: undefined
+        educationObj: {}
       }
     });
   };
@@ -39,7 +39,7 @@ function Modals() {
       type: "archives/updateState",
       payload: {
         isEducationVisible: false,
-        educationObj: undefined
+        educationObj: {}
       },
     });
   };
