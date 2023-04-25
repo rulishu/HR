@@ -42,7 +42,8 @@ const Page = () => {
       id: data.id,
       callback: (res: any) => {
         dispatch.sysOrganization.updateState({
-          dataListStaff: res
+          dataListStaff: res,
+          checked: []
         })
       }
     });

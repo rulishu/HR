@@ -39,6 +39,7 @@ const route = {
       const params: KktproKeys = {
         page,
         pageSize,
+        isApproved: 1,
         ...payload
       }
       const { code, data } = await selectStaffFile(params);

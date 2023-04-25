@@ -81,7 +81,7 @@ export function uploadZip(params: KktproKeys) {
 export function downZip(params: KktproKeys) {
   return request('/api/vc/downZip', {
     method: 'post',
-    body: { ...params },
-    requestType: 'form',
+    body: params,
+    responseType: "blob",
   });
 }

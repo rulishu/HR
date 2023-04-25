@@ -11,7 +11,7 @@ import {
   getDownloadFilePDF
 } from '@/servers/resume';
 import { Notify } from 'uiw';
-import { downloadExcelFile, downloadPdfFile } from '../../../utils/export';
+import { downloadExcelFile, downloadPdfFile, downloadZipFile } from '../../../utils/export';
 
 const init = {
   allFormData: undefined, // 详情数据
@@ -40,6 +40,7 @@ const route = {
     isProjectVisible: false, // 项目经验
     projectObj: {},
     projectExperience: [],
+    checked: [],
 
     companyId: '2'
   },
@@ -131,10 +132,8 @@ const route = {
      * 批量导出
     */
     async downZip(payload?: any, state?: any) {
-      const { code, msg } = await downZip(payload);
-      if (code === 200) {
-        Notify.success({ description: msg || '导出成功' });
-      }
+      const data = await downZip(payload);
+      downloadZipFile(data, '简历批量下载.zip')
     },
     /*
      * 导出Word简历
