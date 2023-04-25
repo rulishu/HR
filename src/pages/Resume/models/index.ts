@@ -24,7 +24,7 @@ const route = {
 
     formData: {}, // 新增/编辑简历
     TableData: [],
-    total: 10,
+    total: 0,
     page: 1,
     pageSize: 5,
 
@@ -70,7 +70,9 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '删除成功' });
         dispatch.resume.update({
-          isDelete: false
+          isDelete: false,
+          page: 1,
+          pageSize: 5
         });
         dispatch.resume.quickSelect({
           page: 1,
@@ -86,7 +88,9 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
         dispatch.resume.update({
-          editVisible: false
+          editVisible: false,
+          page: 1,
+          pageSize: 5
         });
         dispatch.resume.quickSelect({
           companyId: payload.companyId,

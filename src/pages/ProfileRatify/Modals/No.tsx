@@ -9,7 +9,6 @@ const NO = () => {
       isNoVisble,
       checkId
     },
-    global: { userData },
   } = useSelector((state: RootState) => state);
 
   const [value, setValue] = useState<string>('');
@@ -29,8 +28,7 @@ const NO = () => {
    * 提交
   */
   const onConfirm = () => {
-    const { userId } = userData as any || {};
-    dispatch.profileRatify.approve({userId, context:value, isApproved: 2, id: checkId})
+    dispatch.profileRatify.approve({ context:value, isApproved: 2, id: checkId})
   }
 
   return (

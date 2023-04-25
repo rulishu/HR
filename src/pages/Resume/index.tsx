@@ -37,7 +37,11 @@ const Index = () => {
             page: page,
             pageSize: pageSize
           })
-          dispatch.resume.update({ companyId: key })
+          dispatch.resume.update({
+            companyId: key,
+            page: 1,
+            pageSize: 5
+          })
         }}>
         {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {
           return (

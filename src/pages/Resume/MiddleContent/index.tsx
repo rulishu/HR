@@ -87,7 +87,7 @@ const Index = () => {
     <Card
       noHover
       bordered={false}
-      style={{ padding: 0, marginTop: -1, height: 680, overflow: 'scroll' }}
+      style={{ padding: 0, marginTop: -1, height: 660, overflow: 'scroll' }}
       title={
         <Row gutter={10}>
           <Col>

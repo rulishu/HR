@@ -48,7 +48,7 @@ const route = {
       }
       let data: any;
       if (params.id) {
-        data = await update(params)
+        data = await update({...params, isApproved: 0})
       } else {
         data = await insert(params);
       }

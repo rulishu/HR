@@ -69,20 +69,18 @@ const Index = () => {
       );
     }
     if (editType === 'edit') {
-      dispatch({
-        type: 'resume/updateVC',
-        payload: {
-          ...formData,
-          cvFileUUID,
-          companyId: companyId,
-          workExperience: [...workData],
-        }
-      })
-      dispatch.resume.quickSelect({
+      dispatch.resume.updateVC({
+        ...formData,
+        cvFileUUID,
         companyId: companyId,
-        page: page,
-        pageSize: pageSize,
-        total: total
+        workExperience: [...workData],
+      }).then(() => {
+        dispatch.resume.quickSelect({
+          companyId: companyId,
+          page: page,
+          pageSize: pageSize,
+          total: total
+        })
       })
     }
     onclose()
@@ -147,6 +145,10 @@ const Index = () => {
         {editType === 'edit' && <ProForm
           title={'项目经验'}
           form={form2}
+          formType="card"
+          cardProps={{
+            noHover: true
+          }}
           readOnlyProps={{ column: 2 }}
           onChange={(_, current) => { onChangeProject(current) }}
           formDatas={form2List(formData)}
