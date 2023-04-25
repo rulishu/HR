@@ -26,14 +26,14 @@ const formSearchList = ({ dictObject }: any) => [
   },
 ];
 
-const Search = () => {
+const Search = (props: any) => {
   const {
     global: { dictObject },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   const onScreenSubmit = (current: object) => {
-    dispatch.sysOrganization.selectListStaff({ ...current });
+    dispatch.sysOrganization.selectListStaff({ ...current, id:props.companyId, });
   }
 
   return (

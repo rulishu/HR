@@ -7,6 +7,7 @@ import {
   updateVC,
   getDownloadFile,
   uploadZip,
+  downZip
 } from '@/servers/resume';
 import { Notify } from 'uiw';
 import { downloadExcelFile, downloadPdfFile } from '../../../utils/export';
@@ -126,6 +127,15 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '上传成功' });
         dispatch.resume.quickSelect();
+      }
+    },
+    /**
+     * 导出简历
+    */
+    async downZip(payload?: any, state?: any) {
+      const { code, msg } = await downZip(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '导出成功' });
       }
     },
   }),

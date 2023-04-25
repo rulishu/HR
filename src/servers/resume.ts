@@ -65,3 +65,13 @@ export function uploadZip(params: KktproKeys) {
     requestType: 'form',
   });
 }
+/**
+ * 批量下载
+*/
+export function downZip(params: KktproKeys) {
+  return request('/api/vc/downZip', {
+    method: 'post',
+    body: { ...params },
+    requestType: 'form',
+  });
+}

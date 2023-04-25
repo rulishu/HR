@@ -63,7 +63,7 @@ const Page = () => {
 
   return (
     <Fragment>
-      <Tabs className='tabsRecord' type="line" activeKey={activeKey} onTabClick={(key, tab, e) => {
+      <Tabs className='tabsRecordTop' type="line" activeKey={activeKey} onTabClick={(key, tab, e) => {
         dispatch.employeeProfile.updateState({
           activeKey: key
         })
