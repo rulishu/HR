@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination, Popover } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
@@ -11,7 +11,6 @@ const Index = () => {
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
-  const [ExportVis, setExportVis] = useState(false)
 
   const dispatchFn = (params: any) => {
     dispatch({
@@ -19,7 +18,7 @@ const Index = () => {
       payload: params
     })
   }
-  const handle = async (type: any, data: any) => {
+  const handle = async (type: any, data?: any) => {
     dispatchFn({ editType: type })
 
     if (type === 'add' || type === 'edit') {
@@ -31,7 +30,6 @@ const Index = () => {
           formData: {
             ...formData,
             ...data,
-            projectExperience: [...data?.projectExperience],
             cvFileUUID: cvFileUUID || data?.cvFileUUID
           }
         })
@@ -41,15 +39,12 @@ const Index = () => {
       dispatch({
         type: "archives/updateState",
         payload: {
-          workData: [...data?.workExperience],
+          workData: data?.workExperience || [],
         }
       });
     }
 
     if (type === 'view') {
-      // dispatchFn({
-      //   modalVisible: true,
-      // })
       dispatch.resume.getDownloadFile(data?.cvFileUUID)
     }
     if (type === 'delete') {
@@ -67,15 +62,6 @@ const Index = () => {
         }
       })
     }
-    // if (type === 'batchUpload') {
-    //   dispatch({
-    //     type: 'resume/uploadZip',
-    //     // payload: {
-    //     //   userId: data.userId,
-    //     //   id: data.id
-    //     // }
-    //   })
-    // }
   }
 
   const onDelClosed = () => {
@@ -85,12 +71,18 @@ const Index = () => {
     dispatch.resume.deleteVC([delId])
   }
   const footer = (
+    TableData?.length > 0 &&
     <Pagination
       current={page}
       pageSize={pageSize}
       total={total}
       divider
       onChange={(current: any) => {
+        dispatchFn({
+          page: current,
+          pageSize: pageSize,
+          total: total,
+        })
         dispatch({
           type: "resume/quickSelect",
           payload: {
@@ -115,7 +107,7 @@ const Index = () => {
             <Button
               type='primary'
               icon='plus'
-              onClick={() => { handle('add', {}) }}
+              onClick={() => handle('add')}
             >
               新增简历
             </Button>
@@ -142,71 +134,65 @@ const Index = () => {
       }
       footer={footer}
     >
-      {TableData?.map((item: any, idx: any) => {
-        return (
-          <Fragment key={idx}>
-            < Card style={{ marginBottom: 10 }} noHover>
-              <div style={{ display: 'flex', justifyContent: "space-between", }} >
-                <div style={{ marginLeft: 20 }}>
-                  <p>姓名： {item?.name}</p>
-                  <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p>
-                </div>
-                <div>
-                  <p>工作经验： {item?.experience} 年</p>
-                  <p>薪资范围： {item?.salaryExpectation} </p>
-                </div>
-                <div>
-                  <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p>
-                  <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p>
-                </div>
-                <div
-                  style={{
-                    marginRight: 50,
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  <TipButton
-                    tip='编辑'
-                    type='primary'
-                    icon='edit'
-                    onClick={() => { handle('edit', item) }}
-                  />
-                  <TipButton
-                    tip='查看'
-                    type='primary'
-                    icon='document'
-                    disabled={item.cvFileUUID ? false : true}
-                    onClick={() => { handle('view', item) }}
-                  />
-                  <TipButton
-                    tip='删除'
-                    type='primary'
-                    icon='delete'
-                    onClick={() => { handle('delete', item) }}
-                  />
-                  {/* <TipButton
+      <div style={{ height: '100%' }}>
+        {TableData?.map((item: any, idx: any) => {
+          return (
+            <Fragment key={idx}>
+              < Card style={{ marginBottom: 10 }} noHover>
+                <div style={{ display: 'flex', justifyContent: "space-between", }} >
+                  <div style={{ marginLeft: 20 }}>
+                    <p>姓名： {item?.name}</p>
+                    <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p>
+                  </div>
+                  <div>
+                    <p>工作经验： {item?.experience} 年</p>
+                    <p>薪资范围： {item?.salaryExpectation} </p>
+                  </div>
+                  <div>
+                    <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p>
+                    <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p>
+                  </div>
+                  <div
+                    style={{
+                      marginRight: 50,
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <TipButton
+                      tip='编辑'
+                      type='primary'
+                      icon='edit'
+                      onClick={() => handle('edit', item)}
+                    />
+                    <TipButton
+                      tip='查看'
+                      type='primary'
+                      icon='document'
+                      disabled={item.cvFileUUID ? false : true}
+                      onClick={() => handle('view', item)}
+                    />
+                    <TipButton
+                      tip='删除'
+                      type='primary'
+                      icon='delete'
+                      onClick={() => handle('delete', item)}
+                    />
+                    {/* <TipButton
                       tip='导出'
                       type='primary'
                       icon='download'
                       onClick={() => { handle('export', item) }}
                     /> */}
-                  <Button
-                    icon='more'
-                    className='buttonPopover'
-                    onClick={() => setExportVis(true)}
-                  >
                     <Popover
-                      trigger="click"
-                      placement="topLeft"
-                      isOpen={ExportVis}
+                      trigger="hover"
+                      placement="top"
                       isOutside={true}
-                      onOpened={() => setExportVis(true)}
-                      onClosed={() => setExportVis(false)}
+                      // isOpen={ExportVis}
                       content={
                         <div
                           style={{
-                            width: 120,
+                            width: 80,
                             display: "flex",
                             flexDirection: "column",
                           }}
@@ -215,7 +201,7 @@ const Index = () => {
                             basic
                             block
                             type="primary"
-                            onClick={() => { handle('export', item) }}
+                            onClick={() => handle('export', item)}
                           >
                             导出Word
                           </Button>
@@ -223,21 +209,26 @@ const Index = () => {
                             basic
                             block
                             type="primary"
-                            onClick={() => { handle('exportExcel', item) }}
+                            onClick={() => handle('exportExcel', item)}
                           >
                             导出excel
                           </Button>
                         </div>
                       }
-                    />
-                  </Button>
+                    >
+                      <Button
+                        icon='more'
+                        className='buttonPopover'
+                      ></Button>
+                    </Popover>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          </Fragment>
-        )
-      })
-      }
+              </Card>
+            </Fragment>
+          )
+        })
+        }
+      </div>
 
       {TableData?.length <= 0 && <Empty />}
 
@@ -251,7 +242,7 @@ const Index = () => {
         onConfirm={() => onConfirm()}
         content="您确定要删除吗？"
       />
-    </Card>
+    </Card >
   )
 }
 export default Index

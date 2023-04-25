@@ -39,7 +39,7 @@ const route = {
     projectObj: {},
     projectExperience: [],
 
-    companyId: 2
+    companyId: '2'
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -93,7 +93,11 @@ const route = {
         dispatch.resume.update({
           editVisible: false
         });
-        dispatch.resume.quickSelect();
+        dispatch.resume.quickSelect({
+          companyId: payload.companyId,
+          page: 1,
+          pageSize: 5
+        });
       }
     },
     /**
@@ -106,7 +110,6 @@ const route = {
         dispatch.resume.update({
           editVisible: false
         });
-        dispatch.resume.quickSelect();
       }
     },
     // 简历下载
