@@ -2,13 +2,11 @@ import { Fragment } from 'react';
 import { Drawer, Card, Button } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm, useForm } from "@uiw-admin/components";
-import { formList } from './item';
+import { formList, form2List } from './item';
 import '../../style/index.css';
 import WorkTable from '@/components/Archives/Tables/Work';
 import WorkModals from '@/components/Archives/Modals/Work';
 import { PlusItems, PlusIcon } from '../../style/style';
-import ProjectTable from './Project/Table/index';
-import ProjectModal from './Project/Modal/index';
 
 const Index = () => {
   const {
@@ -18,14 +16,18 @@ const Index = () => {
       cvFileUUID,
       editType,
       file,
-      projectExperience,
-      companyId
+      // projectExperience,x
+      companyId,
+      page,
+      pageSize,
+      total
     },
     archives: { workData },
     global: { dictObject, },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
   const form = useForm();
+  const form2 = useForm();
 
   const onclose = () => {
     dispatch({
@@ -46,11 +48,20 @@ const Index = () => {
       }
     })
   }
-  const onScreenSubmit = (current?: any) => {
+  const onChangeProject = (current?: any) => {
+    dispatch({
+      type: 'resume/update',
+      payload: {
+        formData: { ...formData, ...current, }
+      }
+    })
+  }
+  const onScreenSubmit = (current?: any, current2?: any) => {
     if (editType === 'add') {
       dispatch.resume.insert({
-        TCurriculumVitae: {
+        tcurriculumVitae: {
           ...current,
+          ...current2,
           cvFileUUID
         },
         companyId: companyId
@@ -63,9 +74,15 @@ const Index = () => {
         payload: {
           ...formData,
           cvFileUUID,
+          companyId: companyId,
           workExperience: [...workData],
-          projectExperience: [...projectExperience]
         }
+      })
+      dispatch.resume.quickSelect({
+        companyId: companyId,
+        page: page,
+        pageSize: pageSize,
+        total: total
       })
     }
     onclose()
@@ -89,14 +106,6 @@ const Index = () => {
       type: "archives/updateState",
       payload: {
         isWorkVisible: true,
-      },
-    });
-  }
-  const projectOnAdd = () => {
-    dispatch({
-      type: "resume/update",
-      payload: {
-        isProjectVisible: true,
       },
     });
   }
@@ -135,16 +144,13 @@ const Index = () => {
             <WorkModals />
           </Card>}
         {/* 项目经验 */}
-        {editType === 'edit' &&
-          <Card noHover title={'项目经验'} extra={
-            <PlusItems onClick={() => projectOnAdd()}>
-              <PlusIcon type="plus" />
-              项目经验
-            </PlusItems>
-          }>
-            <ProjectTable />
-            <ProjectModal />
-          </Card>}
+        {editType === 'edit' && <ProForm
+          title={'项目经验'}
+          form={form2}
+          readOnlyProps={{ column: 2 }}
+          onChange={(_, current) => { onChangeProject(current) }}
+          formDatas={form2List(formData)}
+        />}
 
         {/* useForm验证提交 */}
         <Button
@@ -153,11 +159,15 @@ const Index = () => {
           onClick={async () => {
             // 触发验证
             await form.submitvalidate();
+            await form2.submitvalidate();
             // 获取错误信息
             const errors = form.getError()
+            const errors2 = form2.getError()
             if (errors && Object.keys(errors).length > 0) return
+            if (errors2 && Object.keys(errors2).length > 0) return
             const value = form.getFieldValues?.()
-            onScreenSubmit(value)
+            const value2 = form2.getFieldValues?.()
+            onScreenSubmit(value, value2)
             // 调用请求接口
           }}
         >

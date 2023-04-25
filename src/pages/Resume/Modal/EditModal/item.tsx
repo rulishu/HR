@@ -194,19 +194,39 @@ export const formList = (
       label: '上传简历',
       key: 'upload',
       widget: 'upload',
-      initialValue: formData?.cvFileUUID && [{dataURL: pdf, name: `${formData?.name}的简历`}],
+      initialValue: formData?.cvFileUUID && [{ dataURL: pdf, name: `${formData?.name}的简历` }],
       span: '24',
       readSpan: 3,
       widgetProps: {
         onChange: handleChange,
         uploadType: 'picture',
         maxNumber: 1,
-        onPreview:() => downloadPdfFile(file),
+        onPreview: () => downloadPdfFile(file),
         showFileIcon: {
           showPreviewIcon: true,
           showRemoveIcon: true,
         },
       },
+    },
+  ]
+}
+
+export const form2List = (
+  formData: any
+) => {
+  return [
+    {
+      label: "项目经验",
+      key: "projectExperience",
+      widget: "textarea",
+      initialValue: formData?.projectExperience,
+      widgetProps: {
+        rows: 5
+      },
+      span: "24",
+      rules: [
+        { message: '请输入项目经验' },
+      ],
     },
   ]
 }

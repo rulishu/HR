@@ -20,15 +20,6 @@ export function deleteVC(params: KktproKeys) {
   });
 }
 /**
- * 导出简历
-*/
-export function exportWord(params: KktproKeys) {
-  return request('/api/vc/exportWord', {
-    method: 'post',
-    body: { ...params },
-  });
-}
-/**
  * 新增简历
 */
 export function insert(params: KktproKeys) {
@@ -56,10 +47,39 @@ export const getDownloadFile = (params: any) => {
   })
 }
 /**
+ * 导出WORD简历
+*/
+export function exportWord(params: KktproKeys) {
+  return request('/api/vc/exportWord', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+/**
+ * 导出PDF简历
+*/
+export const getDownloadFilePDF = (params: any) => {
+  return request('/api/vc/exportPdf', {
+    method: 'post',
+    responseType: "blob",
+    body: { ...params }
+  })
+}
+/**
  * 批量上传
 */
 export function uploadZip(params: KktproKeys) {
   return request('/api/vc/uploadZip', {
+    method: 'post',
+    body: { ...params },
+    requestType: 'form',
+  });
+}
+/**
+ * 批量下载
+*/
+export function downZip(params: KktproKeys) {
+  return request('/api/vc/downZip', {
     method: 'post',
     body: { ...params },
     requestType: 'form',

@@ -46,7 +46,7 @@ const Index = () => {
             </Tabs.Pane >
           )
         })}
-        <Tabs.Pane label={'面试简历'} key={'0'}>
+        <Tabs.Pane label={'面试简历'} key={''}>
           <TabsContent />
         </Tabs.Pane >
       </Tabs >
