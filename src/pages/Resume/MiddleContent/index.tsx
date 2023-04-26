@@ -33,6 +33,7 @@ const Index = () => {
         type: "archives/updateState",
         payload: {
           workData: data?.workExperience || [],
+          educationData: data?.educationalExperience || []
         }
       });
       dispatch.resume.getCVUpdateLogs({ id: data.id })

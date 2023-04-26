@@ -174,7 +174,7 @@ export const formList = (
       hide: editType === 'edit' ? false : true
     },
     {
-      label: "自我介绍",
+      label: "自我评价",
       key: "introduce",
       widget: "textarea",
       initialValue: formData?.introduce,
