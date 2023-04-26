@@ -24,7 +24,7 @@ export const LayoutWraper = styled.div<{ scroll: boolean }>`
   ${({ scroll }) => {
     if (scroll) {
       return css`
-        overflow: hidden;
+        /* overflow: hidden; */
       `
     }
   }}

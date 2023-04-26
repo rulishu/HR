@@ -125,6 +125,12 @@
             "name": "外派人员管理",
             "icon": "folder-open",
             "element": "@/pages/ExpatriatePersonnel"
+          },
+          {
+            "path": "/admin/employment-confirmation",
+            "name": "转正审批",
+            "icon": "usergroup-add",
+            "element": "@/pages/EmploymentConfirmation"
           }
         ]
       },
