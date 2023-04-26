@@ -7,6 +7,7 @@ import '../../style/index.css';
 import WorkTable from '@/components/Archives/Tables/Work';
 import WorkModals from '@/components/Archives/Modals/Work';
 import { PlusItems, PlusIcon } from '../../style/style';
+import CVLog from './CVLog'
 
 const Index = () => {
   const {
@@ -142,18 +143,21 @@ const Index = () => {
             <WorkModals />
           </Card>}
         {/* 项目经验 */}
-        {editType === 'edit' && <ProForm
-          title={'项目经验'}
-          form={form2}
-          formType="card"
-          cardProps={{
-            noHover: true
-          }}
-          readOnlyProps={{ column: 2 }}
-          onChange={(_, current) => { onChangeProject(current) }}
-          formDatas={form2List(formData)}
-        />}
-
+        {editType === 'edit' &&
+          <ProForm
+            title={'项目经验'}
+            form={form2}
+            formType="card"
+            cardProps={{
+              noHover: true
+            }}
+            readOnlyProps={{ column: 2 }}
+            onChange={(_, current) => { onChangeProject(current) }}
+            formDatas={form2List(formData)}
+          />}
+        {/* 简历历史记录查看 */}
+        {editType === 'edit' &&
+          < CVLog />}
         {/* useForm验证提交 */}
         <Button
           style={{ marginTop: 10, width: 80 }}
