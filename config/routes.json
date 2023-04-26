@@ -44,7 +44,7 @@
           },
           {
             "path": "/admin/employee-depart",
-            "name": "离职管理",
+            "name": "离职申请",
             "icon": "user-delete",
             "element": "@/pages/EmployeeDepart"
           },

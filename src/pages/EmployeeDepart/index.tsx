@@ -1,15 +1,34 @@
-import { Fragment } from 'react';
-import { Card } from 'uiw';
-import Search from './Search';
-import Table from './Table';
+import React, { useRef } from 'react';
+import { FormPage, Regulars } from '@/components'
+import { formData } from './utils';
 
-const Page = () => {
+const Index = () => {
+  const formRefList = useRef<any>([]);
+
+  const onReset = async () => {
+    formRefList.current?.resetForm();
+  }
+
   return (
-    <Fragment>
-      <Card noHover bordered={false} style={{ marginBottom: 14 }}><Search /></Card>
-      <Card noHover bordered={false}><Table /></Card>
-    </Fragment>
+    <FormPage
+    buttons={[
+      {
+        type: "primary",
+        label: '提交',
+        // onClick: onSubmit
+      },
+      {
+        label: '重置',
+        // hide: allFormData && (allFormData as any).id,
+        onClick: onReset
+      },
+    ]}
+  >
+   <Regulars 
+      refs={(e: any) => e && (formRefList.current = e)}
+      formDatas={formData({})}/>
+  </FormPage>
+     
   )
 }
-
-export default Page;
+export default Index;
