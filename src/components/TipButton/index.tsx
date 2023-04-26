@@ -17,7 +17,6 @@ const TipButton = (props: TipButtonProps) => {
       <Btn
         icon={icon}
         type={type}
-        size="large"
         onClick={onClick}
         disabled={disabled}
       />

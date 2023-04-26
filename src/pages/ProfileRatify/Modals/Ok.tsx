@@ -15,7 +15,7 @@ const OK = () => {
   } = useSelector((state: RootState) => state);
 
   const formRef = useRef<any>();
-  
+
   const [formData, setFormData] = useState<KktproKeys | undefined>();
   const [departmentList, setDepartmentList] = useState<KktproKeys[]>([]);
 
@@ -50,13 +50,16 @@ const OK = () => {
   */
   const onConfirm = async () => {
     await formRef.current?.submitvalidate();
-    delete newFormData.idCardImgFrontUUIDs
-    delete newFormData.idCardImgBackUUIDs
-    delete newFormData.diplomaImgUUIDs
-    delete newFormData.degreeCertificateImgUUIDs
-    delete newFormData.departImgUUIDs
-    delete newFormData.staffPhotoImgUUIDs
-    dispatch.profileRatify.approve({...newFormData, ...formData, isApproved: 1})
+    const values: KktproKeys = await formRef.current?.getError() || {};
+    if (Object.keys(values).length === 0) {
+      delete newFormData.idCardImgFrontUUIDs;
+      delete newFormData.idCardImgBackUUIDs;
+      delete newFormData.diplomaImgUUIDs;
+      delete newFormData.degreeCertificateImgUUIDs;
+      delete newFormData.departImgUUIDs;
+      delete newFormData.staffPhotoImgUUIDs;
+      dispatch.profileRatify.approve({ ...newFormData, ...formData, isApproved: 1 })
+    }
   }
 
   return (

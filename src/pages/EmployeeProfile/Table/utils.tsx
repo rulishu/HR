@@ -1,5 +1,6 @@
 import { KktproKeys, dispatch } from '@kkt/pro';
-import { Checkbox, Button } from "uiw";
+import { Checkbox } from "uiw";
+import { TipButton } from '@/components'
 
 interface columnsProps {
   companyList?: any,
@@ -7,7 +8,7 @@ interface columnsProps {
   checked?: any,
   dataSourceList?: any,
   onCheck?: (rowData: KktproKeys, e: KktproKeys) => void;
-  onEdit?: (rowData: KktproKeys) => void;
+  onEdit?: (rowData: KktproKeys, type?: any) => void;
   onDelete?: (rowData: KktproKeys) => void;
 }
 
@@ -158,26 +159,34 @@ export const columns = ({
     {
       title: "操作",
       key: "edit",
-      width: 140,
+      width: 160,
       render: (text: any, key: any, rowData: any) => {
         return (
           <>
-          <Button
+          <TipButton
+            tip="转正"
+            icon="verification"
+            type="primary"
+            onClick={() => onEdit?.(rowData, '/admin/sys/organization-structure')}
+          />
+          <TipButton
+            tip="离职"
+            icon="user-delete"
+            type="primary"
+            onClick={() => onEdit?.(rowData, '/admin/employee-depart')}
+          />
+          <TipButton
+            tip="编辑"
             icon="edit"
             type="primary"
-            onClick={(e) => {
-              onEdit?.(rowData);
-            }}
-          >
-            编辑
-          </Button>
-          <Button
-            icon="delete"
+            onClick={() => onEdit?.(rowData)}
+          />
+          <TipButton
+            tip="删除"
             type="danger"
+            icon="delete"
             onClick={() => onDelete?.(rowData)}
-          >
-            删除
-          </Button>
+          />
           </>
         );
       },

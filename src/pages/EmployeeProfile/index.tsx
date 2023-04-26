@@ -72,6 +72,7 @@ const Page = () => {
           <Card noHover style={{ marginBottom: 14 }}><Search /></Card>
           <Card noHover><Table /></Card>
         </Tabs.Pane>
+        {queryInfo?.id ? (
         <Tabs.Pane label="人员信息档案" key="2">
           <FormPage
             buttons={[
@@ -82,7 +83,7 @@ const Page = () => {
               },
               {
                 label: '重置',
-                hide: queryInfo && (queryInfo as any).id,
+                hide: queryInfo?.id,
                 onClick: onReset
               },
             ]}
@@ -93,7 +94,7 @@ const Page = () => {
               contract={1}
             />
           </FormPage>
-        </Tabs.Pane>
+        </Tabs.Pane>) : ''}
       </Tabs>
       <Modals />
     </Fragment>
