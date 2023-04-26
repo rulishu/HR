@@ -44,7 +44,7 @@
           },
           {
             "path": "/admin/employee-depart",
-            "name": "离职管理",
+            "name": "离职申请",
             "icon": "user-delete",
             "element": "@/pages/EmployeeDepart"
           },
@@ -104,7 +104,7 @@
           },
           {
             "path": "/admin/sys/organization-structure",
-            "name": "转正管理",
+            "name": "转正申请",
             "icon": "folder-open",
             "element": "@/pages/sys/RegularEmployee"
           },
@@ -125,6 +125,12 @@
             "name": "外派人员管理",
             "icon": "folder-open",
             "element": "@/pages/ExpatriatePersonnel"
+          },
+          {
+            "path": "/admin/employment-confirmation",
+            "name": "转正审批",
+            "icon": "usergroup-add",
+            "element": "@/pages/EmploymentConfirmation"
           }
         ]
       },

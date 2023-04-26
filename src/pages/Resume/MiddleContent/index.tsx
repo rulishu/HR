@@ -33,6 +33,7 @@ const Index = () => {
         type: "archives/updateState",
         payload: {
           workData: data?.workExperience || [],
+          educationData: data?.educationalExperience || []
         }
       });
       dispatch.resume.getCVUpdateLogs({ id: data.id })
@@ -65,6 +66,12 @@ const Index = () => {
   }
   const onConfirm = () => {
     dispatch.resume.deleteVC([delId])
+      .then(() =>
+        dispatch.resume.quickSelect({
+          page: page,
+          pageSize: pageSize,
+        })
+      )
   }
   const footer = (
     TableData?.length > 0 &&

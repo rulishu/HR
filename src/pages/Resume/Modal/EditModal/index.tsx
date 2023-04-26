@@ -6,6 +6,8 @@ import { formList, form2List } from './item';
 import '../../style/index.css';
 import WorkTable from '@/components/Archives/Tables/Work';
 import WorkModals from '@/components/Archives/Modals/Work';
+import EducationTable from '@/components/Archives/Tables/Education';
+import EducationModals from '@/components/Archives/Modals/Education'
 import { PlusItems, PlusIcon } from '../../style/style';
 import CVLog from './CVLog'
 
@@ -23,7 +25,7 @@ const Index = () => {
       pageSize,
       total
     },
-    archives: { workData },
+    archives: { workData, educationData },
     global: { dictObject, },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -75,6 +77,7 @@ const Index = () => {
         cvFileUUID,
         companyId: companyId,
         workExperience: [...workData],
+        educationalExperience: [...educationData]
       }).then(() => {
         dispatch.resume.quickSelect({
           companyId: companyId,
@@ -105,6 +108,14 @@ const Index = () => {
       type: "archives/updateState",
       payload: {
         isWorkVisible: true,
+      },
+    });
+  }
+  const educationOnAdd = () => {
+    dispatch({
+      type: "archives/updateState",
+      payload: {
+        isEducationVisible: true,
       },
     });
   }
@@ -142,10 +153,21 @@ const Index = () => {
             <WorkTable type="edit" />
             <WorkModals />
           </Card>}
+        {/* 教育经历 */}
+        {editType === 'edit' &&
+          <Card noHover title={'教育经历'} extra={
+            <PlusItems onClick={() => educationOnAdd()}>
+              <PlusIcon type="plus" />
+              教育经历
+            </PlusItems>
+          }>
+            <EducationTable type="edit" />
+            <EducationModals />
+          </Card>}
         {/* 项目经验 */}
         {editType === 'edit' &&
           <ProForm
-            title={'项目经验'}
+            // title={'项目经验'}
             form={form2}
             formType="card"
             cardProps={{

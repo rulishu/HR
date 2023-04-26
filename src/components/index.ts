@@ -18,4 +18,7 @@ export * from './Scroll';
 export { default as Archives } from './Archives';
 export * from './Archives';
 
+export { default as Regulars } from './Regulars';
+export * from './Regulars';
+
 export { default as NoData } from './NoData';

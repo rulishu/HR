@@ -28,7 +28,7 @@ const NO = () => {
    * 提交
   */
   const onConfirm = () => {
-    dispatch.profileRatify.approve({ remake:value, isApproved: 2, id: checkId})
+    dispatch.profileRatify.approve({ context:value, isApproved: 2, id: checkId})
   }
 
   return (
