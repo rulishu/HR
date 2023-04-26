@@ -28,7 +28,21 @@ export const handleExport = (data: any, fileName: string) => {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
+export const downloadZipFile = (data: any, fileName: string) => {
+  const blob = new Blob([data], {
+    type: "application/zip",
+  });
 
+  // For other browsers
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", fileName);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
 export const downloadPdfFile = (data: any) => {
   const blob = new Blob([data], { type: "application/pdf;charset-UTF-8" })
   const linkNode = document.createElement('a');

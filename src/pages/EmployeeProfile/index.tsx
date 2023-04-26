@@ -25,7 +25,7 @@ const Page = () => {
     dispatch.employeeProfile.updateState({
       activeKey: '1'
     })
-    dispatch.employeeProfile.selectStaffFile({ isApproved: 1 });
+    dispatch.employeeProfile.selectStaffFile();
     if (companyList.length === 0) {
       dispatch.sysOrganization.selectList({
         callback: (data: any) => {
