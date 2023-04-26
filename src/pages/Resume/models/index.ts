@@ -74,12 +74,6 @@ const route = {
         Notify.success({ description: msg || '删除成功' });
         dispatch.resume.update({
           isDelete: false,
-          page: 1,
-          pageSize: 5
-        });
-        dispatch.resume.quickSelect({
-          page: 1,
-          pageSize: 5
         });
       }
     },
@@ -127,7 +121,7 @@ const route = {
       const { code, msg } = await uploadZip(payload);
       if (code === 200) {
         Notify.success({ description: msg || '上传成功' });
-        dispatch.resume.quickSelect();
+        dispatch.resume.quickSelect({ page: 1, pageSize: 5 });
       }
     },
     /**
