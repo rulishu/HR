@@ -1,16 +1,17 @@
 import { Fragment, useEffect } from 'react';
 import { useDispatch, Dispatch, KktproKeys, useSelector, RootState } from '@kkt/pro';
-import { Row } from "uiw";
+import { Row, Tabs } from "uiw";
 import U from './Users';
 import C from './Content';
 import M from './Modals';
+import T from './Table';
 import { NoData } from '@/components';
 import { CardWrap } from './style';
 
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
-    profileRatify: { noData }
+    profileRatify: { noData, activeKey }
   } = useSelector((state: RootState) => state);
 
   useEffect(() => {
@@ -37,18 +38,29 @@ const Page = () => {
 
   return (
     <Fragment>
-      {noData ? (
-        <NoData tip="暂无审核数据" />
-      ) : (
-        <CardWrap
-          noHover
-          bodyStyle={{ padding: 0, height: '100%', overflow: 'hidden' }}>
-          <Row style={{ height: '100%' }}>
-            <U />
-            <C />
-          </Row>
-        </CardWrap>
-      )}
+      <Tabs className='tabsRecordTop' type="line" activeKey={activeKey} onTabClick={(key, tab, e) => {
+        dispatch.profileRatify.updateState({
+          activeKey: key
+        })
+      }}>
+        <Tabs.Pane label="档案审批" key="1">
+          {noData ? (
+            <NoData tip="暂无审核数据" />
+          ) : (
+            <CardWrap
+              noHover
+              bodyStyle={{ padding: 0, height: '100%', overflow: 'hidden' }}>
+              <Row style={{ height: '100%' }}>
+                <U />
+                <C />
+              </Row>
+            </CardWrap>
+          )}
+        </Tabs.Pane>
+        <Tabs.Pane label="档案审批记录" key="2">
+          <T />
+        </Tabs.Pane>
+      </Tabs>
       <M />
     </Fragment>
   )

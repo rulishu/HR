@@ -40,3 +40,13 @@ export const getSelectFile = (params: any) => {
     responseType: "blob",
   })
 }
+
+/**
+ * 档案审批记录
+*/
+export function selectTimeline(params: KktproKeys) {
+  return request('/api/userTimeline/selectTimeline', {
+    method: 'POST',
+    body: { ...params },
+  });
+}

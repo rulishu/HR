@@ -1,5 +1,5 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
-import { selectStaffFile, approve, getSelectFile } from '@/servers/profileRatify';
+import { selectStaffFile, approve, getSelectFile, selectTimeline } from '@/servers/profileRatify';
 import { Notify } from 'uiw';
 import { asyncAwaitFormList } from '@/utils/valid';
 
@@ -18,6 +18,7 @@ const init = {
   // 弹层
   isOkVisble: false, // 通过弹层
   isNoVisble: false, // 不通过弹层
+  activeKey: '1',
 }
 
 const route = {
@@ -149,6 +150,15 @@ const route = {
           isOkVisble: false,
           isNoVisble: false,
         });
+      }
+    },
+    /**
+     * 档案审批记录
+    */
+    async selectTimeline(payload: KktproKeys) {
+      const { code, msg } = await selectTimeline(payload);
+      if (code === 200) {
+        Notify.success({ description: msg || '审批成功' });
       }
     },
   })
