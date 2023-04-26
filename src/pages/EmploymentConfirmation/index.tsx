@@ -45,7 +45,7 @@ const Page = () => {
           activeKey: key
         })
       }}>
-        <Tabs.Pane label="档案审批" key="1">
+        <Tabs.Pane label="转正审批" key="1">
           {noData ? (
             <NoData tip="暂无审核数据" />
           ) : (
@@ -59,7 +59,7 @@ const Page = () => {
             </CardWrap>
           )}
         </Tabs.Pane>
-        <Tabs.Pane label="档案审批记录" key="2">
+        <Tabs.Pane label="转正审批记录" key="2">
           <T />
         </Tabs.Pane>
       </Tabs>

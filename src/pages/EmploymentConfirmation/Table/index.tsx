@@ -78,6 +78,10 @@ function ArchiveApprovalRecord() {
           // 默认值
           defaultSelected: [],
         }}
+        // paginationProps={{
+        //   pageSizeOptions: [10, 20, 30],
+        //   pageSize: 10,
+        // }}
         table={table}
         columns={[
           {
