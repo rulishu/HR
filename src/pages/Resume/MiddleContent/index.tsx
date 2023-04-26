@@ -35,6 +35,7 @@ const Index = () => {
           workData: data?.workExperience || [],
         }
       });
+      dispatch.resume.getCVUpdateLogs({ id: data.id })
     }
 
     if (type === 'view') {
@@ -50,7 +51,7 @@ const Index = () => {
       dispatch.resume.getDownloadFilePDF({ id: data.id })
     }
     if (type === 'batchUpload') {
-      const checkedDown = checked.map((item:any) => ({userId:item?.userId,id:item?.id}))
+      const checkedDown = checked.map((item: any) => ({ userId: item?.userId, id: item?.id }))
       dispatch({
         type: 'resume/downZip',
         payload: checkedDown
@@ -145,15 +146,15 @@ const Index = () => {
             </FileInput>
           </Col>
           <Col>
-          <Button
-                type='primary'
-                icon='download'
-                disabled={checked.length === 0}
-                onClick={() => { handle('batchUpload', {}) }}
-              >
-                批量下载
-              </Button>
-              </Col>
+            <Button
+              type='primary'
+              icon='download'
+              disabled={checked.length === 0}
+              onClick={() => { handle('batchUpload', {}) }}
+            >
+              批量下载
+            </Button>
+          </Col>
         </Row>
       }
       footer={footer}
@@ -164,16 +165,16 @@ const Index = () => {
             <Fragment key={idx}>
               < Card style={{ marginBottom: 10 }} noHover>
                 <div style={{ display: 'flex', justifyContent: "space-between", }} >
-                  <div style={{ display: 'flex', marginLeft: 20, alignItems:'center' }}>
-                  <Checkbox
-                    checked={item.checked}
-                    onClick={(e) => {
-                      onCheck?.(item, e);
-                    }}
-                  />
-                  <div style={{ marginLeft: 10 }}>
-                    <p>姓名： {item?.name}</p >
-                    <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p >
+                  <div style={{ display: 'flex', marginLeft: 20, alignItems: 'center' }}>
+                    <Checkbox
+                      checked={item.checked}
+                      onClick={(e) => {
+                        onCheck?.(item, e);
+                      }}
+                    />
+                    <div style={{ marginLeft: 10 }}>
+                      <p>姓名： {item?.name}</p >
+                      <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p >
                     </div>
                   </div>
                   <div>
