@@ -66,6 +66,12 @@ const Index = () => {
   }
   const onConfirm = () => {
     dispatch.resume.deleteVC([delId])
+      .then(() =>
+        dispatch.resume.quickSelect({
+          page: page,
+          pageSize: pageSize,
+        })
+      )
   }
   const footer = (
     TableData?.length > 0 &&
