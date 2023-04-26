@@ -167,7 +167,7 @@ const Index = () => {
         {/* 项目经验 */}
         {editType === 'edit' &&
           <ProForm
-            title={'项目经验'}
+            // title={'项目经验'}
             form={form2}
             formType="card"
             cardProps={{
