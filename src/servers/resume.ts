@@ -20,15 +20,6 @@ export function deleteVC(params: KktproKeys) {
   });
 }
 /**
- * 导出简历
-*/
-export function exportWord(params: KktproKeys) {
-  return request('/api/vc/exportWord', {
-    method: 'post',
-    body: { ...params },
-  });
-}
-/**
  * 新增简历
 */
 export function insert(params: KktproKeys) {
@@ -50,9 +41,28 @@ export function updateVC(params: KktproKeys) {
  * 文件预览下载
 */
 export const getDownloadFile = (params: any) => {
-  return request(` /api/file/download/${params}`, {
+  return request(`/api/file/download/${params}`, {
     method: 'get',
     responseType: "blob",
+  })
+}
+/**
+ * 导出WORD简历
+*/
+export function exportWord(params: KktproKeys) {
+  return request('/api/vc/exportWord', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+/**
+ * 导出PDF简历
+*/
+export const getDownloadFilePDF = (params: any) => {
+  return request('/api/vc/exportPdf', {
+    method: 'post',
+    responseType: "blob",
+    body: { ...params }
   })
 }
 /**
@@ -73,5 +83,14 @@ export function downZip(params: KktproKeys) {
     method: 'post',
     body: params,
     responseType: "blob",
+  });
+}
+/**
+ * 获取简历修改记录
+*/
+export function getCVUpdateLogs(params: KktproKeys) {
+  return request('/api/cvTimeline/getCVUpdateLogs', {
+    method: 'post',
+    body: { ...params },
   });
 }

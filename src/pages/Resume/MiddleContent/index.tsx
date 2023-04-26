@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination, Popover, Checkbox } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
@@ -11,7 +11,6 @@ const Index = () => {
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
-  const [ExportVis, setExportVis] = useState(false)
 
   const dispatchFn = (params: any) => {
     dispatch({
@@ -19,61 +18,46 @@ const Index = () => {
       payload: params
     })
   }
-  const handle = async (type: any, data: any) => {
+  const handle = async (type: any, data?: any) => {
     dispatchFn({ editType: type })
 
     if (type === 'add' || type === 'edit') {
       dispatchFn({ editVisible: true })
-      type === 'add' &&
-        dispatchFn({ formData: {} })
-      type === 'edit' &&
-        dispatchFn({
-          formData: {
-            ...formData,
-            ...data,
-            projectExperience: [...data?.projectExperience],
-            cvFileUUID: cvFileUUID || data?.cvFileUUID
-          }
-        })
+      type === 'add' && dispatchFn({ formData: {} })
+      type === 'edit' && dispatchFn({ formData: { ...formData, ...data, cvFileUUID: cvFileUUID || data?.cvFileUUID } })
+
       data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
         dispatchFn({ file: res })
       })
       dispatch({
         type: "archives/updateState",
         payload: {
-          workData: [...data?.workExperience],
+          workData: data?.workExperience || [],
         }
       });
+      dispatch.resume.getCVUpdateLogs({ id: data.id })
     }
 
     if (type === 'view') {
-      // dispatchFn({
-      //   modalVisible: true,
-      // })
       dispatch.resume.getDownloadFile(data?.cvFileUUID)
     }
     if (type === 'delete') {
-      dispatchFn({
-        isDelete: true,
-        delId: data.id
-      })
+      dispatchFn({ isDelete: true, delId: data.id })
     }
     if (type === 'export') {
-      dispatch({
-        type: 'resume/exportWord',
-        payload: {
-          userId: data.userId,
-          id: data.id
-        }
-      })
+      dispatch.resume.exportWord({ userId: data.userId, id: data.id })
+    }
+    if (type === 'exportPdf') {
+      dispatch.resume.getDownloadFilePDF({ id: data.id })
     }
     if (type === 'batchUpload') {
-      const checkedDown = checked.map((item:any) => ({userId:item?.userId,id:item?.id}))
+      const checkedDown = checked.map((item: any) => ({ userId: item?.userId, id: item?.id }))
       dispatch({
         type: 'resume/downZip',
         payload: checkedDown
       })
     }
+
   }
 
   const onDelClosed = () => {
@@ -83,12 +67,18 @@ const Index = () => {
     dispatch.resume.deleteVC([delId])
   }
   const footer = (
+    TableData?.length > 0 &&
     <Pagination
       current={page}
       pageSize={pageSize}
       total={total}
       divider
       onChange={(current: any) => {
+        dispatchFn({
+          page: current,
+          pageSize: pageSize,
+          total: total,
+        })
         dispatch({
           type: "resume/quickSelect",
           payload: {
@@ -102,6 +92,7 @@ const Index = () => {
       }
     />
   )
+
   const onCheck = (rowData: any, e: any) => {
     const isChecked = e.target.checked;
     let check = [...checked] as any[];
@@ -118,19 +109,20 @@ const Index = () => {
       payload: { checked: check },
     });
   }
-  
+
+
   return (
     <Card
       noHover
       bordered={false}
-      style={{ padding: 0, marginTop: -1, height: 680, overflow: 'scroll' }}
+      style={{ padding: 0, marginTop: -1, height: 660, overflow: 'scroll' }}
       title={
         <Row gutter={10}>
           <Col>
             <Button
               type='primary'
               icon='plus'
-              onClick={() => { handle('add', {}) }}
+              onClick={() => handle('add')}
             >
               新增简历
             </Button>
@@ -154,101 +146,82 @@ const Index = () => {
             </FileInput>
           </Col>
           <Col>
-          <Button
-                type='primary'
-                icon='download'
-                disabled={checked.length === 0}
-                onClick={() => { handle('batchUpload', {}) }}
-              >
-                批量下载
-              </Button>
-              </Col>
+            <Button
+              type='primary'
+              icon='download'
+              disabled={checked.length === 0}
+              onClick={() => { handle('batchUpload', {}) }}
+            >
+              批量下载
+            </Button>
+          </Col>
         </Row>
       }
       footer={footer}
     >
-      {TableData?.map((item: any, idx: any) => {
-        return (
-          <Fragment key={idx}>
-            < Card style={{ marginBottom: 10 }} noHover>
-              <div style={{ display: 'flex', justifyContent: "space-between", }} >
-                <div style={{ display: 'flex', marginLeft: 20, alignItems:'center' }}>
-                <Checkbox
-                    checked={item.checked}
-                    onClick={(e) => {
-                      onCheck?.(item, e);
-                    }}
-                  />
-                  <div style={{ marginLeft: 10 }}>
-                  <p>姓名： {item?.name}</p>
-                  <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p>
+      <div style={{ height: '100%' }}>
+        {TableData?.map((item: any, idx: any) => {
+          return (
+            <Fragment key={idx}>
+              < Card style={{ marginBottom: 10 }} noHover>
+                <div style={{ display: 'flex', justifyContent: "space-between", }} >
+                  <div style={{ display: 'flex', marginLeft: 20, alignItems: 'center' }}>
+                    <Checkbox
+                      checked={item.checked}
+                      onClick={(e) => {
+                        onCheck?.(item, e);
+                      }}
+                    />
+                    <div style={{ marginLeft: 10 }}>
+                      <p>姓名： {item?.name}</p >
+                      <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p >
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <p>工作经验： {item?.experience} 年</p>
-                  <p>薪资范围： {item?.salaryExpectation} </p>
-                </div>
-                <div>
-                  <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p>
-                  <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p>
-                </div>
-                <div
-                  style={{
-                    marginRight: 50,
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  <TipButton
-                    tip='编辑'
-                    type='primary'
-                    icon='edit'
-                    onClick={() => { handle('edit', item) }}
-                  />
-                  <TipButton
-                    tip='查看'
-                    type='primary'
-                    icon='document'
-                    disabled={item.cvFileUUID ? false : true}
-                    onClick={() => { handle('view', item) }}
-                  />
-                  <TipButton
-                    tip='删除'
-                    type='primary'
-                    icon='delete'
-                    onClick={() => { handle('delete', item) }}
-                  />
-                  {/* <TipButton
-                      tip='导出'
-                      type='primary'
-                      icon='download'
-                      onClick={() => { handle('export', item) }}
-                    /> */}
-                  <Button
-                    icon='more'
-                    className='buttonPopover'
-                    onClick={() => setExportVis(true)}
+                  <div>
+                    <p>工作经验： {item?.experience} 年</p >
+                    <p>薪资范围： {item?.salaryExpectation} </p >
+                  </div>
+                  <div>
+                    <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p >
+                    <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p >
+                  </div>
+                  <div
+                    style={{
+                      marginRight: 50,
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
                   >
+                    <TipButton
+                      tip='编辑'
+                      type='primary'
+                      icon='edit'
+                      onClick={() => handle('edit', item)}
+                    />
+                    <TipButton
+                      tip='查看'
+                      type='primary'
+                      icon='document'
+                      disabled={item.cvFileUUID ? false : true}
+                      onClick={() => handle('view', item)}
+                    />
+                    <TipButton
+                      tip='删除'
+                      type='primary'
+                      icon='delete'
+                      onClick={() => handle('delete', item)}
+                    />
                     <Popover
-                      trigger="click"
-                      placement="topLeft"
-                      isOpen={ExportVis}
+                      trigger="hover"
+                      placement="top"
                       isOutside={true}
-                      onOpened={() => setExportVis(true)}
-                      onClosed={() => setExportVis(false)}
                       content={
-                        <div
-                          style={{
-                            width: 120,
-                            display: "flex",
-                            flexDirection: "column",
-                          }}
-                        >
+                        <div style={{ width: 80, display: "flex", flexDirection: "column", }}>
                           <Button
                             basic
                             block
                             type="primary"
-                            onClick={() => { handle('export', item) }}
+                            onClick={() => handle('export', item)}
                           >
                             导出Word
                           </Button>
@@ -256,21 +229,26 @@ const Index = () => {
                             basic
                             block
                             type="primary"
-                            onClick={() => { handle('exportExcel', item) }}
+                            onClick={() => handle('exportPdf', item)}
                           >
-                            导出excel
+                            导出PDF
                           </Button>
                         </div>
                       }
-                    />
-                  </Button>
+                    >
+                      <Button
+                        icon='more'
+                        className='buttonPopover'
+                      ></Button>
+                    </Popover>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          </Fragment>
-        )
-      })
-      }
+              </Card>
+            </Fragment>
+          )
+        })
+        }
+      </div>
 
       {TableData?.length <= 0 && <Empty />}
 
@@ -284,7 +262,7 @@ const Index = () => {
         onConfirm={() => onConfirm()}
         content="您确定要删除吗？"
       />
-    </Card>
+    </Card >
   )
 }
 export default Index

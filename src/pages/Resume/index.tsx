@@ -37,7 +37,11 @@ const Index = () => {
             page: page,
             pageSize: pageSize
           })
-          dispatch.resume.update({ companyId: key })
+          dispatch.resume.update({
+            companyId: key,
+            page: 1,
+            pageSize: 5
+          })
         }}>
         {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {
           return (
@@ -46,7 +50,7 @@ const Index = () => {
             </Tabs.Pane >
           )
         })}
-        <Tabs.Pane label={'面试简历'} key={'0'}>
+        <Tabs.Pane label={'面试简历'} key={''}>
           <TabsContent />
         </Tabs.Pane >
       </Tabs >

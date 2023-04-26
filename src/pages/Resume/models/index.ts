@@ -7,7 +7,9 @@ import {
   updateVC,
   getDownloadFile,
   uploadZip,
-  downZip
+  downZip,
+  getDownloadFilePDF,
+  getCVUpdateLogs
 } from '@/servers/resume';
 import { Notify } from 'uiw';
 import { downloadExcelFile, downloadPdfFile, downloadZipFile } from '../../../utils/export';
@@ -23,7 +25,7 @@ const route = {
 
     formData: {}, // 新增/编辑简历
     TableData: [],
-    total: 10,
+    total: 0,
     page: 1,
     pageSize: 5,
 
@@ -41,7 +43,8 @@ const route = {
     projectExperience: [],
     checked: [],
 
-    companyId: 2
+    companyId: '2',
+    cvLogData: []
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -70,20 +73,15 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '删除成功' });
         dispatch.resume.update({
-          isDelete: false
+          isDelete: false,
+          page: 1,
+          pageSize: 5
         });
-        dispatch.resume.quickSelect();
+        dispatch.resume.quickSelect({
+          page: 1,
+          pageSize: 5
+        });
       }
-    },
-    /**
-     * 导出简历
-    */
-    async exportWord(payload?: any, state?: any) {
-      const data = await exportWord(payload);
-      // if (code === 200) {
-      //   Notify.success({ description: msg || '导出成功' });
-      downloadExcelFile(data, '简历导出.doc')
-      // }
     },
     /**
     * 新增简历
@@ -93,9 +91,15 @@ const route = {
       if (code === 200) {
         Notify.success({ description: msg || '添加成功' });
         dispatch.resume.update({
-          editVisible: false
+          editVisible: false,
+          page: 1,
+          pageSize: 5
         });
-        dispatch.resume.quickSelect();
+        dispatch.resume.quickSelect({
+          companyId: payload.companyId,
+          page: 1,
+          pageSize: 5
+        });
       }
     },
     /**
@@ -108,10 +112,9 @@ const route = {
         dispatch.resume.update({
           editVisible: false
         });
-        dispatch.resume.quickSelect();
       }
     },
-    // 简历下载
+    // 文件预览
     async getDownloadFile(payload: any) {
       const data = await getDownloadFile(payload)
       downloadPdfFile(data)
@@ -128,11 +131,37 @@ const route = {
       }
     },
     /**
-     * 导出简历
+     * 批量导出
     */
     async downZip(payload?: any, state?: any) {
       const data = await downZip(payload);
       downloadZipFile(data, '简历批量下载.zip')
+    },
+    /*
+     * 导出Word简历
+    */
+    async exportWord(payload?: any, state?: any) {
+      const data = await exportWord(payload);
+      downloadExcelFile(data, '简历导出.doc')
+    },
+    /*
+    * 导出PDF简历
+    */
+    async getDownloadFilePDF(payload: any) {
+      const data = await getDownloadFilePDF(payload)
+      downloadPdfFile(data)
+      return data
+    },
+    /*
+    * 获取简历修改记录
+    */
+    async getCVUpdateLogs(payload: any) {
+      const { data, code } = await getCVUpdateLogs(payload)
+      if (code === 200 && data) {
+        dispatch.resume.update({
+          cvLogData: data
+        });
+      }
     },
   }),
 }
