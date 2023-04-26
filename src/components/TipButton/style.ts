@@ -3,6 +3,6 @@ import { Button } from 'uiw';
 
 export const Btn = styled(Button)`
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
 `;

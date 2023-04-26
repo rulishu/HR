@@ -30,13 +30,13 @@ export const okColumns = ({
   },
   {
     label: "评价",
-    key: "desc",
+    key: "remake",
     widget: "textarea",
     span: "24",
     readSpan: 1,
     widgetProps: {
       rows: 5
     },
-    initialValue: data?.desc,
+    initialValue: data?.remake,
   },
 ]

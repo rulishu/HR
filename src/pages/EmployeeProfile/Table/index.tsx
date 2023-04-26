@@ -1,4 +1,4 @@
-import { useSelector, RootState, useDispatch, Dispatch, KktproKeys } from '@kkt/pro';
+import { useSelector, RootState, useNavigate, useDispatch, Dispatch, KktproKeys } from '@kkt/pro';
 import { Button, Table, Pagination, Empty, Alert } from "uiw";
 import { columns } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
@@ -10,6 +10,8 @@ const Page = () => {
     global: { dictObject },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
+  const navigate = useNavigate();
+
   const dataSourceList = dataList?.map((item: any) => {
     const { id } = item;
     const isChecked = (checked as any[]).includes(id);
@@ -17,57 +19,61 @@ const Page = () => {
   });
 
   // 编辑
-  const onEdit = async (rowData: any) => {
-    const imgsUUID: KktproKeys = {
-      idCardImgBackUUIDs: rowData.idCardImgBackUUID,
-      idCardImgFrontUUIDs: rowData.idCardImgFrontUUID,
-      diplomaImgUUIDs: rowData.diplomaImgUUID,
-      degreeCertificateImgUUIDs: rowData.degreeCertificateImgUUID,
-      departImgUUIDs: rowData.departImgUUID,
-      staffPhotoImgUUIDs: rowData.staffPhotoImgUUID
-    }
-    const alls: KktproKeys = [];
-    Object.keys(imgsUUID).forEach((item) => {
-      if (imgsUUID[item]) {
-        alls[item] = imgsUUID[item];
+  const onEdit = async (rowData: any, type: any) => {
+    if (type) {
+      navigate(type);
+    } else {
+      const imgsUUID: KktproKeys = {
+        idCardImgBackUUIDs: rowData.idCardImgBackUUID,
+        idCardImgFrontUUIDs: rowData.idCardImgFrontUUID,
+        diplomaImgUUIDs: rowData.diplomaImgUUID,
+        degreeCertificateImgUUIDs: rowData.degreeCertificateImgUUID,
+        departImgUUIDs: rowData.departImgUUID,
+        staffPhotoImgUUIDs: rowData.staffPhotoImgUUID
       }
-    })
-    const all = Object.keys(alls).map(key => {
-      return new Promise((resolve, reject) => {
-        dispatch.profileRatify.getSelectFile(alls[key]).then(res => {
-          let blob = res;
-          let reader = new FileReader();
-          reader.readAsDataURL(blob);  // 转换为base64
-          reader.onload = () => {
-            resolve({
-              [key]: [{
-                dataURL: reader.result
-              }]
-            })
-          }
+      const alls: KktproKeys = [];
+      Object.keys(imgsUUID).forEach((item) => {
+        if (imgsUUID[item]) {
+          alls[item] = imgsUUID[item];
+        }
+      })
+      const all = Object.keys(alls).map(key => {
+        return new Promise((resolve, reject) => {
+          dispatch.profileRatify.getSelectFile(alls[key]).then(res => {
+            let blob = res;
+            let reader = new FileReader();
+            reader.readAsDataURL(blob);  // 转换为base64
+            reader.onload = () => {
+              resolve({
+                [key]: [{
+                  dataURL: reader.result
+                }]
+              })
+            }
+          })
         })
       })
-    })
-    const imgs = await asyncAwaitFormList(all) || [];
-    let imgObj: KktproKeys = {};
-    imgs.forEach(item => {
-      imgObj = {
-        ...imgObj,
-        ...item
+      const imgs = await asyncAwaitFormList(all) || [];
+      let imgObj: KktproKeys = {};
+      imgs.forEach(item => {
+        imgObj = {
+          ...imgObj,
+          ...item
+        }
+      });
+      const params = {
+        ...rowData,
+        ...imgObj
       }
-    });
-    const params = {
-      ...rowData,
-      ...imgObj
-    }
 
-    dispatch({
-      type: "employeeProfile/updateState",
-      payload: {
-        queryInfo: params,
-        activeKey: '2'
-      },
-    });
+      dispatch({
+        type: "employeeProfile/updateState",
+        payload: {
+          queryInfo: params,
+          activeKey: '2'
+        },
+      });
+    }
   }
 
   // 全选按钮

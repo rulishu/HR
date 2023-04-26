@@ -5,6 +5,7 @@ import { ProTable, useTable } from '@uiw-admin/components';
 function ArchiveApprovalRecord() {
   const {
     employeeInduction: { companyList = [] },
+    global: { dictObject },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
@@ -82,7 +83,7 @@ function ArchiveApprovalRecord() {
         columns={[
           {
             title: "姓名",
-            key: "staffId",
+            key: "name",
             props: {
               widget: 'input',
               initialValue: '',
@@ -93,7 +94,7 @@ function ArchiveApprovalRecord() {
           },
           {
             title: "公司",
-            key: "company",
+            key: "companyName",
             props: {
               widget: 'select',
               option: companyList.map((item: KktproKeys) => ({ label: item.companyName, value: item.companyName })),
@@ -103,24 +104,45 @@ function ArchiveApprovalRecord() {
             },
           },
           {
-            title: '部门',
-            key: 'department',
+            title: "部门",
+            key: "department",
+            render: (text: any, key: any, rowData: any) => {
+              let department = "";
+              const data: any = companyList?.filter((item: any) => item.id === Number(rowData?.company))?.[0]
+              data?.department?.map((items: any) => {
+                if (items.id === Number(text)) {
+                  department = items.departmentName;
+                  return department;
+                } else {
+                  return null;
+                }
+              })
+              return <div>{department}</div>;
+            },
           },
           {
-            title: '职位',
-            key: 'post',
+            title: "职位",
+            key: "post",
+            render: (text: any, key: any, rowData: any) => {
+              const data = dictObject['post']?.child.filter((item: any) => item.value === text)?.[0]
+              return <div>{data?.label}</div>;
+            }
           },
           {
             title: '入职日期',
-            key: 'reasons',
+            key: 'entryDate',
           },
           {
             title: '审批人',
             key: 'name',
           },
+          // {
+          //   title: '审批状态',
+          //   key: 'context',
+          // },
           {
             title: '审批结果',
-            key: 'resultsApproval',
+            key: 'context',
             props: {
               widget: 'select',
               option: [
@@ -130,16 +152,12 @@ function ArchiveApprovalRecord() {
             },
           },
           {
-            title: '审批状态',
-            key: 'ApprovalStatus',
-          },
-          {
             title: '创建时间',
-            key: 'creationTime',
+            key: 'staffCreateTime',
           },
           {
             title: '更新时间',
-            key: 'updateTime',
+            key: 'createTime',
           },
         ]}
       />
