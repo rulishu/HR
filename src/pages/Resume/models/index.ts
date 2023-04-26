@@ -8,7 +8,8 @@ import {
   getDownloadFile,
   uploadZip,
   downZip,
-  getDownloadFilePDF
+  getDownloadFilePDF,
+  getCVUpdateLogs
 } from '@/servers/resume';
 import { Notify } from 'uiw';
 import { downloadExcelFile, downloadPdfFile, downloadZipFile } from '../../../utils/export';
@@ -42,7 +43,8 @@ const route = {
     projectExperience: [],
     checked: [],
 
-    companyId: '2'
+    companyId: '2',
+    cvLogData: []
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -142,11 +144,24 @@ const route = {
       const data = await exportWord(payload);
       downloadExcelFile(data, '简历导出.doc')
     },
-    // 导出PDF简历
+    /*
+    * 导出PDF简历
+    */
     async getDownloadFilePDF(payload: any) {
       const data = await getDownloadFilePDF(payload)
       downloadPdfFile(data)
       return data
+    },
+    /*
+    * 获取简历修改记录
+    */
+    async getCVUpdateLogs(payload: any) {
+      const { data, code } = await getCVUpdateLogs(payload)
+      if (code === 200 && data) {
+        dispatch.resume.update({
+          cvLogData: data
+        });
+      }
     },
   }),
 }
