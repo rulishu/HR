@@ -16,7 +16,6 @@ export const formList = (
       widget: "input",
       required: true,
       initialValue: formData?.name,
-      span: "24",
       // readSpan: 1,
       rules: [
         { required: true, message: '请输入姓名' },
@@ -28,7 +27,6 @@ export const formList = (
       widget: "radio",
       option: dictObject['sex']?.child || [],
       initialValue: formData?.gender,
-      span: "24",
       // rules: [
       //   { required: true, message: '请选择性别' },
       // ],
@@ -38,7 +36,7 @@ export const formList = (
       key: "phone",
       widget: "input",
       initialValue: formData?.phone,
-      span: "24",
+
       rules: [
         { required: true, message: '请填写手机号' },
         {
@@ -57,7 +55,6 @@ export const formList = (
       key: "age",
       widget: "inputNumber",
       initialValue: formData?.age,
-      span: "24",
       // readSpan: 1,
     },
     {
@@ -65,7 +62,6 @@ export const formList = (
       key: "experience",
       widget: "inputNumber",
       initialValue: formData?.experience,
-      span: "24",
       // readSpan: 1,
     },
     {
@@ -74,7 +70,6 @@ export const formList = (
       widget: "select",
       option: dictObject['education']?.child || [],
       initialValue: formData?.educational,
-      span: "24",
       // rules: [
       //   { required: true, message: '请选择学历' },
       // ],
@@ -85,7 +80,6 @@ export const formList = (
       widget: "select",
       option: dictObject['post']?.child || [],
       initialValue: formData?.post,
-      span: "24",
       // rules: [
       //   { required: true, message: '请选择入职岗位' },
       // ],
@@ -95,7 +89,7 @@ export const formList = (
       key: "email",
       widget: "input",
       initialValue: formData?.email,
-      span: "24",
+
       rules: [
         // { required: true, message: '请填写邮箱' },
         {
@@ -114,7 +108,6 @@ export const formList = (
       key: "livingPlace",
       widget: "input",
       initialValue: formData?.livingPlace,
-      span: "24",
       // rules: [
       //   { required: true, message: '请填写现居地址' },
       // ],
@@ -126,7 +119,6 @@ export const formList = (
       key: "nativePlace",
       widget: "input",
       initialValue: formData?.nativePlace,
-      span: "24",
       rules: [
         { message: '请填写籍贯' },
         {
@@ -146,7 +138,7 @@ export const formList = (
       key: "nationality",
       widget: "input",
       initialValue: formData?.nationality,
-      span: "24",
+
       rules: [
         { message: '请填写民族' },
         {
@@ -167,18 +159,9 @@ export const formList = (
       widget: "select",
       option: dictObject['married']?.child || [],
       initialValue: formData?.isMarried,
-      span: "24",
       rules: [
         { message: '请选择入婚姻状况' },
       ],
-      hide: editType === 'edit' ? false : true
-    },
-    {
-      label: "自我介绍",
-      key: "introduce",
-      widget: "textarea",
-      initialValue: formData?.introduce,
-      span: "24",
       hide: editType === 'edit' ? false : true
     },
     {
@@ -186,10 +169,9 @@ export const formList = (
       key: "salaryExpectation",
       widget: "input",
       initialValue: formData?.salaryExpectation,
-      span: "24",
+
       hide: editType === 'edit' ? false : true
     },
-
     {
       label: '上传简历',
       key: 'upload',
@@ -226,6 +208,32 @@ export const form2List = (
       span: "24",
       rules: [
         { message: '请输入项目经验' },
+      ],
+    },
+    {
+      label: "专业技能",
+      key: "technicalAbility",
+      widget: "textarea",
+      initialValue: formData?.technicalAbility,
+      span: "24",
+      widgetProps: {
+        rows: 5
+      },
+      rules: [
+        { message: '请输入专业技能' },
+      ],
+    },
+    {
+      label: "自我评价",
+      key: "introduce",
+      widget: "textarea",
+      initialValue: formData?.introduce,
+      span: "24",
+      widgetProps: {
+        rows: 5
+      },
+      rules: [
+        { message: '请输入自我评价' },
       ],
     },
   ]
