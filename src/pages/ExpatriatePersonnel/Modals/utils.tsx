@@ -23,6 +23,7 @@ export const formList = ({
       key: "companyId",
       widget: "searchSelect",
       span: "24",
+      className: 'companyForm',
       option: companyList.filter((item: any) => item.companyType === 2).map((item: any) => ({ label: item.companyName, value: item.id })),
       hide: queryInfo?.state === 3,
       widgetProps: {
