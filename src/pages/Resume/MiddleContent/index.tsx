@@ -53,18 +53,7 @@ const Index = () => {
     }
     if (type === 'batchUpload') {
       const checkedDown = checked.map((item: any) => ({ userId: item?.userId, id: item?.id }))
-      dispatch.resume.downZip(checkedDown).then((res) => {
-        dispatch.resume.quickSelect({
-          companyId: companyId,
-          page: page,
-          pageSize: pageSize,
-          total: total
-        })
-      })
-      // dispatch({
-      //   type: 'resume/downZip',
-      //   payload: checkedDown
-      // })
+      dispatch.resume.downZip(checkedDown)
     }
 
   }
@@ -126,7 +115,6 @@ const Index = () => {
     });
   }
 
-
   return (
     <Card
       noHover
@@ -143,6 +131,7 @@ const Index = () => {
               新增简历
             </Button>
           </Col>
+          { !companyId && (
           <Col>
             <FileInput
               uploadType="text"
@@ -161,6 +150,7 @@ const Index = () => {
               </Button>
             </FileInput>
           </Col>
+          )}
           <Col>
             <Button
               type='primary'

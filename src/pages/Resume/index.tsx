@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Tabs } from 'uiw';
+import { Tabs, Loader } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import './style/index.css';
 import TabsContent from './tabs';
 
 const Index = () => {
   const {
+    loading,
     employeeInduction: { companyList = [] },
     resume: { page, pageSize }
   } = useSelector((state: RootState) => state)
@@ -18,6 +19,9 @@ const Index = () => {
         dispatch.employeeInduction.updateState({
           companyList: data
         })
+        dispatch.resume.update({
+          companyId: data?.[0].id.toString(),
+        })
         setActive(data?.[0].id.toString())
         dispatch.resume.quickSelect({ companyId: data?.[0].id.toString(), page: page, pageSize: pageSize })
       }
@@ -26,7 +30,12 @@ const Index = () => {
   }, [])
 
   return (
-    <>
+    <Loader
+      loading={loading.effects.resume.downZip}
+      tip="加载中..."
+      style={{ width: "100%", height: '100%', flex: 1 }}
+      bgColor="rgba(255, 255, 255, .7)"
+    >
       <Tabs
         type="line"
         activeKey={active}
@@ -51,10 +60,10 @@ const Index = () => {
           )
         })}
         <Tabs.Pane label={'面试简历'} key={''}>
-          <TabsContent />
+          <TabsContent/>
         </Tabs.Pane >
       </Tabs >
-    </>
+    </Loader>
   )
 }
 export default Index
