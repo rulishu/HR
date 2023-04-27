@@ -484,7 +484,7 @@ export const formData = ({
           rules: [
             { required: true, message: '请填合同公司' },
           ],
-          initialValue: data?.contractCompany
+          initialValue: data?.contractCompany || data?.company
         },
         {
           label: "合同类型",

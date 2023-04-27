@@ -10,7 +10,7 @@ export const CardWrap = styled(Card)`
   }
 `;
 export const FlexCol = styled.div`
-  height: 100%;
+  min-height: calc(100vh - 100px);
   /* border-right: solid 1px #e8e8e8; */
   box-shadow: 0 1px 1px rgb(0 0 0 / 5%), 0 2px 6px 0 rgb(0 0 0 / 5%);
 `;
