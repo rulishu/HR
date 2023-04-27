@@ -1,5 +1,5 @@
 import { Dispatch, RootState, useDispatch, useSelector } from "@kkt/pro";
-import { Row, Col, Modal, List, Steps } from 'uiw';
+import { Row, Col, Modal, List, Steps, Tag } from 'uiw';
 import { CircleList, CircleCol } from '../style/style';
 
 function Modals() {
@@ -84,7 +84,6 @@ function Modals() {
             <Col grow={1}> {queryInfo?.workAddress}</Col>
           </Row>
         </List.Item>
-
         <List.Item>
           <Row>
             <CircleCol fixed>办公方式 :</CircleCol>
@@ -94,7 +93,13 @@ function Modals() {
         <List.Item>
           <Row justify="space-between">
             <CircleCol fixed>外派状态 :</CircleCol>
-            <Col grow={1}> {queryInfo?.state === 3 ? "外派中" : '未外派'}</Col>
+            <Col grow={1}><Tag light title={queryInfo?.state === 3 ? '外派中' : '未外派'} color={queryInfo?.state === 3 ? '#28a745' : '#008EF0'} /></Col>
+          </Row>
+        </List.Item>
+        <List.Item>
+          <Row>
+            <CircleCol fixed>备注 :</CircleCol>
+            <Col grow={1}>{queryInfo?.remake}</Col>
           </Row>
         </List.Item>
         <List.Item>

@@ -25,3 +25,6 @@
 .rightCard .w-row.w-row-justify-space-between {
   width: 100%;
 }
+.companyForm .w-form-row {
+  display: block;
+}

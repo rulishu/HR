@@ -148,8 +148,8 @@ function ArchiveApprovalRecord() {
             props: {
               widget: 'select',
               option: [
-                { label: '审批通过', value: 1 },
-                { label: '审批未通过', value: 0 },
+                { label: '入职通过', value: '入职通过' },
+                { label: '入职审批未通过', value: '入职审批未通过' },
               ],
             },
           },
