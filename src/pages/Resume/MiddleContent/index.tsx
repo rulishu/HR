@@ -7,7 +7,7 @@ import '../style/index.css'
 
 const Index = () => {
   const {
-    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked },
+    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked, companyId },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -70,6 +70,7 @@ const Index = () => {
         dispatch.resume.quickSelect({
           page: page,
           pageSize: pageSize,
+          companyId: companyId,
         })
       )
   }
