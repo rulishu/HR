@@ -37,10 +37,11 @@ const Page = () => {
     const { userId } = userData as any || {};
     const values: KktproKeys = await archivesRef.current?.submitvalidate() || {};
     // 入职人员编辑需要重新提交审批
-    const param = values?.id ? {...values, userId, isApproved: 0} : {...values, userId}
+    // const param = values?.id ? {...values, userId, isApproved: 0} : {...values, userId}
     if (Object.keys(values).length !== 0) {
       dispatch.employeeInduction.submit({
-        ...param,
+        ...values,
+        userId,
         callback: () => {
           if (roles === 'entry') {
             // entryInit();
