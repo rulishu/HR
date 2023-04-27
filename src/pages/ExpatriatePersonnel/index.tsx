@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
-import { Row, Col, Menu, Card} from 'uiw';
+import { Row, Col, Menu, Card, Loader} from 'uiw';
 import Modals from './Modals';
 import EmployeeDetails from './Modals/EmployeeDetails'
 import { FlexCol, CardWrap } from './style/style';
@@ -11,6 +11,7 @@ import Table from './Table';
 const Page = () => {
   const dispatch = useDispatch<Dispatch>();
   const {
+    loading,
     employeeInduction: { companyList },
   } = useSelector((state: RootState) => state);
   const [companyId, setCompanyId] = useState()
@@ -50,6 +51,12 @@ const Page = () => {
   }
 
   return (
+    <Loader
+      loading={loading.effects.sysOrganization.downloadExcelStaff}
+      tip="加载中..."
+      style={{ width: "100%", height: '100%', flex: 1 }}
+      bgColor="rgba(255, 255, 255, .7)"
+    >
     <Fragment>
       <CardWrap noHover bordered={false}>
         <Row gutter={2}>
@@ -82,6 +89,7 @@ const Page = () => {
       <Modals companyId={companyId}/>
       <EmployeeDetails />
     </Fragment>
+    </Loader>
   )
 }
 

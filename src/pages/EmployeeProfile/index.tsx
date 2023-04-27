@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, Dispatch, useSelector, RootState, KktproKeys } from '@kkt/pro';
-import { Card, Tabs } from 'uiw';
+import { Card, Tabs, Loader } from 'uiw';
 import { FormPage, Archives, ArchivesType } from '@/components'
 import Search from './Search';
 import Table from './Table';
@@ -9,6 +9,7 @@ import './style/index.css'
 
 const Page = () => {
   const {
+    loading,
     employeeInduction: {
       companyList = [],
     },
@@ -63,6 +64,12 @@ const Page = () => {
   }
 
   return (
+    <Loader
+      loading={loading.effects.employeeProfile.filesDownload}
+      tip="加载中..."
+      style={{ width: "100%", height: '100%', flex: 1 }}
+      bgColor="rgba(255, 255, 255, .7)"
+    >
     <Fragment>
       <Tabs className='tabsRecordTop' type="line" activeKey={activeKey} onTabClick={(key, tab, e) => {
         dispatch.employeeProfile.updateState({
@@ -99,6 +106,7 @@ const Page = () => {
       </Tabs>
       <Modals />
     </Fragment>
+    </Loader>
   )
 }
 

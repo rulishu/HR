@@ -1,5 +1,5 @@
 import { useSelector, RootState, useNavigate, useDispatch, Dispatch, KktproKeys } from '@kkt/pro';
-import { Button, Table, Pagination, Empty, Alert } from "uiw";
+import { Button, Table, Pagination, Empty, Alert, Notify } from "uiw";
 import { columns } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
 
@@ -96,10 +96,11 @@ const Page = () => {
 
   // 导出
   const onFileExport = () => {
-    dispatch({
-      type: 'employeeProfile/filesDownload',
-      payload: { id: checked?.[0] },
-    })
+    if(checked.length > 1){
+      Notify.error({ description: '请选择一条数据' });
+    } else {
+      dispatch.employeeProfile.filesDownload({ id: checked?.[0] })
+    }
   }
 
   // 翻页
@@ -134,6 +135,7 @@ const Page = () => {
         <Button
           icon="download"
           type="primary"
+          disabled={checked.length === 0}
           onClick={() => {
             onFileExport();
           }}
