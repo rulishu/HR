@@ -186,8 +186,8 @@ const Index = () => {
                     </div>
                   </div>
                   <div>
-                    <p>工作经验： {item?.experience} 年</p >
-                    <p>薪资范围： {item?.salaryExpectation} </p >
+                    <p>工作经验： {item?.experience} {item?.experience ? "年" : ''}</p >
+                    <p>期望薪资： {item?.salaryExpectation} </p >
                   </div>
                   <div>
                     <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p >
@@ -247,6 +247,7 @@ const Index = () => {
                       <Button
                         icon='more'
                         className='buttonPopover'
+                        type='primary'
                       ></Button>
                     </Popover>
                   </div>

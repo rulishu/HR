@@ -43,7 +43,7 @@ const route = {
     projectExperience: [],
     checked: [],
 
-    companyId: '2',
+    companyId: '',
     cvLogData: []
   },
   reducers: {
