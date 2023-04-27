@@ -26,6 +26,7 @@ Build Static:
     - npm run build
   only:
     - main
+    - tags
 
 Docker Imgae Build Dev:
   stage: deploy
