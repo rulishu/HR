@@ -47,10 +47,7 @@ const Page = (props: any) => {
   }
   // 导出
   const onFileExport = () => {
-    dispatch({
-      type: 'sysOrganization/downloadExcelStaff',
-      payload: { id:props.companyId, ids: checked },
-    })
+    dispatch.sysOrganization.downloadExcelStaff({ id:props.companyId, ids: checked })
   }
 
   // 翻页
