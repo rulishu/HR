@@ -7,7 +7,7 @@ import '../style/index.css'
 
 const Index = () => {
   const {
-    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked },
+    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked, companyId },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -53,10 +53,18 @@ const Index = () => {
     }
     if (type === 'batchUpload') {
       const checkedDown = checked.map((item: any) => ({ userId: item?.userId, id: item?.id }))
-      dispatch({
-        type: 'resume/downZip',
-        payload: checkedDown
+      dispatch.resume.downZip(checkedDown).then((res) => {
+        dispatch.resume.quickSelect({
+          companyId: companyId,
+          page: page,
+          pageSize: pageSize,
+          total: total
+        })
       })
+      // dispatch({
+      //   type: 'resume/downZip',
+      //   payload: checkedDown
+      // })
     }
 
   }
