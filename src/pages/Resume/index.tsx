@@ -7,19 +7,19 @@ import TabsContent from './tabs';
 const Index = () => {
   const {
     employeeInduction: { companyList = [] },
-    resume: { companyId, page, pageSize }
+    resume: { page, pageSize }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
   const [active, setActive] = useState('')
 
   useEffect(() => {
-    dispatch.resume.quickSelect({ companyId: companyId, page: page, pageSize: pageSize })
     dispatch.sysOrganization.selectList({
       callback: (data: any) => {
         dispatch.employeeInduction.updateState({
           companyList: data
         })
-        setActive('2')
+        setActive(data?.[0].id.toString())
+        dispatch.resume.quickSelect({ companyId: data?.[0].id.toString(), page: page, pageSize: pageSize })
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
