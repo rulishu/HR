@@ -49,6 +49,7 @@ const Page = () => {
         ...values,
         // userId,
         callback: () => {
+          dispatch.employeeProfile.selectStaffFile();
           if (!values.id) {
             onReset();
           }

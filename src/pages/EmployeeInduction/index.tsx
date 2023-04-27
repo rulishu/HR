@@ -36,10 +36,11 @@ const Page = () => {
   const onSubmit = async () => {
     const { userId } = userData as any || {};
     const values: KktproKeys = await archivesRef.current?.submitvalidate() || {};
+    // 入职人员编辑需要重新提交审批
+    const param = values?.id ? {...values, userId, isApproved: 0} : {...values, userId}
     if (Object.keys(values).length !== 0) {
       dispatch.employeeInduction.submit({
-        ...values,
-        userId,
+        ...param,
         callback: () => {
           if (roles === 'entry') {
             // entryInit();
