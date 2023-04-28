@@ -30,40 +30,48 @@ const Index = () => {
   }, [])
 
   return (
-    <Loader
-      loading={loading.effects.resume.downZip}
-      tip="加载中..."
-      style={{ width: "100%", height: '100%', flex: 1 }}
-      bgColor="rgba(255, 255, 255, .7)"
-    >
-      <Tabs
-        type="line"
-        activeKey={active}
-        className='tabsRecord'
-        onTabClick={(key, tab, e) => {
-          dispatch.resume.quickSelect({
-            companyId: key,
-            page: page,
-            pageSize: pageSize
-          })
-          dispatch.resume.update({
-            companyId: key,
-            page: 1,
-            pageSize: 5
-          })
-        }}>
-        {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {
-          return (
-            <Tabs.Pane label={itm.companyName} key={itm.id.toString()}>
+
+    <Tabs
+      type="line"
+      activeKey={active}
+      className='tabsRecord'
+      onTabClick={(key, tab, e) => {
+        dispatch.resume.quickSelect({
+          companyId: key,
+          page: page,
+          pageSize: pageSize
+        })
+        dispatch.resume.update({
+          companyId: key,
+          page: 1,
+          pageSize: 5
+        })
+      }}>
+      {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {
+        return (
+          <Tabs.Pane label={itm.companyName} key={itm.id.toString()}>
+            <Loader
+              loading={loading.effects.resume.downZip}
+              tip="加载中..."
+              style={{ width: "100%", height: '100%', flex: 1 }}
+              bgColor="rgba(255, 255, 255, .7)"
+            >
               <TabsContent />
-            </Tabs.Pane >
-          )
-        })}
-        <Tabs.Pane label={'面试简历'} key={''}>
-          <TabsContent/>
-        </Tabs.Pane >
-      </Tabs >
-    </Loader>
+            </Loader>
+          </Tabs.Pane >
+        )
+      })}
+      <Tabs.Pane label={'面试简历'} key={''}>
+        <Loader
+          loading={loading.effects.resume.downZip}
+          tip="加载中..."
+          style={{ width: "100%", height: '100%', flex: 1 }}
+          bgColor="rgba(255, 255, 255, .7)"
+        >
+          <TabsContent />
+        </Loader>
+      </Tabs.Pane >
+    </Tabs >
   )
 }
 export default Index
