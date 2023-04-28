@@ -41,6 +41,7 @@ const Page = () => {
     if (Object.keys(values).length !== 0) {
       dispatch.employeeInduction.submit({
         ...param,
+        // userId,
         callback: () => {
           if (roles === 'entry') {
             // entryInit();

@@ -9,7 +9,7 @@ import Modals from './Modals';
 import { formData, formDataVoid, addConfig, dateShift, datesShift } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
 import { PageWraps, PlusItems, PlusIcon  } from './style';
-import { hometown } from '@/utils'
+// import { hometown } from '@/utils'
 
 export type ArchivesType = {
   /** 效验并获取value */
@@ -169,18 +169,18 @@ const Archives = (
   // 通过身份证号获取出生日期、年龄、性别 、籍贯
   const handleIdcardBlur = async(value = '') => {
     // 直接newData身份证校验失败会导致：教育经历/工作经验/家庭成员 信息清空
-    const newData = getData();
-    let MyBirthday = value.substring(6, 10) + '/' + value.substring(10, 12) + '/' + value.substring(12, 14)
-    let MySex = parseInt(value.substr(16, 1)) % 2 === 1 ? '1' : '2'
-    let MyHometown = (hometown as any)[parseInt(value.substring(0, 2))]
-    if (formRefList.current.length > 0) {
-      initData({
-        ...newData,
-        birth: new Date(MyBirthday),
-        gender: MySex,
-        nativePlace: MyHometown,
-      })
-    }
+    // const newData = getData();
+    // let MyBirthday = value.substring(6, 10) + '/' + value.substring(10, 12) + '/' + value.substring(12, 14)
+    // let MySex = parseInt(value.substr(16, 1)) % 2 === 1 ? '1' : '2'
+    // let MyHometown = (hometown as any)[parseInt(value.substring(0, 2))]
+    // if (formRefList.current.length > 0) {
+    //   initData({
+    //     ...newData,
+    //     birth: new Date(MyBirthday),
+    //     gender: MySex,
+    //     nativePlace: MyHometown,
+    //   })
+    // }
   }
 
   const _formData = formData({

@@ -22,7 +22,7 @@ function ArchiveApprovalRecord() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  let token = sessionStorage.getItem('token') || localStorage.getItem('token');
   const table = useTable('/api/userTimeline/selectTimeline', {
     // 格式化接口返回的数据，必须返回{total 总数, data: 列表数据}的格式
     formatData: (data) => {
@@ -39,6 +39,9 @@ function ArchiveApprovalRecord() {
         types: [3],
         ...searchValues,
       }
+    },
+    requestOptions: {
+      headers: { Authorization: ''+token },
     },
   });
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
+import { useDispatch, Dispatch, useSelector, RootState, KktproKeys } from '@kkt/pro';
 import { Modal, Textarea, Button } from 'uiw';
 
 const NO = () => {
@@ -28,7 +28,27 @@ const NO = () => {
    * 提交
   */
   const onConfirm = () => {
-    dispatch.profileRatify.approve({ remake:value, isApproved: 2, id: checkId})
+    dispatch.profileRatify.approve({ remake:value, isApproved: 2, id: checkId}).then((res) => {
+      dispatch.profileRatify.updateState({
+        noData: false,
+        list: [],
+        page: 1,
+        activeKey: '1'
+      })
+      dispatch.profileRatify.selectStaffFile({
+        isApproved: 0,
+        callback: (data: KktproKeys[]) => {
+          if (data.length > 0) {
+            dispatch.profileRatify.getUserDetails({
+              id: data[0].id
+            })
+            dispatch.profileRatify.updateState({
+              checkId: data[0].id
+            })
+          }
+        }
+      });
+    })
   }
 
   return (
