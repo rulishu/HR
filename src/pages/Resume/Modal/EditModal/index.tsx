@@ -112,6 +112,11 @@ const Index = () => {
           })
         }
       })
+    } else {
+      dispatch({
+        type: "resume/update",
+        payload: { cvFileUUID: '' },
+      });
     }
   }
   const workOnAdd = () => {

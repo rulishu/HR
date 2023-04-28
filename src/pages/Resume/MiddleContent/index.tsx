@@ -25,7 +25,7 @@ const Index = () => {
     if (type === 'add' || type === 'edit') {
       dispatchFn({ editVisible: true })
       type === 'add' && dispatchFn({ formData: {} })
-      type === 'edit' && dispatchFn({ formData: { ...formData, ...data, cvFileUUID: cvFileUUID || data?.cvFileUUID } })
+      type === 'edit' && dispatchFn({ formData: { ...formData, ...data, cvFileUUID: cvFileUUID || data?.cvFileUUID }, cvFileUUID: cvFileUUID || data?.cvFileUUID })
 
       data?.cvFileUUID && dispatch.profileRatify.getSelectFile(data.cvFileUUID).then((res) => {
         dispatchFn({ file: res })
