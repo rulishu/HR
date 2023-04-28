@@ -38,7 +38,7 @@ const Index = () => {
       onTabClick={(key, tab, e) => {
         dispatch.resume.quickSelect({
           companyId: key,
-          page: page,
+          page: 1,
           pageSize: pageSize
         })
         dispatch.resume.update({
