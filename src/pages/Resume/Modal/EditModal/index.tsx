@@ -32,6 +32,13 @@ const Index = () => {
   const form = useForm();
   const form2 = useForm();
 
+  const dispatchFn = (params: any) => {
+    dispatch({
+      type: 'resume/update',
+      payload: params
+    })
+  }
+  
   const onclose = () => {
     dispatch({
       type: 'resume/update',
@@ -90,7 +97,7 @@ const Index = () => {
     }
     onclose()
   }
-
+  
   const handleChange = (value = []) => {
     if (value.length > 0) {
       dispatch.global.uploadFile({
@@ -100,6 +107,9 @@ const Index = () => {
             type: "resume/update",
             payload: { cvFileUUID: data?.uuid },
           });
+          data?.uuid && dispatch.profileRatify.getSelectFile(data?.uuid).then((res) => {
+            dispatchFn({ file: res })
+          })
         }
       })
     }
