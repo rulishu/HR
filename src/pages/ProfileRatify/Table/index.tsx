@@ -27,8 +27,8 @@ function ArchiveApprovalRecord() {
     // 格式化接口返回的数据，必须返回{total 总数, data: 列表数据}的格式
     formatData: (data) => {
       return {
-        total: 10,
-        data: data.data,
+        total: data.data.total,
+        data: data.data.list,
       };
     },
     // 格式化查询参数 会接收到pageIndex 当前页  searchValues 表单数据
@@ -41,7 +41,7 @@ function ArchiveApprovalRecord() {
       }
     },
     requestOptions: {
-      headers: { Authorization: ''+token },
+      headers: { 'Authorization': ''+token },
     },
   });
 
