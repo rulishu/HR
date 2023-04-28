@@ -58,7 +58,27 @@ const OK = () => {
       delete newFormData.degreeCertificateImgUUIDs;
       delete newFormData.departImgUUIDs;
       delete newFormData.staffPhotoImgUUIDs;
-      dispatch.profileRatify.approve({ ...newFormData, ...formData, isApproved: 1 })
+      dispatch.profileRatify.approve({ ...newFormData, ...formData, isApproved: 1 }).then((res)=>{
+        dispatch.profileRatify.updateState({
+          noData: false,
+          list: [],
+          page: 1,
+          activeKey: '1'
+        })
+        dispatch.profileRatify.selectStaffFile({
+          isApproved: 0,
+          callback: (data: KktproKeys[]) => {
+            if (data.length > 0) {
+              dispatch.profileRatify.getUserDetails({
+                id: data[0].id
+              })
+              dispatch.profileRatify.updateState({
+                checkId: data[0].id
+              })
+            }
+          }
+        });
+      })
     }
   }
 

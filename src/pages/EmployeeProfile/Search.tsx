@@ -37,13 +37,13 @@ const formSearchList = [
   // },
   {
     label: "员工状态",
-    key: "state",
+    key: "probation",
     widget: "select",
     option: [
-      { value: 1, label: "正式" },
-      { value: 3, label: "实习" },
-      { value: 4, label: "试用" },
-      { value: 2, label: "已离职" },
+      { value: 0, label: "正式" },
+      { value: 1, label: "实习" },
+      { value: 2, label: "试用" },
+      { value: 3, label: "已离职" },
     ],
   },
 ];
