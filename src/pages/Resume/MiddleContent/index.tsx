@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination, Popover, Checkbox } from 'uiw';
+import { Alert, Card, Empty, Button, FileInput, Row, Col, Pagination, Popover, Checkbox, Loader } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { TipButton } from '@/components';
 import { getDictLabel } from '@/utils';
@@ -7,6 +7,7 @@ import '../style/index.css'
 
 const Index = () => {
   const {
+    loading,
     resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked, companyId },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
@@ -83,6 +84,7 @@ const Index = () => {
           page: current,
           pageSize: pageSize,
           total: total,
+          companyId: companyId
         })
         dispatch({
           type: "resume/quickSelect",
@@ -91,6 +93,7 @@ const Index = () => {
             page: current,
             pageSize: pageSize,
             total: total,
+            companyId: companyId
           },
         });
       }
@@ -131,25 +134,25 @@ const Index = () => {
               新增简历
             </Button>
           </Col>
-          { !companyId && (
-          <Col>
-            <FileInput
-              uploadType="text"
-              multiple
-              maxNumber={1}
-              value={[]}
-              onChange={(e: any) => {
-                dispatch.resume.uploadZip(e?.[0])
-              }}
-            >
-              <Button
-                type='primary'
-                icon='plus'
+          {!companyId && (
+            <Col>
+              <FileInput
+                uploadType="text"
+                multiple
+                maxNumber={1}
+                value={[]}
+                onChange={(e: any) => {
+                  dispatch.resume.uploadZip(e?.[0])
+                }}
               >
-                批量上传
-              </Button>
-            </FileInput>
-          </Col>
+                <Button
+                  type='primary'
+                  icon='plus'
+                >
+                  批量上传
+                </Button>
+              </FileInput>
+            </Col>
           )}
           <Col>
             <Button
@@ -223,22 +226,36 @@ const Index = () => {
                       isOutside={true}
                       content={
                         <div style={{ width: 80, display: "flex", flexDirection: "column", }}>
-                          <Button
-                            basic
-                            block
-                            type="primary"
-                            onClick={() => handle('export', item)}
+                          <Loader
+                            loading={loading.effects.resume.exportWord}
+                            tip="加载中..."
+                            style={{ width: "100%", height: '100%', flex: 1 }}
+                            bgColor="rgba(255, 255, 255, .7)"
                           >
-                            导出Word
-                          </Button>
-                          <Button
-                            basic
-                            block
-                            type="primary"
-                            onClick={() => handle('exportPdf', item)}
+                            <Button
+                              basic
+                              block
+                              type="primary"
+                              onClick={() => handle('export', item)}
+                            >
+                              导出Word
+                            </Button>
+                          </Loader>
+                          <Loader
+                            loading={loading.effects.resume.getDownloadFilePDF}
+                            tip="加载中..."
+                            style={{ width: "100%", height: '100%', flex: 1 }}
+                            bgColor="rgba(255, 255, 255, .7)"
                           >
-                            导出PDF
-                          </Button>
+                            <Button
+                              basic
+                              block
+                              type="primary"
+                              onClick={() => handle('exportPdf', item)}
+                            >
+                              导出PDF
+                            </Button>
+                          </Loader>
                         </div>
                       }
                     >
