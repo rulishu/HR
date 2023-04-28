@@ -176,7 +176,7 @@ export const formList = (
       label: '上传简历',
       key: 'upload',
       widget: 'upload',
-      initialValue: formData?.cvFileUUID && [{ dataURL: pdf, name: `${formData?.name}的简历` }],
+      initialValue: formData?.cvFileUUID ? [{ dataURL: pdf, name: `${formData?.name}的简历` }] : '',
       span: '24',
       readSpan: 3,
       widgetProps: {

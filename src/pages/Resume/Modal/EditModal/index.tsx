@@ -39,7 +39,8 @@ const Index = () => {
         editVisible: false,
         formData: {},
         editType: "none",
-        isProjectVisible: false
+        isProjectVisible: false,
+        cvFileUUID: ''
       }
     })
   }
