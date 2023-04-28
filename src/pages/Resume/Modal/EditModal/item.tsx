@@ -164,14 +164,14 @@ export const formList = (
       ],
       hide: editType === 'edit' ? false : true
     },
-    {
-      label: "期望薪资",
-      key: "salaryExpectation",
-      widget: "input",
-      initialValue: formData?.salaryExpectation,
+    // {
+    //   label: "期望薪资",
+    //   key: "salaryExpectation",
+    //   widget: "input",
+    //   initialValue: formData?.salaryExpectation,
 
-      hide: editType === 'edit' ? false : true
-    },
+    //   hide: editType === 'edit' ? false : true
+    // },
     {
       label: '上传简历',
       key: 'upload',
