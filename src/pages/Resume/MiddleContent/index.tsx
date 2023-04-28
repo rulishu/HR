@@ -185,11 +185,11 @@ const Index = () => {
                   </div>
                   <div>
                     <p>工作经验： {item?.experience} {item?.experience ? "年" : ''}</p >
-                    <p>期望薪资： {item?.salaryExpectation} </p >
+                    <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p >
+                    {/* <p>期望薪资： {item?.salaryExpectation} </p > */}
                   </div>
                   <div>
                     <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p >
-                    <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p >
                   </div>
                   <div
                     style={{
