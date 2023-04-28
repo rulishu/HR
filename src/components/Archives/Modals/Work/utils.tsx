@@ -79,7 +79,7 @@ export const formList = (props?: FormListProps) => {
       widget: "input",
       required: true,
       initialValue: data?.post,
-      span: "12",
+      span: "24",
       readSpan: 1,
       rules: [
         { required: true, message: '请输入职位' },
@@ -94,18 +94,18 @@ export const formList = (props?: FormListProps) => {
         }
       ],
     },
-    {
-      label: "薪资",
-      key: "salary",
-      widget: "inputNumber",
-      required: true,
-      initialValue: data?.salary,
-      span: "12",
-      readSpan: 1,
-      rules: [
-        { required: true, message: '请输入薪资' },
-      ],
-    },
+    // {
+    //   label: "薪资",
+    //   key: "salary",
+    //   widget: "inputNumber",
+    //   required: true,
+    //   initialValue: data?.salary,
+    //   span: "12",
+    //   readSpan: 1,
+    //   rules: [
+    //     { required: true, message: '请输入薪资' },
+    //   ],
+    // },
     {
       label: "主要工作职责",
       key: "desc",
