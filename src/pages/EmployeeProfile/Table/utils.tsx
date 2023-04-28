@@ -151,9 +151,9 @@ export const columns = ({
     },
     {
       title: "员工状态",
-      key: "state",
+      key: "probation",
       render: (text: any, key: any, rowData: any) => {
-        return <div>{text === '1' ? '正式' : text === '2' ? '离职' : text === '3' ? '正式' : ''}</div>;
+        return <div>{text === 0 ? '正式' : text === 1 ? '实习' : text === 2 ? '试用' : text === 3 ? '已离职' : ''}</div>;
       }
     },
     {
