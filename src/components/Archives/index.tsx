@@ -9,7 +9,7 @@ import Modals from './Modals';
 import { formData, formDataVoid, addConfig, dateShift, datesShift } from './utils';
 import { asyncAwaitFormList } from '@/utils/valid';
 import { PageWraps, PlusItems, PlusIcon  } from './style';
-import { hometown } from '@/utils'
+// import { hometown } from '@/utils'
 
 export type ArchivesType = {
   /** 效验并获取value */
