@@ -72,9 +72,9 @@ export const workColumn = ({ onEdit, onRemove, type }: FormListProps) => {
       width: 220,
       render: (text: any, key: any, rowData: any) => {
         const { startTime, endTime } = rowData;
-        if (!startTime || !endTime) return '--'
-        const start = dayjs(startTime).format('YYYY-MM-DD')
-        const end = dayjs(endTime).format('YYYY-MM-DD')
+        // if (!startTime || !endTime) return '--'
+        const start = (startTime&&dayjs(startTime).format('YYYY-MM-DD')) || '--'
+        const end = (endTime&&dayjs(endTime).format('YYYY-MM-DD')) || '--'
         return <div style={{ width: 180 }}>{start + ' ~ ' + end}</div>;
       },
     },
@@ -86,10 +86,10 @@ export const workColumn = ({ onEdit, onRemove, type }: FormListProps) => {
       title: "职位",
       key: "post",
     },
-    {
-      title: "工资",
-      key: "salary",
-    },
+    // {
+    //   title: "工资",
+    //   key: "salary",
+    // },
     {
       title: "主要工作职责",
       key: "desc",

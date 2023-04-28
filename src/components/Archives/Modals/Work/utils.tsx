@@ -131,10 +131,6 @@ export const formList = (props?: FormListProps) => {
       widgetProps: {
         rows: 10
       },
-      required: true,
-      rules: [
-        { required: true, message: '请输入离职原因' },
-      ],
     },
   ]
 }
