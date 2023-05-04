@@ -8,7 +8,9 @@
 .leftTable {
   display: flex;
 }
-.education-title, .work-title, .family-title {
+.education-title,
+.work-title,
+.family-title {
   display: flex;
   flex: 1;
   align-items: center;
@@ -18,13 +20,15 @@
   padding: 0 16px;
   border-right: 0;
 }
-.education-title, .work-title {
+.education-title,
+.work-title {
   border-bottom: 0;
 }
 .leftTable .w-table > table > thead > tr > th {
   background: #fafafa;
 }
-.education > table tr > td, .work > table tr > td {
+.education > table tr > td,
+.work > table tr > td {
   border-bottom: 0;
 }
 .leftTable .w-table > table > tbody > tr:nth-child(2n) > td {
@@ -33,6 +37,11 @@
 .leftTable .w-table table td {
   padding: 12px !important;
 }
-.leftTable .w-table > table > tbody > tr:hover > td, .leftTable .w-table > table > tbody > tr:hover:nth-child(2n) > td {
+.leftTable .w-table > table > tbody > tr:hover > td,
+.leftTable .w-table > table > tbody > tr:hover:nth-child(2n) > td {
   background-color: #fff;
+}
+
+.proForms .w-dateinputrange-inner {
+  width: 100% !important;
 }
