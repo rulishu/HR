@@ -56,7 +56,9 @@ const Index = () => {
       const checkedDown = checked.map((item: any) => ({ userId: item?.userId, id: item?.id }))
       dispatch.resume.downZip(checkedDown)
     }
-
+    if (type === 'share') {
+      window.open(`/api/vc/previewPdf?id=${data?.id}`)
+    }
   }
 
   const onDelClosed = () => {
@@ -240,6 +242,21 @@ const Index = () => {
                             onClick={() => handle('exportPdf', item)}
                           >
                             导出PDF
+                          </Button>
+                        </Loader>
+                        <Loader
+                          loading={loading.effects.resume.getDownloadFilePDF}
+                          tip="加载中..."
+                          style={{ width: "100%", height: '100%', flex: 1 }}
+                          bgColor="rgba(255, 255, 255, .7)"
+                        >
+                          <Button
+                            basic
+                            block
+                            type="primary"
+                            onClick={() => handle('share', item)}
+                          >
+                            简历分享
                           </Button>
                         </Loader>
                       </div>
