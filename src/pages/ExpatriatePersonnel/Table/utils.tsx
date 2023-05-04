@@ -1,5 +1,5 @@
 import { KktproKeys, dispatch } from '@kkt/pro';
-import { Checkbox, Button, Tag } from "uiw";
+import { Checkbox, Button, Tag, Tooltip } from "uiw";
 
 interface columnsProps {
   onCheck?: (rowData: KktproKeys, e: KktproKeys) => void;
@@ -40,6 +40,7 @@ export const columns = ({
       );
     },
     key: "checked",
+    width: 30,
     render: (text: any, key: any, rowData: any) => {
       return (
         <Checkbox
@@ -70,6 +71,28 @@ export const columns = ({
     {
       title: "联系方式",
       key: "phone",
+      width: 100,
+      ellipsis: true,
+      render: (text: any) => (
+        <Tooltip placement="topLeft" content={text}>
+          {text}
+        </Tooltip>
+      ),
+    },
+    {
+      title: "身份证号",
+      key: "idNumber",
+      width: 100,
+      ellipsis: true,
+      render: (text: any) => (
+        <Tooltip placement="topLeft" content={text}>
+          {text}
+        </Tooltip>
+      ),
+    },
+    {
+      title: "等级",
+      key: "qualifications",
     },
     {
       title: "外派公司",
@@ -99,6 +122,13 @@ export const columns = ({
     {
       title: "备注",
       key: "remake",
+      width: 100,
+      ellipsis: true,
+      render: (text: any) => (
+        <Tooltip placement="topLeft" content={text||''}>
+          {text||''}
+        </Tooltip>
+      ),
     },
     {
       title: "操作",

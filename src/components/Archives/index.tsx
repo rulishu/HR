@@ -42,6 +42,7 @@ const Archives = (
   } = props;
 
   const [newData, setNewData] = useState<KktproKeys>({});
+  const [departmentList, setDepartmentList] = useState<KktproKeys[]>([]);
 
   const dispatch = useDispatch<Dispatch>();
   const {
@@ -90,17 +91,23 @@ const Archives = (
   }, [])
 
   useEffect(() => {
-    if (companyList.length === 0) {
+    // if (companyList.length === 0) {
       dispatch.sysOrganization.selectList({
-        callback: (data: any) => {
+        callback: (res: any) => {
+          const departmentName: KktproKeys = res.find((item: KktproKeys) => String(item.id) === String(data?.company)) || {};
+          const list = (departmentName.department || []).map((item: KktproKeys) => ({
+            label: item.departmentName,
+            value: item.id
+          }))
+          setDepartmentList(list)
           dispatch.archives.updateState({
-            companyList: data
+            companyList: res
           })
         }
       })
-    }
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyList]);
+  }, []);
 
   useEffect(() => {
     const newData = data || {};
@@ -185,11 +192,12 @@ const Archives = (
 
   const _formData = formData({
     companyList,
-    departmentList: [], // 入职部门
+    departmentList, // 入职部门
     data,
     dictObject,
+    contract,
     handleChange,
-    handleIdcardBlur
+    handleIdcardBlur,
   });
 
   /**

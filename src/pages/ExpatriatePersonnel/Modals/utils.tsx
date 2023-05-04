@@ -35,7 +35,7 @@ export const formList = ({
         }
       },
       rules: [
-        { required: true, message: '请选择公司名称' },
+        { required: true, message: '请选择外派公司名称' },
       ],
     },
     {
@@ -47,7 +47,7 @@ export const formList = ({
         format: 'YYYY-MM-DD'
       },
       rules: [
-        { required: true, message: '请选择入场日期' },
+        { required: true, message: `请选择${queryInfo?.state === 3 ? '离场' : '入场'}日期` },
       ],
     },
     {
@@ -57,7 +57,7 @@ export const formList = ({
       span: "24",
       hide: queryInfo?.state === 3,
       rules: [
-        { required: true, message: '请选择入场日期' },
+        { required: true, message: '请输入工作地址' },
       ],
     },
     {
@@ -67,7 +67,17 @@ export const formList = ({
       span: "24",
       hide: queryInfo?.state === 3,
       rules: [
-        { required: true, message: '请选择入场日期' },
+        { required: true, message: '请输入办公方式' },
+      ],
+    },
+    {
+      label: "等级",
+      key: "qualifications",
+      widget: "input",
+      span: "24",
+      hide: queryInfo?.state === 3,
+      rules: [
+        { required: true, message: '请输入等级' },
       ],
     },
     {
