@@ -32,7 +32,7 @@ const Pages = ({ navigate }: KktproPageProps) => {
     <Fragment>
       {/* <UserLogin
         api="/api/login"
-        projectName="人事管理系统"
+        projectName="HR Flow"
         btnProps={{ type: "primary" }}
         onSuccess={(data) => {
           if (data.code === 200 && data.token) {
@@ -48,7 +48,7 @@ const Pages = ({ navigate }: KktproPageProps) => {
       /> */}
       <UserLogin
         api="/api/login"
-        projectName="人事管理系统"
+        projectName="HR Flow"
         buttons={[
           {
             title: "登录",
