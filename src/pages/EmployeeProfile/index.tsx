@@ -51,6 +51,9 @@ const Page = () => {
         // userId,
         callback: () => {
           dispatch.employeeProfile.selectStaffFile();
+          dispatch.employeeProfile.updateState({
+            activeKey: '1'
+          })
           if (!values.id) {
             onReset();
           }

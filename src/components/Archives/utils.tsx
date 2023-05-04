@@ -8,6 +8,7 @@ interface formDataProps {
   departmentList?: any[]
   data: any,
   dictObject: any;
+  contract: any;
   handleChange?: (value: any, e: any) => void;
   handleIdcardBlur?: (e: any) => void;
 }
@@ -28,9 +29,10 @@ export const formData = ({
   departmentList,
   data = {},
   dictObject,
+  contract,
   handleChange,
   handleIdcardBlur
-}: formDataProps): formDataVoid[] => {  
+}: formDataProps): formDataVoid[] => {   
   return [
     {
       title: '入职信息',
@@ -74,24 +76,28 @@ export const formData = ({
             { required: true, message: '请选择入职日期' },
           ],
         },
-        // {
-        //   label: "入职公司",
-        //   key: "company",
-        //   widget: "select",
-        //   option: companyList.map(item => ({ label: item.companyName, value: item.id })),
-        //   rules: [
-        //     { required: true, message: '请选择入职公司' },
-        //   ]
-        // },
-        // {
-        //   label: "入职部门",
-        //   key: "department",
-        //   widget: "select",
-        //   option: departmentList,
-        //   rules: [
-        //     { required: true, message: '请选择入职部门' },
-        //   ],
-        // },
+        {
+          label: "入职公司",
+          key: "company",
+          widget: "select",
+          initialValue: data?.company,
+          option: companyList.filter((item) => item.companyType === 1).map(item => ({ label: item.companyName, value: Number(item.id) })),
+          hide: !contract,
+          rules: [
+            { required: true, message: '请选择入职公司' },
+          ]
+        },
+        {
+          label: "入职部门",
+          key: "department",
+          widget: "select",
+          initialValue: data?.department,
+          option: departmentList,
+          hide: !contract,
+          rules: [
+            { required: true, message: '请选择入职部门' },
+          ],
+        },
         {
           label: "入职岗位",
           key: "post",
