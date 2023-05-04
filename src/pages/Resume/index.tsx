@@ -35,15 +35,16 @@ const Index = () => {
       activeKey={active}
       className='tabsRecord'
       onTabClick={(key, tab, e) => {
-        dispatch.resume.quickSelect({
-          companyId: key,
-          page: 1,
-          pageSize: pageSize
-        })
         dispatch.resume.update({
           companyId: key,
           page: 1,
-          pageSize: 20
+          pageSize: 20,
+          post: ""
+        })
+        dispatch.resume.quickSelect({
+          companyId: key,
+          page: 1,
+          pageSize: pageSize,
         })
       }}>
       {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {

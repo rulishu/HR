@@ -8,11 +8,10 @@ const Index = () => {
   const {
     trainingDevelopment: { dataList, isDelete, formData, delId },
     employeeInduction: { companyList = [] },
-    global: { userData }
+    global: { roles }
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
   const [content, setContent] = useState('')
-  const { userId } = userData as any || {};
 
   useEffect(() => {
     dispatch.sysOrganization.selectList({
@@ -81,7 +80,6 @@ const Index = () => {
       value: item.id
     }
   })
-  console.log(111, userId);
 
   return (
     <Fragment>
@@ -134,13 +132,13 @@ const Index = () => {
                                 <Button
                                   icon="edit"
                                   size="small"
-                                  disabled={userId !== 1 ? true : false}
+                                  disabled={(roles === 'entry' || roles === 'general') ? true : false}
                                   onClick={() => { handle('edit', data) }}
                                 />
                                 <Button
                                   icon="delete"
                                   size="small"
-                                  disabled={userId !== 1 ? true : false}
+                                  disabled={(roles === 'entry' || roles === 'general') ? true : false}
                                   onClick={() => { handle('delete', data) }}
                                 />
                               </div>
