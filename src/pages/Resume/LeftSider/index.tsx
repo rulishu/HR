@@ -12,7 +12,9 @@ const Index = () => {
 
   const render = () => {
     return (
-      <Card noHover style={{ height: 660, overflow: 'scroll' }}>
+      <Card
+        noHover
+      >
         {dictObject?.post?.child?.map((item: any, idx: any) => {
           let valueItem = dictObject?.post?.child?.find((itm: any) => itm.label === item.label)
           let post = valueItem?.value
@@ -24,6 +26,12 @@ const Index = () => {
                 text={item.label}
                 onClick={() => {
                   setIsColor(item.value)
+                  dispatch({
+                    type: 'resume/update',
+                    payload: {
+                      post: post
+                    }
+                  })
                   dispatch.resume.quickSelect({ post, companyId: companyId, page: page, pageSize: pageSize })
                 }}
               />
@@ -35,11 +43,9 @@ const Index = () => {
     )
   }
   return (
-    <Fragment>
-      <Menu>
-        {render()}
-      </Menu>
-    </Fragment >
+    <Menu>
+      {render()}
+    </Menu>
   )
 }
 export default Index;
