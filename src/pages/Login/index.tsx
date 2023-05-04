@@ -74,6 +74,11 @@ const Pages = ({ navigate }: KktproPageProps) => {
             });
           }
         }}
+        footer={
+          <div style={{ color: '#fff', display: 'flex', justifyContent: 'center' }}>
+            版权所有 copyright © 2022 Nihao
+          </div>
+        }
       />
       {/* <Loader
         tip="第三方登录加载中..."
