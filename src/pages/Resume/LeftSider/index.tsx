@@ -24,12 +24,6 @@ const Index = () => {
                 text={item.label}
                 onClick={() => {
                   setIsColor(item.value)
-                  dispatch({
-                    type: 'resume/update',
-                    payload: {
-                      post: post
-                    }
-                  })
                   dispatch.resume.quickSelect({ post, companyId: companyId, page: page, pageSize: pageSize })
                 }}
               />

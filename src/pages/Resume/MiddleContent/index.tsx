@@ -87,7 +87,6 @@ const Index = () => {
           pageSize: pageSize,
           total: total,
           companyId: companyId,
-          post: post
         })
         dispatch({
           type: "resume/quickSelect",
