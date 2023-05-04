@@ -30,7 +30,6 @@ const Index = () => {
   }, [])
 
   return (
-
     <Tabs
       type="line"
       activeKey={active}
@@ -44,7 +43,7 @@ const Index = () => {
         dispatch.resume.update({
           companyId: key,
           page: 1,
-          pageSize: 5
+          pageSize: 20
         })
       }}>
       {companyList?.filter((item: any) => item?.companyType === 1).map((itm: any) => {

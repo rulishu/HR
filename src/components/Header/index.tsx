@@ -19,7 +19,7 @@ const Headers = (props: KktproPageProps) => {
         <Log onClick={onNavigate}>
           <LogLeft>
             <Icon type="uiw" style={{ marginRight: 20, fontSize: 22 }} />
-            <span>人事管理系统</span>
+            <span>HR Flow</span>
           </LogLeft>
           <Input
             size="large"

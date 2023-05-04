@@ -1,17 +1,19 @@
 import { Layout, Card } from 'uiw';
-import LeftSider from './LeftSider';
 import MiddleContent from './MiddleContent';
 import ResumeModal from './Modal';
+import LeftSider from './LeftSider';
+import { Sidertyle } from './style/tabs';
 import './style/index.css'
-const { Sider, Content } = Layout;
+
+const { Content } = Layout;
 
 const TabsTable = () => {
   return (
-    <Card noHover style={{ marginTop: 20 }}>
+    <Card noHover style={{ marginTop: 20 }} >
       <Layout style={{ background: 'rgb(255,255,255)' }}>
-        <Sider style={{ borderRadius: 5 }}>
+        <Sidertyle>
           <LeftSider />
-        </Sider>
+        </Sidertyle>
         <Content style={{ borderRadius: 5 }}>
           <MiddleContent />
         </Content>
