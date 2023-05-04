@@ -8,7 +8,7 @@ import '../style/index.css'
 const Index = () => {
   const {
     loading,
-    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked, companyId },
+    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked, companyId, post },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -84,7 +84,8 @@ const Index = () => {
           page: current,
           pageSize: pageSize,
           total: total,
-          companyId: companyId
+          companyId: companyId,
+          post: post
         })
         dispatch({
           type: "resume/quickSelect",
@@ -93,7 +94,8 @@ const Index = () => {
             page: current,
             pageSize: pageSize,
             total: total,
-            companyId: companyId
+            companyId: companyId,
+            post: post
           },
         });
       }
@@ -122,7 +124,7 @@ const Index = () => {
     <Card
       noHover
       bordered={false}
-      style={{ padding: 0, marginTop: -1, height: 660, overflow: 'scroll' }}
+      style={{ borderLeft: '1px solid rgba(16, 22, 26, 0.15)' }}
       title={
         <Row gutter={10}>
           <Col>
@@ -173,100 +175,84 @@ const Index = () => {
           return (
             <Fragment key={idx}>
               < Card style={{ marginBottom: 10 }} noHover>
-                <div style={{ display: 'flex', justifyContent: "space-between", }} >
-                  <div style={{ display: 'flex', marginLeft: 20, alignItems: 'center' }}>
-                    <Checkbox
-                      checked={item.checked}
-                      onClick={(e) => {
-                        onCheck?.(item, e);
-                      }}
-                    />
-                    <div style={{ marginLeft: 10 }}>
-                      <p>姓名： {item?.name}</p >
-                      <p>性别： {getDictLabel(dictObject?.sex?.child, item?.gender)}</p >
-                    </div>
-                  </div>
-                  <div>
-                    <p>工作经验： {item?.experience} {item?.experience ? "年" : ''}</p >
-                    <p>应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</p >
-                    {/* <p>期望薪资： {item?.salaryExpectation} </p > */}
-                  </div>
-                  <div>
-                    <p>学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</p >
-                  </div>
-                  <div
-                    style={{
-                      marginRight: 50,
-                      display: 'flex',
-                      alignItems: 'center'
+                <Row align="middle">
+                  <Checkbox
+                    checked={item.checked}
+                    onClick={(e) => {
+                      onCheck?.(item, e);
                     }}
+                  />
+                  <Col> 姓名： {item?.name} </Col>
+                  <Col> 性别： {getDictLabel(dictObject?.sex?.child, item?.gender)} </Col>
+                  <Col> 应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</Col>
+                  <Col> 学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</Col>
+                  <Col>工作经验： {item?.experience} {item?.experience ? "年" : ''}</Col>
+                  <TipButton
+                    tip='编辑'
+                    type='primary'
+                    icon='edit'
+                    onClick={() => handle('edit', item)}
+                  />
+                  <TipButton
+                    tip='查看'
+                    type='primary'
+                    icon='document'
+                    disabled={item.cvFileUUID ? false : true}
+                    onClick={() => handle('view', item)}
+                  />
+                  <TipButton
+                    tip='删除'
+                    type='primary'
+                    icon='delete'
+                    onClick={() => handle('delete', item)}
+                  />
+                  <Popover
+                    trigger="hover"
+                    placement="top"
+                    isOutside={true}
+                    content={
+                      <div style={{ width: 80, display: "flex", flexDirection: "column", }}>
+                        <Loader
+                          loading={loading.effects.resume.exportWord}
+                          tip="加载中..."
+                          style={{ width: "100%", height: '100%', flex: 1 }}
+                          bgColor="rgba(255, 255, 255, .7)"
+                        >
+                          <Button
+                            basic
+                            block
+                            type="primary"
+                            onClick={() => handle('export', item)}
+                          >
+                            导出Word
+                          </Button>
+                        </Loader>
+                        <Loader
+                          loading={loading.effects.resume.getDownloadFilePDF}
+                          tip="加载中..."
+                          style={{ width: "100%", height: '100%', flex: 1 }}
+                          bgColor="rgba(255, 255, 255, .7)"
+                        >
+                          <Button
+                            basic
+                            block
+                            type="primary"
+                            onClick={() => handle('exportPdf', item)}
+                          >
+                            导出PDF
+                          </Button>
+                        </Loader>
+                      </div>
+                    }
                   >
-                    <TipButton
-                      tip='编辑'
+                    <Button
+                      icon='more'
+                      className='buttonPopover'
                       type='primary'
-                      icon='edit'
-                      onClick={() => handle('edit', item)}
-                    />
-                    <TipButton
-                      tip='查看'
-                      type='primary'
-                      icon='document'
-                      disabled={item.cvFileUUID ? false : true}
-                      onClick={() => handle('view', item)}
-                    />
-                    <TipButton
-                      tip='删除'
-                      type='primary'
-                      icon='delete'
-                      onClick={() => handle('delete', item)}
-                    />
-                    <Popover
-                      trigger="hover"
-                      placement="top"
-                      isOutside={true}
-                      content={
-                        <div style={{ width: 80, display: "flex", flexDirection: "column", }}>
-                          <Loader
-                            loading={loading.effects.resume.exportWord}
-                            tip="加载中..."
-                            style={{ width: "100%", height: '100%', flex: 1 }}
-                            bgColor="rgba(255, 255, 255, .7)"
-                          >
-                            <Button
-                              basic
-                              block
-                              type="primary"
-                              onClick={() => handle('export', item)}
-                            >
-                              导出Word
-                            </Button>
-                          </Loader>
-                          <Loader
-                            loading={loading.effects.resume.getDownloadFilePDF}
-                            tip="加载中..."
-                            style={{ width: "100%", height: '100%', flex: 1 }}
-                            bgColor="rgba(255, 255, 255, .7)"
-                          >
-                            <Button
-                              basic
-                              block
-                              type="primary"
-                              onClick={() => handle('exportPdf', item)}
-                            >
-                              导出PDF
-                            </Button>
-                          </Loader>
-                        </div>
-                      }
-                    >
-                      <Button
-                        icon='more'
-                        className='buttonPopover'
-                        type='primary'
-                      ></Button>
-                    </Popover>
-                  </div>
-                </div>
+                    ></Button>
+                  </Popover>
+                </Row>
+
               </Card>
             </Fragment>
           )

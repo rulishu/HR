@@ -27,7 +27,7 @@ const route = {
     TableData: [],
     total: 0,
     page: 1,
-    pageSize: 5,
+    pageSize: 20,
 
     editType: "none",
     editVisible: false, // 编辑
@@ -44,7 +44,9 @@ const route = {
     checked: [],
 
     companyId: '',
-    cvLogData: []
+    cvLogData: [],
+
+    post: ''
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -87,12 +89,12 @@ const route = {
         dispatch.resume.update({
           editVisible: false,
           page: 1,
-          pageSize: 5
+          pageSize: 20
         });
         dispatch.resume.quickSelect({
           companyId: payload.companyId,
           page: 1,
-          pageSize: 5
+          pageSize: 20
         });
       }
     },
@@ -121,7 +123,7 @@ const route = {
       const { code, msg } = await uploadZip(payload);
       if (code === 200) {
         Notify.success({ description: msg || '上传成功' });
-        dispatch.resume.quickSelect({ page: 1, pageSize: 5 });
+        dispatch.resume.quickSelect({ page: 1, pageSize: 20 });
       }
     },
     /**

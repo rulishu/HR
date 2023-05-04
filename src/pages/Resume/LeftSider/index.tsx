@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { Menu, Card } from 'uiw';
+import { Menu } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 
 const Index = () => {
@@ -12,7 +12,7 @@ const Index = () => {
 
   const render = () => {
     return (
-      <Card noHover style={{ height: 660, overflow: 'scroll' }}>
+      <div>
         {dictObject?.post?.child?.map((item: any, idx: any) => {
           let valueItem = dictObject?.post?.child?.find((itm: any) => itm.label === item.label)
           let post = valueItem?.value
@@ -24,6 +24,12 @@ const Index = () => {
                 text={item.label}
                 onClick={() => {
                   setIsColor(item.value)
+                  dispatch({
+                    type: 'resume/update',
+                    payload: {
+                      post: post
+                    }
+                  })
                   dispatch.resume.quickSelect({ post, companyId: companyId, page: page, pageSize: pageSize })
                 }}
               />
@@ -31,15 +37,13 @@ const Index = () => {
             </Fragment>
           )
         })}
-      </Card>
+      </div>
     )
   }
   return (
-    <Fragment>
-      <Menu>
-        {render()}
-      </Menu>
-    </Fragment >
+    <Menu>
+      {render()}
+    </Menu>
   )
 }
 export default Index;
