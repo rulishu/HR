@@ -72,6 +72,10 @@ export const columns = ({
       key: "phone",
     },
     {
+      title: "等级",
+      key: "qualifications",
+    },
+    {
       title: "外派公司",
       key: "expatriateCompanyName",
     },
