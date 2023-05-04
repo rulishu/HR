@@ -8,7 +8,7 @@ import '../style/index.css'
 const Index = () => {
   const {
     loading,
-    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked, companyId },
+    resume: { TableData, isDelete, delId, formData, cvFileUUID, total, page, pageSize, checked, companyId, post },
     global: { dictObject },
   } = useSelector((state: RootState) => state)
   const dispatch = useDispatch<Dispatch>()
@@ -84,7 +84,8 @@ const Index = () => {
           page: current,
           pageSize: pageSize,
           total: total,
-          companyId: companyId
+          companyId: companyId,
+          post: post
         })
         dispatch({
           type: "resume/quickSelect",
@@ -93,7 +94,8 @@ const Index = () => {
             page: current,
             pageSize: pageSize,
             total: total,
-            companyId: companyId
+            companyId: companyId,
+            post: post
           },
         });
       }
@@ -122,6 +124,7 @@ const Index = () => {
     <Card
       noHover
       bordered={false}
+      style={{ borderLeft: '1px solid rgba(16, 22, 26, 0.15)' }}
       title={
         <Row gutter={10}>
           <Col>

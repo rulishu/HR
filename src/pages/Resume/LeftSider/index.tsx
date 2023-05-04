@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { Menu, Card } from 'uiw';
+import { Menu } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 
 const Index = () => {
@@ -12,9 +12,7 @@ const Index = () => {
 
   const render = () => {
     return (
-      <Card
-        noHover
-      >
+      <div>
         {dictObject?.post?.child?.map((item: any, idx: any) => {
           let valueItem = dictObject?.post?.child?.find((itm: any) => itm.label === item.label)
           let post = valueItem?.value
@@ -39,7 +37,7 @@ const Index = () => {
             </Fragment>
           )
         })}
-      </Card>
+      </div>
     )
   }
   return (
