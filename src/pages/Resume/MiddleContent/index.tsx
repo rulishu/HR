@@ -41,7 +41,8 @@ const Index = () => {
     }
 
     if (type === 'view') {
-      dispatch.resume.getDownloadFile(data?.cvFileUUID)
+      // dispatch.resume.getDownloadFile(data?.cvFileUUID)
+      window.open(`/api/vc/previewPdf?id=${data?.cvFileUUID}&exportVersion`)
     }
     if (type === 'delete') {
       dispatchFn({ isDelete: true, delId: data.id })
@@ -56,8 +57,11 @@ const Index = () => {
       const checkedDown = checked.map((item: any) => ({ userId: item?.userId, id: item?.id }))
       dispatch.resume.downZip(checkedDown)
     }
+    if (type === 'detailShare') {
+      window.open(`/api/vc/previewPdf?id=${data?.id}&exportVersion=1`)
+    }
     if (type === 'share') {
-      window.open(`/api/vc/previewPdf?id=${data?.id}`)
+      window.open(`/api/vc/previewPdf?id=${data?.id}&exportVersion=2`)
     }
   }
 
@@ -212,7 +216,7 @@ const Index = () => {
                     placement="top"
                     isOutside={true}
                     content={
-                      <div style={{ width: 80, display: "flex", flexDirection: "column", }}>
+                      <div style={{ width: 100, display: "flex", flexDirection: "column", }}>
                         <Loader
                           loading={loading.effects.resume.exportWord}
                           tip="加载中..."
@@ -243,21 +247,22 @@ const Index = () => {
                             导出PDF
                           </Button>
                         </Loader>
-                        <Loader
-                          loading={loading.effects.resume.getDownloadFilePDF}
-                          tip="加载中..."
-                          style={{ width: "100%", height: '100%', flex: 1 }}
-                          bgColor="rgba(255, 255, 255, .7)"
+                        <Button
+                          basic
+                          block
+                          type="primary"
+                          onClick={() => handle('detailShare', item)}
                         >
-                          <Button
-                            basic
-                            block
-                            type="primary"
-                            onClick={() => handle('share', item)}
-                          >
-                            简历分享
-                          </Button>
-                        </Loader>
+                          详细简历分享
+                        </Button>
+                        <Button
+                          basic
+                          block
+                          type="primary"
+                          onClick={() => handle('share', item)}
+                        >
+                          简约简历分享
+                        </Button>
                       </div>
                     }
                   >
