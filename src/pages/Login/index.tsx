@@ -1,6 +1,6 @@
 import { useEffect, Fragment } from 'react';
 import { useDispatch, Dispatch, KktproPageProps, useLocation } from '@kkt/pro';
-import UserLogin from "@uiw-admin/user-login";
+import UserLogin from '@uiw-admin/user-login';
 import { Notify } from 'uiw';
 
 const Pages = ({ navigate }: KktproPageProps) => {
@@ -9,7 +9,7 @@ const Pages = ({ navigate }: KktproPageProps) => {
 
   const thirdLogin = () => {
     dispatch({ type: 'global/fetchThirdLoginToken' });
-  }
+  };
 
   useEffect(() => {
     if (search) {
@@ -24,9 +24,9 @@ const Pages = ({ navigate }: KktproPageProps) => {
         },
       });
     }
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, dispatch])
+  }, [pathname, dispatch]);
 
   return (
     <Fragment>
@@ -51,27 +51,31 @@ const Pages = ({ navigate }: KktproPageProps) => {
         projectName="HR Flow"
         buttons={[
           {
-            title: "登录",
-            htmlType: "submit",
-            type: "primary"
+            title: '登录',
+            htmlType: 'submit',
+            type: 'primary',
           },
           {
-            title: "第三方登陆",
+            title: '第三方登陆',
             basic: true,
-            icon: "github-o",
-            type: "link",
-            onClick: () => { thirdLogin() }
+            icon: 'github-o',
+            type: 'link',
+            onClick: () => {
+              thirdLogin();
+            },
           },
         ]}
         onSuccess={(data) => {
           if (data.code === 200 && data.token) {
             Notify.success({ description: '登录成功' });
-            localStorage.setItem("token", data?.token);
+            localStorage.setItem('token', data?.token);
             dispatch.global.getUserInfo({
               callback: (authRoutes: string[]) => {
-                navigate('/home', { replace: true })
-              }
+                navigate('/home', { replace: true });
+              },
             });
+          } else {
+            Notify.error({ description: data.msg || '登录失败' });
           }
         }}
         footer={
@@ -87,8 +91,7 @@ const Pages = ({ navigate }: KktproPageProps) => {
         fullscreen={isFullscreen}
         loading={isFullscreen}
       /> */}
-
     </Fragment>
-  )
+  );
 };
 export default Pages;
