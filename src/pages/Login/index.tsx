@@ -76,7 +76,7 @@ const Pages = ({ navigate }: KktproPageProps) => {
         }}
         footer={
           <div style={{ color: '#fff', display: 'flex', justifyContent: 'center' }}>
-            版权所有 copyright © 2022 Nihao
+            Copyright @ 2013-2023 上海尼好系统集成有限公司 All Rights Reserved.
           </div>
         }
       />
