@@ -39,7 +39,7 @@ const Index = () => {
           companyId: key,
           page: 1,
           pageSize: 20,
-          post: ""
+          post: ''
         })
         dispatch.resume.quickSelect({
           companyId: key,
