@@ -1,5 +1,5 @@
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
-import { Button, Table, Empty, Card } from "uiw";
+import { Button, Table, Empty, Card } from 'uiw';
 import { columns } from './utils';
 
 const Page = (props: any) => {
@@ -16,18 +16,18 @@ const Page = (props: any) => {
   });
 
   const onEdit = (rowData?: any, type?: number) => {
-    !type && dispatch.sysOrganization.selectEntranceOrDeparture({ id: rowData?.id, })
+    !type && dispatch.sysOrganization.selectEntranceOrDeparture({ id: rowData?.id });
 
     //入场/离场
-    const typeVisible = type ? 'isVisible' : 'visible'
+    const typeVisible = type ? 'isVisible' : 'visible';
     dispatch({
       type: 'sysOrganization/updateState',
       payload: {
         [typeVisible]: true,
         queryInfo: rowData,
-      }
-    })
-  }
+      },
+    });
+  };
 
   const onCheck = (rowData: any, e: any) => {
     const isChecked = e.target.checked;
@@ -41,19 +41,19 @@ const Page = (props: any) => {
       check.splice(check.indexOf(rowData.id), 1);
     }
     dispatch({
-      type: "sysOrganization/updateState",
+      type: 'sysOrganization/updateState',
       payload: { checked: check },
     });
-  }
+  };
   // 导出
   const onFileExport = () => {
-    dispatch.sysOrganization.downloadExcelStaff({ id:props.companyId, ids: checked })
-  }
+    dispatch.sysOrganization.downloadExcelStaff({ id: props.companyId, ids: checked });
+  };
 
   // 翻页
   // const onTurnPages = (current: number) => {
   //   console.log('current',current);
-    
+
   //   dispatch.sysOrganization.updateState({
   //     page: current
   //   });
@@ -63,9 +63,14 @@ const Page = (props: any) => {
   return (
     <Card noHover bordered={false}>
       <div style={{ marginBottom: 15 }}>
-        <Button icon="download" type="primary" onClick={() => {
+        <Button
+          icon="download"
+          type="primary"
+          disabled={checked.length === 0}
+          onClick={() => {
             onFileExport();
-          }}>
+          }}
+        >
           导出
         </Button>
       </div>
@@ -90,7 +95,7 @@ const Page = (props: any) => {
         // )}
       />
     </Card>
-  )
-}
+  );
+};
 
 export default Page;
