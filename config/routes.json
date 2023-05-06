@@ -131,6 +131,12 @@
             "name": "转正审批",
             "icon": "usergroup-add",
             "element": "@/pages/EmploymentConfirmation"
+          },
+          {
+            "path": "/admin/interview-tasks",
+            "name": "面试任务",
+            "icon": "folder-open",
+            "element": "@/pages/InterviewTasks"
           }
         ]
       },

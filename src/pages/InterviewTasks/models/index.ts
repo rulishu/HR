@@ -1,29 +1,24 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import {
-  quickSelect,
-  deleteVC,
   exportWord,
-  insert,
-  updateVC,
   getDownloadFile,
-  uploadZip,
-  downZip,
   getDownloadFilePDF,
   getCVUpdateLogs,
   resumeInterview,
   selectListByRole,
   interviewAssignment,
+  selectCVByInterview,
   selectUserVC,
-} from '@/servers/resume';
+} from '@/servers/interviewTasks';
 import { Notify } from 'uiw';
-import { downloadExcelFile, downloadPdfFile, downloadZipFile } from '../../../utils/export';
+import { downloadExcelFile, downloadPdfFile } from '../../../utils/export';
 
 const init = {
   allFormData: undefined, // 详情数据
 }
 
 const route = {
-  name: 'resume',
+  name: 'interviewTasks',
   state: {
     listType: 10,
 
@@ -61,8 +56,7 @@ const route = {
     assignHrName:"", // hr
     assignInterviewerName:'', //技术
     assignState:undefined, //状态
-    hrContext:'',
-    itContext:'',
+
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -74,81 +68,24 @@ const route = {
     /**
      * table列表数据查询
     */
-    async quickSelect(payload?: any, state?: any) {
-      const { code, data } = await quickSelect(payload);
+    async selectCVByInterview(payload?: any, state?: any) {
+      const { code, data } = await selectCVByInterview(payload)
       if (code === 200 && data) {
-        dispatch.resume.update({
+        dispatch.interviewTasks.update({
           TableData: data.list,
           total: data.total
         });
       }
     },
-    /**
-     * 删除简历
-    */
-    async deleteVC(payload?: any, state?: any) {
-      const { code, msg } = await deleteVC(payload);
-      if (code === 200) {
-        Notify.success({ description: msg || '删除成功' });
-        dispatch.resume.update({
-          isDelete: false,
-        });
-      }
-    },
-    /**
-    * 新增简历
-    */
-    async insert(payload: KktproKeys, state: any) {
-      const { code, msg } = await insert(payload);
-      if (code === 200) {
-        Notify.success({ description: msg || '添加成功' });
-        dispatch.resume.update({
-          editVisible: false,
-          page: 1,
-          pageSize: 20
-        });
-        dispatch.resume.quickSelect({
-          companyId: payload.companyId,
-          page: 1,
-          pageSize: 20
-        });
-      }
-    },
-    /**
-    * 编辑简历
-    */
-    async updateVC(payload: KktproKeys, state: any) {
-      const { code, msg } = await updateVC(payload);
-      if (code === 200) {
-        Notify.success({ description: msg || '更新成功' });
-        dispatch.resume.update({
-          editVisible: false
-        });
-      }
-    },
+    
+   
     // 文件预览
     async getDownloadFile(payload: any) {
       const data = await getDownloadFile(payload)
       downloadPdfFile(data)
       return data
     },
-    /**
-     * 批量上传
-    */
-    async uploadZip(payload?: any, state?: any) {
-      const { code, msg } = await uploadZip(payload);
-      if (code === 200) {
-        Notify.success({ description: msg || '上传成功' });
-        dispatch.resume.quickSelect({ page: 1, pageSize: 20 });
-      }
-    },
-    /**
-     * 批量导出
-    */
-    async downZip(payload?: any, state?: any) {
-      const data = await downZip(payload);
-      downloadZipFile(data, '简历批量下载.zip')
-    },
+   
     /*
      * 导出Word简历
     */
@@ -170,7 +107,7 @@ const route = {
     async getCVUpdateLogs(payload: any) {
       const { data, code } = await getCVUpdateLogs(payload)
       if (code === 200 && data) {
-        dispatch.resume.update({
+        dispatch.interviewTasks.update({
           cvLogData: data
         });
       }
@@ -183,11 +120,11 @@ const route = {
       const { data, code } = await selectListByRole(payload)
       if (code === 200 && data) {
         if(payload.personType === 'it'){
-          dispatch.resume.update({
+          dispatch.interviewTasks.update({
             interviewer: data,
           });
         }else if(payload.personType === 'hr'){
-          dispatch.resume.update({
+          dispatch.interviewTasks.update({
             hrInterviewer:data
           });
         }
@@ -212,35 +149,32 @@ const route = {
       const {  code,msg } = await resumeInterview(payload)
       if (code === 200 ) {
         Notify.success({ description: msg || '修改成功' });
-        dispatch.resume.update({
+        dispatch.interviewTasks.update({
           examineVisible: false,
         });
-        dispatch.resume.quickSelect({ page: 1, pageSize: 20 });
+        dispatch.interviewTasks.selectCVByInterview({
+          assignInterviewer:payload.assignInterviewer,
+            page: 1,
+            pageSize: 20,
+        });
       }
     },
-    
-     /*
+
+    /*
     * 简历查询
     */
-     async selectUserVC(payload: any) {
+    async selectUserVC(payload: any) {
       const { data, code, } = await selectUserVC(payload)
-      const hrContext = data.list?.at(0)?.timelines.filter((item:any)=>{
-        return item.type === 4
-      })?.at(0)?.comments?.at(0)?.context
-
-      const itContext = data.list?.at(0)?.timelines.filter((item:any)=>{
-        return item.type === 3
-      })?.at(0)?.comments?.at(0)?.context
       if (code === 200 ) {
-        dispatch.resume.update({
+        dispatch.interviewTasks.update({
           assignInterviewerName: data?.list?.at(0)?.assignInterviewerName,
           assignHrName:data?.list?.at(0)?.assignHrName,
           assignState:data?.list?.at(0)?.state,
-          hrContext:hrContext,
-          itContext:itContext,
+
         });
       }
     },
+    
   }),
 }
 
