@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { List, Row, Col, Button, Pagination, Empty } from 'uiw';
+import { List, Row, Col, Button, Pagination, Empty, Tag, Tooltip, Icon } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
 import formatter from "@uiw/formatter";
 import LinkContent from '../Modal/LinkContent'
@@ -125,6 +125,11 @@ const Index = () => {
             return (
               <List.Item>
                 <Col>
+                  {item.topping === 1 &&
+                    <Tag>
+                      置顶
+                    </Tag>
+                  }
                   <Button
                     basic
                     type="link"
@@ -138,9 +143,7 @@ const Index = () => {
                       })
                     }}
                   >
-                    <div>
-                      {item?.title}
-                    </div>
+                    {item?.title}
                   </Button>
                 </Col>
                 <Col>{comName?.label}</Col>
@@ -166,13 +169,16 @@ const Index = () => {
                               sort ? (sort === "DESC" ? "caret-down" : "v") : "d-caret"
                             }
                           /> */}
-                        <Button
-                          size="small"
-                          icon="caret-up"
-                          onClick={() => { handleUp(item) }}
-                        >
-                          置顶
-                        </Button>
+                        <Tooltip placement="top" content="置顶">
+                          <Button
+                            size="small"
+                            icon="caret-up"
+                            onClick={() => {
+                              handleUp(item)
+                            }}
+                          >
+                          </Button>
+                        </Tooltip>
                       </div>
                       {/* </Dropdown> */}
                     </div>
