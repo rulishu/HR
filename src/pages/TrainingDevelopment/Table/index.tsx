@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { List, Row, Col, Button, Pagination, Empty, Tag, Tooltip, Icon } from 'uiw';
+import { List, Row, Col, Button, Pagination, Empty, Tag, Tooltip } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro'
 import formatter from "@uiw/formatter";
 import LinkContent from '../Modal/LinkContent'
