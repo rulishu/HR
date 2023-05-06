@@ -1,0 +1,23 @@
+.cardTablediv {
+  background-color: blue;
+}
+.formResume {
+  width: 900px;
+  margin: 0 auto;
+}
+.formResume .w-btn {
+  width: 100px;
+}
+
+.tabsRecord {
+  box-shadow: rgb(0 0 0 / 6%) 0px 3px 10px 0px;
+  background: #fff;
+  position: sticky;
+  width: 100%;
+  padding: 0px 20px;
+}
+.buttonPopover{
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}

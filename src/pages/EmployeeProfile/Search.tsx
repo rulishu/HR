@@ -1,7 +1,7 @@
 import { useDispatch, Dispatch } from '@kkt/pro';
 import { ProForm } from '@uiw-admin/components';
 import formatter from '@uiw/formatter';
-import { DateInputRange } from 'uiw';
+import { DateInputRange, Notify } from 'uiw';
 import './style/index.css';
 
 //搜索表单
@@ -54,6 +54,14 @@ const Search = () => {
   const dispatch = useDispatch<Dispatch>();
 
   const onScreenSubmit = (current?: any) => {
+    if (current?.entryDateStart?.at(0) !== undefined && current?.entryDateStart?.at(1) !== undefined) {
+      if (
+        formatter('YYYY-MM-DD', new Date(current?.entryDateStart?.at(0))) >
+        formatter('YYYY-MM-DD', new Date(current?.entryDateStart?.at(1)))
+      ) {
+        Notify.error({ description: '结束时间不能小于开始时间' });
+      }
+    }
     dispatch.employeeProfile.selectStaffFile({
       ...current,
       entryDateStart:

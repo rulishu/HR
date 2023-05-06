@@ -127,6 +127,17 @@ export function interviewAssignment(params: KktproKeys) {
 }
 
 /**
+ * 简历查询列表
+*/
+export function selectCVByInterview(params: KktproKeys) {
+  return request('/api/vc/selectCVByInterview', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+
+/**
  * 简历查询
 */
 export function selectUserVC(params: KktproKeys) {
@@ -135,5 +146,3 @@ export function selectUserVC(params: KktproKeys) {
     body: { ...params },
   });
 }
-
-

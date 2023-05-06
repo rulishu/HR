@@ -72,7 +72,7 @@ const login = {
     /**
      * 获取第三方token
     */
-    async fetchThirdLoginToken(param: any) {
+    async fetchThirdLoginToken() {
       const data = await getAuthorConfig();
       if (data && data.data) {
         window.location.href = data.data.gitLabUrl;

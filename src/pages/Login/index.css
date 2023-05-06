@@ -1,0 +1,11 @@
+.w-form .w-row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .linkLoader{
+    margin-top: 20px;
+    &::before{
+      border-color: #008ef0;
+    }
+  }
+}
