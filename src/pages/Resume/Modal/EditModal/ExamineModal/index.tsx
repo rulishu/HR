@@ -17,6 +17,8 @@ const ExamineModal = () => {
       companyId,
       page,
       pageSize,
+      itContext,
+      hrContext,
     },
     usersModal: { roleList },
   } = useSelector((state: RootState) => state);
@@ -26,7 +28,7 @@ const ExamineModal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(hrContext);
 
   const onClosed = () => {
     setValue('');
@@ -91,14 +93,7 @@ const ExamineModal = () => {
         state: 4,
         context: value,
         flag: 1,
-      },
-    });
-    dispatch({
-      type: 'resume/quickSelect',
-      payload: {
-        page: page,
-        pageSize: pageSize,
-        companyId: companyId,
+        type: 4,
       },
     });
   };
@@ -107,6 +102,9 @@ const ExamineModal = () => {
   const onTextChange = (val: string) => {
     setValue(val);
   };
+
+  const states = ['待面试', '面试中', '面试完成', '面试完成', '面试完成'];
+  const hrStates = ['待面试', '待面试', '面试中', '面试完成', '面试完成'];
 
   return (
     <Drawer
@@ -147,10 +145,8 @@ const ExamineModal = () => {
                     </Button>
                   </div>
                 </div>
-                <div style={{ marginBottom: 6 }}>
-                  状态：{assignState === 4 ? '面试已通过' : itPersonDate?.length === 0 ? '待面试' : '面试中'}
-                </div>
-                <div style={{ marginBottom: 6 }}>反馈：</div>
+                <div style={{ marginBottom: 6 }}>状态：{states[assignState as any]}</div>
+                <div style={{ marginBottom: 6 }}>反馈：{itContext}</div>
               </div>
             }
           />
@@ -175,10 +171,8 @@ const ExamineModal = () => {
                     </Button>
                   </div>
                 </div>
-                <div style={{ marginBottom: 6 }}>
-                  状态：{assignState === 4 ? '面试已通过' : hrPersonDate?.length === 0 ? '待面试' : '面试中'}
-                </div>
-                <div style={{ marginBottom: 6 }}>反馈：</div>
+                <div style={{ marginBottom: 6 }}>状态：{hrStates[assignState as any]}</div>
+                <div style={{ marginBottom: 6 }}>反馈：{hrContext}</div>
               </div>
             }
           />
@@ -186,7 +180,8 @@ const ExamineModal = () => {
       </Card>
       <div style={{ marginBottom: 10, marginTop: 10, fontWeight: 'bold' }}>不通过原因：</div>
       <Textarea
-        value={value}
+        value={hrContext || value}
+        disabled={assignState === 3 || assignState === 4}
         placeholder="请输入内容"
         rows={6}
         style={{ paddingLeft: 10 }}
