@@ -94,3 +94,46 @@ export function getCVUpdateLogs(params: KktproKeys) {
     body: { ...params },
   });
 }
+
+/**
+ * 是否面试通过
+*/
+export function resumeInterview(params: KktproKeys) {
+  return request('/api/vc/resumeInterview', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 获取面试人
+*/
+export function selectListByRole(params: KktproKeys) {
+  return request('/api/user/selectListByRole', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+
+/**
+ * 面试指派
+*/
+export function interviewAssignment(params: KktproKeys) {
+  return request('/api/vc/interviewAssignment', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 简历查询
+*/
+export function selectUserVC(params: KktproKeys) {
+  return request('/api/vc/selectUserVC', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+
