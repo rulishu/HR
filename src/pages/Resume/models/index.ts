@@ -9,7 +9,11 @@ import {
   uploadZip,
   downZip,
   getDownloadFilePDF,
-  getCVUpdateLogs
+  getCVUpdateLogs,
+  resumeInterview,
+  selectListByRole,
+  interviewAssignment,
+  selectUserVC,
 } from '@/servers/resume';
 import { Notify } from 'uiw';
 import { downloadExcelFile, downloadPdfFile, downloadZipFile } from '../../../utils/export';
@@ -33,6 +37,8 @@ const route = {
     editVisible: false, // 编辑
     // modalVisible: false, // 查看
     isDelete: false, // 删除
+    examineVisible:false, //审批
+    isPersonVisible:false, //人员
     delId: 0,
 
     ...init,
@@ -42,11 +48,20 @@ const route = {
     projectObj: {},
     projectExperience: [],
     checked: [],
-
     companyId: '',
     cvLogData: [],
+    post: '',
+    itPersonDate:[], // 技术存储数据
+    hrPersonDate:[], // hr存储数据
+    personType:'', // 技术、人员
+    interviewer:[], // 面试人
+    hrInterviewer:[], //hr 面试人
+    isHrPersonVisible:false,
+    vitaId:undefined, // 简历id
+    assignHrName:"", // hr
+    assignInterviewerName:'', //技术
+    assignState:undefined, //状态
 
-    post: ''
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -156,6 +171,63 @@ const route = {
       if (code === 200 && data) {
         dispatch.resume.update({
           cvLogData: data
+        });
+      }
+    },
+
+    /*
+    * 获取面试人
+    */
+    async selectListByRole(payload: any) {
+      const { data, code } = await selectListByRole(payload)
+      if (code === 200 && data) {
+        if(payload.personType === 'it'){
+          dispatch.resume.update({
+            interviewer: data,
+          });
+        }else if(payload.personType === 'hr'){
+          dispatch.resume.update({
+            hrInterviewer:data
+          });
+        }
+       
+      }
+    },
+
+    /*
+    * 指派面试人
+    */
+    async interviewAssignment(payload: any) {
+      const { data, code, msg } = await interviewAssignment(payload)
+      if (code === 200 && data) {
+        Notify.success({ description: msg || '指派成功' });
+      }
+    },
+
+     /*
+    * 是否面试通过
+    */
+     async resumeInterview(payload: any) {
+      const {  code,msg } = await resumeInterview(payload)
+      if (code === 200 ) {
+        Notify.success({ description: msg || '修改成功' });
+        dispatch.resume.update({
+          examineVisible: false,
+        });
+      }
+    },
+    
+     /*
+    * 简历查询
+    */
+     async selectUserVC(payload: any) {
+      const { data, code, } = await selectUserVC(payload)
+      if (code === 200 ) {
+        dispatch.resume.update({
+          assignInterviewerName: data?.list?.at(0)?.assignInterviewerName,
+          assignHrName:data?.list?.at(0)?.assignHrName,
+          assignState:data?.list?.at(0)?.state,
+
         });
       }
     },
