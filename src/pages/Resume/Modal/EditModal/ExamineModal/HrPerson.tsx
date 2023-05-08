@@ -45,7 +45,7 @@ const HrPerson = () => {
       });
       dispatch.resume.interviewAssignment({
         assignHr: values,
-        state: 2,
+        state: 1,
         id: vitaId,
       });
     }

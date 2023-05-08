@@ -18,6 +18,8 @@ const ExamineModal = () => {
       hrContext,
       itState,
       hrState,
+      page,
+      pageSize,
     },
     usersModal: { roleList },
   } = useSelector((state: RootState) => state);
@@ -35,6 +37,7 @@ const ExamineModal = () => {
     dispatch.resume.update({
       examineVisible: false,
     });
+    dispatch.resume.quickSelect({ page: page, pageSize: pageSize });
   };
 
   //  获取 hr 角色
@@ -85,8 +88,8 @@ const ExamineModal = () => {
   /**
    * 同意
    */
-  const onAgree = () => {
-    dispatch({
+  const onAgree = async () => {
+    await dispatch({
       type: 'resume/resumeInterview',
       payload: {
         id: vitaId,
@@ -97,13 +100,14 @@ const ExamineModal = () => {
         interviewResult: '同意',
       },
     });
+    await dispatch.resume.quickSelect({ page: page, pageSize: pageSize });
   };
 
   /**
    * 不同意
    */
-  const onNoAgree = () => {
-    dispatch({
+  const onNoAgree = async () => {
+    await dispatch({
       type: 'resume/resumeInterview',
       payload: {
         id: vitaId,
@@ -114,6 +118,7 @@ const ExamineModal = () => {
         interviewResult: '不同意',
       },
     });
+    await dispatch.resume.quickSelect({ page: page, pageSize: pageSize });
   };
   // 反馈
   const onTextChange = (val: string) => {
@@ -128,12 +133,16 @@ const ExamineModal = () => {
       type="primary"
       onClose={() => onClosed()}
       footer={
-        <div>
-          <Button type="primary" onClick={() => onAgree()}>
-            同意
-          </Button>
-          <Button onClick={() => onNoAgree()}>不同意</Button>
-        </div>
+        itState === '不同意' ? (
+          ''
+        ) : (
+          <div>
+            <Button type="primary" onClick={() => onAgree()}>
+              同意
+            </Button>
+            <Button onClick={() => onNoAgree()}>不同意</Button>
+          </div>
+        )
       }
     >
       <Card>
@@ -151,6 +160,7 @@ const ExamineModal = () => {
                   <div style={{ width: 200, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                     <div style={{ marginRight: 8 }}>{itPersonDate?.at(0) || assignInterviewerName}</div>
                     <Button
+                      disabled={itState === '不同意' || itState === '同意'}
                       onClick={() => {
                         onSkill();
                       }}
@@ -177,6 +187,7 @@ const ExamineModal = () => {
                   <div style={{ width: 200, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                     <div style={{ marginRight: 8 }}>{hrPersonDate?.at(0) || assignHrName}</div>
                     <Button
+                      disabled={hrState === '不同意' || hrState === '同意'}
                       onClick={() => {
                         onHr();
                       }}
