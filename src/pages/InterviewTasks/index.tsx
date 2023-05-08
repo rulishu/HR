@@ -10,7 +10,7 @@ function ArchiveApprovalRecord() {
   const {
     loading,
     sysDataDictionary: { dataList = [] },
-    global: { dictObject, userData },
+    global: { dictObject },
     interviewTasks: { formData, cvFileUUID },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
@@ -119,7 +119,7 @@ function ArchiveApprovalRecord() {
     // 格式化查询参数 会接收到pageIndex 当前页  searchValues 表单数据
     query: (page, pageSize, searchValues) => {
       return {
-        assignInterviewer: (userData as any)?.userId,
+        // assignInterviewer: (userData as any)?.userId,
         page: page,
         pageSize: pageSize,
         ...searchValues,
@@ -215,7 +215,7 @@ function ArchiveApprovalRecord() {
                     tip="查看"
                     type="primary"
                     icon="document"
-                    // disabled={item.cvFileUUID ? false : true}
+                    disabled={rowData.cvFileUUID ? false : true}
                     onClick={() => handle('view', rowData)}
                   />
                   <Popover
@@ -259,7 +259,7 @@ function ArchiveApprovalRecord() {
           },
         ]}
       />
-      <Modal />
+      <Modal table={table} />
     </div>
   );
 }

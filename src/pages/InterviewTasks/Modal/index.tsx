@@ -1,10 +1,12 @@
 import { Fragment } from 'react';
 import ExamineModal from './ExamineModal/index';
 
-const Index = () => {
+const Index = (props: any) => {
+  const { table } = props;
+
   return (
     <Fragment>
-      <ExamineModal />
+      <ExamineModal table={table} />
     </Fragment>
   );
 };
