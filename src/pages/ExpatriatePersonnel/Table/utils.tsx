@@ -47,6 +47,7 @@ export const columns = ({ onCheck, onEdit, dictObject, checked, dataSourceList }
   {
     title: '姓名',
     key: 'staffName',
+    width: 100,
   },
   // {
   //   title: "公司",
@@ -55,6 +56,7 @@ export const columns = ({ onCheck, onEdit, dictObject, checked, dataSourceList }
   {
     title: '职位',
     key: 'post',
+    width: 100,
     render: (text: any, key: any, rowData: any) => {
       const data = dictObject['post']?.child.filter((item: any) => item.value === text)?.[0];
       return <div>{data?.label}</div>;
@@ -85,26 +87,32 @@ export const columns = ({ onCheck, onEdit, dictObject, checked, dataSourceList }
   {
     title: '级别',
     key: 'qualifications',
+    width: 100,
   },
   {
     title: '外派公司',
     key: 'expatriateCompanyName',
+    width: 100,
   },
   {
     title: '入场时间',
     key: 'entranceTime',
+    width: 100,
   },
   {
     title: '离场时间',
     key: 'departureTime',
+    width: 100,
   },
   {
     title: '工作地址',
     key: 'workAddress',
+    width: 100,
   },
   {
     title: '办公方式',
     key: 'workWay',
+    width: 100,
   },
   {
     title: '外派状态',
@@ -127,7 +135,7 @@ export const columns = ({ onCheck, onEdit, dictObject, checked, dataSourceList }
   {
     title: '操作',
     key: 'edit',
-    width: 120,
+    width: 200,
     render: (text: any, key: any, rowData: any) => {
       return (
         <>
@@ -140,6 +148,9 @@ export const columns = ({ onCheck, onEdit, dictObject, checked, dataSourceList }
               入场
             </Button>
           )}
+          <Button type="primary" onClick={() => onEdit?.(rowData, 555)}>
+            编辑
+          </Button>
           <Button
             type="primary"
             onClick={() => {

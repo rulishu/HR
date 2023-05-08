@@ -16,6 +16,12 @@ const Page = (props: any) => {
   });
 
   const onEdit = (rowData?: any, type?: number) => {
+    dispatch({
+      type: 'sysOrganization/updateState',
+      payload: {
+        buttonType: type
+      }
+    })
     !type && dispatch.sysOrganization.selectEntranceOrDeparture({ id: rowData?.id });
 
     //入场/离场
@@ -84,15 +90,15 @@ const Page = (props: any) => {
         })}
         data={dataSourceList}
         empty={<Empty />}
-        // footer={total > 0 && (
-        //   <Pagination
-        //     current={page}
-        //     pageSize={pageSize}
-        //     total={total}
-        //     divider
-        //     onChange={(current) => onTurnPages(current)}
-        //   />
-        // )}
+      // footer={total > 0 && (
+      //   <Pagination
+      //     current={page}
+      //     pageSize={pageSize}
+      //     total={total}
+      //     divider
+      //     onChange={(current) => onTurnPages(current)}
+      //   />
+      // )}
       />
     </Card>
   );
