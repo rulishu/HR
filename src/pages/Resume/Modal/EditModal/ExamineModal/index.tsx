@@ -133,7 +133,7 @@ const ExamineModal = () => {
       type="primary"
       onClose={() => onClosed()}
       footer={
-        itState === '不同意' ? (
+        itState === '不同意' || hrState === '不同意' || hrState === '同意' ? (
           ''
         ) : (
           <div>

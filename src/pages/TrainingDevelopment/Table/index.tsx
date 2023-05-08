@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { List, Row, Col, Button, Pagination, Empty, Tag, Tooltip, Alert } from 'uiw';
+import { List, Row, Col, Button, Empty, Tag, Tooltip, Alert } from 'uiw';
 import { useSelector, RootState, useDispatch, Dispatch } from '@kkt/pro';
 import formatter from '@uiw/formatter';
 import LinkContent from '../Modal/LinkContent';
@@ -137,22 +137,7 @@ const Index = () => {
         <Row>
           <List
             // header={<div>列表头部</div>}
-            footer={
-              <Pagination
-                current={1}
-                pageSize={10}
-                total={20}
-                divider
-                onShowSizeChange={(current: any) => {
-                  dispatch({
-                    type: 'trainingDevelopment/update',
-                    payload: {
-                      page: current,
-                    },
-                  });
-                }}
-              />
-            }
+            // footer={}
             noHover
             size="small"
             style={{ width: '100%' }}
