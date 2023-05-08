@@ -16,6 +16,10 @@ const ExamineModal = () => {
       assignState,
       itContext,
       hrContext,
+      itState,
+      hrState,
+      page,
+      pageSize,
     },
     usersModal: { roleList },
   } = useSelector((state: RootState) => state);
@@ -27,11 +31,13 @@ const ExamineModal = () => {
 
   const [value, setValue] = useState<string>(hrContext);
 
+  // 取消
   const onClosed = () => {
     setValue('');
     dispatch.resume.update({
       examineVisible: false,
     });
+    dispatch.resume.quickSelect({ page: page, pageSize: pageSize });
   };
 
   //  获取 hr 角色
@@ -56,52 +62,68 @@ const ExamineModal = () => {
   };
 
   // 选择技术面
-  const onSkill = () => {
-    dispatchFn({ isPersonVisible: true, personType: 'it' });
-    dispatch({
+  const onSkill = async () => {
+    await dispatch({
       type: 'resume/selectListByRole',
       payload: {
         ids: it,
         personType: 'it',
       },
     });
+    await dispatchFn({ isPersonVisible: true, personType: 'it' });
   };
 
   // 选择hr面
-  const onHr = () => {
-    dispatchFn({ isHrPersonVisible: true, personType: 'hr' });
-    dispatch({
+  const onHr = async () => {
+    await dispatch({
       type: 'resume/selectListByRole',
       payload: {
         ids: hr,
         personType: 'hr',
       },
     });
+    await dispatchFn({ isHrPersonVisible: true, personType: 'hr' });
   };
 
   /**
-   * 是否同意
+   * 同意
    */
-  const onAgree = () => {
-    dispatch({
+  const onAgree = async () => {
+    await dispatch({
       type: 'resume/resumeInterview',
       payload: {
         id: vitaId,
-        state: 4,
+        state: 3,
         context: value,
         flag: 1,
         type: 4,
+        interviewResult: '同意',
       },
     });
+    await dispatch.resume.quickSelect({ page: page, pageSize: pageSize });
   };
 
+  /**
+   * 不同意
+   */
+  const onNoAgree = async () => {
+    await dispatch({
+      type: 'resume/resumeInterview',
+      payload: {
+        id: vitaId,
+        state: 3,
+        context: value,
+        flag: 1,
+        type: 4,
+        interviewResult: '不同意',
+      },
+    });
+    await dispatch.resume.quickSelect({ page: page, pageSize: pageSize });
+  };
   // 反馈
   const onTextChange = (val: string) => {
     setValue(val);
   };
-
-  const states = ['待面试', '面试中', '面试完成', '面试完成', '面试完成'];
-  const hrStates = ['待面试', '待面试', '面试中', '面试完成', '面试完成'];
 
   return (
     <Drawer
@@ -111,12 +133,16 @@ const ExamineModal = () => {
       type="primary"
       onClose={() => onClosed()}
       footer={
-        <div>
-          <Button type="primary" onClick={() => onAgree()}>
-            同意
-          </Button>
-          <Button onClick={() => onClosed()}>不同意</Button>
-        </div>
+        itState === '不同意' || hrState === '不同意' || hrState === '同意' ? (
+          ''
+        ) : (
+          <div>
+            <Button type="primary" onClick={() => onAgree()}>
+              同意
+            </Button>
+            <Button onClick={() => onNoAgree()}>不同意</Button>
+          </div>
+        )
       }
     >
       <Card>
@@ -134,6 +160,7 @@ const ExamineModal = () => {
                   <div style={{ width: 200, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                     <div style={{ marginRight: 8 }}>{itPersonDate?.at(0) || assignInterviewerName}</div>
                     <Button
+                      disabled={itState === '不同意' || itState === '同意'}
                       onClick={() => {
                         onSkill();
                       }}
@@ -142,7 +169,7 @@ const ExamineModal = () => {
                     </Button>
                   </div>
                 </div>
-                <div style={{ marginBottom: 6 }}>状态：{states[assignState as any]}</div>
+                <div style={{ marginBottom: 6 }}>状态：{itState}</div>
                 <div style={{ marginBottom: 6 }}>反馈：{itContext}</div>
               </div>
             }
@@ -160,6 +187,7 @@ const ExamineModal = () => {
                   <div style={{ width: 200, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                     <div style={{ marginRight: 8 }}>{hrPersonDate?.at(0) || assignHrName}</div>
                     <Button
+                      disabled={hrState === '不同意' || hrState === '同意'}
                       onClick={() => {
                         onHr();
                       }}
@@ -168,14 +196,14 @@ const ExamineModal = () => {
                     </Button>
                   </div>
                 </div>
-                <div style={{ marginBottom: 6 }}>状态：{hrStates[assignState as any]}</div>
+                <div style={{ marginBottom: 6 }}>状态：{hrState}</div>
                 <div style={{ marginBottom: 6 }}>反馈：{hrContext}</div>
               </div>
             }
           />
         </Steps>
       </Card>
-      <div style={{ marginBottom: 10, marginTop: 10, fontWeight: 'bold' }}>不通过原因：</div>
+      <div style={{ marginBottom: 10, marginTop: 10, fontWeight: 'bold' }}>面试反馈：</div>
       <Textarea
         value={hrContext || value}
         disabled={assignState === 3 || assignState === 4}

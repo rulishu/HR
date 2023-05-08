@@ -2,7 +2,8 @@ import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
 import { Drawer, Button, Textarea } from 'uiw';
 import { useEffect, useState } from 'react';
 
-const ExamineModal = () => {
+const ExamineModal = (props: any) => {
+  const { table } = props;
   const dispatch = useDispatch<Dispatch>();
   const {
     interviewTasks: { examineVisible, vitaId },
@@ -16,6 +17,7 @@ const ExamineModal = () => {
 
   const [value, setValue] = useState<string>('');
 
+  // 取消
   const onClosed = () => {
     setValue('');
     dispatch.interviewTasks.update({
@@ -24,18 +26,45 @@ const ExamineModal = () => {
   };
 
   /**
-   * 是否同意
+   * 不同意
    */
-  const onAgree = () => {
+  const onNoAgree = () => {
+    setValue('');
     dispatch({
       type: 'interviewTasks/resumeInterview',
       payload: {
         id: vitaId,
-        state: 4,
+        state: 2,
         context: value,
         flag: 1,
         type: 3,
         assignInterviewer: (userData as any)?.userId,
+        interviewResult: '不同意',
+        callback: () => {
+          table?.onRefersh();
+        },
+      },
+    });
+  };
+
+  /**
+   * 同意
+   */
+  const onAgree = () => {
+    setValue('');
+    dispatch({
+      type: 'interviewTasks/resumeInterview',
+      payload: {
+        id: vitaId,
+        state: 2,
+        context: value,
+        flag: 1,
+        type: 3,
+        assignInterviewer: (userData as any)?.userId,
+        interviewResult: '同意',
+        callback: () => {
+          table?.onRefersh();
+        },
       },
     });
   };
@@ -57,11 +86,11 @@ const ExamineModal = () => {
           <Button type="primary" onClick={() => onAgree()}>
             同意
           </Button>
-          <Button onClick={() => onClosed()}>不同意</Button>
+          <Button onClick={() => onNoAgree()}>不同意</Button>
         </div>
       }
     >
-      <div style={{ marginBottom: 10, marginTop: 10, fontWeight: 'bold' }}>不通过原因：</div>
+      <div style={{ marginBottom: 10, marginTop: 10, fontWeight: 'bold' }}>面试反馈：</div>
       <Textarea
         value={value}
         placeholder="请输入内容"

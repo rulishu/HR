@@ -1,31 +1,45 @@
-import { Fragment, useEffect } from 'react';
-import { Card, Empty, Button, Row, Col, Pagination, Popover, Loader } from 'uiw';
 import { useDispatch, Dispatch, useSelector, RootState } from '@kkt/pro';
-import { TipButton } from '@/components';
+import { ProTable, useTable } from '@uiw-admin/components';
 import { getDictLabel } from '@/utils';
+import { TipButton } from '@/components';
+import { Button, Popover, Loader } from 'uiw';
 import Modal from './Modal';
-// import '../style/index.css';
+import { useEffect } from 'react';
 
-const Index = () => {
+function ArchiveApprovalRecord() {
   const {
     loading,
-    interviewTasks: { TableData, formData, cvFileUUID, total, page, pageSize, companyId, post },
-    global: { dictObject, userData },
+    sysDataDictionary: { dataList = [] },
+    global: { dictObject },
+    interviewTasks: { formData, cvFileUUID },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
 
   useEffect(() => {
-    dispatch.global.getUserInfo({
-      callback: (res: any) => {
-        dispatch.interviewTasks.selectCVByInterview({
-          assignInterviewer: (userData as any)?.userId,
-          page: page,
-          pageSize: pageSize,
+    dispatch.sysDataDictionary.selectList({
+      callback: (data: any) => {
+        dispatch.sysDataDictionary.updateState({
+          dataList: data,
         });
       },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  //获取学历
+  const ele = dataList
+    .filter((item: any) => {
+      return item.dictType === 'education';
+    })
+    .map((a: any) => a.dictData)
+    .flat();
+
+  const eleOption = ele.map((itm: any) => {
+    return {
+      label: itm.dictLabel,
+      value: itm.dictValue,
+    };
+  });
 
   const dispatchFn = (params: any) => {
     dispatch({
@@ -92,58 +106,117 @@ const Index = () => {
       window.open(`/api/vc/previewPdf?id=${data?.id}&exportVersion=2`);
     }
   };
-  const footer = TableData?.length > 0 && (
-    <Pagination
-      current={page}
-      pageSize={pageSize}
-      total={total}
-      divider
-      onChange={(current: any) => {
-        dispatchFn({
-          page: current,
-          pageSize: pageSize,
-          total: total,
-          companyId: companyId,
-        });
-        dispatch({
-          type: 'interviewTasks/selectCVByInterview',
-          payload: {
-            current: true,
-            page: current,
-            pageSize: pageSize,
-            total: total,
-            companyId: companyId,
-            post: post,
-          },
-        });
-      }}
-    />
-  );
+
+  let token = sessionStorage.getItem('token') || localStorage.getItem('token');
+  const table = useTable('/api/vc/selectCVByInterview', {
+    // 格式化接口返回的数据，必须返回{total 总数, data: 列表数据}的格式
+    formatData: (data) => {
+      return {
+        total: data.data.total,
+        data: data.data.list,
+      };
+    },
+    // 格式化查询参数 会接收到pageIndex 当前页  searchValues 表单数据
+    query: (page, pageSize, searchValues) => {
+      return {
+        // assignInterviewer: (userData as any)?.userId,
+        page: page,
+        pageSize: pageSize,
+        ...searchValues,
+      };
+    },
+    requestOptions: {
+      headers: { Authorization: '' + token },
+    },
+  });
 
   return (
-    <Card noHover bordered={false} style={{ borderLeft: '1px solid rgba(16, 22, 26, 0.15)' }} footer={footer}>
-      <div style={{ height: '100%' }}>
-        {TableData?.map((item: any, idx: any) => {
-          return (
-            <Fragment key={idx}>
-              <Card style={{ marginBottom: 10 }} noHover>
-                <Row align="middle">
-                  <Col> 姓名： {item?.name} </Col>
-                  <Col> 手机号： {item?.phone} </Col>
-                  <Col> 性别： {getDictLabel(dictObject?.sex?.child, item?.gender)} </Col>
-                  <Col> 年龄： {item.age} </Col>
-                  <Col> 应聘岗位: {getDictLabel(dictObject?.post?.child, item?.post)}</Col>
-                  <Col> 学历：{getDictLabel(dictObject?.education?.child, item?.educational)}</Col>
-                  <Col>
-                    工作经验： {item?.experience} {item?.experience ? '年' : ''}
-                  </Col>
-                  <TipButton tip="审批" type="primary" icon="time-o" onClick={() => handle('examine', item)} />
+    <div className="formRecord">
+      <ProTable
+        formCol={3}
+        // 搜索栏按钮
+        searchBtns={[
+          {
+            label: '搜索',
+            type: 'primary',
+            onClick: () => {
+              table.onSearch();
+            },
+          },
+          {
+            label: '重置',
+            onClick: () => {
+              table.onReset();
+            },
+          },
+        ]}
+        table={table}
+        columns={[
+          {
+            title: '姓名',
+            key: 'name',
+            props: {
+              widget: 'input',
+              initialValue: '',
+              widgetProps: {
+                placeholder: '请输入',
+              },
+            },
+          },
+          {
+            title: '手机号',
+            key: 'phone',
+          },
+          {
+            title: '性别',
+            key: 'gender',
+            render: (item: any, key: any, rowData: any) => {
+              return <div>{getDictLabel(dictObject?.sex?.child, rowData?.gender)}</div>;
+            },
+          },
+          {
+            title: '年龄',
+            key: 'age',
+          },
+          {
+            title: '应聘岗位',
+            key: 'post',
+            render: (text: any, key: any, rowData: any) => {
+              return <div>{getDictLabel(dictObject?.post?.child, rowData?.post)}</div>;
+            },
+          },
+          {
+            title: '学历',
+            key: 'educational',
+            render: (text: any, key: any, rowData: any) => {
+              return <div>{getDictLabel(dictObject?.education?.child, rowData?.educational)}</div>;
+            },
+            props: {
+              widget: 'select',
+              option: eleOption,
+            },
+          },
+          {
+            title: '工作经验',
+            key: 'experience',
+            render: (text: any, key: any, rowData: any) => {
+              return <div>{rowData?.experience ? rowData?.experience + '年' : ''} </div>;
+            },
+          },
+          {
+            title: '操作',
+            key: 'edit',
+            width: 120,
+            render: (text: any, key: any, rowData: any) => {
+              return (
+                <>
+                  <TipButton tip="审批" type="primary" icon="time-o" onClick={() => handle('examine', rowData)} />
                   <TipButton
                     tip="查看"
                     type="primary"
                     icon="document"
-                    // disabled={item.cvFileUUID ? false : true}
-                    onClick={() => handle('view', item)}
+                    disabled={rowData.cvFileUUID ? false : true}
+                    onClick={() => handle('view', rowData)}
                   />
                   <Popover
                     trigger="hover"
@@ -157,7 +230,7 @@ const Index = () => {
                           style={{ width: '100%', height: '100%', flex: 1 }}
                           bgColor="rgba(255, 255, 255, .7)"
                         >
-                          <Button basic block type="primary" onClick={() => handle('export', item)}>
+                          <Button basic block type="primary" onClick={() => handle('export', rowData)}>
                             导出Word
                           </Button>
                         </Loader>
@@ -167,28 +240,28 @@ const Index = () => {
                           style={{ width: '100%', height: '100%', flex: 1 }}
                           bgColor="rgba(255, 255, 255, .7)"
                         >
-                          <Button basic block type="primary" onClick={() => handle('exportPdf', item)}>
+                          <Button basic block type="primary" onClick={() => handle('exportPdf', rowData)}>
                             导出PDF
                           </Button>
                         </Loader>
-                        <Button basic block type="primary" onClick={() => handle('detailShare', item)}>
+                        <Button basic block type="primary" onClick={() => handle('detailShare', rowData)}>
                           详细简历分享
                         </Button>
-                        <Button basic block type="primary" onClick={() => handle('share', item)}>
+                        <Button basic block type="primary" onClick={() => handle('share', rowData)}>
                           简约简历分享
                         </Button>
                       </div>
                     }
                   ></Popover>
-                </Row>
-              </Card>
-            </Fragment>
-          );
-        })}
-      </div>
-      {TableData?.length <= 0 && <Empty />}
-      <Modal />
-    </Card>
+                </>
+              );
+            },
+          },
+        ]}
+      />
+      <Modal table={table} />
+    </div>
   );
-};
-export default Index;
+}
+
+export default ArchiveApprovalRecord;

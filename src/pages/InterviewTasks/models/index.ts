@@ -146,17 +146,14 @@ const route = {
     * 是否面试通过
     */
      async resumeInterview(payload: any) {
+      const {  callback } = payload
       const {  code,msg } = await resumeInterview(payload)
       if (code === 200 ) {
         Notify.success({ description: msg || '修改成功' });
         dispatch.interviewTasks.update({
           examineVisible: false,
         });
-        dispatch.interviewTasks.selectCVByInterview({
-          assignInterviewer:payload.assignInterviewer,
-            page: 1,
-            pageSize: 20,
-        });
+        callback && callback()
       }
     },
 

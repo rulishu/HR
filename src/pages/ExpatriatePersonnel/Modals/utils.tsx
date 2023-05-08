@@ -2,9 +2,10 @@ interface FormListProps {
   queryInfo?: any;
   companyList?: any;
   handleChange?: (type: string, value: string) => void;
+  buttonType?: any
 }
 
-export const formList = ({ queryInfo, companyList, handleChange }: FormListProps) => {
+export const formList = ({ queryInfo, companyList, handleChange, buttonType }: FormListProps) => {
   return [
     {
       label: '姓名',
@@ -32,7 +33,8 @@ export const formList = ({ queryInfo, companyList, handleChange }: FormListProps
           handleChange?.('companyId', value);
         },
       },
-      rules: [{ required: true, message: '请选择外派公司名称' }],
+      initialValue: buttonType === 555 ? [{ label: queryInfo?.expatriateCompanyName, value: queryInfo?.companyId }] : [],
+      rules: [{ required: buttonType === 555 ? false : true, message: '请选择外派公司名称' }],
     },
     {
       label: `${queryInfo?.state === 3 ? '离场' : '入场'}日期`,
@@ -42,7 +44,8 @@ export const formList = ({ queryInfo, companyList, handleChange }: FormListProps
       widgetProps: {
         format: 'YYYY-MM-DD',
       },
-      rules: [{ required: true, message: `请选择${queryInfo?.state === 3 ? '离场' : '入场'}日期` }],
+      hide: buttonType === 555,
+      rules: [{ required: buttonType === 555 ? false : true, message: `请选择${queryInfo?.state === 3 ? '离场' : '入场'}日期` }],
     },
     {
       label: '工作地址',
@@ -50,7 +53,8 @@ export const formList = ({ queryInfo, companyList, handleChange }: FormListProps
       widget: 'input',
       span: '24',
       hide: queryInfo?.state === 3,
-      rules: [{ required: true, message: '请输入工作地址' }],
+      initialValue: buttonType === 555 ? queryInfo?.workAddress : '',
+      rules: [{ required: buttonType === 555 ? false : true, message: '请输入工作地址' }],
     },
     {
       label: '办公方式',
@@ -58,7 +62,8 @@ export const formList = ({ queryInfo, companyList, handleChange }: FormListProps
       widget: 'input',
       span: '24',
       hide: queryInfo?.state === 3,
-      rules: [{ required: true, message: '请输入办公方式' }],
+      initialValue: buttonType === 555 ? queryInfo?.workWay : '',
+      rules: [{ required: buttonType === 555 ? false : true, message: '请输入办公方式' }],
     },
     {
       label: '级别',
@@ -66,13 +71,15 @@ export const formList = ({ queryInfo, companyList, handleChange }: FormListProps
       widget: 'input',
       span: '24',
       hide: queryInfo?.state === 3,
-      rules: [{ required: true, message: '请输入级别' }],
+      initialValue: buttonType === 555 ? queryInfo?.qualifications : '',
+      rules: [{ required: buttonType === 555 ? false : true, message: '请输入级别' }],
     },
     {
       label: '备注',
       key: 'remake',
       widget: 'textarea',
       span: '24',
+      initialValue: buttonType === 555 ? queryInfo?.remake : '',
     },
   ];
 };

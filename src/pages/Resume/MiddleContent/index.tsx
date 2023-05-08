@@ -55,6 +55,8 @@ const Index = () => {
           itPersonDate: [],
           hrContext: '',
           itContext: '',
+          itState: '',
+          hrState: '',
           assignInterviewerName: '',
           assignHrName: '',
           assignState: undefined,
@@ -147,7 +149,7 @@ const Index = () => {
     });
   };
 
-  const states = ['待面试', '技术面中', '人事面中', '面试未通过', '面试已通过'];
+  const states = ['待面试', '面试中', '面试结束'];
 
   return (
     <Card

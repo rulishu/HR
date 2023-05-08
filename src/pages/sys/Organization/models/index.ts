@@ -1,6 +1,6 @@
 import { Dispatch, KktproKeys } from '@kkt/pro';
 import { Notify } from 'uiw';
-import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture, selectEntranceOrDeparture, downloadExcelStaff } from '@/servers/sys/organization';
+import { selectList, deletes, departmentDelete, selectListStaff, entranceOrDeparture, selectEntranceOrDeparture, downloadExcelStaff, userTimeUpdate } from '@/servers/sys/organization';
 import { handleExport } from '@/utils/export';
 
 const route = {
@@ -14,6 +14,7 @@ const route = {
     selectEntrance: [],
     visible: false,
     checked: [],
+    buttonType: ''
   },
   reducers: {
     updateState: (state: any, payload: KktproKeys) => ({
@@ -113,15 +114,32 @@ const route = {
       }
     },
     /**
+      * 编辑基本信息
+    */
+    async userTimeUpdate(payload?: KktproKeys, state?: any) {
+      const { callback, ...other } = payload || {}
+      const { code, data } = await userTimeUpdate(other);
+      if (code === 200 && data) {
+        Notify.success({ description: data.msg || '成功' });
+        if (callback) {
+          callback(data)
+        } else {
+          dispatch.sysOrganization.updateState({
+            dataListStaff: data,
+          });
+        }
+      }
+    },
+    /**
      * 入场或者离场
     */
     async entranceOrDeparture(payload?: KktproKeys, state?: any) {
-      const { code, data } = await entranceOrDeparture({...payload});
+      const { code, data } = await entranceOrDeparture({ ...payload });
       if (code === 200 && data) {
         Notify.success({ description: data.msg || '成功' });
         dispatch.sysOrganization.hideModal();
       }
-      
+
     },
     /**
      * 获取工作入场离场时间线
@@ -145,10 +163,10 @@ const route = {
     */
     async downloadExcelStaff(payload: KktproKeys) {
       const data = await downloadExcelStaff(payload);
-        handleExport(data, '外派人员导出.xlsx')
-        dispatch.employeeProfile.updateState({
-          checkRouteMenuIds: []
-        });
+      handleExport(data, '外派人员导出.xlsx')
+      dispatch.employeeProfile.updateState({
+        checkRouteMenuIds: []
+      });
     },
   })
 };

@@ -63,6 +63,8 @@ const route = {
     assignState:undefined, //状态
     hrContext:'',
     itContext:'',
+    itState:'',
+    hrState:'',
   },
   reducers: {
     update: (state: any, payload: KktproKeys) => ({
@@ -191,7 +193,6 @@ const route = {
             hrInterviewer:data
           });
         }
-       
       }
     },
 
@@ -215,7 +216,6 @@ const route = {
         dispatch.resume.update({
           examineVisible: false,
         });
-        dispatch.resume.quickSelect({ page: 1, pageSize: 20 });
       }
     },
     
@@ -231,6 +231,15 @@ const route = {
       const itContext = data.list?.at(0)?.timelines.filter((item:any)=>{
         return item.type === 3
       })?.at(0)?.comments?.at(0)?.context
+
+      const itState = data.list?.at(0)?.timelines.filter((item:any)=>{
+        return item.type === 3
+      })?.at(0)?.context
+
+      const hrState = data.list?.at(0)?.timelines.filter((item:any)=>{
+        return item.type ===4
+      })?.at(0)?.context
+
       if (code === 200 ) {
         dispatch.resume.update({
           assignInterviewerName: data?.list?.at(0)?.assignInterviewerName,
@@ -238,6 +247,8 @@ const route = {
           assignState:data?.list?.at(0)?.state,
           hrContext:hrContext,
           itContext:itContext,
+          hrState:hrState,
+          itState:itState,
         });
       }
     },
