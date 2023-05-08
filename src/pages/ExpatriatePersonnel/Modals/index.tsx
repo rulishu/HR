@@ -27,8 +27,8 @@ function Modals(props: any) {
       flag: queryInfo?.state === 3 ? 2 : 1,
       id: queryInfo?.uid
     }
-    dispatch.sysOrganization.entranceOrDeparture({...params}).then((res) => {
-      dispatch.sysOrganization.selectListStaff({id:props.companyId});
+    dispatch.sysOrganization.entranceOrDeparture({ ...params }).then((res) => {
+      dispatch.sysOrganization.selectListStaff({ id: props.companyId });
     })
   };
 
@@ -43,9 +43,17 @@ function Modals(props: any) {
   /**
    * 监听
   */
-  const handleChange = async (type: string,val: any) => {
-    if(type === 'companyId') {
-      dispatch.sysOrganization.selectList({id:val?.[0]?.value});
+  const handleChange = async (type: string, val: any) => {
+    if (type === 'companyId') {
+      await dispatch.sysOrganization.selectList({
+        id: val?.[0]?.value,
+        callback: (dataList: any) => {
+          form?.setFields && form?.setFields({
+            companyId: val || '',
+            workAddress: (dataList as any || [])?.at(0)?.companyAddress || ''
+          })
+        }
+      })
     }
   }
 
