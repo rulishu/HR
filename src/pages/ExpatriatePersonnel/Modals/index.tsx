@@ -6,7 +6,7 @@ import { formList } from './utils';
 
 function Modals(props: any) {
   const {
-    sysOrganization: { isVisible, queryInfo },
+    sysOrganization: { isVisible, queryInfo, buttonType },
     employeeInduction: { companyList },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch>();
@@ -27,9 +27,21 @@ function Modals(props: any) {
       flag: queryInfo?.state === 3 ? 2 : 1,
       id: queryInfo?.uid
     }
-    dispatch.sysOrganization.entranceOrDeparture({ ...params }).then((res) => {
-      dispatch.sysOrganization.selectListStaff({ id: props.companyId });
-    })
+    if (Number(buttonType) === 555) {
+      delete params.time
+      delete params.companyName
+      dispatch.sysOrganization.userTimeUpdate({
+        ...params,
+        context: current?.companyId?.[0]?.label
+      }).then(() => {
+        dispatch.sysOrganization.selectListStaff({ id: props.companyId });
+      })
+    } else {
+      dispatch.sysOrganization.entranceOrDeparture({ ...params }).then((res) => {
+        dispatch.sysOrganization.selectListStaff({ id: props.companyId });
+      })
+    }
+    onClosed()
   };
 
   //关闭弹窗
@@ -75,7 +87,7 @@ function Modals(props: any) {
         saveButtonProps={{ type: "primary" }}
         readOnlyProps={{ column: 2 }}
         onSubmit={(_, current) => onAddSubmit(current)}
-        formDatas={formList({ queryInfo, companyList, handleChange })}
+        formDatas={formList({ queryInfo, companyList, handleChange, buttonType })}
       />
     </Modal>
   );

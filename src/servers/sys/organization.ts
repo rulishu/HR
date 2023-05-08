@@ -37,7 +37,7 @@ export function edit(params: KktproKeys) {
 /**
  * 删除机构
 */
-export function deletes (params: KktproKeys) {
+export function deletes(params: KktproKeys) {
   return request('/api/company/delete', {
     method: 'post',
     body: { ...params },
@@ -47,7 +47,7 @@ export function deletes (params: KktproKeys) {
 /**
  * 查询人员当前所在公司
 */
-export function selectListStaff (params: KktproKeys) {
+export function selectListStaff(params: KktproKeys) {
   return request('/api/company/selectListStaff', {
     method: 'post',
     body: { ...params },
@@ -57,7 +57,7 @@ export function selectListStaff (params: KktproKeys) {
 /**
  * 入场或者离场
 */
-export function entranceOrDeparture (params: KktproKeys) {
+export function entranceOrDeparture(params: KktproKeys) {
   return request('/api/company/entranceOrDeparture', {
     method: 'post',
     body: { ...params },
@@ -67,7 +67,7 @@ export function entranceOrDeparture (params: KktproKeys) {
 /**
  * 获取工作入场离场时间线
 */
-export function selectEntranceOrDeparture (params: KktproKeys) {
+export function selectEntranceOrDeparture(params: KktproKeys) {
   return request('/api/company/selectEntranceOrDeparture', {
     method: 'post',
     body: { ...params },
@@ -77,7 +77,7 @@ export function selectEntranceOrDeparture (params: KktproKeys) {
 /**
  * 导出入场离场
 */
-export function downloadExcelStaff (params: KktproKeys) {
+export function downloadExcelStaff(params: KktproKeys) {
   return request('/api/company/downloadExcelStaff', {
     method: 'post',
     body: { ...params },
@@ -110,6 +110,16 @@ export const departmentUpdate = (params: KktproKeys) => {
 */
 export const departmentDelete = (params: KktproKeys) => {
   return request('/api/department/delete', {
+    method: 'post',
+    body: { ...params },
+  });
+}
+
+/**
+ * 修改基本信息
+*/
+export const userTimeUpdate = (params: KktproKeys) => {
+  return request('/api/userTimeline/update', {
     method: 'post',
     body: { ...params },
   });
