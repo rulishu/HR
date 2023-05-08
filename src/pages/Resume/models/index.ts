@@ -193,7 +193,6 @@ const route = {
             hrInterviewer:data
           });
         }
-       
       }
     },
 
@@ -217,7 +216,6 @@ const route = {
         dispatch.resume.update({
           examineVisible: false,
         });
-        dispatch.resume.quickSelect({ page: 1, pageSize: 20 });
       }
     },
     
@@ -244,7 +242,7 @@ const route = {
 
       if (code === 200 ) {
         dispatch.resume.update({
-          // assignInterviewerName: data?.list?.at(0)?.assignInterviewerName,
+          assignInterviewerName: data?.list?.at(0)?.assignInterviewerName,
           assignHrName:data?.list?.at(0)?.assignHrName,
           assignState:data?.list?.at(0)?.state,
           hrContext:hrContext,

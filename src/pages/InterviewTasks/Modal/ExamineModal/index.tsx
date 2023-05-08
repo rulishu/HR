@@ -29,6 +29,7 @@ const ExamineModal = (props: any) => {
    * 不同意
    */
   const onNoAgree = () => {
+    setValue('');
     dispatch({
       type: 'interviewTasks/resumeInterview',
       payload: {
@@ -50,6 +51,7 @@ const ExamineModal = (props: any) => {
    * 同意
    */
   const onAgree = () => {
+    setValue('');
     dispatch({
       type: 'interviewTasks/resumeInterview',
       payload: {
